@@ -1,9 +1,9 @@
 import 'package:e_markety_client/features/auth/components/text_button_auth.dart';
-import 'package:e_markety_client/shared/theme/theme.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:e_markety_client/shared/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
 
+import '../../../shared/theme/constants.dart';
 import '../../../shared/widgets/filled_button.dart';
 import '../components/email_password_component.dart';
 
@@ -13,6 +13,7 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar.buildAppBar(context),
       body: SafeArea(
         child: Padding(
@@ -22,10 +23,10 @@ class SignInScreen extends StatelessWidget {
             children: [
               Column(
                 children: [
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.055),
                   const LogoWidget(),
-                  const SizedBox(height: 80),
+                  const SizedBox(height: 60),
                   const EmailPasswordComponent(),
-                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -33,13 +34,16 @@ class SignInScreen extends StatelessWidget {
                         onPressed: () {},
                         child: const Text(
                           'Esqueci minha senha',
-                          style:
-                              TextStyle(color: kBasicDarkColor, fontSize: 18),
+                          style: TextStyle(
+                            color: kBasicDarkColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 32),
                   FilledButton(
                     text: 'Sign In',
                     color: Theme.of(context).colorScheme.secondary,

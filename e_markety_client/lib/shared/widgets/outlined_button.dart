@@ -24,7 +24,14 @@ class CustomOutlinedButton extends StatelessWidget {
       ),
       onPressed: onPressed,
       icon: Icon(icon, color: color),
-      label: Text(text, style: TextStyle(color: color)),
+      label: Text(
+        text,
+        style: TextStyle(
+          color: color,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 }

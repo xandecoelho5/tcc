@@ -1,0 +1,4 @@
+enum SellType {
+  weight,
+  piece,
+}

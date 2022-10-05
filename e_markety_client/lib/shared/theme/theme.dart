@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 
-const kPrimaryColor = Color(0xFFEB3E4B);
-const kSecondaryColor = Color(0xFF2AC17E);
-const kBasicDarkColor = Color(0xFF322C46);
-const kBasicLightColor = Color(0xFFE9E9E9);
-const kBackgroundColor = Color(0xFFFFFFFF);
-const kScaffoldColor = Color(0xFFF5F5F5);
-
-const kTesteColor = Colors.deepPurple;
+import 'constants.dart';
 
 final kThemeData = ThemeData(
   fontFamily: 'Raleway',
@@ -19,8 +12,20 @@ final kThemeData = ThemeData(
     bodyText1: TextStyle(),
     bodyText2: TextStyle(),
   ).apply(
-    bodyColor: kTesteColor,
-    displayColor: kTesteColor,
+    bodyColor: kBasicDarkColor,
+    displayColor: kBasicDarkColor,
   ),
   scaffoldBackgroundColor: kScaffoldColor,
+  appBarTheme: const AppBarTheme(
+    backgroundColor: kScaffoldColor,
+    elevation: 0,
+    toolbarHeight: 80,
+  ),
+  inputDecorationTheme: const InputDecorationTheme(
+    border: kOutlineInputBorder,
+    focusedBorder: kOutlineInputBorder,
+    enabledBorder: kOutlineInputBorder,
+    errorBorder: kErrorOutlineInputBorder,
+    focusedErrorBorder: kErrorOutlineInputBorder,
+  ),
 );

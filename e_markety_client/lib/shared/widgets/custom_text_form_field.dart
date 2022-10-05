@@ -1,5 +1,6 @@
-import 'package:e_markety_client/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
+
+import '../theme/constants.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
@@ -20,22 +21,21 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
-        contentPadding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
+        contentPadding: const EdgeInsets.fromLTRB(24, 22, 24, 20),
         border: outlineInputBorder,
         focusedBorder: outlineInputBorder,
         enabledBorder: outlineInputBorder,
         filled: true,
         fillColor: kBackgroundColor,
-        // labelText: label,
         floatingLabelBehavior: FloatingLabelBehavior.always,
         label: Padding(
           padding: const EdgeInsets.only(top: 50.0),
           child: Text(
             label,
-            style: const TextStyle(
-              color: Colors.grey,
+            style: TextStyle(
+              color: Colors.grey.shade400,
               fontSize: 20,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
@@ -44,7 +44,7 @@ class CustomTextFormField extends StatelessWidget {
           child: icon,
         ),
       ),
-      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       obscureText: label == 'Senha',
       obscuringCharacter: '*',
     );

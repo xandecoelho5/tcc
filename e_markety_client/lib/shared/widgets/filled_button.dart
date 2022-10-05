@@ -25,8 +25,9 @@ class FilledButton extends StatelessWidget {
         text,
         style: const TextStyle(
           color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.w500,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          letterSpacing: -0.5,
         ),
       ),
     );

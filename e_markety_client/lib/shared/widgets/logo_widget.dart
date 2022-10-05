@@ -1,5 +1,6 @@
-import 'package:e_markety_client/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
+
+import '../theme/constants.dart';
 
 class LogoWidget extends StatelessWidget {
   const LogoWidget({Key? key}) : super(key: key);

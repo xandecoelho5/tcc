@@ -1,0 +1,14 @@
+Testar todas as strings variáveis com valores extensos, para saber se tem casos que vai dar overflow render;
+- ajustar tamanho de acordo (pode ter casos que vai ficar muito pequeno de ler)
+- colocar um identificador para o overflow (ellipsis, por exemplo);
+
+Testar em mais resoluções para ver como vai se comportar.
+- Verificar onde pode ser usado a ideia de alterar o tamanho do componente de acordo com o tamanho da tela;
+
+Componentizar melhor a aplicação, tornando mais legível e reduzindo número de linhas por arquivo.
+
+Tentar padronizar estilização de textos, ou pelo menos reduzir os estilos repetidos.
+
+Baixar os outros ícones usados para as categorias.
+
+Adicionar mais campos relevantes para o produto;

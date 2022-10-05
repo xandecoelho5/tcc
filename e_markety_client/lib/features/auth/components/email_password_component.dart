@@ -1,3 +1,4 @@
+import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/widgets/custom_text_form_field.dart';
@@ -12,8 +13,8 @@ class EmailPasswordComponent extends StatelessWidget {
         CustomTextFormField(
           label: 'E-mail',
           icon: true
-              ? Icon(Icons.check_circle_outline, color: Colors.lightGreen)
-              : Icon(Icons.cancel_outlined, color: Colors.redAccent),
+              ? Icon(Icons.check_circle_outline, color: kSecondaryColor)
+              : Icon(Icons.cancel_outlined, color: kPrimaryColor),
         ),
         SizedBox(height: 20),
         CustomTextFormField(

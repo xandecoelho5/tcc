@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/theme/theme.dart';
+import '../../../shared/theme/constants.dart';
 
 class TextButtonAuth extends StatelessWidget {
   const TextButtonAuth({
@@ -21,12 +21,12 @@ class TextButtonAuth extends StatelessWidget {
           textLabel,
           style: const TextStyle(
             fontSize: 18,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.bold,
             letterSpacing: -1,
           ),
         ),
         TextButton(
-          style: TextButton.styleFrom(foregroundColor: kTesteColor),
+          style: TextButton.styleFrom(foregroundColor: kBasicDarkColor),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(
             textButtonLabel,
