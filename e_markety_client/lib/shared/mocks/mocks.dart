@@ -1,8 +1,10 @@
 import 'package:e_markety_client/features/category/models/category.dart';
+import 'package:e_markety_client/features/order/address/models/address.dart';
 import 'package:e_markety_client/features/product/models/product.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:e_markety_client/shared/utils/assets.dart';
 
+import '../../features/order/shopping_cart/models/cart_item.dart';
 import '../../features/product/models/sell_type.dart';
 
 const bannersMock = [
@@ -136,5 +138,27 @@ final productsMock = [
     category: categoriesMock[3],
     sellType: SellType.weight,
     weightInKg: 0.75,
+  ),
+];
+
+final cartItemsMock = [
+  CartItem(id: 1, product: productsMock[0], quantity: 1),
+  CartItem(id: 2, product: productsMock[1], quantity: 2),
+  CartItem(id: 3, product: productsMock[2], quantity: 1),
+  CartItem(id: 4, product: productsMock[3], quantity: 1),
+];
+
+const addressMock = [
+  Address(
+    id: 1,
+    name: 'Home',
+    address: 'A/234, Kigs Plazaa, Mithakhali, Ahmedabad, Gujarat',
+    phone: '+91 234 567 8900',
+  ),
+  Address(
+    id: 2,
+    name: 'Office',
+    address: 'B/104, Lawesh Tower, Pondichory, Ahmedabad, Gujarat',
+    phone: '+91 567 890 2340',
   ),
 ];

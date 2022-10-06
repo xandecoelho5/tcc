@@ -12,6 +12,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../shared/mocks/mocks.dart';
 import '../shared/theme/theme.dart';
 import 'auth/screens/welcome_screen.dart';
+import 'order/address/screens/delivery_address_screen.dart';
+import 'order/shopping_cart/screens/shopping_cart_screen.dart';
 
 class AppModule extends Module {
   @override
@@ -50,6 +52,14 @@ class AppModule extends Module {
     ChildRoute(
       '/product-details',
       child: (context, args) => ProductDetailsScreen(product: productsMock[0]),
+    ),
+    ChildRoute(
+      '/shopping-cart',
+      child: (context, args) => const ShoppingCartScreen(),
+    ),
+    ChildRoute(
+      '/delivery-address',
+      child: (context, args) => const DeliveryAddressScreen(),
     ),
   ];
 }

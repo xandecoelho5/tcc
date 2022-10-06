@@ -4,6 +4,7 @@ import 'package:e_markety_client/features/product/components/product_flag_widget
 import 'package:e_markety_client/features/product/models/flag_type.dart';
 import 'package:e_markety_client/features/product/models/product.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
+import 'package:e_markety_client/shared/widgets/quantity_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/theme/constants.dart';
@@ -75,34 +76,14 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   _quantityButtons() {
-    button(icon) {
-      return Container(
-        height: double.infinity,
-        width: 55,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-        ), // Icon(icon, color: Colors.grey.shade700, size: 20)
-        child: Center(
-          child: Text(
-            icon,
-            style: TextStyle(
-              fontSize: 40,
-              color: Colors.grey.shade700,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-        ),
-      );
-    }
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Container(
         height: 55,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.grey.withOpacity(0.05),
+          color: kBasicLightColor.withOpacity(1),
+          // TODO - add gradient from white to kBasicLightColor
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
@@ -119,9 +100,9 @@ class ProductDetailsScreen extends StatelessWidget {
               ),
             ),
             Row(
-              children: [
-                button('-'),
-                const SizedBox(
+              children: const [
+                QuantityButton(icon: '-', height: double.infinity),
+                SizedBox(
                   width: 55,
                   child: Text(
                     '1',
@@ -132,7 +113,14 @@ class ProductDetailsScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                button('+'),
+                QuantityButton(
+                  icon: '+',
+                  height: double.infinity,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
+                ),
               ],
             ),
           ],
