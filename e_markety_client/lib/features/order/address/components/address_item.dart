@@ -1,3 +1,4 @@
+import 'package:e_markety_client/features/order/address/components/address_info.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -7,45 +8,6 @@ class AddressItem extends StatelessWidget {
   const AddressItem({Key? key, required this.address}) : super(key: key);
 
   final Address address;
-
-  _addressInfo() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          address.name,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-        const SizedBox(height: 16),
-        Text(
-          address.address,
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.grey.shade700,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 16),
-        Row(
-          children: [
-            const Text(
-              'Mobile: ',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              address.phone,
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey.shade700,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
 
   _defaultFlag() {
     return Container(
@@ -88,7 +50,7 @@ class AddressItem extends StatelessWidget {
                     flex: 8,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 32, left: 8),
-                      child: _addressInfo(),
+                      child: AddressInfo(address: address),
                     ),
                   ),
                   Expanded(

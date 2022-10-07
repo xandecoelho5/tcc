@@ -107,7 +107,7 @@ class ProductCard extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(top: 2, left: 12),
             child: Text(
-              '\$${product.finalValue.toStringAsFixed(2)}',
+              '\$${product.finalPrice.toStringAsFixed(2)}',
               style: const TextStyle(
                 color: kSecondaryColor,
                 fontSize: 18,

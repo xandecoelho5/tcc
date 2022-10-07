@@ -6,7 +6,7 @@ class Product {
   final String name;
   final String imageUrl;
   final String description;
-  final double value;
+  final double price;
   final DateTime createdAt;
   final Category category;
   final SellType sellType;
@@ -20,7 +20,7 @@ class Product {
     required this.name,
     required this.imageUrl,
     required this.description,
-    required this.value,
+    required this.price,
     required this.createdAt,
     required this.category,
     required this.sellType,
@@ -35,9 +35,13 @@ class Product {
 
   bool get hasPromotion => promotionPercent != null;
 
-  double get promotionValue => value - (value * promotionPercent! / 100);
+  double get promotionPrice => price - (price * promotionPercent! / 100);
 
-  double get finalValue => hasPromotion ? promotionValue : value;
+  double get finalPrice {
+    return hasPromotion ? promotionPrice : price;
+  }
+
+  double get discount => hasPromotion ? (price - promotionPrice) : 0;
 
   String get formattedWeight {
     if (weightInKg! < 1) {

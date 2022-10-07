@@ -2,6 +2,9 @@ import 'package:e_markety_client/features/auth/screens/sign_in_screen.dart';
 import 'package:e_markety_client/features/auth/screens/sign_up_screen.dart';
 import 'package:e_markety_client/features/category/screens/category_screen.dart';
 import 'package:e_markety_client/features/home/screens/home_screen.dart';
+import 'package:e_markety_client/features/order/checkout/screens/checkout_screen.dart';
+import 'package:e_markety_client/features/order/screens/order_result_screen.dart';
+import 'package:e_markety_client/features/order/screens/track_order_screen.dart';
 import 'package:e_markety_client/features/product/screens/product_details_screen.dart';
 import 'package:e_markety_client/features/product/screens/products_by_category_screen.dart';
 import 'package:e_markety_client/features/product/screens/search_result_screen.dart';
@@ -60,6 +63,18 @@ class AppModule extends Module {
     ChildRoute(
       '/delivery-address',
       child: (context, args) => const DeliveryAddressScreen(),
+    ),
+    ChildRoute(
+      '/checkout',
+      child: (context, args) => CheckoutScreen(order: orderMock),
+    ),
+    ChildRoute(
+      '/order-result',
+      child: (context, args) => const OrderResultScreen(isSuccess: false),
+    ),
+    ChildRoute(
+      '/track-order',
+      child: (context, args) => TrackOrderScreen(order: orderMock),
     ),
   ];
 }

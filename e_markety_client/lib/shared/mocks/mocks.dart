@@ -1,9 +1,12 @@
 import 'package:e_markety_client/features/category/models/category.dart';
 import 'package:e_markety_client/features/order/address/models/address.dart';
+import 'package:e_markety_client/features/order/models/order.dart';
 import 'package:e_markety_client/features/product/models/product.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:e_markety_client/shared/utils/assets.dart';
 
+import '../../features/order/models/delivery_tipe.dart';
+import '../../features/order/models/order_status.dart';
 import '../../features/order/shopping_cart/models/cart_item.dart';
 import '../../features/product/models/sell_type.dart';
 
@@ -95,7 +98,7 @@ final productsMock = [
     imageUrl:
         'https://toppng.com/uploads/preview/broccoli-11546982769b24nyuwjow.png',
     description: 'A green broccoli made with love from modern farmers',
-    value: 85,
+    price: 85.0,
     createdAt: DateTime.now(),
     category: categoriesMock[0],
     sellType: SellType.weight,
@@ -108,7 +111,7 @@ final productsMock = [
     imageUrl:
         'https://www.pngitem.com/pimgs/m/121-1218157_delight-nuts-dry-fruits-all-png-download-delight.png',
     description: 'A Delight Nuts Raw Seeds Pumpkin',
-    value: 165,
+    price: 165,
     createdAt: DateTime.now(),
     category: categoriesMock[2],
     sellType: SellType.weight,
@@ -121,7 +124,7 @@ final productsMock = [
     imageUrl:
         'https://e7.pngegg.com/pngimages/170/798/png-clipart-bakery-panini-small-bread-basket-bread-material-free-to-pull-baked-goods-free-logo-design-template-thumbnail.png',
     description: 'Bakery Panini Small Bread Basket',
-    value: 38,
+    price: 38,
     createdAt: DateTime.now(),
     category: categoriesMock[1],
     sellType: SellType.weight,
@@ -133,7 +136,7 @@ final productsMock = [
     name: 'Britannia Bourbon Original Cream Biscuits',
     imageUrl: 'https://unidexmobile.com/img/products/E022005.png',
     description: 'A Britannia Bourbon Original Cream Biscuits',
-    value: 85,
+    price: 85,
     createdAt: DateTime.now(),
     category: categoriesMock[3],
     sellType: SellType.weight,
@@ -145,7 +148,7 @@ final cartItemsMock = [
   CartItem(id: 1, product: productsMock[0], quantity: 1),
   CartItem(id: 2, product: productsMock[1], quantity: 2),
   CartItem(id: 3, product: productsMock[2], quantity: 1),
-  CartItem(id: 4, product: productsMock[3], quantity: 1),
+  CartItem(id: 4, product: productsMock[3], quantity: 5),
 ];
 
 const addressMock = [
@@ -162,3 +165,15 @@ const addressMock = [
     phone: '+91 567 890 2340',
   ),
 ];
+
+final orderMock = Order(
+  id: 2204,
+  createdAt: DateTime.now(),
+  deliveryType: DeliveryType.delivery,
+  items: cartItemsMock,
+  notes: 'Please deliver the order as soon as possible',
+  deliveryAddress: addressMock[0],
+  deliveryCharge: 0,
+  deliveryTime: DateTime.now().add(const Duration(hours: 2)),
+  status: OrderStatus.placed,
+);

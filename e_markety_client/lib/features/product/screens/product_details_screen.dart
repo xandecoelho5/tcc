@@ -22,7 +22,7 @@ class ProductDetailsScreen extends StatelessWidget {
       return Row(
         children: [
           Text(
-            '\$${product.finalValue.toStringAsFixed(2)}',
+            '\$${product.finalPrice.toStringAsFixed(2)}',
             style: const TextStyle(
               color: kSecondaryColor,
               fontSize: 26,
@@ -32,7 +32,7 @@ class ProductDetailsScreen extends StatelessWidget {
           const SizedBox(width: 10),
           // if (product.hasPromotion)
           Text(
-            '\$${product.value.toStringAsFixed(2)}',
+            '\$${product.price.toStringAsFixed(2)}',
             style: const TextStyle(
               color: Color(0XFFCEB35C),
               fontSize: 20,

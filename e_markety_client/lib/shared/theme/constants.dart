@@ -1,6 +1,21 @@
 import 'package:flutter/material.dart';
 
-const kTestRoute = '/delivery-address';
+const kTestRoute = '/checkout';
+
+const routes = [
+  '/home',
+  '/sign-up',
+  '/sign-in',
+  '/category',
+  '/search-result',
+  '/products-by-category',
+  '/product-details',
+  '/shopping-cart',
+  '/delivery-address',
+  '/checkout',
+  '/order-result',
+  '/track-order',
+];
 
 const kPrimaryColor = Color(0xFFEB3E4B);
 const kSecondaryColor = Color(0xFF2AC17E);
@@ -23,6 +38,7 @@ const kWeakBrownColor = Color(0XFFB7823C);
 const kGreenColor = Color(0XFF4CA64C);
 const kGoogleColor = Color(0XFFEA4335);
 const kFacebookColor = Color(0XFF3B5998);
+final kDarkGreyColor = Colors.grey.shade600;
 
 const kBorderRadius = BorderRadius.all(Radius.circular(8));
 

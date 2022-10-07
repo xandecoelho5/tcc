@@ -69,7 +69,7 @@ class CartItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '\$${item.product.finalValue.toStringAsFixed(2)} x ${item.quantity}',
+                  '\$${item.product.finalPrice.toStringAsFixed(2)} x ${item.quantity}',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: kSecondaryColor,

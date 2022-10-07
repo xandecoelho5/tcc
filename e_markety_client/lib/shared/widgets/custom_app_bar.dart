@@ -1,4 +1,3 @@
-import 'package:e_markety_client/shared/widgets/action_cart.dart';
 import 'package:flutter/material.dart';
 
 import '../theme/constants.dart';
@@ -48,7 +47,19 @@ class CustomAppBar {
       title: title != null ? _title(title) : null,
       backgroundColor: backgroundColor ?? kScaffoldColor,
       centerTitle: true,
-      actions: const [ActionCart()],
+      actions: [
+        // const ActionCart(),
+        PopupMenuButton<String>(
+          icon: const Icon(Icons.more_vert, color: kBasicDarkColor),
+          onSelected: (String item) => Navigator.pushNamed(context, item),
+          itemBuilder: (BuildContext context) => routes.map((String item) {
+            return PopupMenuItem<String>(
+              value: item,
+              child: Text(item),
+            );
+          }).toList(),
+        ),
+      ],
       leading: _leadingIcon(context),
       titleTextStyle: titleStyle ??
           const TextStyle(

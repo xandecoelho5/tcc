@@ -9,6 +9,8 @@ Componentizar melhor a aplicação, tornando mais legível e reduzindo número d
 
 Tentar padronizar estilização de textos, ou pelo menos reduzir os estilos repetidos.
 
-Baixar os outros ícones usados para as categorias.
+Baixar os outros ícones usados para as categorias e Status dos Pedidos.
 
 Adicionar mais campos relevantes para o produto;
+
+Na parte de Delivery Address, perguntar se o usuário quer por entrega ou retirada no local.;

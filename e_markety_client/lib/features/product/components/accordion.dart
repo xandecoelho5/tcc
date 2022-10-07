@@ -6,10 +6,12 @@ class Accordion extends StatelessWidget {
     Key? key,
     required this.title,
     required this.content,
+    this.titleColor,
   }) : super(key: key);
 
   final String title;
   final Widget content;
+  final Color? titleColor;
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +20,10 @@ class Accordion extends StatelessWidget {
       child: ExpansionTile(
         title: Text(
           title,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: kBasicDarkColor,
+            color: titleColor ?? kBasicDarkColor,
           ),
         ),
         trailing: const Icon(
