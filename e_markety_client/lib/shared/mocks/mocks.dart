@@ -9,6 +9,7 @@ import '../../features/order/models/delivery_tipe.dart';
 import '../../features/order/models/order_status.dart';
 import '../../features/order/shopping_cart/models/cart_item.dart';
 import '../../features/product/models/sell_type.dart';
+import '../../features/user/models/user.dart';
 
 const bannersMock = [
   'https://delivery.patao.com.br/arquivos/smd_home_22_09_17_oferta_slider_Spaten1.png?v=637998969138700000',
@@ -176,4 +177,60 @@ final orderMock = Order(
   deliveryCharge: 0,
   deliveryTime: DateTime.now().add(const Duration(hours: 2)),
   status: OrderStatus.placed,
+);
+
+final ordersMock = [
+  orderMock,
+  Order(
+    id: 2203,
+    createdAt: DateTime.now().subtract(const Duration(days: 7)),
+    deliveryType: DeliveryType.delivery,
+    items: cartItemsMock,
+    notes: 'Please deliver the order as soon as possible',
+    deliveryAddress: addressMock[0],
+    deliveryCharge: 0,
+    deliveryTime: DateTime.now().add(const Duration(hours: 2)),
+    status: OrderStatus.confirmed,
+  ),
+  Order(
+    id: 2203,
+    createdAt: DateTime.now().subtract(const Duration(days: 7)),
+    deliveryType: DeliveryType.delivery,
+    items: cartItemsMock,
+    notes: 'Please deliver the order as soon as possible',
+    deliveryAddress: addressMock[0],
+    deliveryCharge: 0,
+    deliveryTime: DateTime.now().add(const Duration(hours: 2)),
+    status: OrderStatus.shipped,
+  ),
+  Order(
+    id: 2203,
+    createdAt: DateTime.now().subtract(const Duration(days: 7)),
+    deliveryType: DeliveryType.delivery,
+    items: cartItemsMock,
+    notes: 'Please deliver the order as soon as possible',
+    deliveryAddress: addressMock[0],
+    deliveryCharge: 0,
+    deliveryTime: DateTime.now().add(const Duration(hours: 2)),
+    status: OrderStatus.outForDelivery,
+  ),
+  Order(
+    id: 2203,
+    createdAt: DateTime.now().subtract(const Duration(days: 7)),
+    deliveryType: DeliveryType.delivery,
+    items: cartItemsMock,
+    notes: 'Please deliver the order as soon as possible',
+    deliveryAddress: addressMock[0],
+    deliveryCharge: 0,
+    deliveryTime: DateTime.now().add(const Duration(hours: 2)),
+    status: OrderStatus.delivered,
+  )
+];
+
+const userMock = User(
+  id: 1,
+  name: 'Lucy Martin',
+  email: 'lucymartin@gmail.com',
+  avatarUrl: 'https://avatars.githubusercontent.com/u/45719696',
+  password: '123214',
 );

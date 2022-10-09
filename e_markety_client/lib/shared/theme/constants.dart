@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 const kTestRoute = '/checkout';
 
 const routes = [
+  '/about-me',
+  '/my-orders',
+  '/favourite',
+  '/address',
+  '/add-new-address',
+  '/settings',
+  '/support-center-details',
+  '/support-center',
   '/home',
   '/sign-up',
   '/sign-in',
@@ -15,6 +23,8 @@ const routes = [
   '/checkout',
   '/order-result',
   '/track-order',
+  '/apply-filters',
+  '/user-profile',
 ];
 
 const kPrimaryColor = Color(0xFFEB3E4B);
@@ -50,4 +60,14 @@ const kOutlineInputBorder = OutlineInputBorder(
 const kErrorOutlineInputBorder = OutlineInputBorder(
   borderRadius: kBorderRadius,
   borderSide: BorderSide(color: Colors.red),
+);
+
+const kBottomRadiusCircularBorder = BorderRadius.only(
+  bottomLeft: Radius.circular(10),
+  bottomRight: Radius.circular(10),
+);
+
+const kDecorationBottomRadiusCircularBorder = BoxDecoration(
+  color: Colors.white,
+  borderRadius: kBottomRadiusCircularBorder,
 );

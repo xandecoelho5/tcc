@@ -2,7 +2,7 @@ import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
 
 class InformationContainer extends StatefulWidget {
-  InformationContainer({
+  const InformationContainer({
     Key? key,
     required this.title,
     this.titleColor,
@@ -11,6 +11,7 @@ class InformationContainer extends StatefulWidget {
     this.onIconTapped,
     this.modifiable = false,
     this.expanded = false,
+    this.elevation,
   }) : super(key: key);
 
   final String title;
@@ -19,21 +20,24 @@ class InformationContainer extends StatefulWidget {
   final IconData? icon;
   final void Function()? onIconTapped;
   final bool modifiable;
-  bool expanded;
+  final bool expanded;
+  final double? elevation;
 
   @override
   State<InformationContainer> createState() => _InformationContainerState();
 }
 
 class _InformationContainerState extends State<InformationContainer> {
+  late bool _expanded = widget.expanded;
+
   @override
   Widget build(BuildContext context) {
     final bool expandable = (widget.child != null &&
-        ((widget.modifiable && widget.expanded) || !widget.modifiable));
+        ((widget.modifiable && _expanded) || !widget.modifiable));
 
     return Material(
       borderRadius: BorderRadius.circular(10),
-      elevation: expandable ? 1 : 0,
+      elevation: widget.elevation ?? (expandable ? 1 : 0),
       child: Column(
         children: [
           Container(
@@ -62,9 +66,7 @@ class _InformationContainerState extends State<InformationContainer> {
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      onTap: () => setState(() {
-                        widget.expanded = !widget.expanded;
-                      }),
+                      onTap: () => setState(() => _expanded = !_expanded),
                       borderRadius: BorderRadius.circular(50),
                       child: Icon(widget.icon, size: 30),
                     ),
