@@ -1,5 +1,6 @@
 import 'package:e_markety_client/features/category/models/category.dart';
 import 'package:e_markety_client/features/order/address/models/address.dart';
+import 'package:e_markety_client/features/order/address/models/tag.dart';
 import 'package:e_markety_client/features/order/models/order.dart';
 import 'package:e_markety_client/features/product/models/product.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
@@ -130,6 +131,7 @@ final productsMock = [
     category: categoriesMock[1],
     sellType: SellType.weight,
     weightInKg: 1,
+    isFavorite: true,
     promotionPercent: 15,
   ),
   Product(
@@ -155,15 +157,26 @@ final cartItemsMock = [
 const addressMock = [
   Address(
     id: 1,
-    name: 'Home',
-    address: 'A/234, Kigs Plazaa, Mithakhali, Ahmedabad, Gujarat',
+    tag: Tag.home,
+    address: 'A/234, Kigs Plazaa',
+    district: 'Mithakhali',
+    city: 'Ahmedabad',
+    zipcode: '380009',
+    email: 'lucymartin@gmail.com',
+    name: 'Lucy Martin',
+    isDefault: true,
     phone: '+91 234 567 8900',
   ),
   Address(
     id: 2,
-    name: 'Office',
-    address: 'B/104, Lawesh Tower, Pondichory, Ahmedabad, Gujarat',
+    tag: Tag.office,
+    address: 'B/104, Lawesh Tower',
+    name: 'John Martin',
     phone: '+91 567 890 2340',
+    city: 'Ahmedabad',
+    zipcode: '382415',
+    email: 'lucymartin@gmail.com',
+    district: 'Pondichory',
   ),
 ];
 

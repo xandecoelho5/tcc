@@ -13,9 +13,6 @@ import 'package:e_markety_client/features/product/screens/favourite_screen.dart'
 import 'package:e_markety_client/features/product/screens/product_details_screen.dart';
 import 'package:e_markety_client/features/product/screens/products_by_category_screen.dart';
 import 'package:e_markety_client/features/product/screens/search_result_screen.dart';
-import 'package:e_markety_client/features/settings/screens/settings_screen.dart';
-import 'package:e_markety_client/features/support/screens/support_center_details_screen.dart';
-import 'package:e_markety_client/features/support/screens/support_center_screen.dart';
 import 'package:e_markety_client/features/user/screens/about_me_screen.dart';
 import 'package:e_markety_client/features/user/screens/user_profile_screen.dart';
 import 'package:e_markety_client/shared/widgets/custom_scroll_behavior.dart';
@@ -101,15 +98,6 @@ class AppModule extends Module {
     ChildRoute(
       '/add-new-address',
       child: (context, args) => const AddNewAddressScreen(),
-    ),
-    ChildRoute('/settings', child: (context, args) => const SettingsScreen()),
-    ChildRoute(
-      '/support-center',
-      child: (context, args) => const SupportCenterScreen(),
-    ),
-    ChildRoute(
-      '/support-center-details',
-      child: (context, args) => const SupportCenterDetailsScreen(),
     ),
   ];
 }

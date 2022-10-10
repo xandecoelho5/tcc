@@ -13,12 +13,12 @@ class AddressInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          address.name,
+          address.tag.label,
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         const SizedBox(height: 16),
         Text(
-          address.address,
+          address.fullAddress,
           style: TextStyle(
             fontSize: 16,
             color: Colors.grey.shade700,

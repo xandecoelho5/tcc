@@ -31,7 +31,12 @@ class DeliveryAddressScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const Expanded(child: AddressList(addresses: addressMock)),
+                  const Expanded(
+                    child: AddressList(
+                      addresses: addressMock,
+                      isShopping: true,
+                    ),
+                  ),
                 ],
               ),
             ),

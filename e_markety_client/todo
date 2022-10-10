@@ -14,3 +14,5 @@ Baixar os outros ícones usados para as categorias e Status dos Pedidos.
 Adicionar mais campos relevantes para o produto;
 
 Na parte de Delivery Address, perguntar se o usuário quer por entrega ou retirada no local.;
+
+Implementar uso da exclusão de favoritos e produtos do carrinho, quando começar a usar gerência de estado;
