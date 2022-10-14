@@ -158,11 +158,10 @@ const addressMock = [
   Address(
     id: 1,
     tag: Tag.home,
-    address: 'A/234, Kigs Plazaa',
+    address: 'A/234, Kigs Plaza',
     district: 'Mithakhali',
     city: 'Ahmedabad',
     zipcode: '380009',
-    email: 'lucymartin@gmail.com',
     name: 'Lucy Martin',
     isDefault: true,
     phone: '+91 234 567 8900',
@@ -175,7 +174,6 @@ const addressMock = [
     phone: '+91 567 890 2340',
     city: 'Ahmedabad',
     zipcode: '382415',
-    email: 'lucymartin@gmail.com',
     district: 'Pondichory',
   ),
 ];
@@ -206,7 +204,7 @@ final ordersMock = [
     status: OrderStatus.confirmed,
   ),
   Order(
-    id: 2203,
+    id: 2202,
     createdAt: DateTime.now().subtract(const Duration(days: 7)),
     deliveryType: DeliveryType.delivery,
     items: cartItemsMock,
@@ -217,7 +215,7 @@ final ordersMock = [
     status: OrderStatus.shipped,
   ),
   Order(
-    id: 2203,
+    id: 2201,
     createdAt: DateTime.now().subtract(const Duration(days: 7)),
     deliveryType: DeliveryType.delivery,
     items: cartItemsMock,
@@ -228,7 +226,7 @@ final ordersMock = [
     status: OrderStatus.outForDelivery,
   ),
   Order(
-    id: 2203,
+    id: 2200,
     createdAt: DateTime.now().subtract(const Duration(days: 7)),
     deliveryType: DeliveryType.delivery,
     items: cartItemsMock,
@@ -245,5 +243,5 @@ const userMock = User(
   name: 'Lucy Martin',
   email: 'lucymartin@gmail.com',
   avatarUrl: 'https://avatars.githubusercontent.com/u/45719696',
-  password: '123214',
+  password: '123456',
 );

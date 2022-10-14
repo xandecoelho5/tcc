@@ -58,8 +58,6 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                     children: [
                       CustomTextFormField(label: 'Name'),
                       const SizedBox(height: 12),
-                      CustomTextFormField(label: 'Email Address'),
-                      const SizedBox(height: 12),
                       CustomTextFormField(label: 'Phone Nº'),
                       const SizedBox(height: 12),
                       CustomTextFormField(label: 'Address'),

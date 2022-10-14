@@ -91,8 +91,6 @@ class AddressItem extends StatelessWidget {
                 const SizedBox(height: 8),
                 row(Icons.phone, address.phone),
                 const SizedBox(height: 8),
-                row(Icons.mail, address.email),
-                const SizedBox(height: 8),
                 row(Icons.location_on, address.fullAddress),
               ],
             ),

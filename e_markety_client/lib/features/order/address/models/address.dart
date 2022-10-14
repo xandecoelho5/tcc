@@ -4,7 +4,6 @@ class Address {
   final int id;
   final Tag tag;
   final String name;
-  final String email;
   final String phone;
   final String address;
   final String district; // Bairro
@@ -16,7 +15,6 @@ class Address {
     required this.id,
     required this.tag,
     required this.name,
-    required this.email,
     required this.phone,
     required this.address,
     required this.district,

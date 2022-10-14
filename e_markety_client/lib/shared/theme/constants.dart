@@ -33,6 +33,7 @@ const kScaffoldColor = Color(0xFFF5F5F5);
 
 const kWeakSecondaryColor = Color(0XFFCEF7E4);
 
+const kGreenColor = Color(0XFF4CA64C);
 const kLightBrownColor = Color(0xFFD39447);
 const kMediumBrownColor = Color(0xFF7E724C);
 const kBrownColor = Color(0xFFB34F2D);
@@ -42,7 +43,6 @@ const kBlueColor = Color(0XFF2788BB);
 const kPinkColor = Color(0XFFF2598D);
 const kLightGreyColor = Color(0XFF787161);
 const kWeakBrownColor = Color(0XFFB7823C);
-const kGreenColor = Color(0XFF4CA64C);
 const kGoogleColor = Color(0XFFEA4335);
 const kFacebookColor = Color(0XFF3B5998);
 final kDarkGreyColor = Colors.grey.shade600;
