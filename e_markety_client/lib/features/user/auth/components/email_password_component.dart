@@ -1,4 +1,3 @@
-import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:validatorless/validatorless.dart';
 
@@ -28,9 +27,6 @@ class _EmailPasswordComponentState extends State<EmailPasswordComponent> {
       children: [
         CustomTextFormField(
           label: 'E-mail',
-          icon: true
-              ? const Icon(Icons.check_circle_outline, color: kSecondaryColor)
-              : const Icon(Icons.cancel_outlined, color: kPrimaryColor),
           validator: Validatorless.multiple([
             Validatorless.email(Strings.emailInvalido),
             Validatorless.required(Strings.campoObrigatorio),
