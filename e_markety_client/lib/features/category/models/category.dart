@@ -14,4 +14,24 @@ class Category {
     required this.iconUrl,
     required this.color,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'imageUrl': imageUrl,
+      'iconUrl': iconUrl,
+      'color': color,
+    };
+  }
+
+  factory Category.fromMap(dynamic map) {
+    return Category(
+      id: map['id'],
+      name: map['nome'],
+      imageUrl: map['imagemUrl'],
+      iconUrl: map['iconUrl'],
+      color: Color(int.parse(map['cor'])),
+    );
+  }
 }

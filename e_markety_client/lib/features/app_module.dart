@@ -1,6 +1,11 @@
+import 'package:dio/dio.dart';
+import 'package:e_markety_client/core/services/snack_bar/basic_snack_bar_service.dart';
+import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
 import 'package:e_markety_client/features/auth/screens/sign_in_screen.dart';
 import 'package:e_markety_client/features/auth/screens/sign_up_screen.dart';
+import 'package:e_markety_client/features/category/blocs/category_bloc.dart';
 import 'package:e_markety_client/features/category/screens/category_screen.dart';
+import 'package:e_markety_client/features/category/services/category_service.dart';
 import 'package:e_markety_client/features/home/screens/home_screen.dart';
 import 'package:e_markety_client/features/order/address/screens/add_new_address_screen.dart';
 import 'package:e_markety_client/features/order/address/screens/address_screen.dart';
@@ -19,6 +24,8 @@ import 'package:e_markety_client/shared/widgets/custom_scroll_behavior.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../core/services/http/dio_service.dart';
+import '../core/services/http/http_service.dart';
 import '../shared/mocks/mocks.dart';
 import '../shared/theme/theme.dart';
 import 'auth/screens/welcome_screen.dart';
@@ -27,7 +34,19 @@ import 'order/shopping_cart/screens/shopping_cart_screen.dart';
 
 class AppModule extends Module {
   @override
-  final List<Bind> binds = [];
+  final List<Bind> binds = [
+    Bind.singleton<ISnackBarService>((i) => BasicSnackBarService()),
+    Bind.singleton<IHttpService>(
+      (i) => DioService(
+        Dio(
+          BaseOptions(baseUrl: 'http://10.0.2.2:8080', connectTimeout: 5000),
+        ),
+      ),
+    ),
+    Bind.singleton<ICategoryService>((i) => CategoryService(i())),
+    // Bind.singleton<ICategoryService>((i) => CategoryMockService()),
+    Bind.singleton((i) => CategoryBloc(i())),
+  ];
 
   @override
   final List<ModularRoute> routes = [
