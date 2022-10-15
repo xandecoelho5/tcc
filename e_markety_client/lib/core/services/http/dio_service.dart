@@ -19,7 +19,7 @@ class DioService implements IHttpService {
       final response = await _dio.get(url);
       return Right(response.data);
     } on DioError catch (e) {
-      return Left(DioGetException(e.message, e.stackTrace));
+      return Left(DioGetException(e.response?.data ?? e.message, e.stackTrace));
     }
   }
 
@@ -29,7 +29,7 @@ class DioService implements IHttpService {
       final response = await _dio.get(url);
       return Right(response.data);
     } on DioError catch (e) {
-      return Left(DioGetException(e.message, e.stackTrace));
+      return Left(DioGetException(e.response?.data ?? e.message, e.stackTrace));
     }
   }
 
@@ -39,7 +39,9 @@ class DioService implements IHttpService {
       final response = await _dio.post(url, data: body);
       return Right(response.data);
     } on DioError catch (e) {
-      return Left(DioPostException(e.message, e.stackTrace));
+      return Left(
+        DioPostException(e.response?.data ?? e.message, e.stackTrace),
+      );
     }
   }
 
@@ -49,7 +51,7 @@ class DioService implements IHttpService {
       final response = await _dio.put(url, data: body);
       return Right(response.data);
     } on DioError catch (e) {
-      return Left(DioPutException(e.message, e.stackTrace));
+      return Left(DioPutException(e.response?.data ?? e.message, e.stackTrace));
     }
   }
 
@@ -59,7 +61,9 @@ class DioService implements IHttpService {
       final response = await _dio.delete(url);
       return Right(response.data);
     } on DioError catch (e) {
-      return Left(DioDeleteException(e.message, e.stackTrace));
+      return Left(
+        DioDeleteException(e.response?.data ?? e.message, e.stackTrace),
+      );
     }
   }
 }
