@@ -3,8 +3,6 @@ import 'package:e_markety_client/shared/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../shared/theme/constants.dart';
-
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
 
@@ -20,15 +18,15 @@ class WelcomeScreen extends StatelessWidget {
               const LogoWidget(),
               const SizedBox(height: 80),
               FilledButton(
-                text: 'Login',
+                text: 'Entrar',
                 color: Theme.of(context).colorScheme.primary,
-                onPressed: () => Modular.to.pushNamed(kTestRoute),
+                onPressed: () => Modular.to.pushNamed('/sign-in'),
               ),
               const SizedBox(height: 24),
               FilledButton(
-                text: 'Create an account',
+                text: 'Criar uma conta',
                 color: Theme.of(context).colorScheme.secondary,
-                onPressed: () => Modular.to.pushNamed('/sign-in'),
+                onPressed: () => Modular.to.pushNamed('/sign-up'),
               ),
             ],
           ),

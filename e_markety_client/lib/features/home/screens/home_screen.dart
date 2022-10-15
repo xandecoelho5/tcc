@@ -1,4 +1,3 @@
-import 'package:e_markety_client/features/auth/components/view_all_row.dart';
 import 'package:e_markety_client/features/category/components/category_list.dart';
 import 'package:e_markety_client/features/home/components/banners.dart';
 import 'package:e_markety_client/features/product/components/products_list.dart';
@@ -8,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../../../shared/mocks/mocks.dart';
 import '../../../shared/theme/constants.dart';
+import '../../user/auth/components/view_all_row.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);

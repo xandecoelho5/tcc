@@ -6,14 +6,14 @@ class CategoryInitial implements CategoryState {}
 
 class CategoryLoading implements CategoryState {}
 
-class CategorySuccess implements CategoryState {
+class CategoryLoaded implements CategoryState {
   final List<Category> categories;
 
-  CategorySuccess(this.categories);
+  CategoryLoaded(this.categories);
 }
 
-class CategoryFailure implements CategoryState {
+class CategoryError implements CategoryState {
   final String message;
 
-  CategoryFailure(this.message);
+  CategoryError(this.message);
 }

@@ -7,18 +7,18 @@ part 'category_event.dart';
 part 'category_state.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
-  final ICategoryService service;
+  final ICategoryService _service;
 
-  CategoryBloc(this.service) : super(CategoryInitial()) {
+  CategoryBloc(this._service) : super(CategoryInitial()) {
     on<CategoryGetAllEvent>(_onCategoryGetAllEvent);
   }
 
-  _onCategoryGetAllEvent(CategoryGetAllEvent event, emit) async {
+  Future _onCategoryGetAllEvent(CategoryGetAllEvent event, emit) async {
     emit(CategoryLoading());
-    final either = await service.getCategories();
-    return either.fold(
-      (l) => emit(CategoryFailure(l.message)),
-      (r) => emit(CategorySuccess(r)),
+    final response = await _service.getCategories();
+    return response.fold(
+      (l) => emit(CategoryError(l.message)),
+      (r) => emit(CategoryLoaded(r)),
     );
   }
 }

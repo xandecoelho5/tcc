@@ -17,8 +17,8 @@ class CategoryService implements ICategoryService {
 
   @override
   Future<Either<CategoryException, List<Category>>> getCategories() async {
-    final either = await _httpService.getAll('/categoria');
-    return either.fold(
+    final response = await _httpService.getAll('/categoria');
+    return response.fold(
       (l) => Left(CategoryException(l.message, l.stackTrace)),
       (r) => Right(r.map(Category.fromMap).toList()),
     );

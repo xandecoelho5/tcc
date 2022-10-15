@@ -26,11 +26,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (state is CategorySuccess) {
+          if (state is CategoryLoaded) {
             return CategoryList(categories: state.categories);
           }
 
-          if (state is CategoryFailure) {
+          if (state is CategoryError) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               Modular.get<ISnackBarService>().showError(context, state.message);
             });

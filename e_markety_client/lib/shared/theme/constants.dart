@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-const kTestRoute = '/checkout';
-
 const routes = [
   '/about-me',
   '/my-orders',
