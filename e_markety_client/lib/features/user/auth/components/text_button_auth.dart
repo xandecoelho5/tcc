@@ -7,10 +7,12 @@ class TextButtonAuth extends StatelessWidget {
     Key? key,
     required this.textLabel,
     required this.textButtonLabel,
+    this.onPressed,
   }) : super(key: key);
 
   final String textLabel;
   final String textButtonLabel;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class TextButtonAuth extends StatelessWidget {
         ),
         TextButton(
           style: TextButton.styleFrom(foregroundColor: kBasicDarkColor),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: onPressed,
           child: Text(
             textButtonLabel,
             style: const TextStyle(

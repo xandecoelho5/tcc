@@ -1,6 +1,5 @@
 import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
 import 'package:e_markety_client/features/user/blocs/user_bloc.dart';
-import 'package:e_markety_client/features/user/models/user.dart';
 import 'package:e_markety_client/shared/utils/strings.dart';
 import 'package:e_markety_client/shared/widgets/custom_text_form_field.dart';
 import 'package:e_markety_client/shared/widgets/filled_button.dart';
@@ -14,6 +13,7 @@ import '../../../shared/theme/constants.dart';
 import '../../../shared/widgets/custom_app_bar.dart';
 import '../auth/components/email_password_component.dart';
 import '../auth/components/text_button_auth.dart';
+import '../models/register_model.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -23,12 +23,12 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final _formKey = GlobalKey<FormState>();
-  User user = const User.empty();
+  final _registerFormKey = GlobalKey<FormState>();
+  RegisterModel user = const RegisterModel(name: '', email: '', password: '');
 
   Future<void> _register() async {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
+    if (_registerFormKey.currentState!.validate()) {
+      _registerFormKey.currentState!.save();
       Modular.get<UserBloc>().add(UserRegisterEvent(user));
     }
   }
@@ -70,7 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 flex: 10,
                 child: SingleChildScrollView(
                   child: Form(
-                    key: _formKey,
+                    key: _registerFormKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

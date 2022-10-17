@@ -3,8 +3,10 @@ import 'package:e_markety_client/features/user/components/icon_buttons_list.dart
 import 'package:e_markety_client/features/user/models/user.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../shared/widgets/custom_app_bar.dart';
+import '../auth/blocs/auth_bloc.dart';
 import '../components/icon_button_container_big.dart';
 import '../components/icon_button_model.dart';
 
@@ -12,6 +14,13 @@ class UserProfileScreen extends StatelessWidget {
   const UserProfileScreen({Key? key, required this.user}) : super(key: key);
 
   final User user;
+
+  Future<void> _signOut() async {
+    Modular.get<AuthBloc>().add(AuthSignOutEvent());
+    Future.delayed(const Duration(milliseconds: 500), () {
+      Modular.to.navigate('/');
+    });
+  }
 
   _header(context) {
     return Padding(
@@ -84,20 +93,13 @@ class UserProfileScreen extends StatelessWidget {
               const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  IconButtonContainerBig(
-                    iconButton: IconButtonModel(
-                      icon: Icons.support_agent,
-                      label: 'Support Center',
-                      color: kPrimaryColor,
-                    ),
-                  ),
-                  SizedBox(width: 20),
+                children: [
                   IconButtonContainerBig(
                     iconButton: IconButtonModel(
                       icon: Icons.logout,
                       label: 'Sign Out',
                       color: kSecondaryColor,
+                      onTap: _signOut,
                     ),
                   ),
                 ],

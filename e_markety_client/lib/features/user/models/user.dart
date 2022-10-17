@@ -4,14 +4,12 @@ class User {
   final int id;
   final String name;
   final String email;
-  final String password;
   final String avatarUrl;
 
   const User({
     required this.id,
     required this.name,
     required this.email,
-    required this.password,
     required this.avatarUrl,
   });
 
@@ -19,7 +17,6 @@ class User {
     this.id = 0,
     this.name = '',
     this.email = '',
-    this.password = '',
     this.avatarUrl = Assets.avatarPlaceholderUrl,
   });
 
@@ -33,7 +30,6 @@ class User {
       id: id,
       name: name ?? this.name,
       email: email ?? this.email,
-      password: password ?? this.password,
       avatarUrl: avatarUrl ?? this.avatarUrl,
     );
   }
@@ -43,7 +39,6 @@ class User {
       'id': id,
       'nome': name,
       'email': email,
-      'senha': password,
       'imagemUrl': avatarUrl,
     };
   }
@@ -53,7 +48,6 @@ class User {
       id: map['id'],
       name: map['nome'],
       email: map['email'],
-      password: map['senha'],
       avatarUrl: map['imagemUrl'],
     );
   }

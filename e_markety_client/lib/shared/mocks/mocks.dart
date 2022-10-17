@@ -137,7 +137,8 @@ final productsMock = [
   Product(
     id: 4,
     name: 'Britannia Bourbon Original Cream Biscuits',
-    imageUrl: 'https://unidexmobile.com/img/products/E022005.png',
+    imageUrl:
+        'https://www.bigbasket.com/media/uploads/p/xxl/1201309-2_1-britannia-bourbon-cream-biscuit-chocolate-flavor.jpg',
     description: 'A Britannia Bourbon Original Cream Biscuits',
     price: 85,
     createdAt: DateTime.now(),
@@ -243,5 +244,4 @@ const userMock = User(
   name: 'Lucy Martin',
   email: 'lucymartin@gmail.com',
   avatarUrl: 'https://avatars.githubusercontent.com/u/45719696',
-  password: '123456',
 );

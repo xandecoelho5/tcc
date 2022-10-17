@@ -17,7 +17,10 @@ class BasicSnackBarService implements ISnackBarService {
   void showError(BuildContext context, String message) {
     _show(
       context,
-      _snackBar.copyWith(content: Text(message), backgroundColor: Colors.red),
+      _snackBar.copyWith(
+        content: Text(message),
+        backgroundColor: Theme.of(context).colorScheme.error,
+      ),
     );
   }
 

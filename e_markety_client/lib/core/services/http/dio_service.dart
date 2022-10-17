@@ -39,6 +39,7 @@ class DioService implements IHttpService {
       final response = await _dio.post(url, data: body);
       return Right(response.data);
     } on DioError catch (e) {
+      print(e.response?.data);
       return Left(
         DioPostException(e.response?.data ?? e.message, e.stackTrace),
       );

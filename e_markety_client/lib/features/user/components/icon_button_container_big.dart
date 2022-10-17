@@ -35,7 +35,7 @@ class IconButtonContainerBig extends StatelessWidget {
               color: Colors.white.withOpacity(0.25),
               borderRadius: BorderRadius.circular(28),
               child: InkWell(
-                onTap: () {},
+                onTap: iconButton.onTap,
                 borderRadius: BorderRadius.circular(28),
                 child: Padding(
                   padding: const EdgeInsets.all(14),

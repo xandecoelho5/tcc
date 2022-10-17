@@ -1,10 +1,33 @@
+import 'package:e_markety_client/shared/utils/strings.dart';
 import 'package:e_markety_client/shared/widgets/filled_button.dart';
 import 'package:e_markety_client/shared/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class WelcomeScreen extends StatelessWidget {
+import '../../../../core/services/cache/cache_service.dart';
+import '../blocs/auth_bloc.dart';
+
+class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _tryToLogin();
+  }
+
+  Future<void> _tryToLogin() async {
+    final token = await Modular.get<ICacheService>().get(Strings.token);
+    if (token != null) {
+      Modular.get<AuthBloc>().add(AuthGetCurrentUserEvent());
+      Modular.to.navigate('/home');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
