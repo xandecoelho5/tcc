@@ -24,7 +24,7 @@ INSERT INTO UNIDADE_MEDIDA(DESCRICAO) VALUES('UN');
 INSERT INTO UNIDADE_MEDIDA(DESCRICAO) VALUES('KG');
 INSERT INTO UNIDADE_MEDIDA(DESCRICAO) VALUES('LT');
 
-INSERT INTO USUARIO(NOME, EMAIL, SENHA, IMAGEM_URL, ADMIN) VALUES('Testezera', 'teste@t.com', '$2a$10$whun6s9AXYDjiWqJVWnjiOa56fP2Suu2VesHBMyPfsF7q56hLo9oG', 'https://avatars.githubusercontent.com/u/45719696', true);
+INSERT INTO USUARIO(NOME, EMAIL, SENHA, IMAGEM_URL, ADMIN) VALUES('Testezera', 'a@a.com', '$2a$10$whun6s9AXYDjiWqJVWnjiOa56fP2Suu2VesHBMyPfsF7q56hLo9oG', 'https://avatars.githubusercontent.com/u/45719696', true);
 INSERT INTO USUARIO(NOME, EMAIL, SENHA, IMAGEM_URL, ADMIN) VALUES('Lucy Martin', 'lucymartin@gmail.com', '$2a$10$whun6s9AXYDjiWqJVWnjiOa56fP2Suu2VesHBMyPfsF7q56hLo9oG', 'https://avatars.githubusercontent.com/u/45719696', false);
 INSERT INTO USUARIO(NOME, EMAIL, SENHA, IMAGEM_URL, ADMIN) VALUES('Administro', 'admin@gmail.com', '$2a$10$whun6s9AXYDjiWqJVWnjiOa56fP2Suu2VesHBMyPfsF7q56hLo9oG', 'https://avatars.githubusercontent.com/u/45719696', true);
 

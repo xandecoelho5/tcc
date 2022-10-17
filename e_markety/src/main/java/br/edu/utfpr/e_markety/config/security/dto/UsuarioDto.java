@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 @Getter
 public class UsuarioDto {
 
+    private Long id;
+
     @NotEmpty @NotNull
     private String nome;
 
@@ -21,6 +23,5 @@ public class UsuarioDto {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
 
-    @NotEmpty @NotNull
     private String imagemUrl;
 }

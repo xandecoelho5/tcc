@@ -1,7 +1,6 @@
 package br.edu.utfpr.e_markety.config.security;
 
 import br.edu.utfpr.e_markety.config.security.service.TokenService;
-import br.edu.utfpr.e_markety.model.Usuario;
 import br.edu.utfpr.e_markety.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,7 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 public class AuthByTokenFilter extends OncePerRequestFilter {
@@ -34,10 +32,10 @@ public class AuthByTokenFilter extends OncePerRequestFilter {
 
     private void authenticateUser(String token) {
         Long userId = tokenService.getUserId(token);
-        Optional<Usuario> optionalUser = usuarioRepository.findById(userId);
-        if(optionalUser.isPresent()) {
-            Usuario user = optionalUser.get();
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+        var optionalUser = usuarioRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            var user = optionalUser.get();
+            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
     }
