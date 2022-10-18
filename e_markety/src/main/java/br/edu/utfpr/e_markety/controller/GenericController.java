@@ -2,6 +2,7 @@ package br.edu.utfpr.e_markety.controller;
 
 import br.edu.utfpr.e_markety.config.validator.CustomValidator;
 import br.edu.utfpr.e_markety.service.GenericService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -18,8 +19,19 @@ public abstract class GenericController<T, ID, Y> {
     protected abstract GenericService<T, ID, Y> getService();
 
     @GetMapping
-    public ResponseEntity<List<Y>> getAll() {
-        return new ResponseEntity<>(getService().getAll(), HttpStatus.OK);
+    public ResponseEntity<List<Y>> getAll(@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+        if (size.isPresent() && size.get() == 0) {
+            return ResponseEntity.ok(getService().getAll());
+        }
+
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(5);
+
+        var result = this.getService().getAll(PageRequest.of(currentPage - 1, pageSize));
+//        if (list.getTotalPages() > 0) {
+//            List<Integer> pageNumbers = IntStream.rangeClosed(1, list.getTotalPages()).boxed().toList();
+//        }
+        return new ResponseEntity<>(result.toList(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

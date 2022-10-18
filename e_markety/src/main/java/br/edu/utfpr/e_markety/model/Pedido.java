@@ -1,5 +1,6 @@
 package br.edu.utfpr.e_markety.model;
 
+import br.edu.utfpr.e_markety.config.security.dto.UsuarioDto;
 import br.edu.utfpr.e_markety.model.enums.StatusPedido;
 import br.edu.utfpr.e_markety.model.enums.TipoEntrega;
 import lombok.*;
@@ -49,4 +50,8 @@ public class Pedido {
     @ManyToOne
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
     private Endereco endereco;
+
+    public UsuarioDto getUsuario() {
+        return UsuarioDto.fromUsuario(usuario);
+    }
 }

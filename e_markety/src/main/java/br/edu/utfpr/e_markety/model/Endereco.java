@@ -1,5 +1,6 @@
 package br.edu.utfpr.e_markety.model;
 
+import br.edu.utfpr.e_markety.config.security.dto.UsuarioDto;
 import br.edu.utfpr.e_markety.model.enums.Tag;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -45,4 +46,8 @@ public class Endereco {
     @ManyToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false)
     private Usuario usuario;
+
+    public UsuarioDto getUsuario() {
+        return UsuarioDto.fromUsuario(usuario);
+    }
 }

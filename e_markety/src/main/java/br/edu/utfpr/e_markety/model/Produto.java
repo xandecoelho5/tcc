@@ -47,9 +47,13 @@ public class Produto {
 
     @Column(nullable = false)
     private float pesoPreco; // preço do KG/L
+    // Ex: 1kg de arroz custa 5 reais, então pesoPreco = 1, 0.5kg de arroz custa 2.5 reais, então pesoUnidade = 0.5
 
     @Column(nullable = false)
     private float pesoUnidade; // peso da unidade, ex: 150g de 1kg
+
+    @Column(nullable = false)
+    private int quantidadeVendida;
 
     @ManyToOne
     @JoinColumn(name = "unidade_medida_id", referencedColumnName = "id", nullable = false)

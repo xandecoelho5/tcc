@@ -4,6 +4,8 @@ import br.edu.utfpr.e_markety.repository.GenericRepository;
 import br.edu.utfpr.e_markety.service.GenericService;
 import br.edu.utfpr.e_markety.service.MapperService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.ParameterizedType;
@@ -25,9 +27,17 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<T, 
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Y> getAll() {
         List<T> list = getRepository().findAll();
         return mapEntityListToDto(list);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Y> getAll(Pageable pageable) {
+        Page<T> page = getRepository().findAll(pageable);
+        return page.map(this::mapEntityToDto);
     }
 
     @Override
