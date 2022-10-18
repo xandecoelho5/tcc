@@ -8,6 +8,7 @@ import br.edu.utfpr.e_markety.config.security.service.UsuarioService;
 import br.edu.utfpr.e_markety.config.validator.CustomValidator;
 import br.edu.utfpr.e_markety.model.Usuario;
 import br.edu.utfpr.e_markety.service.MapperService;
+import br.edu.utfpr.e_markety.utils.UserUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,6 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,11 +62,11 @@ public class UsuarioController {
 
     @GetMapping("/usuario/current")
     public ResponseEntity<UsuarioDto> getCurrentUser() {
-        var principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof String) {
+        var optionalUser = UserUtils.getLoggedUser();
+        if (optionalUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        var userDto = mapper.mapEntityToDto(principal, UsuarioDto.class);
+        var userDto = mapper.mapEntityToDto(optionalUser.get(), UsuarioDto.class);
         return ResponseEntity.ok(userDto);
     }
 

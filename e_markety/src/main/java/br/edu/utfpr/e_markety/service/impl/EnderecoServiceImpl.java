@@ -7,6 +7,8 @@ import br.edu.utfpr.e_markety.service.EnderecoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class EnderecoServiceImpl extends GenericServiceImpl<Endereco, Long, Endereco> implements EnderecoService {
@@ -16,5 +18,15 @@ public class EnderecoServiceImpl extends GenericServiceImpl<Endereco, Long, Ende
     @Override
     protected GenericRepository<Endereco, Long> getRepository() {
         return repository;
+    }
+
+    @Override
+    public List<Endereco> findAllByUsuarioId(Long id) {
+        return repository.findAllByUsuarioId(id);
+    }
+
+    @Override
+    public Endereco getDefaultAddress(Long id) {
+        return repository.findEnderecoByUsuarioIdAndPadraoIsTrue(id);
     }
 }
