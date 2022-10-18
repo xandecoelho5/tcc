@@ -9,7 +9,7 @@ class ViewAllRow extends StatelessWidget {
   }) : super(key: key);
 
   final String text;
-  final Function? onViewAll;
+  final void Function()? onViewAll;
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +27,11 @@ class ViewAllRow extends StatelessWidget {
             ),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: onViewAll,
             child: Row(
               children: const [
                 Text(
-                  'View All',
+                  'Ver todos',
                   style: TextStyle(
                     color: kBasicDarkColor,
                     fontWeight: FontWeight.bold,

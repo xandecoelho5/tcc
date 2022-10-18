@@ -17,8 +17,8 @@ class ProductDetailsScreen extends StatelessWidget {
 
   final Product product;
 
-  _basicInfo() {
-    productValues() {
+  Padding _basicInfo() {
+    Row productValues() {
       return Row(
         children: [
           Text(
@@ -75,7 +75,7 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  _quantityButtons() {
+  Padding _quantityButtons() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Container(
@@ -129,7 +129,7 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  _productDescription() {
+  Text _productDescription() {
     return Text(
       product.description,
       style: TextStyle(
@@ -143,14 +143,14 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  _productInformation() {
+  Column _productInformation() {
     final divider = Divider(
       height: 14,
       color: Colors.grey.shade400,
       thickness: 1,
     );
 
-    infoRow(key, value) {
+    Row infoRow(key, value) {
       return Row(
         children: [
           Expanded(
@@ -193,7 +193,7 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  _buildStockFlag() {
+  Positioned _buildStockFlag() {
     return const Positioned(
       top: 20,
       left: 3,
@@ -201,7 +201,7 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  _buildFavoriteFlag() {
+  Positioned _buildFavoriteFlag() {
     return Positioned(
       top: 16,
       right: 16,
@@ -213,7 +213,7 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  _details() {
+  Stack _details() {
     return Stack(
       children: [
         Card(
@@ -249,7 +249,7 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  _addToCartButton() {
+  Row _addToCartButton() {
     return Row(
       children: [
         Expanded(
@@ -303,7 +303,7 @@ class ProductDetailsScreen extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(flex: 1, child: _addToCartButton()),
+          Expanded(child: _addToCartButton()),
         ],
       ),
     );

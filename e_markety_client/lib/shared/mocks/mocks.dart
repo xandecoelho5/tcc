@@ -2,6 +2,7 @@ import 'package:e_markety_client/features/category/models/category.dart';
 import 'package:e_markety_client/features/order/address/models/address.dart';
 import 'package:e_markety_client/features/order/address/models/tag.dart';
 import 'package:e_markety_client/features/order/models/order.dart';
+import 'package:e_markety_client/features/product/models/measure_unit.dart';
 import 'package:e_markety_client/features/product/models/product.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:e_markety_client/shared/utils/assets.dart';
@@ -9,7 +10,6 @@ import 'package:e_markety_client/shared/utils/assets.dart';
 import '../../features/order/models/delivery_tipe.dart';
 import '../../features/order/models/order_status.dart';
 import '../../features/order/shopping_cart/models/cart_item.dart';
-import '../../features/product/models/sell_type.dart';
 import '../../features/user/models/user.dart';
 
 const bannersMock = [
@@ -93,6 +93,12 @@ const categoriesMock = [
   ),
 ];
 
+const measureUnitsMock = [
+  MeasureUnit(id: 1, description: 'UN'),
+  MeasureUnit(id: 2, description: 'KG'),
+  MeasureUnit(id: 3, description: 'LT'),
+];
+
 final productsMock = [
   Product(
     id: 1,
@@ -100,12 +106,16 @@ final productsMock = [
     imageUrl:
         'https://toppng.com/uploads/preview/broccoli-11546982769b24nyuwjow.png',
     description: 'A green broccoli made with love from modern farmers',
-    price: 85.0,
+    price: 85,
     createdAt: DateTime.now(),
     category: categoriesMock[0],
-    sellType: SellType.weight,
     isFavorite: true,
-    weightInKg: 1,
+    weightPrice: 1,
+    quantitySold: 5,
+    stock: 100,
+    discountPercent: 0,
+    measureUnit: measureUnitsMock[1],
+    weightUnit: 0.05,
   ),
   Product(
     id: 2,
@@ -116,9 +126,13 @@ final productsMock = [
     price: 165,
     createdAt: DateTime.now(),
     category: categoriesMock[2],
-    sellType: SellType.weight,
     isFavorite: true,
-    weightInKg: 0.75,
+    weightPrice: 0.75,
+    weightUnit: 0.75,
+    quantitySold: 6,
+    stock: 20,
+    discountPercent: 0,
+    measureUnit: measureUnitsMock[1],
   ),
   Product(
     id: 3,
@@ -129,10 +143,13 @@ final productsMock = [
     price: 38,
     createdAt: DateTime.now(),
     category: categoriesMock[1],
-    sellType: SellType.weight,
-    weightInKg: 1,
+    weightPrice: 1,
+    weightUnit: 0.5,
     isFavorite: true,
-    promotionPercent: 15,
+    discountPercent: 15,
+    quantitySold: 100,
+    stock: 17,
+    measureUnit: measureUnitsMock[1],
   ),
   Product(
     id: 4,
@@ -143,8 +160,13 @@ final productsMock = [
     price: 85,
     createdAt: DateTime.now(),
     category: categoriesMock[3],
-    sellType: SellType.weight,
-    weightInKg: 0.75,
+    weightPrice: 0.75,
+    weightUnit: 0.75,
+    quantitySold: 40,
+    stock: 12,
+    discountPercent: 0,
+    measureUnit: measureUnitsMock[1],
+    isFavorite: false,
   ),
 ];
 

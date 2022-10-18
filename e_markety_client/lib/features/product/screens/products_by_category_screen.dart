@@ -3,21 +3,20 @@ import 'package:e_markety_client/shared/widgets/category_circle_avatar.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:e_markety_client/shared/widgets/search_bar_with_filter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../core/services/snack_bar/snackbar_service.dart';
+import '../blocs/product_by_category/product_by_category_bloc.dart';
 import '../components/products_list.dart';
-import '../models/product.dart';
 
 class ProductsByCategoryScreen extends StatelessWidget {
-  const ProductsByCategoryScreen({
-    Key? key,
-    required this.category,
-    required this.products,
-  }) : super(key: key);
+  const ProductsByCategoryScreen({Key? key, required this.category})
+      : super(key: key);
 
   final Category category;
-  final List<Product> products;
 
-  _imageContainer() {
+  Container _imageContainer() {
     return Container(
       height: 258,
       decoration: BoxDecoration(
@@ -81,7 +80,35 @@ class ProductsByCategoryScreen extends StatelessWidget {
             ),
           ),
           const SearchBarWithFilter(),
-          Expanded(child: ProductsList(products: products)),
+          Expanded(
+            child: BlocBuilder<ProductByCategoryBloc, ProductByCategoryState>(
+              bloc: Modular.get<ProductByCategoryBloc>()
+                ..add(ProductGetAllByCategoryEvent(category.id)),
+              builder: (context, state) {
+                if (state is ProductByCategoryLoaded) {
+                  if (state.products.isEmpty) {
+                    return Center(
+                      child: Text(
+                        'Nenhum produto encontrado para esta categoria',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                    );
+                  }
+                  return ProductsList(products: state.products);
+                }
+                if (state is ProductByCategoryError) {
+                  Modular.get<ISnackBarService>().showError(
+                    context,
+                    state.message,
+                  );
+                }
+                if (state is ProductByCategoryLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                return const Center(child: Text('Algo deu errado....!'));
+              },
+            ),
+          ),
         ],
       ),
     );

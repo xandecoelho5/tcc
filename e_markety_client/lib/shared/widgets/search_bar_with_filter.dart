@@ -5,7 +5,7 @@ import '../theme/constants.dart';
 class SearchBarWithFilter extends StatelessWidget {
   const SearchBarWithFilter({Key? key}) : super(key: key);
 
-  _searchBar() {
+  Expanded _searchBar() {
     return const Expanded(
       flex: 7,
       child: Padding(
@@ -13,7 +13,7 @@ class SearchBarWithFilter extends StatelessWidget {
         child: TextField(
           decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical: 18),
-            hintText: 'Search for products...',
+            hintText: 'Procurar por produtos...',
             filled: true,
             fillColor: kBackgroundColor,
             prefixIcon: Padding(

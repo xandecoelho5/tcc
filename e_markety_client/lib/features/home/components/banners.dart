@@ -12,8 +12,8 @@ class Banners extends StatefulWidget {
 class _BannersState extends State<Banners> {
   int _current = 0;
 
-  _indicator(int index) {
-    bool isActive = _current == index;
+  Container _indicator(int index) {
+    final isActive = _current == index;
     return Container(
       height: 4,
       width: isActive ? 12 : 4,
@@ -30,7 +30,6 @@ class _BannersState extends State<Banners> {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.215,
       child: PageView.builder(
-        scrollDirection: Axis.horizontal,
         itemCount: widget.items.length,
         onPageChanged: (int index) => setState(() => _current = index),
         itemBuilder: (context, index) {
@@ -52,7 +51,7 @@ class _BannersState extends State<Banners> {
                 child: Wrap(
                   children: List.generate(
                     widget.items.length,
-                    (index) => _indicator(index),
+                    _indicator,
                   ),
                 ),
               ),

@@ -15,7 +15,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
 
   Future _onCategoryGetAllEvent(CategoryGetAllEvent event, emit) async {
     emit(CategoryLoading());
-    final response = await _service.getCategories();
+    final response = await _service.getCategories(event.size);
     return response.fold(
       (l) => emit(CategoryError(l.message)),
       (r) => emit(CategoryLoaded(r)),

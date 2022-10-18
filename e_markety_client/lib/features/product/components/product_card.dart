@@ -2,6 +2,7 @@ import 'package:e_markety_client/features/product/components/category_chip.dart'
 import 'package:e_markety_client/features/product/components/product_flag_widget.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../models/flag_type.dart';
 import '../models/product.dart';
@@ -11,19 +12,19 @@ class ProductCard extends StatelessWidget {
 
   final Product product;
 
-  _buildPromotionOrNewFlag() {
+  Positioned _buildPromotionOrNewFlag() {
     return Positioned(
       top: 10,
       left: 0,
       child: ProductFlagWidget.small(
         flagType:
             product.hasPromotion ? FlagType.promotion : FlagType.newProduct,
-        promotionPercentage: product.promotionPercent,
+        promotionPercentage: product.discountPercent,
       ),
     );
   }
 
-  _buildFavoriteFlag() {
+  Positioned _buildFavoriteFlag() {
     return Positioned(
       top: 6,
       right: 5,
@@ -34,7 +35,7 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  _buildCartButton() {
+  Positioned _buildCartButton() {
     return Positioned(
       bottom: 10,
       right: 10,
@@ -53,7 +54,7 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  _productInfo() {
+  Column _productInfo() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -122,18 +123,21 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: SizedBox(
-        height: 265,
-        width: MediaQuery.of(context).size.width * 0.44,
-        child: Stack(
-          children: [
-            _productInfo(),
-            if (product.hasPromotion || product.isNew)
-              _buildPromotionOrNewFlag(),
-            _buildFavoriteFlag(),
-            _buildCartButton(),
-          ],
+    return InkWell(
+      onTap: () => Modular.to.pushNamed('/product-details', arguments: product),
+      child: Card(
+        child: SizedBox(
+          height: 265,
+          width: MediaQuery.of(context).size.width * 0.44,
+          child: Stack(
+            children: [
+              _productInfo(),
+              if (product.hasPromotion || product.isNew)
+                _buildPromotionOrNewFlag(),
+              _buildFavoriteFlag(),
+              _buildCartButton(),
+            ],
+          ),
         ),
       ),
     );

@@ -1,31 +1,72 @@
+import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
+import 'package:e_markety_client/features/category/blocs/category_bloc.dart';
 import 'package:e_markety_client/features/category/components/category_list.dart';
 import 'package:e_markety_client/features/home/components/banners.dart';
 import 'package:e_markety_client/features/home/components/home_app_bar.dart';
 import 'package:e_markety_client/features/product/components/products_list.dart';
 import 'package:e_markety_client/shared/widgets/search_bar_with_filter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../shared/mocks/mocks.dart';
+import '../../product/blocs/product/product_bloc.dart';
 import '../../user/auth/components/view_all_row.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
-  _categories(context) {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  Column _categories(context) {
     return Column(
-      children: const [
-        ViewAllRow(text: 'Category'),
-        SizedBox(height: 8),
-        CategoryList(categories: categoriesMock, needWrap: true),
+      children: [
+        ViewAllRow(
+          text: 'Categorias',
+          onViewAll: () => Modular.to.pushNamed('/category'),
+        ),
+        const SizedBox(height: 8),
+        BlocBuilder<CategoryBloc, CategoryState>(
+          bloc: Modular.get<CategoryBloc>()..add(CategoryGetAllEvent(5)),
+          builder: (context, state) {
+            if (state is CategoryLoaded) {
+              return CategoryList(categories: state.categories, needWrap: true);
+            }
+            if (state is CategoryError) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Modular.get<ISnackBarService>()
+                    .showError(context, state.message);
+              });
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
+        ),
       ],
     );
   }
 
-  _bestSellers() {
+  Column _bestSellers() {
     return Column(
       children: [
-        const ViewAllRow(text: 'Best Seller'),
-        ProductsList(products: productsMock, needWrap: true),
+        const ViewAllRow(text: 'Mais Vendidos'),
+        BlocBuilder<ProductBloc, ProductState>(
+          bloc: Modular.get<ProductBloc>()..add(ProductGetAllEvent(4)),
+          builder: (context, state) {
+            if (state is ProductLoaded) {
+              return ProductsList(products: state.products, needWrap: true);
+            }
+            if (state is ProductError) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Modular.get<ISnackBarService>()
+                    .showError(context, state.message);
+              });
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
+        ),
       ],
     );
   }
@@ -41,7 +82,7 @@ class HomeScreen extends StatelessWidget {
             const SearchBarWithFilter(),
             const SizedBox(height: 32),
             const Banners(items: bannersMock),
-            const SizedBox(height: 32),
+            const SizedBox(height: 24),
             _categories(context),
             const SizedBox(height: 16),
             _bestSellers(),

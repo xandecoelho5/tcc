@@ -1,5 +1,5 @@
 import 'package:e_markety_client/features/category/models/category.dart';
-import 'package:e_markety_client/features/product/models/sell_type.dart';
+import 'package:e_markety_client/features/product/models/measure_unit.dart';
 
 class Product {
   final int id;
@@ -8,12 +8,16 @@ class Product {
   final String description;
   final double price;
   final DateTime createdAt;
-  final Category category;
-  final SellType sellType;
-  final double? weightInKg;
+  final int stock;
   final bool isFavorite;
+  final int quantitySold;
+  final double weightPrice; // In Kg, L, UN
+  final double weightUnit; // Kg, L, UN
 
-  final int? promotionPercent;
+  final int discountPercent;
+
+  final Category category;
+  final MeasureUnit measureUnit;
 
   const Product({
     required this.id,
@@ -22,20 +26,23 @@ class Product {
     required this.description,
     required this.price,
     required this.createdAt,
+    required this.stock,
+    required this.isFavorite,
+    required this.quantitySold,
+    required this.weightPrice,
+    required this.weightUnit,
+    required this.discountPercent,
     required this.category,
-    required this.sellType,
-    this.weightInKg,
-    this.isFavorite = false,
-    this.promotionPercent,
+    required this.measureUnit,
   });
 
   bool get isNew => createdAt.isAfter(
         DateTime.now().subtract(const Duration(days: 7)),
       );
 
-  bool get hasPromotion => promotionPercent != null;
+  bool get hasPromotion => discountPercent > 0;
 
-  double get promotionPrice => price - (price * promotionPercent! / 100);
+  double get promotionPrice => price - (price * discountPercent / 100);
 
   double get finalPrice {
     return hasPromotion ? promotionPrice : price;
@@ -44,15 +51,34 @@ class Product {
   double get discount => hasPromotion ? (price - promotionPrice) : 0;
 
   String get formattedWeight {
-    if (weightInKg! < 1) {
-      return '${(weightInKg! * 1000).toInt()} G';
+    if (weightPrice < 1) {
+      return '${(weightPrice * 1000).toInt()} G';
     }
 
-    var decimal = weightInKg! - weightInKg!.toInt();
+    final decimal = weightPrice - weightPrice.toInt();
     if (decimal == 0) {
-      return '${weightInKg!.toInt()} kg';
+      return '${weightPrice.toInt()} kg';
     }
 
-    return '${weightInKg!.toInt()} kg ${(decimal * 1000).toInt()} G';
+    return '${weightPrice.toInt()} kg ${(decimal * 1000).toInt()} G';
+  }
+
+  factory Product.fromMap(dynamic map) {
+    return Product(
+      id: map['id'],
+      name: map['nome'],
+      imageUrl: map['imagemUrl'],
+      description: map['descricao'],
+      price: map['preco'],
+      createdAt: DateTime.parse(map['data']),
+      stock: map['estoque'],
+      isFavorite: map['favorito'],
+      quantitySold: map['quantidadeVendida'],
+      weightPrice: map['pesoPreco'],
+      weightUnit: map['pesoUnidade'],
+      discountPercent: map['percentualDesconto'],
+      category: Category.fromMap(map['categoria']),
+      measureUnit: MeasureUnit.fromMap(map['unidadeMedida']),
+    );
   }
 }

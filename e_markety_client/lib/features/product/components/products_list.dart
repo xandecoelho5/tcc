@@ -13,7 +13,7 @@ class ProductsList extends StatelessWidget {
   final List<Product> products;
   final bool needWrap;
 
-  _getProductsList() {
+  List<ProductCard> _getProductsList() {
     return products.map((product) => ProductCard(product: product)).toList();
   }
 

@@ -9,11 +9,14 @@ import 'package:e_markety_client/features/order/checkout/screens/checkout_screen
 import 'package:e_markety_client/features/order/screens/my_orders_screen.dart';
 import 'package:e_markety_client/features/order/screens/order_result_screen.dart';
 import 'package:e_markety_client/features/order/screens/track_order_screen.dart';
+import 'package:e_markety_client/features/product/blocs/product/product_bloc.dart';
+import 'package:e_markety_client/features/product/blocs/product_by_category/product_by_category_bloc.dart';
 import 'package:e_markety_client/features/product/screens/apply_filters_screen.dart';
 import 'package:e_markety_client/features/product/screens/favourite_screen.dart';
 import 'package:e_markety_client/features/product/screens/product_details_screen.dart';
 import 'package:e_markety_client/features/product/screens/products_by_category_screen.dart';
 import 'package:e_markety_client/features/product/screens/search_result_screen.dart';
+import 'package:e_markety_client/features/product/services/product_service.dart';
 import 'package:e_markety_client/features/user/auth/blocs/auth_bloc.dart';
 import 'package:e_markety_client/features/user/auth/screens/sign_in_screen.dart';
 import 'package:e_markety_client/features/user/auth/screens/welcome_screen.dart';
@@ -49,6 +52,10 @@ class AppModule extends Module {
     // auth
     Bind.singleton<IAuthService>((i) => AuthService(i(), i())),
     Bind.singleton((i) => AuthBloc(i(), i())),
+    // product
+    Bind.singleton<IProductService>((i) => ProductService(i())),
+    Bind.singleton((i) => ProductBloc(i())),
+    Bind.singleton((i) => ProductByCategoryBloc(i())),
   ];
 
   @override
@@ -76,14 +83,11 @@ class AppModule extends Module {
     ),
     ChildRoute(
       '/products-by-category',
-      child: (context, args) => ProductsByCategoryScreen(
-        category: categoriesMock[0],
-        products: productsMock,
-      ),
+      child: (context, args) => ProductsByCategoryScreen(category: args.data),
     ),
     ChildRoute(
       '/product-details',
-      child: (context, args) => ProductDetailsScreen(product: productsMock[0]),
+      child: (context, args) => ProductDetailsScreen(product: args.data),
     ),
     ChildRoute(
       '/shopping-cart',
