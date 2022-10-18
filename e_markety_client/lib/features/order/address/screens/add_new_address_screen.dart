@@ -17,7 +17,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
   Tag _tag = Tag.other;
   bool _isDefault = false;
 
-  _dropdown() {
+  Expanded _dropdown() {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -45,7 +45,10 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(context, title: 'Add New Address'),
+      appBar: CustomAppBar.buildAppBar(
+        context,
+        title: 'Adicionar Novo Endereço',
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -56,17 +59,15 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                 child: Form(
                   child: Column(
                     children: [
-                      CustomTextFormField(label: 'Name'),
+                      CustomTextFormField(label: 'Nome'),
                       const SizedBox(height: 12),
-                      CustomTextFormField(label: 'Phone Nº'),
+                      CustomTextFormField(label: 'Nº Telefone'),
                       const SizedBox(height: 12),
-                      CustomTextFormField(label: 'Address'),
+                      CustomTextFormField(label: 'Rua'),
                       const SizedBox(height: 12),
-                      CustomTextFormField(label: 'District'),
+                      CustomTextFormField(label: 'Bairro'),
                       const SizedBox(height: 12),
-                      CustomTextFormField(label: 'City'),
-                      const SizedBox(height: 12),
-                      CustomTextFormField(label: 'Zip Code'),
+                      CustomTextFormField(label: 'Referência'),
                       const SizedBox(height: 12),
                       Row(
                         children: [
@@ -91,7 +92,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                 setState(() => _isDefault = value!),
                           ),
                           Text(
-                            'Make Default shipping address',
+                            'Endereço padrão de entrega',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,

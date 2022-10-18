@@ -1,9 +1,12 @@
-import 'package:e_markety_client/shared/mocks/mocks.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../../core/services/snack_bar/snackbar_service.dart';
 import '../../../../shared/theme/constants.dart';
 import '../../../../shared/widgets/filled_button.dart';
+import '../blocs/address/address_bloc.dart';
 import '../components/address_list.dart';
 
 class AddressScreen extends StatelessWidget {
@@ -12,12 +15,26 @@ class AddressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(context, title: 'My Address'),
+      appBar: CustomAppBar.buildAppBar(context, title: 'Meus Endereços'),
       body: Column(
         children: [
-          const Expanded(
+          Expanded(
             flex: 8,
-            child: AddressList(addresses: addressMock),
+            child: BlocBuilder<AddressBloc, AddressState>(
+              bloc: Modular.get<AddressBloc>()..add(AddressGetAllEvent()),
+              builder: (context, state) {
+                if (state is AddressLoaded) {
+                  return AddressList(addresses: state.addresses);
+                }
+                if (state is AddressError) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    Modular.get<ISnackBarService>()
+                        .showError(context, state.message);
+                  });
+                }
+                return const Center(child: CircularProgressIndicator());
+              },
+            ),
           ),
           Expanded(
             child: Padding(
@@ -26,8 +43,8 @@ class AddressScreen extends StatelessWidget {
                 vertical: 12,
               ),
               child: FilledButton(
-                text: 'Add New Address',
-                onPressed: () {},
+                text: 'Adicionar Endereço',
+                onPressed: () => Modular.to.pushNamed('/add-new-address'),
                 color: kSecondaryColor,
               ),
             ),

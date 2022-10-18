@@ -1,32 +1,33 @@
 import 'package:e_markety_client/features/user/components/icon_button_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import 'icon_button_model.dart';
 
 final List<IconButtonModel> iconButtons = [
   IconButtonModel(
     icon: Icons.person,
-    label: 'About Me',
-    onTap: () {},
+    label: 'Sobre Mim',
+    onTap: () => Modular.to.pushNamed('/about-me'),
   ),
   IconButtonModel(
     icon: Icons.shopping_bag,
-    label: 'My Orders',
-    onTap: () {},
+    label: 'Meus Pedidos',
+    onTap: () => Modular.to.pushNamed('/my-orders'),
   ),
   IconButtonModel(
     icon: Icons.favorite,
-    label: 'My Favourite',
-    onTap: () {},
+    label: 'Meus Favoritos',
+    onTap: () => Modular.to.pushNamed('/favourite'),
   ),
   IconButtonModel(
     icon: Icons.location_on,
-    label: 'My Address',
-    onTap: () {},
+    label: 'Meus Endereços',
+    onTap: () => Modular.to.pushNamed('/address'),
   ),
   IconButtonModel(
     icon: Icons.settings_outlined,
-    label: 'Settings',
+    label: 'Configurações',
     onTap: () {},
   ),
 ];

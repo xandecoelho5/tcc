@@ -36,7 +36,7 @@ class IconButtonContainer extends StatelessWidget {
               color: Colors.white,
               shape: const CircleBorder(),
               child: InkWell(
-                onTap: () {},
+                onTap: iconButton.onTap,
                 splashColor: kPrimaryColor,
                 borderRadius: BorderRadius.circular(50),
                 child: Padding(

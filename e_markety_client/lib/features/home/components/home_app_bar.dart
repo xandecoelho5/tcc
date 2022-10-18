@@ -1,3 +1,4 @@
+import 'package:e_markety_client/features/order/address/blocs/default_address/default_address_bloc.dart';
 import 'package:e_markety_client/features/user/auth/blocs/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +21,8 @@ class HomeAppBar {
               elevation: 1,
               borderRadius: BorderRadius.circular(50),
               child: InkWell(
-                onTap: () => Modular.to.pushNamed('/user-profile'),
+                onTap: () =>
+                    Modular.to.pushNamed('/user-profile', arguments: user),
                 borderRadius: BorderRadius.circular(50),
                 child: CircleAvatar(
                   backgroundColor: Colors.white,
@@ -44,23 +46,41 @@ class HomeAppBar {
                     color: kBasicDarkColor,
                   ),
                 ),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.location_on,
-                      color: kPrimaryColor,
-                      size: 12,
-                    ),
-                    const SizedBox(width: 2),
-                    Text(
-                      'Mithakhali, Navrangpura',
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: Colors.grey.shade500,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                BlocBuilder<DefaultAddressBloc, DefaultAddressState>(
+                  bloc: Modular.get<DefaultAddressBloc>(),
+                  builder: (context, state) {
+                    if (state is DefaultAddressSuccess) {
+                      return Row(
+                        children: [
+                          const Icon(
+                            Icons.location_on,
+                            color: kPrimaryColor,
+                            size: 12,
+                          ),
+                          const SizedBox(width: 2),
+                          Text(
+                            state.address.street,
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: Colors.grey.shade500,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        ],
+                      );
+                    }
+                    if (state is DefaultAddressError) {
+                      return Text(
+                        state.message,
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey.shade500,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    }
+                    return Container();
+                  },
                 ),
               ],
             ),

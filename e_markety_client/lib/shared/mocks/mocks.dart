@@ -1,5 +1,6 @@
 import 'package:e_markety_client/features/category/models/category.dart';
 import 'package:e_markety_client/features/order/address/models/address.dart';
+import 'package:e_markety_client/features/order/address/models/district.dart';
 import 'package:e_markety_client/features/order/address/models/tag.dart';
 import 'package:e_markety_client/features/order/models/order.dart';
 import 'package:e_markety_client/features/product/models/measure_unit.dart';
@@ -177,27 +178,30 @@ final cartItemsMock = [
   CartItem(id: 4, product: productsMock[3], quantity: 5),
 ];
 
-const addressMock = [
+const districsMock = [
+  District(id: 1, name: 'Mithakhali'),
+  District(id: 2, name: 'Pondichory'),
+];
+
+final addressMock = [
   Address(
     id: 1,
     tag: Tag.home,
-    address: 'A/234, Kigs Plaza',
-    district: 'Mithakhali',
-    city: 'Ahmedabad',
-    zipcode: '380009',
+    street: 'A/234, Kigs Plaza',
+    district: districsMock[0],
     name: 'Lucy Martin',
     isDefault: true,
     phone: '+91 234 567 8900',
+    reference: 'ASDskaodksaodksasdsadsad sadsa dasdasdsad',
   ),
   Address(
     id: 2,
     tag: Tag.office,
-    address: 'B/104, Lawesh Tower',
+    street: 'B/104, Lawesh Tower',
     name: 'John Martin',
     phone: '+91 567 890 2340',
-    city: 'Ahmedabad',
-    zipcode: '382415',
-    district: 'Pondichory',
+    district: districsMock[1],
+    reference: 'Near to the bus stop',
   ),
 ];
 

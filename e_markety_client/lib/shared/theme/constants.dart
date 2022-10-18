@@ -19,7 +19,6 @@ const routes = [
   '/order-result',
   '/track-order',
   '/apply-filters',
-  '/user-profile',
 ];
 
 const kPrimaryColor = Color(0xFFEB3E4B);

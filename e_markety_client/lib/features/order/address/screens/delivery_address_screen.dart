@@ -31,7 +31,7 @@ class DeliveryAddressScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const Expanded(
+                  Expanded(
                     child: AddressList(
                       addresses: addressMock,
                       isShopping: true,
@@ -41,7 +41,6 @@ class DeliveryAddressScreen extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 1,
               child: FilledButton(
                 text: 'Delivery to This Address',
                 color: kSecondaryColor,

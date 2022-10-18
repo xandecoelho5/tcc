@@ -8,10 +8,10 @@ class AddressItem extends StatelessWidget {
 
   final Address address;
 
-  _addressContainer() {
+  Material _addressContainer() {
     final color = address.isDefault ? kPrimaryColor : kSecondaryColor;
 
-    row(icon, text) {
+    Row row(icon, text) {
       return Row(
         children: [
           CircleAvatar(
@@ -69,11 +69,12 @@ class AddressItem extends StatelessWidget {
                   ],
                 ),
               ),
-              const Positioned(
-                top: 0,
-                right: 16,
-                child: DefaultFlag(),
-              ),
+              if (address.isDefault)
+                const Positioned(
+                  top: 0,
+                  right: 16,
+                  child: DefaultFlag(),
+                ),
             ],
           ),
           Container(

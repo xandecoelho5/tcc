@@ -11,7 +11,7 @@ class DefaultFlag extends StatelessWidget {
       color: kWeakSecondaryColor,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: const Text(
-        'Default',
+        'Padrão',
         style: TextStyle(
           fontSize: 13,
           color: kSecondaryColor,

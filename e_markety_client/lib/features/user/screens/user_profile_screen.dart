@@ -22,7 +22,7 @@ class UserProfileScreen extends StatelessWidget {
     });
   }
 
-  _header(context) {
+  Padding _header(context) {
     return Padding(
       padding: const EdgeInsets.only(top: 66, bottom: 24),
       child: Stack(
@@ -97,7 +97,7 @@ class UserProfileScreen extends StatelessWidget {
                   IconButtonContainerBig(
                     iconButton: IconButtonModel(
                       icon: Icons.logout,
-                      label: 'Sign Out',
+                      label: 'Sair',
                       color: kSecondaryColor,
                       onTap: _signOut,
                     ),

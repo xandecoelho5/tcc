@@ -3,8 +3,10 @@ import 'package:e_markety_client/features/category/blocs/category_bloc.dart';
 import 'package:e_markety_client/features/category/screens/category_screen.dart';
 import 'package:e_markety_client/features/category/services/category_service.dart';
 import 'package:e_markety_client/features/home/screens/home_screen.dart';
+import 'package:e_markety_client/features/order/address/blocs/default_address/default_address_bloc.dart';
 import 'package:e_markety_client/features/order/address/screens/add_new_address_screen.dart';
 import 'package:e_markety_client/features/order/address/screens/address_screen.dart';
+import 'package:e_markety_client/features/order/address/services/address_service.dart';
 import 'package:e_markety_client/features/order/checkout/screens/checkout_screen.dart';
 import 'package:e_markety_client/features/order/screens/my_orders_screen.dart';
 import 'package:e_markety_client/features/order/screens/order_result_screen.dart';
@@ -32,6 +34,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import '../shared/mocks/mocks.dart';
 import '../shared/theme/theme.dart';
+import 'order/address/blocs/address/address_bloc.dart';
 import 'order/address/screens/delivery_address_screen.dart';
 import 'order/shopping_cart/screens/shopping_cart_screen.dart';
 
@@ -56,6 +59,10 @@ class AppModule extends Module {
     Bind.singleton<IProductService>((i) => ProductService(i())),
     Bind.singleton((i) => ProductBloc(i())),
     Bind.singleton((i) => ProductByCategoryBloc(i())),
+    // address
+    Bind.singleton<IAddressService>((i) => AddressService(i())),
+    Bind.singleton((i) => AddressBloc(i())),
+    Bind.singleton((i) => DefaultAddressBloc(i())),
   ];
 
   @override
@@ -115,7 +122,7 @@ class AppModule extends Module {
     ),
     ChildRoute(
       '/user-profile',
-      child: (context, args) => const UserProfileScreen(user: userMock),
+      child: (context, args) => UserProfileScreen(user: args.data),
     ),
     ChildRoute('/about-me', child: (context, args) => const AboutMeScreen()),
     ChildRoute('/my-orders', child: (context, args) => MyOrdersScreen()),
