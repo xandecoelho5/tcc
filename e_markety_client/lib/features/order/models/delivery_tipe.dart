@@ -1,1 +1,0 @@
-enum DeliveryType { pickup, delivery }

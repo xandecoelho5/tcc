@@ -1,12 +1,12 @@
 import 'package:e_markety_client/features/order/address/components/address_info.dart';
-import 'package:e_markety_client/features/order/components/total_container.dart';
-import 'package:e_markety_client/features/order/models/delivery_tipe.dart';
-import 'package:e_markety_client/features/order/models/order.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../shared/widgets/filled_button.dart';
+import '../../order/components/total_container.dart';
+import '../../order/models/delivery_tipe.dart';
+import '../../order/models/order.dart';
 import '../components/information_container.dart';
 
 class CheckoutScreen extends StatelessWidget {
@@ -14,7 +14,7 @@ class CheckoutScreen extends StatelessWidget {
 
   final Order order;
 
-  _orderId() {
+  Container _orderId() {
     const style = TextStyle(
       fontSize: 18,
       color: Colors.white,
@@ -37,7 +37,7 @@ class CheckoutScreen extends StatelessWidget {
     );
   }
 
-  _deliveryAddress() {
+  InformationContainer _deliveryAddress() {
     return InformationContainer(
       title: 'Delivery Address',
       icon: Icons.more_horiz,
@@ -45,7 +45,7 @@ class CheckoutScreen extends StatelessWidget {
     );
   }
 
-  _deliveryTimeSettings() {
+  InformationContainer _deliveryTimeSettings() {
     return InformationContainer(
       title: 'Delivery Time Settings',
       child: Column(
@@ -78,14 +78,14 @@ class CheckoutScreen extends StatelessWidget {
     ];
   }
 
-  _orderBill() {
+  InformationContainer _orderBill() {
     return InformationContainer(
       title: 'Order Bill',
       child: TotalContainer(order: order, showDiscount: true),
     );
   }
 
-  _notes() {
+  InformationContainer _notes() {
     final border = OutlineInputBorder(
       borderRadius: const BorderRadius.all(Radius.circular(0)),
       borderSide: BorderSide(color: Colors.grey.shade300, width: 2),
@@ -136,7 +136,6 @@ class CheckoutScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 1,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: FilledButton(

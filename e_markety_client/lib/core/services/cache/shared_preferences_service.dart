@@ -3,41 +3,47 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesService implements ICacheService {
-  SharedPreferences? _sharedPreferences;
-
   SharedPreferencesService() {
     _ensureInit();
   }
 
+  late SharedPreferences _plugin;
+
   Future<void> _ensureInit() async {
-    _sharedPreferences ??= await Modular.getAsync<SharedPreferences>();
+    _plugin = await Modular.getAsync<SharedPreferences>();
   }
 
   @override
-  Future<Object?> get(String key) async {
+  Future<dynamic> get(String key) async {
     await _ensureInit();
-    return _sharedPreferences!.get(key);
+    return _plugin.get(key);
   }
 
   @override
-  Future<void> remove(String key) async {
+  Future<void> delete(String key) async {
     await _ensureInit();
-    await _sharedPreferences!.remove(key);
+    await _plugin.remove(key);
   }
 
   @override
-  Future<void> set(String key, dynamic value) async {
+  Future<void> save(String key, dynamic value) async {
     await _ensureInit();
     if (value is String) {
-      await _sharedPreferences!.setString(key, value);
+      await _plugin.setString(key, value);
     } else if (value is int) {
-      await _sharedPreferences!.setInt(key, value);
+      await _plugin.setInt(key, value);
     } else if (value is double) {
-      await _sharedPreferences!.setDouble(key, value);
+      await _plugin.setDouble(key, value);
     } else if (value is bool) {
-      await _sharedPreferences!.setBool(key, value);
+      await _plugin.setBool(key, value);
     } else if (value is List<String>) {
-      await _sharedPreferences!.setStringList(key, value);
+      await _plugin.setStringList(key, value);
     }
+  }
+
+  @override
+  Stream<List> getStream(String key) {
+    // TODO: implement getStream
+    throw UnimplementedError();
   }
 }

@@ -1,8 +1,8 @@
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
-import '../../../shared/theme/constants.dart';
-import '../../../shared/widgets/filled_button.dart';
+import '../../../../shared/theme/constants.dart';
+import '../../../../shared/widgets/filled_button.dart';
 
 class OrderSuccess extends StatelessWidget {
   const OrderSuccess({Key? key}) : super(key: key);

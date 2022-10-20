@@ -26,7 +26,7 @@ class AuthService implements IAuthService {
       (l) => Left(AuthException(l.message, l.stackTrace)),
       (r) async {
         final authResponse = AuthResponse.fromMap(r);
-        await _cacheService.set(
+        await _cacheService.save(
           Strings.token,
           [authResponse.type, authResponse.token],
         );
@@ -37,6 +37,6 @@ class AuthService implements IAuthService {
 
   @override
   Future<void> signOut() async {
-    await _cacheService.remove(Strings.token);
+    await _cacheService.delete(Strings.token);
   }
 }

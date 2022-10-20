@@ -22,6 +22,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final snackBarService = Modular.get<ISnackBarService>();
+
   @override
   void initState() {
     super.initState();
@@ -47,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
               return CategoryList(categories: state.categories, needWrap: true);
             }
             if (state is CategoryError) {
-              Modular.get<ISnackBarService>().showError(context, state.message);
+              snackBarService.showError(context, state.message);
             }
             return const Center(child: CircularProgressIndicator());
           },
@@ -67,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
               return ProductsList(products: state.products, needWrap: true);
             }
             if (state is ProductError) {
-              Modular.get<ISnackBarService>().showError(context, state.message);
+              snackBarService.showError(context, state.message);
             }
             return const Center(child: CircularProgressIndicator());
           },

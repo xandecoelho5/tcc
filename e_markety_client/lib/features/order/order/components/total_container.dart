@@ -12,7 +12,7 @@ class TotalContainer extends StatelessWidget {
   final Order order;
   final bool showDiscount;
 
-  _row(label, value) {
+  Row _row(label, value) {
     final style = TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.bold,
@@ -40,7 +40,7 @@ class TotalContainer extends StatelessWidget {
         if (showDiscount && order.discount > 0) const SizedBox(height: 8),
         if (showDiscount && order.discount > 0)
           _row('Discount', '\$${order.discount.toStringAsFixed(2)}'),
-        const Divider(height: 30, thickness: 1),
+        const Divider(height: 20, thickness: 1),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const [
@@ -50,7 +50,7 @@ class TotalContainer extends StatelessWidget {
             ),
             Spacer(),
             Text(
-              '\$100.00',
+              r'$100.00',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ],

@@ -18,10 +18,10 @@ class Category {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'name': name,
-      'imageUrl': imageUrl,
+      'nome': name,
+      'imagemUrl': imageUrl,
       'iconUrl': iconUrl,
-      'color': color,
+      'cor': color,
     };
   }
 
@@ -33,5 +33,11 @@ class Category {
       iconUrl: map['iconUrl'],
       color: Color(int.parse(map['cor'])),
     );
+  }
+
+  @override
+  String toString() {
+    return 'Category{id: $id, name: $name, imageUrl: $imageUrl, '
+        'iconUrl: $iconUrl, color: $color}';
   }
 }

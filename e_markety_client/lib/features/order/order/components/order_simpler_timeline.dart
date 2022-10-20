@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:timelines/timelines.dart';
 
-import '../../../shared/theme/constants.dart';
+import '../../../../shared/theme/constants.dart';
 import '../models/order_status.dart';
 
 class OrderSimplerTimeline extends StatelessWidget {
@@ -14,7 +14,7 @@ class OrderSimplerTimeline extends StatelessWidget {
   final int processIndex;
   final bool delivered;
 
-  _getColor(int index) {
+  Color _getColor(int index) {
     if (delivered) return kSecondaryColor;
 
     if (index <= processIndex) return kPrimaryColor;

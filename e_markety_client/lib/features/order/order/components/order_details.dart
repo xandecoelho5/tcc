@@ -1,9 +1,10 @@
-import 'package:e_markety_client/features/order/components/order_simpler_timeline.dart';
-import 'package:e_markety_client/features/order/models/order.dart';
-import 'package:e_markety_client/features/order/models/order_status.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:e_markety_client/shared/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
+
+import '../models/order.dart';
+import '../models/order_status.dart';
+import 'order_simpler_timeline.dart';
 
 class OrderDetails extends StatefulWidget {
   const OrderDetails({Key? key, required this.order}) : super(key: key);
@@ -45,7 +46,7 @@ class _OrderDetailsState extends State<OrderDetails> {
     );
   }
 
-  _details() {
+  Column _details() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -96,7 +97,7 @@ class _OrderDetailsState extends State<OrderDetails> {
     );
   }
 
-  _expandIcon(onTap) {
+  Material _expandIcon(onTap) {
     return Material(
       color: Colors.white,
       borderRadius: BorderRadius.circular(10),
@@ -115,7 +116,7 @@ class _OrderDetailsState extends State<OrderDetails> {
     );
   }
 
-  _firstChild() {
+  Container _firstChild() {
     return Container(
       decoration: kDecorationBottomRadiusCircularBorder,
       padding: EdgeInsets.only(
@@ -150,7 +151,7 @@ class _OrderDetailsState extends State<OrderDetails> {
     );
   }
 
-  _secondChild() {
+  Container _secondChild() {
     return Container(
       height: 185,
       decoration: kDecorationBottomRadiusCircularBorder,

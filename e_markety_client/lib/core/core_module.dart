@@ -3,7 +3,7 @@ import 'package:e_markety_client/core/services/cache/cache_service.dart';
 import 'package:e_markety_client/core/services/cache/shared_preferences_service.dart';
 import 'package:e_markety_client/core/services/http/dio_service.dart';
 import 'package:e_markety_client/core/services/http/http_service.dart';
-import 'package:e_markety_client/core/services/snack_bar/basic_snack_bar_service.dart';
+import 'package:e_markety_client/core/services/snack_bar/asuka_service.dart';
 import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
 import 'package:e_markety_client/shared/utils/strings.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -21,7 +21,8 @@ class CoreModule extends Module {
       export: true,
     ),
     Bind.singleton<ISnackBarService>(
-      (i) => BasicSnackBarService(),
+      // (i) => BasicSnackBarService(),
+      (i) => AsukaService(),
       export: true,
     ),
     Bind.singleton<IHttpService>(

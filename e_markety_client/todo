@@ -16,3 +16,5 @@ Adicionar mais campos relevantes para o produto;
 Na parte de Delivery Address, perguntar se o usuário quer por entrega ou retirada no local.;
 
 Implementar uso da exclusão de favoritos e produtos do carrinho, quando começar a usar gerência de estado;
+
+Adicionar FOCO nos componteis de input quando abrir a tela e quando der submit no input atual;

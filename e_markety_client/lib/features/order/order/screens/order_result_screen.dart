@@ -1,7 +1,7 @@
-import 'package:e_markety_client/features/order/components/order_success.dart';
 import 'package:flutter/material.dart';
 
 import '../components/order_decline.dart';
+import '../components/order_success.dart';
 
 class OrderResultScreen extends StatelessWidget {
   const OrderResultScreen({Key? key, required this.isSuccess})

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:timelines/timelines.dart';
 
-import '../../../shared/theme/constants.dart';
+import '../../../../shared/theme/constants.dart';
 import '../models/order_status.dart';
 
 class OrderTimeline extends StatelessWidget {
@@ -9,13 +9,13 @@ class OrderTimeline extends StatelessWidget {
 
   final int processIndex;
 
-  _getColor(int index) {
+  dynamic _getColor(int index) {
     if (index <= processIndex) return kSecondaryColor;
 
     return Colors.grey.shade300;
   }
 
-  _dotIndicator(backgroundColor, foregroundColor) {
+  DotIndicator _dotIndicator(backgroundColor, foregroundColor) {
     return DotIndicator(
       size: 72,
       color: backgroundColor,
@@ -43,7 +43,7 @@ class OrderTimeline extends StatelessWidget {
         contentsBuilder: (context, index) {
           final notProcessed = index > processIndex;
           return Padding(
-            padding: const EdgeInsets.only(left: 40.0),
+            padding: const EdgeInsets.only(left: 40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,6 +1,7 @@
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:e_markety_client/shared/widgets/filled_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class EmptyCart extends StatelessWidget {
   const EmptyCart({Key? key}) : super(key: key);
@@ -20,20 +21,20 @@ class EmptyCart extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                SizedBox(height: MediaQuery.of(context).size.height * 0.16),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.13),
                 const Icon(
                   Icons.shopping_bag_outlined,
                   size: 150,
                   color: kPrimaryColor,
                 ),
-                const SizedBox(height: 36),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                 const Text(
-                  'Your cart is empty!',
+                  'Seu carrinho está vazio!',
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 Text(
-                  'Make your basket happy and add products to purchase theme',
+                  'Faça sua cesta feliz e adicione produtos para comprar',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -47,9 +48,9 @@ class EmptyCart extends StatelessWidget {
           ),
           const Spacer(),
           FilledButton(
-            text: 'Start Shopping',
+            text: 'Começar a comprar',
             color: kSecondaryColor,
-            onPressed: () {},
+            onPressed: () => Modular.to.navigate('/home'),
           ),
         ],
       ),

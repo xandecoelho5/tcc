@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../theme/constants.dart';
 
@@ -17,7 +18,7 @@ class ActionCart extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: () => Modular.to.pushNamed('/shopping-cart'),
           borderRadius: BorderRadius.circular(8),
           child: const Icon(
             Icons.camera_alt_outlined,

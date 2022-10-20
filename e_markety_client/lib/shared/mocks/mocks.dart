@@ -2,14 +2,14 @@ import 'package:e_markety_client/features/category/models/category.dart';
 import 'package:e_markety_client/features/order/address/models/address.dart';
 import 'package:e_markety_client/features/order/address/models/district.dart';
 import 'package:e_markety_client/features/order/address/models/tag.dart';
-import 'package:e_markety_client/features/order/models/order.dart';
 import 'package:e_markety_client/features/product/models/measure_unit.dart';
 import 'package:e_markety_client/features/product/models/product.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:e_markety_client/shared/utils/assets.dart';
 
-import '../../features/order/models/delivery_tipe.dart';
-import '../../features/order/models/order_status.dart';
+import '../../features/order/order/models/delivery_tipe.dart';
+import '../../features/order/order/models/order.dart';
+import '../../features/order/order/models/order_status.dart';
 import '../../features/order/shopping_cart/models/cart_item.dart';
 import '../../features/user/models/user.dart';
 
@@ -214,7 +214,7 @@ final orderMock = Order(
   deliveryAddress: addressMock[0],
   deliveryCharge: 0,
   deliveryTime: DateTime.now().add(const Duration(hours: 2)),
-  status: OrderStatus.placed,
+  total: 22,
 );
 
 final ordersMock = [
@@ -229,6 +229,7 @@ final ordersMock = [
     deliveryCharge: 0,
     deliveryTime: DateTime.now().add(const Duration(hours: 2)),
     status: OrderStatus.confirmed,
+    total: 32,
   ),
   Order(
     id: 2202,
@@ -239,7 +240,8 @@ final ordersMock = [
     deliveryAddress: addressMock[0],
     deliveryCharge: 0,
     deliveryTime: DateTime.now().add(const Duration(hours: 2)),
-    status: OrderStatus.shipped,
+    status: OrderStatus.readyToDeliver,
+    total: 35,
   ),
   Order(
     id: 2201,
@@ -251,6 +253,7 @@ final ordersMock = [
     deliveryCharge: 0,
     deliveryTime: DateTime.now().add(const Duration(hours: 2)),
     status: OrderStatus.outForDelivery,
+    total: 25,
   ),
   Order(
     id: 2200,
@@ -262,6 +265,7 @@ final ordersMock = [
     deliveryCharge: 0,
     deliveryTime: DateTime.now().add(const Duration(hours: 2)),
     status: OrderStatus.delivered,
+    total: 87,
   )
 ];
 

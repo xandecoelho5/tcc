@@ -1,3 +1,4 @@
+import 'package:asuka/asuka.dart';
 import 'package:e_markety_client/core/core_module.dart';
 import 'package:e_markety_client/features/category/blocs/category_bloc.dart';
 import 'package:e_markety_client/features/category/screens/category_screen.dart';
@@ -8,9 +9,8 @@ import 'package:e_markety_client/features/order/address/screens/add_new_address_
 import 'package:e_markety_client/features/order/address/screens/address_screen.dart';
 import 'package:e_markety_client/features/order/address/services/address_service.dart';
 import 'package:e_markety_client/features/order/checkout/screens/checkout_screen.dart';
-import 'package:e_markety_client/features/order/screens/my_orders_screen.dart';
-import 'package:e_markety_client/features/order/screens/order_result_screen.dart';
-import 'package:e_markety_client/features/order/screens/track_order_screen.dart';
+import 'package:e_markety_client/features/order/shopping_cart/blocs/cart_item_overview_bloc.dart';
+import 'package:e_markety_client/features/order/shopping_cart/repositories/cart_item_repository.dart';
 import 'package:e_markety_client/features/product/blocs/product/product_bloc.dart';
 import 'package:e_markety_client/features/product/blocs/product_by_category/product_by_category_bloc.dart';
 import 'package:e_markety_client/features/product/screens/apply_filters_screen.dart';
@@ -36,7 +36,13 @@ import '../shared/mocks/mocks.dart';
 import '../shared/theme/theme.dart';
 import 'order/address/blocs/address/address_bloc.dart';
 import 'order/address/screens/delivery_address_screen.dart';
+import 'order/order/blocs/order_bloc.dart';
+import 'order/order/screens/my_orders_screen.dart';
+import 'order/order/screens/order_result_screen.dart';
+import 'order/order/screens/track_order_screen.dart';
+import 'order/order/services/order_service.dart';
 import 'order/shopping_cart/screens/shopping_cart_screen.dart';
+import 'order/shopping_cart/services/cart_item_service.dart';
 
 class AppModule extends Module {
   @override
@@ -63,6 +69,13 @@ class AppModule extends Module {
     Bind.singleton<IAddressService>((i) => AddressService(i())),
     Bind.singleton((i) => AddressBloc(i())),
     Bind.singleton((i) => DefaultAddressBloc(i())),
+    // order
+    Bind.singleton<IOrderService>((i) => OrderService(i())),
+    Bind.singleton((i) => OrderBloc(i())),
+    // cart item
+    Bind.singleton<ICartItemService>((i) => CartItemService(i())),
+    Bind.singleton((i) => CartItemRepository(i())),
+    Bind.singleton((i) => CartItemOverviewBloc(i())),
   ];
 
   @override
@@ -141,6 +154,7 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      builder: Asuka.builder,
       title: 'EMarkety',
       theme: kThemeData,
       routerDelegate: Modular.routerDelegate,

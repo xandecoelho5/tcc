@@ -1,8 +1,9 @@
-import 'package:e_markety_client/features/order/components/order_timeline.dart';
-import 'package:e_markety_client/features/order/models/order.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+
+import '../components/order_timeline.dart';
+import '../models/order.dart';
 
 class TrackOrderScreen extends StatefulWidget {
   const TrackOrderScreen({Key? key, required this.order}) : super(key: key);
@@ -14,7 +15,7 @@ class TrackOrderScreen extends StatefulWidget {
 }
 
 class _TrackOrderScreenState extends State<TrackOrderScreen> {
-  _orderSummary() {
+  Container _orderSummary() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       decoration: BoxDecoration(

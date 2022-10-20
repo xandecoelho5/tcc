@@ -8,27 +8,32 @@ class SlidableCard extends StatelessWidget {
     Key? key,
     required this.child,
     required this.valueKey,
+    required this.onConfirmDelete,
   }) : super(key: key);
 
   final Widget child;
   final int valueKey;
+  final void Function() onConfirmDelete;
 
   Future<bool> _confirmDelete(context) async {
     return await showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Are you sure?'),
+        title: const Text('Remover Produto'),
         content: const Text(
-          'Do you want to remove this product from your list?',
+          'Você quer realmente remover este produto da sua lista?',
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('No'),
+            onPressed: () {
+              onConfirmDelete();
+              Navigator.of(ctx).pop(true);
+            },
+            child: const Text('Sim'),
           ),
           TextButton(
-            onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Yes'),
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('Não'),
           ),
         ],
       ),
@@ -40,7 +45,7 @@ class SlidableCard extends StatelessWidget {
     return Slidable(
       key: ValueKey(valueKey),
       endActionPane: ActionPane(
-        extentRatio: 0.35,
+        extentRatio: 0.3,
         motion: const ScrollMotion(),
         children: [
           Expanded(

@@ -3,10 +3,7 @@ import 'package:e_markety_client/shared/extensions/snack_bar_copy_with.dart';
 import 'package:flutter/material.dart';
 
 class BasicSnackBarService implements ISnackBarService {
-  final SnackBar _snackBar = const SnackBar(
-    content: Text(''),
-    behavior: SnackBarBehavior.floating,
-  );
+  final SnackBar _snackBar = const SnackBar(content: Text(''));
 
   @override
   void show(BuildContext context, String message) {

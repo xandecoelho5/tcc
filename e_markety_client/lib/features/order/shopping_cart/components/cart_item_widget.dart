@@ -9,7 +9,7 @@ class CartItemWidget extends StatelessWidget {
 
   final CartItem item;
 
-  _quantityButtons() {
+  SizedBox _quantityButtons() {
     return SizedBox(
       width: 35,
       child: Column(
@@ -48,7 +48,7 @@ class CartItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 120,
+      height: MediaQuery.of(context).size.height * 0.15,
       decoration: BoxDecoration(
         color: Colors.grey.shade50,
         borderRadius: BorderRadius.circular(12),

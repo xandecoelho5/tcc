@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/theme/constants.dart';
-import '../../../shared/widgets/custom_app_bar.dart';
-import '../../../shared/widgets/filled_button.dart';
+import '../../../../shared/theme/constants.dart';
+import '../../../../shared/widgets/custom_app_bar.dart';
+import '../../../../shared/widgets/filled_button.dart';
 
 class OrderDecline extends StatelessWidget {
   const OrderDecline({Key? key}) : super(key: key);
@@ -42,10 +42,10 @@ class OrderDecline extends StatelessWidget {
                   ),
                   const SizedBox(height: 28),
                   const Text(
-                    """
+                    '''
 Sorry, somethings went wrong.
 Please try again to continue your order.
-                    """,
+                    ''',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

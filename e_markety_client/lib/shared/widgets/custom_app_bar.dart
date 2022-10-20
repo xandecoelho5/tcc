@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../theme/constants.dart';
 
 class CustomAppBar {
   CustomAppBar._();
 
-  static _leadingIcon(context) {
+  static Container _leadingIcon(context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 32, 8, 16),
       decoration: BoxDecoration(
@@ -30,9 +31,9 @@ class CustomAppBar {
     );
   }
 
-  static _title(title) {
+  static Padding _title(title) {
     return Padding(
-      padding: const EdgeInsets.only(top: 16.0),
+      padding: const EdgeInsets.only(top: 16),
       child: Text(title),
     );
   }
@@ -51,7 +52,7 @@ class CustomAppBar {
         // const ActionCart(),
         PopupMenuButton<String>(
           icon: const Icon(Icons.more_vert, color: kBasicDarkColor),
-          onSelected: (String item) => Navigator.pushNamed(context, item),
+          onSelected: (String item) => Modular.to.pushNamed(item),
           itemBuilder: (BuildContext context) => routes.map((String item) {
             return PopupMenuItem<String>(
               value: item,

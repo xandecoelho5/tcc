@@ -63,6 +63,25 @@ class Product {
     return '${weightPrice.toInt()} kg ${(decimal * 1000).toInt()} G';
   }
 
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'nome': name,
+      'imagemUrl': imageUrl,
+      'descricao': description,
+      'preco': price,
+      'data': createdAt,
+      'estoque': stock,
+      'favorito': isFavorite,
+      'quantidadeVendida': quantitySold,
+      'pesoPreco': weightPrice,
+      'pesoUnidade': weightUnit,
+      'percentualDesconto': discountPercent,
+      'categoria': category,
+      'unidadeMedida': measureUnit,
+    };
+  }
+
   factory Product.fromMap(dynamic map) {
     return Product(
       id: map['id'],
@@ -80,5 +99,15 @@ class Product {
       category: Category.fromMap(map['categoria']),
       measureUnit: MeasureUnit.fromMap(map['unidadeMedida']),
     );
+  }
+
+  @override
+  String toString() {
+    return 'Product{id: $id, name: $name, imageUrl: $imageUrl, description: '
+        '$description, price: $price, createdAt: $createdAt, stock: $stock, '
+        'isFavorite: $isFavorite, quantitySold: $quantitySold, '
+        'weightPrice: $weightPrice, weightUnit: $weightUnit, '
+        'discountPercent: $discountPercent, category: $category, '
+        'measureUnit: $measureUnit}';
   }
 }

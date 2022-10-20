@@ -31,9 +31,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           }
 
           if (state is CategoryError) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              Modular.get<ISnackBarService>().showError(context, state.message);
-            });
+            Modular.get<ISnackBarService>().showError(context, state.message);
           }
 
           return const Center(child: Text('Nenhuma categoria para mostrar!'));

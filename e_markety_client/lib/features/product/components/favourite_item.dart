@@ -13,6 +13,7 @@ class FavouriteItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return SlidableCard(
       valueKey: favourite.id,
+      onConfirmDelete: () {}, // TODO
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(

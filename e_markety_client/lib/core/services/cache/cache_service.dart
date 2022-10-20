@@ -1,7 +1,9 @@
 abstract class ICacheService {
-  Future<void> set(String key, dynamic value);
+  Future<void> save(String key, dynamic value);
 
-  Future<Object?> get(String key);
+  Future<dynamic> get(String key);
 
-  Future<void> remove(String key);
+  Future<void> delete(String key);
+
+  Stream<List<dynamic>> getStream(String key);
 }

@@ -8,13 +8,15 @@ class AvatarContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _deviceWidth = MediaQuery.of(context).size.width;
+
     return Stack(
       children: [
         CircleAvatar(
-          radius: 95,
+          radius: _deviceWidth * 0.185, // 95 // 0.225
           backgroundColor: Colors.white.withOpacity(0.4),
           child: CircleAvatar(
-            radius: 83,
+            radius: _deviceWidth * 0.16, // 83 // 0.2
             backgroundImage: NetworkImage(url),
           ),
         ),
@@ -37,7 +39,7 @@ class AvatarContainer extends StatelessWidget {
                   splashColor: kPrimaryColor,
                   borderRadius: BorderRadius.circular(50),
                   child: const Padding(
-                    padding: EdgeInsets.all(12.0),
+                    padding: EdgeInsets.all(12),
                     child: Icon(
                       Icons.camera_alt,
                       color: Colors.white,

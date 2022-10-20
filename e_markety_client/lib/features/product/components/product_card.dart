@@ -1,3 +1,5 @@
+import 'package:e_markety_client/features/order/shopping_cart/blocs/cart_item_overview_bloc.dart';
+import 'package:e_markety_client/features/order/shopping_cart/models/cart_item.dart';
 import 'package:e_markety_client/features/product/components/category_chip.dart';
 import 'package:e_markety_client/features/product/components/product_flag_widget.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
@@ -11,6 +13,19 @@ class ProductCard extends StatelessWidget {
   const ProductCard({Key? key, required this.product}) : super(key: key);
 
   final Product product;
+
+  void _onAddItemToCart() {
+    final bloc = Modular.get<CartItemOverviewBloc>();
+    final items = bloc.state.cartItems;
+    bloc.add(
+      CartItemOverviewCartItemAdd(
+        CartItem(
+          id: items.isEmpty ? 1 : items.last.id + 1,
+          product: product,
+        ),
+      ),
+    );
+  }
 
   Positioned _buildPromotionOrNewFlag() {
     return Positioned(
@@ -44,7 +59,7 @@ class ProductCard extends StatelessWidget {
         backgroundColor: kPrimaryColor,
         mini: true,
         elevation: 10,
-        onPressed: () {},
+        onPressed: _onAddItemToCart,
         child: const Icon(
           Icons.add_shopping_cart,
           color: Colors.white,

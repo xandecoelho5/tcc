@@ -28,9 +28,7 @@ class UserProfileScreen extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.32,
-          ),
+          Container(height: MediaQuery.of(context).size.height * 0.32),
           Positioned(
             bottom: 0,
             height: 160,
@@ -47,7 +45,7 @@ class UserProfileScreen extends StatelessWidget {
             child: AvatarContainer(url: user.avatarUrl),
           ),
           Positioned(
-            top: 205,
+            top: MediaQuery.of(context).size.height * 0.23, // 205
             child: Column(
               children: [
                 Text(

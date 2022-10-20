@@ -27,10 +27,8 @@ class AddressScreen extends StatelessWidget {
                   return AddressList(addresses: state.addresses);
                 }
                 if (state is AddressError) {
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    Modular.get<ISnackBarService>()
-                        .showError(context, state.message);
-                  });
+                  Modular.get<ISnackBarService>()
+                      .showError(context, state.message);
                 }
                 return const Center(child: CircularProgressIndicator());
               },
