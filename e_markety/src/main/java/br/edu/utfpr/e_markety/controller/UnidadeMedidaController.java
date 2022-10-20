@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("unidade-medida")
 @RequiredArgsConstructor
-public class UnidadeMedidaController extends GenericController<UnidadeMedida, Long, UnidadeMedida> {
+public class UnidadeMedidaController extends GenericController<Long, UnidadeMedida> {
     private final UnidadeMedidaService service;
 
     @Override
-    protected GenericService<UnidadeMedida, Long, UnidadeMedida> getService() {
+    protected GenericService<Long, UnidadeMedida> getService() {
         return service;
     }
 }

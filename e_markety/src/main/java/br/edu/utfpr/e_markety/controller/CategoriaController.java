@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("categoria")
 @RequiredArgsConstructor
-public class CategoriaController extends GenericController<Categoria, Long, Categoria> {
+public class CategoriaController extends GenericController<Long, Categoria> {
     private final CategoriaService service;
 
     @Override
-    protected GenericService<Categoria, Long, Categoria> getService() {
+    protected GenericService<Long, Categoria> getService() {
         return service;
     }
 }

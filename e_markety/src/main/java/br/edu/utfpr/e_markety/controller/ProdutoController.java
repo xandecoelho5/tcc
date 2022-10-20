@@ -15,11 +15,11 @@ import java.util.List;
 @RestController
 @RequestMapping("produto")
 @RequiredArgsConstructor
-public class ProdutoController extends GenericController<Produto, Long, Produto> {
+public class ProdutoController extends GenericController<Long, Produto> {
     private final ProdutoService service;
 
     @Override
-    protected GenericService<Produto, Long, Produto> getService() {
+    protected GenericService<Long, Produto> getService() {
         return service;
     }
 

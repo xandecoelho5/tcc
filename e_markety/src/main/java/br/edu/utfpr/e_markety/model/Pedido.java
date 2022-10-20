@@ -1,14 +1,17 @@
 package br.edu.utfpr.e_markety.model;
 
-import br.edu.utfpr.e_markety.config.security.dto.UsuarioDto;
 import br.edu.utfpr.e_markety.model.enums.StatusPedido;
 import br.edu.utfpr.e_markety.model.enums.TipoEntrega;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,8 +25,10 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ColumnDefault("CURRENT_DATE")
     private LocalDate data;
 
+    @Column(columnDefinition = "decimal(10,2) default 0.00")
     private BigDecimal total;
 
     @Enumerated(EnumType.STRING)
@@ -31,8 +36,8 @@ public class Pedido {
     @ColumnDefault("'RETIRADA'")
     private TipoEntrega tipoEntrega;
 
-    @Column(length = 20)
-    private String horarioEntrega;
+    @Column
+    private LocalDateTime horarioEntrega;
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "status_pedido_enum")
@@ -45,13 +50,13 @@ public class Pedido {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
     private Endereco endereco;
 
-    public UsuarioDto getUsuario() {
-        return UsuarioDto.fromUsuario(usuario);
-    }
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PedidoItem> items = new ArrayList<>();
 }

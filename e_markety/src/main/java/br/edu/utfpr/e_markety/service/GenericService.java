@@ -6,11 +6,13 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
-public interface GenericService <T, ID, Y> {
+public interface GenericService <ID, Y> {
 
     List<Y> getAll();
 
     Page<Y> getAll(Pageable pageable);
+
+    List<Y> getAllByCurrentUser(ID id);
 
     Y save(Y dto);
 

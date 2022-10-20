@@ -6,7 +6,7 @@ import br.edu.utfpr.e_markety.config.security.dto.UsuarioDto;
 import br.edu.utfpr.e_markety.config.security.service.TokenService;
 import br.edu.utfpr.e_markety.config.security.service.UsuarioService;
 import br.edu.utfpr.e_markety.config.validator.CustomValidator;
-import br.edu.utfpr.e_markety.model.Usuario;
+import br.edu.utfpr.e_markety.exceptions.UserAlreadyRegisteredException;
 import br.edu.utfpr.e_markety.service.MapperService;
 import br.edu.utfpr.e_markety.utils.UserUtils;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -47,12 +46,13 @@ public class UsuarioController {
 
     @PostMapping("/usuario")
     public ResponseEntity<Object> register(@RequestBody @Valid UsuarioDto usuarioDto) {
-        Optional<Usuario> user = usuarioService.findByEmail(usuarioDto.getEmail());
-        if (user.isPresent()) {
-            return ResponseEntity.badRequest().body("Usuário já cadastrado");
+        try {
+            usuarioService.verifyUserExists(usuarioDto.getEmail());
+            usuarioDto.setImagemUrl("http://unicietec.unievangelica.edu.br/wp-content/uploads/2017/04/avatar-placeholder-300x250.png");
+            return ResponseEntity.ok(usuarioService.save(usuarioDto));
+        } catch (UserAlreadyRegisteredException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        usuarioDto.setImagemUrl("http://unicietec.unievangelica.edu.br/wp-content/uploads/2017/04/avatar-placeholder-300x250.png");
-        return ResponseEntity.ok(usuarioService.save(usuarioDto));
     }
 
     @GetMapping("/usuario")
@@ -61,13 +61,14 @@ public class UsuarioController {
     }
 
     @GetMapping("/usuario/current")
-    public ResponseEntity<UsuarioDto> getCurrentUser() {
-        var optionalUser = UserUtils.getLoggedUser();
-        if (optionalUser.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    public ResponseEntity<?> getCurrentUser() {
+        try {
+            var user = UserUtils.getLoggedUser();
+            var userDto = mapper.mapEntityToDto(user, UsuarioDto.class);
+            return ResponseEntity.ok(userDto);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
-        var userDto = mapper.mapEntityToDto(optionalUser.get(), UsuarioDto.class);
-        return ResponseEntity.ok(userDto);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

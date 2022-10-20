@@ -1,6 +1,7 @@
 package br.edu.utfpr.e_markety.service.impl;
 
 import br.edu.utfpr.e_markety.repository.GenericRepository;
+import br.edu.utfpr.e_markety.repository.GenericUserRepository;
 import br.edu.utfpr.e_markety.service.GenericService;
 import br.edu.utfpr.e_markety.service.MapperService;
 import org.modelmapper.ModelMapper;
@@ -12,7 +13,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<T, ID, Y> {
+public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID, Y> {
 
     protected abstract GenericRepository<T, ID> getRepository();
 
@@ -77,6 +78,15 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<T, 
         return Optional.empty();
     }
 
+    @Override
+    public List<Y> getAllByCurrentUser(ID id) {
+        if (!(getRepository() instanceof GenericUserRepository)) {
+            throw new UnsupportedOperationException("Esse repositório não suporta busca por usuário");
+        }
+        var list = ((GenericUserRepository<T, ID>) getRepository()).findAllByUsuarioId(id);
+        return mapEntityListToDto(list);
+    }
+
     protected void changeEntityId(ID id, T entity) {
 
     }
@@ -88,18 +98,14 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<T, 
     }
 
     private Y mapEntityToDto(T entity) {
-//        return mapper.map(entity, dtoClass);
         return mapper.mapEntityToDto(entity, dtoClass);
     }
 
     private T mapDtoToEntity(Y dto) {
         return mapper.mapDtoToEntity(dto, entityClass);
-//        return mapper.map(dto, entityClass);
     }
 
     private List<Y> mapEntityListToDto(List<T> entityList) {
-        return entityList.stream()
-                .map(this::mapEntityToDto)
-                .toList();
+        return mapper.mapEntityListToDto(entityList, dtoClass);
     }
 }

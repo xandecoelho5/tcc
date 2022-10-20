@@ -1,5 +1,6 @@
 package br.edu.utfpr.e_markety.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class PedidoItem {
 
     @ManyToOne
     @JoinColumn(name = "pedido_id", referencedColumnName = "id")
+    @JsonIgnore
     private Pedido pedido;
 
     @ManyToOne

@@ -1,5 +1,6 @@
 package br.edu.utfpr.e_markety.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -31,7 +32,7 @@ public class Produto {
     @Column(nullable = false)
     private BigDecimal preco;
 
-    @Column(nullable = false)
+    @ColumnDefault("CURRENT_DATE")
     private LocalDate data;
 
     @Column(nullable = false)
@@ -65,5 +66,6 @@ public class Produto {
 
     @ManyToOne
     @JoinColumn(name = "empresa_id", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     private Empresa empresa;
 }

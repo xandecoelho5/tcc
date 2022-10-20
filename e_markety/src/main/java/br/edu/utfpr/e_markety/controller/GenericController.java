@@ -1,7 +1,9 @@
 package br.edu.utfpr.e_markety.controller;
 
 import br.edu.utfpr.e_markety.config.validator.CustomValidator;
+import br.edu.utfpr.e_markety.exceptions.InvalidLoggedUserException;
 import br.edu.utfpr.e_markety.service.GenericService;
+import br.edu.utfpr.e_markety.utils.UserUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +16,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public abstract class GenericController<T, ID, Y> {
+public abstract class GenericController<ID, Y> {
 
-    protected abstract GenericService<T, ID, Y> getService();
+    protected abstract GenericService<ID, Y> getService();
 
     @GetMapping
     public ResponseEntity<List<Y>> getAll(@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
@@ -32,6 +34,18 @@ public abstract class GenericController<T, ID, Y> {
 //            List<Integer> pageNumbers = IntStream.rangeClosed(1, list.getTotalPages()).boxed().toList();
 //        }
         return new ResponseEntity<>(result.toList(), HttpStatus.OK);
+    }
+
+    @GetMapping("/current")
+    public ResponseEntity<?> getAllByCurrentUser() {
+        try {
+            var user = UserUtils.getLoggedUser();
+            return new ResponseEntity<>(getService().getAllByCurrentUser((ID)user.getId()), HttpStatus.OK);
+        } catch (InvalidLoggedUserException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+        } catch (UnsupportedOperationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/{id}")

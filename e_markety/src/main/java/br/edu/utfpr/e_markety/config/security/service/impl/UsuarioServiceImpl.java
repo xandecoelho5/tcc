@@ -2,6 +2,7 @@ package br.edu.utfpr.e_markety.config.security.service.impl;
 
 import br.edu.utfpr.e_markety.config.security.dto.UsuarioDto;
 import br.edu.utfpr.e_markety.config.security.service.UsuarioService;
+import br.edu.utfpr.e_markety.exceptions.UserAlreadyRegisteredException;
 import br.edu.utfpr.e_markety.model.Usuario;
 import br.edu.utfpr.e_markety.repository.GenericRepository;
 import br.edu.utfpr.e_markety.repository.UsuarioRepository;
@@ -42,7 +43,10 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long, Usuari
     }
 
     @Override
-    public Optional<Usuario> findByEmail(String email) {
-        return repository.findByEmail(email);
+    public void verifyUserExists(String email) {
+        var optionalUser = repository.findByEmail(email);
+        if (optionalUser.isPresent()) {
+            throw new UserAlreadyRegisteredException();
+        }
     }
 }

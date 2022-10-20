@@ -36,6 +36,7 @@ public class SecurityConfiguration {
                                 authorize
                                         .antMatchers(HttpMethod.POST, "/auth").permitAll()
                                         .antMatchers(HttpMethod.POST, "/usuario").permitAll()
+                                        .antMatchers(HttpMethod.GET, "/endereco", "/pedido").hasRole("ADMIN")
                                         .anyRequest().permitAll() // authenticated()
                                         .and().csrf().disable()
                                         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

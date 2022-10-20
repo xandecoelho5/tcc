@@ -1,7 +1,7 @@
 package br.edu.utfpr.e_markety.service.impl;
 
 import br.edu.utfpr.e_markety.model.Pedido;
-import br.edu.utfpr.e_markety.repository.GenericRepository;
+import br.edu.utfpr.e_markety.repository.GenericUserRepository;
 import br.edu.utfpr.e_markety.repository.PedidoRepository;
 import br.edu.utfpr.e_markety.service.PedidoService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, Pedido> 
     private final PedidoRepository repository;
 
     @Override
-    protected GenericRepository<Pedido, Long> getRepository() {
+    protected GenericUserRepository<Pedido, Long> getRepository() {
         return repository;
     }
 }

@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("pedido-item")
 @RequiredArgsConstructor
-public class PedidoItemController extends GenericController<PedidoItem, Long, PedidoItem> {
+public class PedidoItemController extends GenericController<Long, PedidoItem> {
     private final PedidoItemService service;
 
     @Override
-    protected GenericService<PedidoItem, Long, PedidoItem> getService() {
+    protected GenericService<Long, PedidoItem> getService() {
         return service;
     }
 }
