@@ -40,7 +40,9 @@ class IconButtonContainer extends StatelessWidget {
                 splashColor: kPrimaryColor,
                 borderRadius: BorderRadius.circular(50),
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(
+                    MediaQuery.of(context).size.width * 0.025,
+                  ),
                   child: Icon(iconButton.icon, color: kPrimaryColor, size: 28),
                 ),
               ),

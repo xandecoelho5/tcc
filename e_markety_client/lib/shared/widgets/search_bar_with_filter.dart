@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../theme/constants.dart';
 
@@ -40,13 +41,13 @@ class SearchBarWithFilter extends StatelessWidget {
     );
   }
 
-  _filter() {
+  ElevatedButton _filter() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         fixedSize: const Size(0, 52),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
-      onPressed: () {},
+      onPressed: () => Modular.to.pushNamed('/apply-filters'),
       child: const Icon(
         Icons.filter_alt_outlined,
         color: Colors.white,
@@ -65,7 +66,6 @@ class SearchBarWithFilter extends StatelessWidget {
           padding: const EdgeInsets.only(right: 14),
           child: _filter(),
         ),
-        // _filter(),
       ],
     );
   }

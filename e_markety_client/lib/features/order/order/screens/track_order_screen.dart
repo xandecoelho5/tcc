@@ -101,7 +101,7 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(context, title: 'Track Order'),
+      appBar: CustomAppBar.buildAppBar(context, title: 'Rastrear pedido'),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

@@ -9,7 +9,6 @@ class Product {
   final double price;
   final DateTime createdAt;
   final int stock;
-  final bool isFavorite;
   final int quantitySold;
   final double weightPrice; // In Kg, L, UN
   final double weightUnit; // Kg, L, UN
@@ -27,7 +26,6 @@ class Product {
     required this.price,
     required this.createdAt,
     required this.stock,
-    required this.isFavorite,
     required this.quantitySold,
     required this.weightPrice,
     required this.weightUnit,
@@ -72,7 +70,6 @@ class Product {
       'preco': price,
       'data': createdAt,
       'estoque': stock,
-      'favorito': isFavorite,
       'quantidadeVendida': quantitySold,
       'pesoPreco': weightPrice,
       'pesoUnidade': weightUnit,
@@ -91,7 +88,6 @@ class Product {
       price: map['preco'],
       createdAt: DateTime.parse(map['data']),
       stock: map['estoque'],
-      isFavorite: map['favorito'],
       quantitySold: map['quantidadeVendida'],
       weightPrice: map['pesoPreco'],
       weightUnit: map['pesoUnidade'],
@@ -101,13 +97,18 @@ class Product {
     );
   }
 
+  // @override
+  // String toString() {
+  //   return 'Product{id: $id, name: $name, imageUrl: $imageUrl, description: '
+  //       '$description, price: $price, createdAt: $createdAt, stock: $stock, '
+  //       'quantitySold: $quantitySold, '
+  //       'weightPrice: $weightPrice, weightUnit: $weightUnit, '
+  //       'discountPercent: $discountPercent, category: $category, '
+  //       'measureUnit: $measureUnit}';
+  // }
+
   @override
   String toString() {
-    return 'Product{id: $id, name: $name, imageUrl: $imageUrl, description: '
-        '$description, price: $price, createdAt: $createdAt, stock: $stock, '
-        'isFavorite: $isFavorite, quantitySold: $quantitySold, '
-        'weightPrice: $weightPrice, weightUnit: $weightUnit, '
-        'discountPercent: $discountPercent, category: $category, '
-        'measureUnit: $measureUnit}';
+    return 'Product{id: $id}';
   }
 }

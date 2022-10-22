@@ -14,5 +14,6 @@ abstract class IHttpService<T> {
   Future<Either<BaseException, dynamic>> get(String url);
   Future<Either<BaseException, dynamic>> post(String url, dynamic body);
   Future<Either<BaseException, dynamic>> put(String url, dynamic body);
+  Future<Either<BaseException, dynamic>> patch(String url, dynamic body);
   Future<Either<BaseException, dynamic>> delete(String url);
 }

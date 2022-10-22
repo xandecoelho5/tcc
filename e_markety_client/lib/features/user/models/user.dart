@@ -5,12 +5,14 @@ class User {
   final String name;
   final String email;
   final String avatarUrl;
+  final List<int> favouritesIds;
 
   const User({
     required this.id,
     required this.name,
     required this.email,
     required this.avatarUrl,
+    this.favouritesIds = const [],
   });
 
   const User.empty({
@@ -18,19 +20,24 @@ class User {
     this.name = '',
     this.email = '',
     this.avatarUrl = Assets.avatarPlaceholderUrl,
+    this.favouritesIds = const [],
   });
+
+  bool isFavourite(int id) => favouritesIds.contains(id);
 
   User copyWith({
     String? name,
     String? email,
     String? password,
     String? avatarUrl,
+    List<int>? favouritesIds,
   }) {
     return User(
       id: id,
       name: name ?? this.name,
       email: email ?? this.email,
       avatarUrl: avatarUrl ?? this.avatarUrl,
+      favouritesIds: favouritesIds ?? this.favouritesIds,
     );
   }
 
@@ -40,6 +47,7 @@ class User {
       'nome': name,
       'email': email,
       'imagemUrl': avatarUrl,
+      'favoritosIds': favouritesIds,
     };
   }
 
@@ -49,6 +57,7 @@ class User {
       name: map['nome'],
       email: map['email'],
       avatarUrl: map['imagemUrl'],
+      favouritesIds: List<int>.from(map['favoritosIds']),
     );
   }
 }

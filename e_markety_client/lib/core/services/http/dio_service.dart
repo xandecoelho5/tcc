@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:e_markety_client/core/exceptions/dio_delete_exception.dart';
 import 'package:e_markety_client/core/exceptions/dio_get_exception.dart';
+import 'package:e_markety_client/core/exceptions/dio_patch_exception.dart';
 import 'package:e_markety_client/core/exceptions/dio_post_exception.dart';
 import 'package:e_markety_client/core/exceptions/dio_put_exception.dart';
 
@@ -64,6 +65,18 @@ class DioService implements IHttpService {
     } on DioError catch (e) {
       return Left(
         DioDeleteException(e.response?.data ?? e.message, e.stackTrace),
+      );
+    }
+  }
+
+  @override
+  Future<Either<BaseException, dynamic>> patch(String url, dynamic body) async {
+    try {
+      final response = await _dio.patch(url, data: body);
+      return Right(response.data);
+    } on DioError catch (e) {
+      return Left(
+        DioPatchException(e.response?.data ?? e.message, e.stackTrace),
       );
     }
   }

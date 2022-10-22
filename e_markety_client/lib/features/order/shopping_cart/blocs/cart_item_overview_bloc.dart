@@ -18,7 +18,7 @@ class CartItemOverviewBloc
     on<CartItemOverviewCartItemAdd>(_onCartItemAdd);
   }
 
-  Future<void> _onSubscriptionRequested(event, emit) async {
+  Future<void> _onSubscriptionRequested(event, Emitter emit) async {
     emit(state.copyWith(status: CartItemOverviewStatus.loading));
 
     await emit.forEach<List<CartItem>>(

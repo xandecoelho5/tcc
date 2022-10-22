@@ -110,7 +110,6 @@ final productsMock = [
     price: 85,
     createdAt: DateTime.now(),
     category: categoriesMock[0],
-    isFavorite: true,
     weightPrice: 1,
     quantitySold: 5,
     stock: 100,
@@ -127,7 +126,6 @@ final productsMock = [
     price: 165,
     createdAt: DateTime.now(),
     category: categoriesMock[2],
-    isFavorite: true,
     weightPrice: 0.75,
     weightUnit: 0.75,
     quantitySold: 6,
@@ -146,7 +144,6 @@ final productsMock = [
     category: categoriesMock[1],
     weightPrice: 1,
     weightUnit: 0.5,
-    isFavorite: true,
     discountPercent: 15,
     quantitySold: 100,
     stock: 17,
@@ -167,7 +164,6 @@ final productsMock = [
     stock: 12,
     discountPercent: 0,
     measureUnit: measureUnitsMock[1],
-    isFavorite: false,
   ),
 ];
 

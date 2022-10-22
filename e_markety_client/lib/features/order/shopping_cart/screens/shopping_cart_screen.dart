@@ -13,7 +13,6 @@ class ShoppingCartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('builded');
     return Scaffold(
       appBar: CustomAppBar.buildAppBar(context, title: 'Carrinho'),
       body: BlocListener<CartItemOverviewBloc, CartItemOverviewState>(

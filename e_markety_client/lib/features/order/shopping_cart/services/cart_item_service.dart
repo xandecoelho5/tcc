@@ -7,8 +7,6 @@ abstract class ICartItemService {
 
   void removeFromCart(int id);
 
-  // void clearCart();
-  // List<CartItem> getCartItems();
   Stream<List<CartItem>> getCartItems();
 }
 
@@ -23,13 +21,7 @@ class CartItemService implements ICartItemService {
 
   Future<void> _init() async {
     final cartItemsJson = await _cacheService.get(_kCartItemKey);
-    print('cartItemsJson: $cartItemsJson');
-    if (cartItemsJson != null) {
-      final cartItems = _decode(cartItemsJson);
-      _streamController.add(cartItems);
-    } else {
-      _streamController.add(const []);
-    }
+    _streamController.add(cartItemsJson != null ? _decode(cartItemsJson) : []);
   }
 
   @override
@@ -56,9 +48,7 @@ class CartItemService implements ICartItemService {
   Future<void> removeFromCart(int id) async {
     final cartItems = [..._streamController.value];
     final index = cartItems.indexWhere((t) => t.id == id);
-    if (index == -1) {
-      throw Exception('Cart Item não encontrado');
-    } else {
+    if (index >= 0) {
       cartItems.removeAt(index);
       _streamController.add(cartItems);
       return _cacheService.save(_kCartItemKey, _encode(cartItems));

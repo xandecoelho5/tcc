@@ -1,17 +1,9 @@
 import 'package:flutter/material.dart';
 
 const routes = [
-  '/about-me',
-  '/my-orders',
-  '/favourite',
-  '/address',
-  '/add-new-address',
-  '/category',
   '/search-result',
-  '/shopping-cart',
   '/delivery-address',
   '/checkout',
-  '/order-result',
   '/track-order',
   '/apply-filters',
 ];

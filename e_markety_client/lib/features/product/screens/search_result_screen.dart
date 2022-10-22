@@ -12,7 +12,7 @@ class SearchResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(context, title: 'Search Result'),
+      appBar: CustomAppBar.buildAppBar(context, title: 'Resultado da Pesquisa'),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -22,7 +22,7 @@ class SearchResultScreen extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 18),
             child: Text(
-              "Search Result for 'Fresh Fruits'",
+              "Resultado da pesquisa para 'Fresh Fruits'",
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,

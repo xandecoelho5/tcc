@@ -1,6 +1,8 @@
 import 'package:e_markety_client/features/product/models/product.dart';
 
 class CartItem {
+  static int _id = 1;
+
   final int id;
   final Product product;
   final double quantity;
@@ -8,8 +10,13 @@ class CartItem {
   const CartItem({
     required this.id,
     required this.product,
-    this.quantity = 1,
+    required this.quantity,
   });
+
+  CartItem.empty({
+    required this.product,
+    this.quantity = 1,
+  }) : id = _id++;
 
   factory CartItem.fromMap(dynamic map) {
     return CartItem(
@@ -27,8 +34,13 @@ class CartItem {
     };
   }
 
+  // @override
+  // String toString() {
+  //   return 'CartItem{id: $id, product: $product, quantity: $quantity}';
+  // }
+
   @override
   String toString() {
-    return 'CartItem{id: $id, product: $product, quantity: $quantity}';
+    return 'CartItem{id: $id}';
   }
 }

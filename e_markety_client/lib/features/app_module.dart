@@ -11,6 +11,7 @@ import 'package:e_markety_client/features/order/address/services/address_service
 import 'package:e_markety_client/features/order/checkout/screens/checkout_screen.dart';
 import 'package:e_markety_client/features/order/shopping_cart/blocs/cart_item_overview_bloc.dart';
 import 'package:e_markety_client/features/order/shopping_cart/repositories/cart_item_repository.dart';
+import 'package:e_markety_client/features/product/blocs/favourite/favourite_bloc.dart';
 import 'package:e_markety_client/features/product/blocs/product/product_bloc.dart';
 import 'package:e_markety_client/features/product/blocs/product_by_category/product_by_category_bloc.dart';
 import 'package:e_markety_client/features/product/screens/apply_filters_screen.dart';
@@ -18,6 +19,7 @@ import 'package:e_markety_client/features/product/screens/favourite_screen.dart'
 import 'package:e_markety_client/features/product/screens/product_details_screen.dart';
 import 'package:e_markety_client/features/product/screens/products_by_category_screen.dart';
 import 'package:e_markety_client/features/product/screens/search_result_screen.dart';
+import 'package:e_markety_client/features/product/services/favourite_service.dart';
 import 'package:e_markety_client/features/product/services/product_service.dart';
 import 'package:e_markety_client/features/user/auth/blocs/auth_bloc.dart';
 import 'package:e_markety_client/features/user/auth/screens/sign_in_screen.dart';
@@ -76,6 +78,9 @@ class AppModule extends Module {
     Bind.singleton<ICartItemService>((i) => CartItemService(i())),
     Bind.singleton((i) => CartItemRepository(i())),
     Bind.singleton((i) => CartItemOverviewBloc(i())),
+    // favourites
+    Bind.singleton<IFavouriteService>((i) => FavouriteService(i())),
+    Bind.singleton((i) => FavouriteBloc(i())),
   ];
 
   @override
@@ -138,7 +143,7 @@ class AppModule extends Module {
       child: (context, args) => UserProfileScreen(user: args.data),
     ),
     ChildRoute('/about-me', child: (context, args) => const AboutMeScreen()),
-    ChildRoute('/my-orders', child: (context, args) => MyOrdersScreen()),
+    ChildRoute('/my-orders', child: (context, args) => const MyOrdersScreen()),
     ChildRoute('/favourite', child: (context, args) => const FavouriteScreen()),
     ChildRoute('/address', child: (context, args) => const AddressScreen()),
     ChildRoute(

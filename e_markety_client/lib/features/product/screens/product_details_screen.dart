@@ -1,13 +1,17 @@
 import 'package:e_markety_client/features/product/components/accordion.dart';
 import 'package:e_markety_client/features/product/components/category_chip.dart';
+import 'package:e_markety_client/features/product/components/favourite_icon.dart';
 import 'package:e_markety_client/features/product/components/product_flag_widget.dart';
 import 'package:e_markety_client/features/product/models/flag_type.dart';
 import 'package:e_markety_client/features/product/models/product.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:e_markety_client/shared/widgets/quantity_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../shared/theme/constants.dart';
+import '../../order/shopping_cart/blocs/cart_item_overview_bloc.dart';
+import '../../order/shopping_cart/models/cart_item.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   const ProductDetailsScreen({
@@ -205,11 +209,7 @@ class ProductDetailsScreen extends StatelessWidget {
     return Positioned(
       top: 16,
       right: 16,
-      child: Icon(
-        product.isFavorite ? Icons.favorite : Icons.favorite_border,
-        color: product.isFavorite ? kSecondaryColor : Colors.grey.shade300,
-        size: 30,
-      ),
+      child: FavouriteIcon(product: product, size: 30),
     );
   }
 
@@ -249,6 +249,12 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
+  void _onAddItemToCart() {
+    Modular.get<CartItemOverviewBloc>().add(
+      CartItemOverviewCartItemAdd(CartItem.empty(product: product)),
+    );
+  }
+
   Row _addToCartButton() {
     return Row(
       children: [
@@ -259,15 +265,15 @@ class ProductDetailsScreen extends StatelessWidget {
               backgroundColor: kSecondaryColor,
               foregroundColor: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: _onAddItemToCart,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
                   Text(''),
                   Text(
-                    'Add to cart',
+                    'Adicionar ao Carrinho',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

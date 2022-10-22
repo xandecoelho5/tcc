@@ -1,6 +1,7 @@
 import 'package:e_markety_client/features/order/shopping_cart/blocs/cart_item_overview_bloc.dart';
 import 'package:e_markety_client/features/order/shopping_cart/models/cart_item.dart';
 import 'package:e_markety_client/features/product/components/category_chip.dart';
+import 'package:e_markety_client/features/product/components/favourite_icon.dart';
 import 'package:e_markety_client/features/product/components/product_flag_widget.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
@@ -14,16 +15,22 @@ class ProductCard extends StatelessWidget {
 
   final Product product;
 
+  // void _onAddItemToCart() {
+  //   final bloc = Modular.get<CartItemOverviewBloc>();
+  //   final items = bloc.state.cartItems;
+  //   bloc.add(
+  //     CartItemOverviewCartItemAdd(
+  //       CartItem(
+  //         id: items.isEmpty ? 1 : items.last.id + 1,
+  //         product: product,
+  //       ),
+  //     ),
+  //   );
+  // }
+
   void _onAddItemToCart() {
-    final bloc = Modular.get<CartItemOverviewBloc>();
-    final items = bloc.state.cartItems;
-    bloc.add(
-      CartItemOverviewCartItemAdd(
-        CartItem(
-          id: items.isEmpty ? 1 : items.last.id + 1,
-          product: product,
-        ),
-      ),
+    Modular.get<CartItemOverviewBloc>().add(
+      CartItemOverviewCartItemAdd(CartItem.empty(product: product)),
     );
   }
 
@@ -43,10 +50,7 @@ class ProductCard extends StatelessWidget {
     return Positioned(
       top: 6,
       right: 5,
-      child: Icon(
-        product.isFavorite ? Icons.favorite : Icons.favorite_border,
-        color: product.isFavorite ? kSecondaryColor : Colors.grey.shade300,
-      ),
+      child: FavouriteIcon(product: product),
     );
   }
 

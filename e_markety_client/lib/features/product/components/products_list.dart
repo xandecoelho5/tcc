@@ -27,13 +27,14 @@ class ProductsList extends StatelessWidget {
       );
     }
 
+    // TODO - Implementar o ListView.builder com tamanho dinamico pros Produtos Cards
     return GridView.builder(
       itemCount: products.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 20,
         mainAxisSpacing: 20,
-        mainAxisExtent: MediaQuery.of(context).size.height * 0.33,
+        mainAxisExtent: MediaQuery.of(context).size.height * 0.4,
       ),
       padding: const EdgeInsets.fromLTRB(18, 28, 18, 32),
       itemBuilder: (ctx, i) => ProductCard(product: products[i]),
