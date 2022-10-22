@@ -7,4 +7,6 @@ import java.util.List;
 public interface ProdutoService extends GenericService<Long, Produto> {
 
     List<Produto> findAllByCategoriaId(Long id);
+
+    List<Produto> findAllByIdIn(List<Long> ids);
 }

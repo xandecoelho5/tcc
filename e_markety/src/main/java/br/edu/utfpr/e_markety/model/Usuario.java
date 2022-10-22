@@ -1,12 +1,17 @@
 package br.edu.utfpr.e_markety.model;
 
+import com.vladmihalcea.hibernate.type.array.ListArrayType;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,6 +21,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@TypeDef(name = "list-array", typeClass = ListArrayType.class)
 public class Usuario implements UserDetails {
 
     @Id
@@ -37,6 +43,11 @@ public class Usuario implements UserDetails {
 
     @Column(columnDefinition = "boolean default false")
     private boolean admin;
+
+    @Type(type = "list-array")
+    @Column(name = "favoritos_ids", columnDefinition = "bigint[]")
+    @ColumnDefault("ARRAY[]::bigint[]")
+    private List<Long> favoritosIds;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

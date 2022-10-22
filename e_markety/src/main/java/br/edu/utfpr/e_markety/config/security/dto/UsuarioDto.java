@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Setter
 @Getter
@@ -25,6 +26,8 @@ public class UsuarioDto {
     private String senha;
 
     private String imagemUrl;
+
+    private List<Long> favoritosIds;
 
     public static UsuarioDto fromUsuario(Usuario usuario) {
         UsuarioDto usuarioDto = new UsuarioDto();

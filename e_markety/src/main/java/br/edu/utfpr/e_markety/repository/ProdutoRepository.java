@@ -7,4 +7,6 @@ import java.util.List;
 public interface ProdutoRepository extends GenericRepository<Produto, Long> {
 
     List<Produto> findAllByCategoriaId(Long id);
+
+    List<Produto> findAllByIdIn(List<Long> ids);
 }

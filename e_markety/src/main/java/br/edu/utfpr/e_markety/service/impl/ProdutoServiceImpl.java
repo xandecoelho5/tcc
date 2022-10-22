@@ -24,4 +24,9 @@ public class ProdutoServiceImpl extends GenericServiceImpl<Produto, Long, Produt
     public List<Produto> findAllByCategoriaId(Long id) {
         return repository.findAllByCategoriaId(id);
     }
+
+    @Override
+    public List<Produto> findAllByIdIn(List<Long> ids) {
+        return repository.findAllByIdIn(ids);
+    }
 }

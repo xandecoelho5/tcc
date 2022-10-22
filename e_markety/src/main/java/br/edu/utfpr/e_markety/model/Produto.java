@@ -42,10 +42,6 @@ public class Produto {
     @ColumnDefault("0")
     private int percentualDesconto;
 
-    @Column
-    @ColumnDefault("false")
-    private boolean favorito;
-
     @Column(nullable = false)
     private float pesoPreco; // preço do KG/L
     // Ex: 1kg de arroz custa 5 reais, então pesoPreco = 1, 0.5kg de arroz custa 2.5 reais, então pesoUnidade = 0.5

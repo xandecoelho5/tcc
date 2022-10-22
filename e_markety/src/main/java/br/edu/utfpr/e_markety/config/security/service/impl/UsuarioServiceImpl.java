@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -38,8 +39,12 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long, Usuari
 
     @Override
     protected void preSave(Usuario entity, Long id) {
-        String encoded = encoder.encode(entity.getSenha());
-        entity.setSenha(encoded);
+        System.out.println("id: " + id);
+        if (id == null) {
+            String encoded = encoder.encode(entity.getSenha());
+            entity.setSenha(encoded);
+            entity.setFavoritosIds(new ArrayList<>());
+        }
     }
 
     @Override
