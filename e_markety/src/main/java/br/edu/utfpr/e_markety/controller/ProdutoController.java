@@ -1,13 +1,11 @@
 package br.edu.utfpr.e_markety.controller;
 
+import br.edu.utfpr.e_markety.dto.FiltroDto;
 import br.edu.utfpr.e_markety.model.Produto;
 import br.edu.utfpr.e_markety.service.GenericService;
 import br.edu.utfpr.e_markety.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -26,5 +24,12 @@ public class ProdutoController extends GenericController<Long, Produto> {
     @GetMapping("categoria/{id}")
     public List<Produto> findAllByCategoriaId(@PathVariable @NotNull Long id) {
         return service.findAllByCategoriaId(id);
+    }
+
+    @PostMapping("filtro")
+    public List<Produto> findAllByFilter(@RequestBody FiltroDto filtro) {
+        System.out.println(filtro);
+        return service.findAllByFilter(filtro.getNome(), filtro.getCategoriaId(), filtro.getPrecoMin(),
+                filtro.getPrecoMax(), filtro.getTipoOrdenacao().getSort());
     }
 }
