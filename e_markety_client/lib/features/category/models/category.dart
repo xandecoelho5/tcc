@@ -37,7 +37,6 @@ class Category {
 
   @override
   String toString() {
-    return 'Category{id: $id, name: $name, imageUrl: $imageUrl, '
-        'iconUrl: $iconUrl, color: $color}';
+    return 'Category{id: $id, name: $name}';
   }
 }

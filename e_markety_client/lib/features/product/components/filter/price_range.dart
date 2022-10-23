@@ -8,9 +8,14 @@ const min = 0.0;
 const max = 500.0;
 
 class PriceRange extends StatefulWidget {
-  const PriceRange({Key? key, required this.values}) : super(key: key);
+  const PriceRange({
+    Key? key,
+    required this.values,
+    required this.onPriceChanged,
+  }) : super(key: key);
 
   final RangeValues values;
+  final void Function(SfRangeValues) onPriceChanged;
 
   @override
   State<PriceRange> createState() => _PriceRangeState();
@@ -25,9 +30,9 @@ class _PriceRangeState extends State<PriceRange> {
   @override
   Widget build(BuildContext context) {
     return InformationContainer(
-      title: 'Price Range',
+      title: 'Preço',
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12.0),
+        padding: const EdgeInsets.symmetric(vertical: 12),
         child: Column(
           children: [
             Row(
@@ -66,14 +71,16 @@ class _PriceRangeState extends State<PriceRange> {
               child: Column(
                 children: [
                   SfRangeSlider(
-                    min: min,
                     max: max,
                     values: _values,
                     enableTooltip: true,
                     tooltipTextFormatterCallback: (actualValue, formattedText) {
                       return '\$${actualValue.toStringAsFixed(2)}';
                     },
-                    onChanged: (values) => setState(() => _values = values),
+                    onChanged: (values) {
+                      setState(() => _values = values);
+                      widget.onPriceChanged(_values);
+                    },
                     // onChangeEnd: widget.onChangeEnd,
                   ),
                 ],

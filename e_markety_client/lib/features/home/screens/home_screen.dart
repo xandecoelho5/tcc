@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Modular.get<DefaultAddressBloc>().add(DefaultAddressGetEvent());
       Modular.get<ProductBloc>().add(ProductGetAllEvent(4));
-      Modular.get<CategoryBloc>().add(CategoryGetAllEvent(5));
+      Modular.get<CategoryBloc>().add(CategoryGetAllEvent());
     });
   }
 

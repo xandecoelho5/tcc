@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 const routes = [
-  '/search-result',
   '/delivery-address',
   '/checkout',
   '/track-order',

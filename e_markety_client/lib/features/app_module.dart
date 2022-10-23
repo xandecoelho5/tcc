@@ -12,6 +12,7 @@ import 'package:e_markety_client/features/order/checkout/screens/checkout_screen
 import 'package:e_markety_client/features/order/shopping_cart/blocs/cart_item_overview_bloc.dart';
 import 'package:e_markety_client/features/order/shopping_cart/repositories/cart_item_repository.dart';
 import 'package:e_markety_client/features/product/blocs/favourite/favourite_bloc.dart';
+import 'package:e_markety_client/features/product/blocs/filter/filter_bloc.dart';
 import 'package:e_markety_client/features/product/blocs/product/product_bloc.dart';
 import 'package:e_markety_client/features/product/blocs/product_by_category/product_by_category_bloc.dart';
 import 'package:e_markety_client/features/product/screens/apply_filters_screen.dart';
@@ -30,6 +31,7 @@ import 'package:e_markety_client/features/user/screens/about_me_screen.dart';
 import 'package:e_markety_client/features/user/screens/sign_up_screen.dart';
 import 'package:e_markety_client/features/user/screens/user_profile_screen.dart';
 import 'package:e_markety_client/features/user/services/user_service.dart';
+import 'package:e_markety_client/shared/utils/global.dart';
 import 'package:e_markety_client/shared/widgets/custom_scroll_behavior.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -67,6 +69,9 @@ class AppModule extends Module {
     Bind.singleton<IProductService>((i) => ProductService(i())),
     Bind.singleton((i) => ProductBloc(i())),
     Bind.singleton((i) => ProductByCategoryBloc(i())),
+    // filter
+    Bind.singleton((i) => FilterBloc(i())),
+    Bind.singleton((i) => Global()),
     // address
     Bind.singleton<IAddressService>((i) => AddressService(i())),
     Bind.singleton((i) => AddressBloc(i())),
@@ -136,7 +141,7 @@ class AppModule extends Module {
     ),
     ChildRoute(
       '/apply-filters',
-      child: (context, args) => const ApplyFiltersScreen(),
+      child: (context, args) => ApplyFiltersScreen(filter: args.data),
     ),
     ChildRoute(
       '/user-profile',

@@ -6,7 +6,7 @@ import '../theme/constants.dart';
 class CustomAppBar {
   CustomAppBar._();
 
-  static Container _leadingIcon(context) {
+  static Container _leadingIcon(context, onLeadingTap) {
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 32, 8, 16),
       decoration: BoxDecoration(
@@ -16,7 +16,7 @@ class CustomAppBar {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () => Navigator.of(context).pop(),
+          onTap: onLeadingTap ?? () => Modular.to.pop(),
           borderRadius: BorderRadius.circular(8),
           child: const Padding(
             padding: EdgeInsets.only(left: 8),
@@ -43,6 +43,7 @@ class CustomAppBar {
     String? title,
     TextStyle? titleStyle,
     Color? backgroundColor,
+    Function()? onLeadingTap,
   }) {
     return AppBar(
       title: title != null ? _title(title) : null,
@@ -61,7 +62,7 @@ class CustomAppBar {
           }).toList(),
         ),
       ],
-      leading: _leadingIcon(context),
+      leading: _leadingIcon(context, onLeadingTap),
       titleTextStyle: titleStyle ??
           const TextStyle(
             fontSize: 20,

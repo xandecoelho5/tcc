@@ -21,7 +21,7 @@ class CategoryList extends StatelessWidget {
         child: ListView.separated(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           scrollDirection: Axis.horizontal,
-          itemCount: categories.length,
+          itemCount: 5,
           itemBuilder: (ctx, i) => CategoryCard.small(category: categories[i]),
           separatorBuilder: (context, index) => const SizedBox(width: 16),
         ),

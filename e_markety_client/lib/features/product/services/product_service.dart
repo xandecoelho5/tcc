@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_markety_client/core/services/http/http_service.dart';
+import 'package:e_markety_client/features/product/models/filter.dart';
 
 import '../exceptions/product_exception.dart';
 import '../models/product.dart';
@@ -11,7 +12,9 @@ abstract class IProductService {
     int categoryId,
   );
 
-// Future<Either<ProductException, Product>> getProduct(int id);
+  Future<Either<ProductException, List<Product>>> getProductsByFilter(
+    Filter filter,
+  );
 }
 
 class ProductService implements IProductService {
@@ -38,6 +41,18 @@ class ProductService implements IProductService {
     return response.fold(
       (l) => Left(ProductException(l.message, l.stackTrace)),
       (r) => Right(r.map(Product.fromMap).toList()),
+    );
+  }
+
+  @override
+  Future<Either<ProductException, List<Product>>> getProductsByFilter(
+    Filter filter,
+  ) async {
+    final response =
+        await _httpService.post('$_baseUrl/filtro', filter.toMap());
+    return response.fold(
+      (l) => Left(ProductException(l.message, l.stackTrace)),
+      (r) => Right((r as List).map(Product.fromMap).toList()),
     );
   }
 }
