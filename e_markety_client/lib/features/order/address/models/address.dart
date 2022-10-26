@@ -1,7 +1,11 @@
 import 'package:e_markety_client/features/order/address/models/tag.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 import 'district.dart';
 
+part 'address.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class Address {
   final int id;
   final Tag tag;
@@ -37,4 +41,9 @@ class Address {
       isDefault: map['padrao'],
     );
   }
+
+  factory Address.fromJson(Map<String, dynamic> json) =>
+      _$AddressFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AddressToJson(this);
 }

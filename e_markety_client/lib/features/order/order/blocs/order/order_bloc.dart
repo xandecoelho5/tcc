@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../models/order.dart';
-import '../services/order_service.dart';
+import '../../models/order.dart';
+import '../../services/order_service.dart';
 
 part 'order_event.dart';
 part 'order_state.dart';

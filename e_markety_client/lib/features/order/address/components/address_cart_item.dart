@@ -2,13 +2,23 @@ import 'package:e_markety_client/features/order/address/components/address_info.
 import 'package:e_markety_client/features/order/address/components/default_flag.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../models/address.dart';
 
 class AddressCartItem extends StatelessWidget {
-  const AddressCartItem({Key? key, required this.address}) : super(key: key);
+  const AddressCartItem({
+    Key? key,
+    required this.address,
+    required this.index,
+    this.selectedValue,
+    this.onSelected,
+  }) : super(key: key);
 
   final Address address;
+  final int index;
+  final int? selectedValue;
+  final Function(int?)? onSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +34,10 @@ class AddressCartItem extends StatelessWidget {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(top: 20),
-                      child: Radio(
-                        value: 1,
-                        groupValue: 1,
-                        onChanged: (value) {},
+                      child: Radio<int?>(
+                        value: index,
+                        groupValue: selectedValue,
+                        onChanged: onSelected,
                         activeColor: kPrimaryColor,
                       ),
                     ),
@@ -40,24 +50,31 @@ class AddressCartItem extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.more_horiz),
-                        iconSize: 28,
-                      ),
+                    child: PopupMenuButton(
+                      icon: const Icon(Icons.more_horiz),
+                      itemBuilder: (context) => [
+                        const PopupMenuItem(
+                          value: 1,
+                          child: Text('Editar'),
+                        ),
+                      ],
+                      onSelected: (value) {
+                        if (value == 1) {
+                          Modular.to.pushNamed('/address');
+                        }
+                      },
                     ),
                   ),
                 ],
               ),
             ),
           ),
-          const Positioned(
-            top: 4,
-            left: 20,
-            child: DefaultFlag(),
-          ),
+          if (address.isDefault)
+            const Positioned(
+              top: 4,
+              left: 20,
+              child: DefaultFlag(),
+            ),
         ],
       ),
     );

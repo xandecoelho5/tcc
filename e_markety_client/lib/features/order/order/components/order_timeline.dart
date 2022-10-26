@@ -5,8 +5,15 @@ import '../../../../shared/theme/constants.dart';
 import '../models/order_status.dart';
 
 class OrderTimeline extends StatelessWidget {
-  const OrderTimeline({Key? key, required this.processIndex}) : super(key: key);
+  OrderTimeline({
+    Key? key,
+    required this.process,
+    required this.processes,
+  })  : processIndex = processes.indexOf(process),
+        super(key: key);
 
+  final OrderStatus process;
+  final List<OrderStatus> processes;
   final int processIndex;
 
   dynamic _getColor(int index) {
@@ -20,7 +27,7 @@ class OrderTimeline extends StatelessWidget {
       size: 72,
       color: backgroundColor,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Image.asset(
           'assets/icons/fruits_and_vegetables.png',
           color: foregroundColor,
@@ -49,7 +56,7 @@ class OrderTimeline extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  OrderStatus.values[index].label,
+                  processes[index].label,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -58,7 +65,7 @@ class OrderTimeline extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  notProcessed ? 'Pending' : 'Jan 26, 2021',
+                  notProcessed ? 'Pendente' : 'Jan 26, 2021',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -76,7 +83,7 @@ class OrderTimeline extends StatelessWidget {
           return _dotIndicator(Colors.grey.shade300, kDarkGreyColor);
         },
         connectorBuilder: (_, i, __) => SolidLineConnector(color: _getColor(i)),
-        itemCount: OrderStatus.values.length,
+        itemCount: processes.length,
       ),
     );
   }

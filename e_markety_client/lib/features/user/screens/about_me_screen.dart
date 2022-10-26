@@ -60,7 +60,7 @@ class AboutMeScreen extends StatelessWidget {
                     );
                   }
 
-                  if (state is DefaultAddressSuccess) {
+                  if (state is DefaultAddressLoaded) {
                     return UserInfoContainer(
                       text: state.address.phone,
                       icon: Icons.phone,

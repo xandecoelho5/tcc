@@ -1,124 +1,72 @@
-import 'package:e_markety_client/shared/theme/constants.dart';
+import 'package:e_markety_client/features/order/order/blocs/current_order/current_order_bloc.dart';
+import 'package:e_markety_client/features/order/order/components/track_order_summary.dart';
+import 'package:e_markety_client/features/order/order/models/order_status.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../components/order_timeline.dart';
+import '../models/delivery_tipe.dart';
 import '../models/order.dart';
 
-class TrackOrderScreen extends StatefulWidget {
-  const TrackOrderScreen({Key? key, required this.order}) : super(key: key);
-
-  final Order order;
-
-  @override
-  State<TrackOrderScreen> createState() => _TrackOrderScreenState();
-}
-
-class _TrackOrderScreenState extends State<TrackOrderScreen> {
-  Container _orderSummary() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      decoration: BoxDecoration(
-        color: kSecondaryColor,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        children: [
-          const CircleAvatar(
-            backgroundColor: Colors.white,
-            radius: 50,
-            child: Icon(
-              Icons.shopping_bag_outlined,
-              size: 60,
-              color: Colors.black,
-            ),
-          ),
-          const SizedBox(width: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Order ID: #OD${widget.order.id}',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 4),
-              const Text(
-                'Placed on Jan 26, 2021',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  const Text(
-                    'Items: ',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Text(
-                    '${widget.order.items.length}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  const Text(
-                    'Total: ',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Text(
-                    '\$${widget.order.total.toStringAsFixed(2)}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+class TrackOrderScreen extends StatelessWidget {
+  const TrackOrderScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar.buildAppBar(context, title: 'Rastrear pedido'),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            _orderSummary(),
-            const SizedBox(height: 20),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: OrderTimeline(processIndex: widget.order.status.index),
+      body: BlocBuilder<CurrentOrderBloc, CurrentOrderState>(
+        bloc: Modular.get<CurrentOrderBloc>()..add(GetCurrentOrder()),
+        builder: (context, state) {
+          if (state is CurrentOrderError) {
+            return Center(child: Text(state.message));
+          }
+
+          if (state is CurrentOrderLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (state is CurrentOrderLoaded) {
+            return TrackOrderView(order: state.order);
+          }
+
+          return Container();
+        },
+      ),
+    );
+  }
+}
+
+class TrackOrderView extends StatelessWidget {
+  const TrackOrderView({Key? key, required this.order}) : super(key: key);
+
+  final Order order;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          TrackOrderSummary(order: order),
+          const SizedBox(height: 20),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: OrderTimeline(
+                process: order.status,
+                processes: order.deliveryType == DeliveryType.delivery
+                    ? OrderStatus.caseDelivery()
+                    : OrderStatus.casePickup(),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

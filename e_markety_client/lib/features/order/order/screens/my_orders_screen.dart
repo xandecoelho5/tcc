@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../blocs/order_bloc.dart';
+import '../blocs/order/order_bloc.dart';
 import '../components/order_details.dart';
 
 class MyOrdersScreen extends StatelessWidget {
@@ -23,7 +23,9 @@ class MyOrdersScreen extends StatelessWidget {
 
           if (state is OrderLoaded) {
             if (state.orders.isEmpty) {
-              return const Center(child: Text('Ainda não há pedidos'));
+              return const Center(
+                child: Text('Ainda não há pedidos realizados!'),
+              );
             }
 
             return ListView.separated(
@@ -35,7 +37,9 @@ class MyOrdersScreen extends StatelessWidget {
           }
 
           if (state is OrderError) {
-            Modular.get<ISnackBarService>().showError(context, state.message);
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              Modular.get<ISnackBarService>().showError(context, state.message);
+            });
           }
 
           return const Center(child: Text('Pedidos não carregados'));

@@ -34,11 +34,7 @@ class CategoryList extends StatelessWidget {
       crossAxisSpacing: 20,
       mainAxisSpacing: 30,
       childAspectRatio: 0.85,
-      children: categories
-          .map(
-            (c) => CategoryCard.big(category: c),
-          )
-          .toList(),
+      children: categories.map((c) => CategoryCard.big(category: c)).toList(),
     );
   }
 }

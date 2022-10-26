@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'measure_unit.g.dart';
+
+@JsonSerializable()
 class MeasureUnit {
   final int id;
   final String description;
@@ -25,4 +30,9 @@ class MeasureUnit {
   String toString() {
     return 'MeasureUnit{id: $id, description: $description}';
   }
+
+  factory MeasureUnit.fromJson(Map<String, dynamic> json) =>
+      _$MeasureUnitFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MeasureUnitToJson(this);
 }

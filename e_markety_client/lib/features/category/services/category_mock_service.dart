@@ -10,7 +10,7 @@ class CategoryMockService implements CategoryService {
     int? size,
   ) async {
     try {
-      return const Right(categoriesMock);
+      return Right(categoriesMock);
     } catch (e) {
       return Left(CategoryException('Errrro: $e'));
     }

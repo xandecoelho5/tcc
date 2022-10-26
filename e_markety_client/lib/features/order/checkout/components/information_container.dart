@@ -12,12 +12,14 @@ class InformationContainer extends StatefulWidget {
     this.modifiable = false,
     this.expanded = false,
     this.elevation,
+    this.popupMenuButton,
   }) : super(key: key);
 
   final String title;
   final Color? titleColor;
   final Widget? child;
   final IconData? icon;
+  final PopupMenuButton? popupMenuButton;
   final void Function()? onIconTapped;
   final bool modifiable;
   final bool expanded;
@@ -32,8 +34,8 @@ class _InformationContainerState extends State<InformationContainer> {
 
   @override
   Widget build(BuildContext context) {
-    final bool expandable = (widget.child != null &&
-        ((widget.modifiable && _expanded) || !widget.modifiable));
+    final expandable = widget.child != null &&
+        ((widget.modifiable && _expanded) || !widget.modifiable);
 
     return Material(
       borderRadius: BorderRadius.circular(10),
@@ -62,11 +64,13 @@ class _InformationContainerState extends State<InformationContainer> {
                     color: widget.titleColor ?? kBasicDarkColor,
                   ),
                 ),
+                if (widget.popupMenuButton != null) widget.popupMenuButton!,
                 if (widget.icon != null)
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      onTap: () => setState(() => _expanded = !_expanded),
+                      onTap: widget.onIconTapped ??
+                          () => setState(() => _expanded = !_expanded),
                       borderRadius: BorderRadius.circular(50),
                       child: Icon(widget.icon, size: 30),
                     ),

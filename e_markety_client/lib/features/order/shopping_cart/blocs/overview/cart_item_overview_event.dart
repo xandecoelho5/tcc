@@ -28,3 +28,21 @@ class CartItemOverviewCartItemDeleted extends CartItemOverviewEvent {
   @override
   List<Object> get props => [cartItem];
 }
+
+class CartItemQuantityIncrement extends CartItemOverviewEvent {
+  const CartItemQuantityIncrement(this.cartItem);
+
+  final CartItem cartItem;
+
+  @override
+  List<Object> get props => [cartItem];
+}
+
+class CartItemQuantityDecrement extends CartItemOverviewEvent {
+  const CartItemQuantityDecrement(this.cartItem);
+
+  final CartItem cartItem;
+
+  @override
+  List<Object> get props => [cartItem];
+}

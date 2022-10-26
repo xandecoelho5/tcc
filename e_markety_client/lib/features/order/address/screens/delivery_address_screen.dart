@@ -1,18 +1,32 @@
+import 'package:e_markety_client/features/order/address/blocs/address/address_bloc.dart';
+import 'package:e_markety_client/features/order/address/models/address.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:e_markety_client/shared/widgets/filled_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../shared/mocks/mocks.dart';
 import '../components/address_list.dart';
 
-class DeliveryAddressScreen extends StatelessWidget {
+class DeliveryAddressScreen extends StatefulWidget {
   const DeliveryAddressScreen({Key? key}) : super(key: key);
+
+  @override
+  State<DeliveryAddressScreen> createState() => _DeliveryAddressScreenState();
+}
+
+class _DeliveryAddressScreenState extends State<DeliveryAddressScreen> {
+  Address? _address;
+
+  void _onAddressSelected(Address address) {
+    _address = address;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(context, title: 'Delivery Address'),
+      appBar: CustomAppBar.buildAppBar(context, title: 'Endereço de Entrega'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Column(
@@ -23,7 +37,7 @@ class DeliveryAddressScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Shipping To',
+                    'Enviando para',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -32,9 +46,32 @@ class DeliveryAddressScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   Expanded(
-                    child: AddressList(
-                      addresses: addressMock,
-                      isShopping: true,
+                    child: BlocBuilder<AddressBloc, AddressState>(
+                      bloc: Modular.get<AddressBloc>()
+                        ..add(AddressGetAllEvent()),
+                      builder: (context, state) {
+                        if (state is AddressLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+
+                        if (state is AddressLoaded) {
+                          _address ??=
+                              state.addresses.where((e) => e.isDefault).first;
+                          return AddressList(
+                            addresses: state.addresses,
+                            isShopping: true,
+                            onAddressSelected: _onAddressSelected,
+                          );
+                        }
+
+                        if (state is AddressError) {
+                          return Center(child: Text(state.message));
+                        }
+
+                        return Container();
+                      },
                     ),
                   ),
                 ],
@@ -42,9 +79,9 @@ class DeliveryAddressScreen extends StatelessWidget {
             ),
             Expanded(
               child: FilledButton(
-                text: 'Delivery to This Address',
+                text: 'Entregar para este endereço',
                 color: kSecondaryColor,
-                onPressed: () {},
+                onPressed: () => Modular.to.pop(_address),
               ),
             ),
           ],

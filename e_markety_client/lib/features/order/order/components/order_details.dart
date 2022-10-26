@@ -2,6 +2,7 @@ import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:e_markety_client/shared/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../models/delivery_tipe.dart';
 import '../models/order.dart';
 import '../models/order_status.dart';
 import 'order_simpler_timeline.dart';
@@ -21,7 +22,11 @@ class _OrderDetailsState extends State<OrderDetails> {
       ? kSecondaryColor
       : kPrimaryColor;
 
-  _icon() {
+  late final processes = widget.order.deliveryType == DeliveryType.delivery
+      ? OrderStatus.caseDelivery()
+      : OrderStatus.casePickup();
+
+  Material _icon() {
     return Material(
       shape: const CircleBorder(
         side: BorderSide(
@@ -51,7 +56,7 @@ class _OrderDetailsState extends State<OrderDetails> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Order ID: #OD${widget.order.id}',
+          'Código: #OD${widget.order.id}',
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
@@ -59,7 +64,7 @@ class _OrderDetailsState extends State<OrderDetails> {
         ),
         const SizedBox(height: 4),
         Text(
-          'Placed on: ${DateTimeUtils.getFormattedDate(widget.order.createdAt)}',
+          'Realizado em: ${DateTimeUtils.getFormattedDate(widget.order.createdAt)}',
           style: TextStyle(
             color: Colors.grey.shade600,
             fontWeight: FontWeight.bold,
@@ -107,7 +112,7 @@ class _OrderDetailsState extends State<OrderDetails> {
         splashColor: color,
         borderRadius: BorderRadius.circular(10),
         child: Padding(
-          padding: const EdgeInsets.all(2.0),
+          padding: const EdgeInsets.all(2),
           child: Icon(
             _expanded ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_up,
           ),
@@ -155,7 +160,10 @@ class _OrderDetailsState extends State<OrderDetails> {
     return Container(
       height: 185,
       decoration: kDecorationBottomRadiusCircularBorder,
-      child: OrderSimplerTimeline(processIndex: widget.order.status.index),
+      child: OrderSimplerTimeline(
+        process: widget.order.status,
+        processes: processes,
+      ),
     );
   }
 
@@ -180,7 +188,6 @@ class _OrderDetailsState extends State<OrderDetails> {
                 _details(),
                 const Spacer(),
                 _expandIcon(() => setState(() => _expanded = !_expanded)),
-                // _status(),
               ],
             ),
           ),

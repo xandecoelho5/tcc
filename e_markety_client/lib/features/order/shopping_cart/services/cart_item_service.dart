@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:e_markety_client/core/services/cache/cache_service.dart';
 import 'package:e_markety_client/features/order/shopping_cart/models/cart_item.dart';
 import 'package:rxdart/rxdart.dart';
@@ -8,6 +10,10 @@ abstract class ICartItemService {
   void removeFromCart(int id);
 
   Stream<List<CartItem>> getCartItems();
+
+  void quantityIncrement(CartItem cartItem);
+
+  void quantityDecrement(CartItem cartItem);
 }
 
 class CartItemService implements ICartItemService {
@@ -21,7 +27,14 @@ class CartItemService implements ICartItemService {
 
   Future<void> _init() async {
     final cartItemsJson = await _cacheService.get(_kCartItemKey);
-    _streamController.add(cartItemsJson != null ? _decode(cartItemsJson) : []);
+    if (cartItemsJson != null) {
+      final cartItems = (jsonDecode(cartItemsJson) as List)
+          .map((e) => CartItem.fromJson(e))
+          .toList();
+      _streamController.add(cartItems);
+    } else {
+      _streamController.add(const []);
+    }
   }
 
   @override
@@ -29,11 +42,9 @@ class CartItemService implements ICartItemService {
       _streamController.asBroadcastStream();
 
   @override
-  Future<void> addToCart(CartItem cartItem) {
+  Future<void> addToCart(CartItem cartItem) async {
     final cartItems = [..._streamController.value];
-    final index = cartItems.indexWhere(
-      (t) => t.product.id == cartItem.product.id,
-    );
+    final index = _findIndexByProductId(cartItem);
     if (index >= 0) {
       cartItems[index] = cartItem;
     } else {
@@ -41,7 +52,7 @@ class CartItemService implements ICartItemService {
     }
 
     _streamController.add(cartItems);
-    return _cacheService.save(_kCartItemKey, _encode(cartItems));
+    await _cacheService.save(_kCartItemKey, jsonEncode(cartItems));
   }
 
   @override
@@ -51,13 +62,36 @@ class CartItemService implements ICartItemService {
     if (index >= 0) {
       cartItems.removeAt(index);
       _streamController.add(cartItems);
-      return _cacheService.save(_kCartItemKey, _encode(cartItems));
+      await _cacheService.save(_kCartItemKey, jsonEncode(cartItems));
     }
   }
 
-  List<Map<String, dynamic>> _encode(List<CartItem> cartItems) =>
-      cartItems.map((e) => e.toMap()).toList();
+  @override
+  Future<void> quantityIncrement(CartItem cartItem) async {
+    final cartItems = [..._streamController.value];
+    final index = _findIndexByProductId(cartItem);
+    cartItems[index] = cartItem.copyWith(
+      quantity: cartItem.quantity + cartItem.product.weightUnit,
+    );
 
-  List<CartItem> _decode(List<Map<String, dynamic>> cartItems) =>
-      cartItems.map(CartItem.fromMap).toList();
+    _streamController.add(cartItems);
+    await _cacheService.save(_kCartItemKey, jsonEncode(cartItems));
+  }
+
+  @override
+  Future<void> quantityDecrement(CartItem cartItem) async {
+    final cartItems = [..._streamController.value];
+    final index = _findIndexByProductId(cartItem);
+    if (cartItem.quantity > cartItem.product.weightUnit) {
+      cartItems[index] = cartItem.copyWith(
+        quantity: cartItem.quantity - cartItem.product.weightUnit,
+      );
+    }
+
+    _streamController.add(cartItems);
+    await _cacheService.save(_kCartItemKey, jsonEncode(cartItems));
+  }
+
+  int _findIndexByProductId(CartItem item) => [..._streamController.value]
+      .indexWhere((t) => t.product.id == item.product.id);
 }

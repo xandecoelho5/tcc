@@ -25,8 +25,10 @@ class _SearchBarWithFilterState extends State<SearchBarWithFilter> {
   }
 
   void _onClear() {
-    _controller.clear();
-    _onApply();
+    if (_controller.text.isNotEmpty) {
+      _controller.clear();
+      _onApply();
+    }
   }
 
   void _onApply() {

@@ -1,111 +1,74 @@
-import 'package:e_markety_client/features/order/address/components/address_info.dart';
+import 'package:e_markety_client/features/order/address/blocs/default_address/default_address_bloc.dart';
+import 'package:e_markety_client/features/order/address/models/address.dart';
+import 'package:e_markety_client/features/order/checkout/components/checkout_header.dart';
+import 'package:e_markety_client/features/order/checkout/components/delivery_address_container.dart';
+import 'package:e_markety_client/features/order/checkout/components/delivery_time_settings.dart';
+import 'package:e_markety_client/features/order/checkout/components/delivery_type_switch.dart';
+import 'package:e_markety_client/features/order/checkout/components/notes_container.dart';
+import 'package:e_markety_client/features/order/order/models/delivery_tipe.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../shared/widgets/filled_button.dart';
 import '../../order/components/total_container.dart';
-import '../../order/models/delivery_tipe.dart';
 import '../../order/models/order.dart';
 import '../components/information_container.dart';
 
-class CheckoutScreen extends StatelessWidget {
+class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({Key? key, required this.order}) : super(key: key);
 
   final Order order;
 
-  Container _orderId() {
-    const style = TextStyle(
-      fontSize: 18,
-      color: Colors.white,
-      fontWeight: FontWeight.bold,
-    );
+  @override
+  State<CheckoutScreen> createState() => _CheckoutScreenState();
+}
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      decoration: BoxDecoration(
-        color: kSecondaryColor,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text('Order ID', style: style),
-          Text('#OD${order.id}', style: style),
-        ],
-      ),
-    );
+class _CheckoutScreenState extends State<CheckoutScreen> {
+  late Order _order = widget.order;
+
+  void _onDeliveryTypeChanged(bool value) {
+    setState(() {
+      _order = _order.copyWith(
+        deliveryType: value ? DeliveryType.delivery : DeliveryType.pickup,
+      );
+
+      if (_order.deliveryType == DeliveryType.delivery &&
+          _order.deliveryAddress == null) {
+        // se Loaded é porque conseguiu pegar o endereço padrão, então seta
+        final state = Modular.get<DefaultAddressBloc>().state;
+        if (state is DefaultAddressLoaded) {
+          _order = _order.copyWith(deliveryAddress: state.address);
+        }
+      }
+    });
   }
 
-  InformationContainer _deliveryAddress() {
-    return InformationContainer(
-      title: 'Delivery Address',
-      icon: Icons.more_horiz,
-      child: AddressInfo(address: order.deliveryAddress!),
-    );
+  void _onAddressSelected(Address address) {
+    setState(() => _order = _order.copyWith(deliveryAddress: address));
   }
 
-  InformationContainer _deliveryTimeSettings() {
-    return InformationContainer(
-      title: 'Delivery Time Settings',
-      child: Column(
-        children: [
-          // titleColor: Colors.grey.shade700,
-          InformationContainer(
-            title: 'Time Slot',
-            icon: Icons.keyboard_arrow_down,
-            titleColor: Colors.grey.shade700,
-            modifiable: true,
-            child: const Text('9:00 AM - 17:00 PM'),
-          ),
-          const SizedBox(height: 16),
-          InformationContainer(
-            title: 'Jan 26, 2021',
-            icon: Icons.calendar_month,
-            titleColor: Colors.grey.shade700,
-          ),
-        ],
-      ),
-    );
+  void _onNotesChange(String notes) {
+    setState(() => _order = _order.copyWith(notes: notes));
   }
 
   List<Widget> _deliveryRelated() {
     return [
-      _deliveryAddress(),
+      DeliveryAddressContainer(
+        onAddressSelected: _onAddressSelected,
+        deliveryAddress: _order.deliveryAddress,
+      ),
       const SizedBox(height: 20),
-      _deliveryTimeSettings(),
+      const DeliveryTimeSettings(),
       const SizedBox(height: 20),
     ];
   }
 
   InformationContainer _orderBill() {
     return InformationContainer(
-      title: 'Order Bill',
-      child: TotalContainer(order: order, showDiscount: true),
-    );
-  }
-
-  InformationContainer _notes() {
-    final border = OutlineInputBorder(
-      borderRadius: const BorderRadius.all(Radius.circular(0)),
-      borderSide: BorderSide(color: Colors.grey.shade300, width: 2),
-    );
-
-    return InformationContainer(
-      title: 'Notes',
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: 'Type Something you want here...',
-          hintStyle: TextStyle(
-            color: Colors.grey.shade500,
-            fontWeight: FontWeight.bold,
-          ),
-          border: border,
-          enabledBorder: border,
-          focusedBorder: border,
-        ),
-        maxLines: 5,
-      ),
+      title: 'Resumo da Conta',
+      child: TotalContainer(order: _order, showDiscount: true),
     );
   }
 
@@ -123,13 +86,18 @@ class CheckoutScreen extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Column(
                   children: [
-                    _orderId(),
+                    CheckoutHeader(order: _order),
                     const SizedBox(height: 20),
-                    if (order.deliveryType == DeliveryType.delivery)
+                    DeliveryTypeSwitch(
+                      deliveryType: _order.deliveryType,
+                      onDeliveryTypeChanged: _onDeliveryTypeChanged,
+                    ),
+                    const SizedBox(height: 20),
+                    if (_order.deliveryType == DeliveryType.delivery)
                       ..._deliveryRelated(),
                     _orderBill(),
                     const SizedBox(height: 20),
-                    _notes(),
+                    NotesContainer(onChange: _onNotesChange),
                   ],
                 ),
               ),
@@ -139,9 +107,11 @@ class CheckoutScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: FilledButton(
-                text: 'Place Order',
+                text: 'Finalizar Pedido',
                 color: kSecondaryColor,
-                onPressed: () {},
+                onPressed: () {
+                  print(_order);
+                },
               ),
             ),
           ),

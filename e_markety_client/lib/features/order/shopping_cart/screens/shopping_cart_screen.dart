@@ -1,5 +1,5 @@
 import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
-import 'package:e_markety_client/features/order/shopping_cart/blocs/cart_item_overview_bloc.dart';
+import 'package:e_markety_client/features/order/shopping_cart/blocs/overview/cart_item_overview_bloc.dart';
 import 'package:e_markety_client/features/order/shopping_cart/components/empty_cart.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';

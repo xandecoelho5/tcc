@@ -1,5 +1,5 @@
+import 'package:e_markety_client/features/order/shopping_cart/components/cart_item_quantity.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
-import 'package:e_markety_client/shared/widgets/quantity_button.dart';
 import 'package:flutter/material.dart';
 
 import '../models/cart_item.dart';
@@ -8,42 +8,6 @@ class CartItemWidget extends StatelessWidget {
   const CartItemWidget({Key? key, required this.item}) : super(key: key);
 
   final CartItem item;
-
-  SizedBox _quantityButtons() {
-    return SizedBox(
-      width: 35,
-      child: Column(
-        children: [
-          const Expanded(
-            child: QuantityButton(
-              icon: '-',
-              borderRadius: BorderRadius.only(topRight: Radius.circular(10)),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              color: kBasicLightColor.withOpacity(0.25),
-              child: Center(
-                child: Text(
-                  '${item.quantity}',
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const Expanded(
-            child: QuantityButton(
-              icon: '+',
-              borderRadius: BorderRadius.only(bottomRight: Radius.circular(10)),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +33,8 @@ class CartItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '\$${item.product.finalPrice.toStringAsFixed(2)} x ${item.quantity}',
+                  '\$${item.product.finalPrice.toStringAsFixed(2)} x '
+                  '${item.quantity.toStringAsFixed(2)}',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: kSecondaryColor,
@@ -96,7 +61,7 @@ class CartItemWidget extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          _quantityButtons(),
+          CartItemQuantity(item: item),
         ],
       ),
     );

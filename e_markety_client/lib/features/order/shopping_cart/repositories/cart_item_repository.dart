@@ -12,4 +12,10 @@ class CartItemRepository {
   void addToCart(CartItem cartItem) => _cartItemService.addToCart(cartItem);
 
   void removeFromCart(int id) => _cartItemService.removeFromCart(id);
+
+  void quantityIncrement(CartItem cartItem) =>
+      _cartItemService.quantityIncrement(cartItem);
+
+  void quantityDecrement(CartItem cartItem) =>
+      _cartItemService.quantityDecrement(cartItem);
 }

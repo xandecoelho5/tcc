@@ -29,7 +29,7 @@ class AddressInfo extends StatelessWidget {
         Row(
           children: [
             const Text(
-              'Mobile: ',
+              'Telefone: ',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             Text(

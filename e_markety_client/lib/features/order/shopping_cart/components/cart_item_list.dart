@@ -2,7 +2,7 @@ import 'package:e_markety_client/shared/widgets/slidable_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../blocs/cart_item_overview_bloc.dart';
+import '../blocs/overview/cart_item_overview_bloc.dart';
 import '../models/cart_item.dart';
 import 'cart_item_widget.dart';
 

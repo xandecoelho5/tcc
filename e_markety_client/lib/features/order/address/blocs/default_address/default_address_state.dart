@@ -4,10 +4,10 @@ abstract class DefaultAddressState {}
 
 class DefaultAddressInitial implements DefaultAddressState {}
 
-class DefaultAddressSuccess implements DefaultAddressState {
+class DefaultAddressLoaded implements DefaultAddressState {
   final Address address;
 
-  DefaultAddressSuccess(this.address);
+  DefaultAddressLoaded(this.address);
 }
 
 class DefaultAddressError implements DefaultAddressState {

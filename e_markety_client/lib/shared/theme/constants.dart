@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 const routes = [
   '/delivery-address',
-  '/checkout',
   '/track-order',
-  '/apply-filters',
 ];
 
 const kPrimaryColor = Color(0xFFEB3E4B);

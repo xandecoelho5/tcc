@@ -1,16 +1,20 @@
 import 'package:e_markety_client/features/order/address/models/address.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 import '../../shopping_cart/models/cart_item.dart';
 import 'delivery_tipe.dart';
 import 'order_status.dart';
 
+part 'order.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class Order {
   final int id;
   final DateTime createdAt;
   final double total;
   final DeliveryType deliveryType;
   final List<CartItem> items;
-  final String notes;
+  final String? notes;
   final Address? deliveryAddress;
   final DateTime? deliveryTime; // hora da entrega
   final double? deliveryCharge;
@@ -34,16 +38,31 @@ class Order {
         (total, item) => total + item.product.finalPrice * item.quantity,
       );
 
-  double calculateTotal() => subTotal + (deliveryCharge ?? 0);
+  double calculateTotal() => subTotal + (deliveryCharge ?? 0) - discount;
 
   String get formattedCharge => deliveryCharge != null && deliveryCharge! > 0
       ? '\$ ${deliveryCharge!.toStringAsFixed(2)}'
-      : 'Free';
+      : 'Grátis';
 
   double get discount => items.fold(
         0,
         (total, item) => total + item.product.discount * item.quantity,
       );
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'data': createdAt,
+      'total': total,
+      'tipoEntrega': deliveryType,
+      'items': items,
+      'observacao': notes,
+      'endereco': deliveryAddress,
+      'horarioEntrega': deliveryTime,
+      'taxaEntrega': deliveryCharge,
+      'status': status,
+    };
+  }
 
   factory Order.fromMap(dynamic map) {
     return Order(
@@ -61,5 +80,43 @@ class Order {
       deliveryCharge: map['taxaEntrega'],
       status: OrderStatus.fromString(map['status']),
     );
+  }
+
+  factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
+
+  Map<String, dynamic> toJson() => _$OrderToJson(this);
+
+  Order copyWith({
+    int? id,
+    DateTime? createdAt,
+    double? total,
+    DeliveryType? deliveryType,
+    List<CartItem>? items,
+    String? notes,
+    Address? deliveryAddress,
+    DateTime? deliveryTime,
+    double? deliveryCharge,
+    OrderStatus? status,
+  }) {
+    return Order(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      total: total ?? this.total,
+      deliveryType: deliveryType ?? this.deliveryType,
+      items: items ?? this.items,
+      notes: notes ?? this.notes,
+      deliveryAddress: deliveryAddress ?? this.deliveryAddress,
+      deliveryTime: deliveryTime ?? this.deliveryTime,
+      deliveryCharge: deliveryCharge ?? this.deliveryCharge,
+      status: status ?? this.status,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'Order{id: $id, createdAt: $createdAt, total: $total, '
+        'deliveryType: $deliveryType, items: $items, notes: $notes, '
+        'deliveryAddress: $deliveryAddress, deliveryTime: $deliveryTime, '
+        'deliveryCharge: $deliveryCharge, status: $status}';
   }
 }

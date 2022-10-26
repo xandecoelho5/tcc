@@ -1,4 +1,4 @@
-import 'package:e_markety_client/features/order/shopping_cart/blocs/cart_item_overview_bloc.dart';
+import 'package:e_markety_client/features/order/shopping_cart/blocs/overview/cart_item_overview_bloc.dart';
 import 'package:e_markety_client/features/order/shopping_cart/models/cart_item.dart';
 import 'package:e_markety_client/features/product/components/category_chip.dart';
 import 'package:e_markety_client/features/product/components/favourite_icon.dart';
@@ -14,19 +14,6 @@ class ProductCard extends StatelessWidget {
   const ProductCard({Key? key, required this.product}) : super(key: key);
 
   final Product product;
-
-  // void _onAddItemToCart() {
-  //   final bloc = Modular.get<CartItemOverviewBloc>();
-  //   final items = bloc.state.cartItems;
-  //   bloc.add(
-  //     CartItemOverviewCartItemAdd(
-  //       CartItem(
-  //         id: items.isEmpty ? 1 : items.last.id + 1,
-  //         product: product,
-  //       ),
-  //     ),
-  //   );
-  // }
 
   void _onAddItemToCart() {
     Modular.get<CartItemOverviewBloc>().add(

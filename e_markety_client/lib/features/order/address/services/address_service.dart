@@ -21,7 +21,7 @@ class AddressService implements IAddressService {
 
   @override
   Future<Either<AddressException, List<Address>>> getAddresses() async {
-    final response = await _httpService.getAll(_baseUrl);
+    final response = await _httpService.getAll('$_baseUrl/current');
     return response.fold(
       (l) => Left(AddressException(l.message, l.stackTrace)),
       (r) => Right(r.map(Address.fromMap).toList()),

@@ -21,76 +21,76 @@ const bannersMock = [
   'https://delivery.patao.com.br/arquivos/smd_home_22_09_17_oferta_slider_Spaten1.png?v=637998969138700000',
 ];
 
-const categoriesMock = [
+final categoriesMock = [
   Category(
     id: 1,
     name: 'Fruits & Vegetables',
     imageUrl: Assets.fruitsAndVegetablesImage,
     iconUrl: Assets.fruitsAndVegetablesIcon,
-    color: kGreenColor,
+    colorString: kGreenColor.toString(),
   ),
   Category(
     id: 2,
     name: 'Dairy & Bakery',
     imageUrl: Assets.fruitsAndVegetablesImage,
     iconUrl: Assets.fruitsAndVegetablesIcon,
-    color: kLightBrownColor,
+    colorString: kLightBrownColor.toString(),
   ),
   Category(
     id: 3,
     name: 'Staples',
     imageUrl: Assets.fruitsAndVegetablesImage,
     iconUrl: Assets.fruitsAndVegetablesIcon,
-    color: kMediumBrownColor,
+    colorString: kMediumBrownColor.toString(),
   ),
   Category(
     id: 4,
     name: 'Snacks & Branded Foods',
     imageUrl: Assets.fruitsAndVegetablesImage,
     iconUrl: Assets.fruitsAndVegetablesIcon,
-    color: kBrownColor,
+    colorString: kBrownColor.toString(),
   ),
   Category(
     id: 5,
     name: 'Beverages',
     imageUrl: Assets.fruitsAndVegetablesImage,
     iconUrl: Assets.fruitsAndVegetablesIcon,
-    color: kGreyColor,
+    colorString: kGreyColor.toString(),
   ),
   Category(
     id: 6,
     name: 'Personal Care',
     imageUrl: Assets.fruitsAndVegetablesImage,
     iconUrl: Assets.fruitsAndVegetablesIcon,
-    color: kPurpleColor,
+    colorString: kPurpleColor.toString(),
   ),
   Category(
     id: 7,
     name: 'Home Care',
     imageUrl: Assets.fruitsAndVegetablesImage,
     iconUrl: Assets.fruitsAndVegetablesIcon,
-    color: kBlueColor,
+    colorString: kBlueColor.toString(),
   ),
   Category(
     id: 8,
     name: 'Baby Care',
     imageUrl: Assets.fruitsAndVegetablesImage,
     iconUrl: Assets.fruitsAndVegetablesIcon,
-    color: kPinkColor,
+    colorString: kPinkColor.toString(),
   ),
   Category(
     id: 9,
     name: 'Home & Kitchen',
     imageUrl: Assets.fruitsAndVegetablesImage,
     iconUrl: Assets.fruitsAndVegetablesIcon,
-    color: kLightGreyColor,
+    colorString: kLightGreyColor.toString(),
   ),
   Category(
     id: 10,
     name: 'Pet Foods',
     imageUrl: Assets.fruitsAndVegetablesImage,
     iconUrl: Assets.fruitsAndVegetablesIcon,
-    color: kWeakBrownColor,
+    colorString: kWeakBrownColor.toString(),
   ),
 ];
 

@@ -1,4 +1,5 @@
 enum OrderStatus {
+  pending('Pedido Pendente'),
   placed('Pedido Realizado'),
   confirmed('Pedido Confirmado'),
   readyToPickup('Pronto para Retirada'),
@@ -12,6 +13,8 @@ enum OrderStatus {
 
   static OrderStatus fromString(String value) {
     switch (value.toUpperCase()) {
+      case 'REALIZADO':
+        return OrderStatus.placed;
       case 'CONFIRMADO':
         return OrderStatus.confirmed;
       case 'PRONTO_PARA_RETIRADA':
@@ -22,9 +25,28 @@ enum OrderStatus {
         return OrderStatus.outForDelivery;
       case 'ENTREGUE':
         return OrderStatus.delivered;
-      case 'REALIZADO':
+      case 'PENDENTE':
       default:
-        return OrderStatus.placed;
+        return OrderStatus.pending;
     }
+  }
+
+  static List<OrderStatus> casePickup() {
+    return [
+      OrderStatus.placed,
+      OrderStatus.confirmed,
+      OrderStatus.readyToPickup,
+      OrderStatus.delivered,
+    ];
+  }
+
+  static List<OrderStatus> caseDelivery() {
+    return [
+      OrderStatus.placed,
+      OrderStatus.confirmed,
+      OrderStatus.readyToDeliver,
+      OrderStatus.outForDelivery,
+      OrderStatus.delivered,
+    ];
   }
 }

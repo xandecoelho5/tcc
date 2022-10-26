@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../models/delivery_tipe.dart';
 import '../models/order.dart';
 
 class TotalContainer extends StatelessWidget {
@@ -28,30 +29,45 @@ class TotalContainer extends StatelessWidget {
     );
   }
 
+  List<Widget> _deliveryChargeRow() {
+    return order.deliveryType == DeliveryType.delivery
+        ? [
+            const SizedBox(height: 8),
+            _row('Taxa de Entrega', order.formattedCharge),
+          ]
+        : [];
+  }
+
+  List<Widget> _discountRow() {
+    return showDiscount && order.discount > 0
+        ? [
+            const SizedBox(height: 8),
+            _row('Discount', '\$${order.discount.toStringAsFixed(2)}'),
+          ]
+        : [];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _row('Item', '${order.items.length}'),
+        _row('Items', '${order.items.length}'),
         const SizedBox(height: 8),
-        _row('Sub Total', '\$${order.subTotal.toStringAsFixed(2)}'),
-        const SizedBox(height: 8),
-        _row('Delivery Charge', order.formattedCharge),
-        if (showDiscount && order.discount > 0) const SizedBox(height: 8),
-        if (showDiscount && order.discount > 0)
-          _row('Discount', '\$${order.discount.toStringAsFixed(2)}'),
+        _row('Subtotal', '\$${order.subTotal.toStringAsFixed(2)}'),
+        ..._deliveryChargeRow(),
+        ..._discountRow(),
         const Divider(height: 20, thickness: 1),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text(
+          children: [
+            const Text(
               'Total',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            Spacer(),
+            const Spacer(),
             Text(
-              r'$100.00',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              '\$${order.calculateTotal().toStringAsFixed(2)}',
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ],
         ),

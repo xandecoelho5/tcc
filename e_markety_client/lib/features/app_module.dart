@@ -9,7 +9,9 @@ import 'package:e_markety_client/features/order/address/screens/add_new_address_
 import 'package:e_markety_client/features/order/address/screens/address_screen.dart';
 import 'package:e_markety_client/features/order/address/services/address_service.dart';
 import 'package:e_markety_client/features/order/checkout/screens/checkout_screen.dart';
-import 'package:e_markety_client/features/order/shopping_cart/blocs/cart_item_overview_bloc.dart';
+import 'package:e_markety_client/features/order/order/blocs/current_order/current_order_bloc.dart';
+import 'package:e_markety_client/features/order/order/services/current_order_service.dart';
+import 'package:e_markety_client/features/order/shopping_cart/blocs/overview/cart_item_overview_bloc.dart';
 import 'package:e_markety_client/features/order/shopping_cart/repositories/cart_item_repository.dart';
 import 'package:e_markety_client/features/product/blocs/favourite/favourite_bloc.dart';
 import 'package:e_markety_client/features/product/blocs/filter/filter_bloc.dart';
@@ -36,11 +38,10 @@ import 'package:e_markety_client/shared/widgets/custom_scroll_behavior.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../shared/mocks/mocks.dart';
 import '../shared/theme/theme.dart';
 import 'order/address/blocs/address/address_bloc.dart';
 import 'order/address/screens/delivery_address_screen.dart';
-import 'order/order/blocs/order_bloc.dart';
+import 'order/order/blocs/order/order_bloc.dart';
 import 'order/order/screens/my_orders_screen.dart';
 import 'order/order/screens/order_result_screen.dart';
 import 'order/order/screens/track_order_screen.dart';
@@ -79,6 +80,8 @@ class AppModule extends Module {
     // order
     Bind.singleton<IOrderService>((i) => OrderService(i())),
     Bind.singleton((i) => OrderBloc(i())),
+    Bind.singleton<ICurrentOrderService>((i) => CurrentOrderService(i(), i())),
+    Bind.singleton((i) => CurrentOrderBloc(i())),
     // cart item
     Bind.singleton<ICartItemService>((i) => CartItemService(i())),
     Bind.singleton((i) => CartItemRepository(i())),
@@ -129,7 +132,7 @@ class AppModule extends Module {
     ),
     ChildRoute(
       '/checkout',
-      child: (context, args) => CheckoutScreen(order: orderMock),
+      child: (context, args) => CheckoutScreen(order: args.data),
     ),
     ChildRoute(
       '/order-result',
@@ -137,7 +140,7 @@ class AppModule extends Module {
     ),
     ChildRoute(
       '/track-order',
-      child: (context, args) => TrackOrderScreen(order: orderMock),
+      child: (context, args) => const TrackOrderScreen(),
     ),
     ChildRoute(
       '/apply-filters',

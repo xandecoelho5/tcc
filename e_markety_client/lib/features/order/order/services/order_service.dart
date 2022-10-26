@@ -6,6 +6,10 @@ import '../models/order.dart';
 
 abstract class IOrderService {
   Future<Either<OrderException, List<Order>>> getOrders();
+
+  Future<Either<OrderException, Order>> getOpenOrder();
+
+  Future<Either<OrderException, Order>> createOrder();
 }
 
 class OrderService implements IOrderService {
@@ -16,10 +20,28 @@ class OrderService implements IOrderService {
 
   @override
   Future<Either<OrderException, List<Order>>> getOrders() async {
-    final response = await _httpService.getAll(_baseUrl);
+    final response = await _httpService.getAll('$_baseUrl/current');
     return response.fold(
       (l) => Left(OrderException(l.message, l.stackTrace)),
       (r) => Right(r.map(Order.fromMap).toList()),
+    );
+  }
+
+  @override
+  Future<Either<OrderException, Order>> getOpenOrder() async {
+    final response = await _httpService.get('$_baseUrl/aberto');
+    return response.fold(
+      (l) => Left(OrderException(l.message, l.stackTrace)),
+      (r) => Right(Order.fromMap(r)),
+    );
+  }
+
+  @override
+  Future<Either<OrderException, Order>> createOrder() async {
+    final response = await _httpService.post('$_baseUrl/novo', {});
+    return response.fold(
+      (l) => Left(OrderException(l.message, l.stackTrace)),
+      (r) => Right(Order.fromMap(r)),
     );
   }
 }

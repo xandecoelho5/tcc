@@ -1,6 +1,10 @@
 import 'package:e_markety_client/features/category/models/category.dart';
 import 'package:e_markety_client/features/product/models/measure_unit.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'product.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class Product {
   final int id;
   final String name;
@@ -61,6 +65,13 @@ class Product {
     return '${weightPrice.toInt()} kg ${(decimal * 1000).toInt()} G';
   }
 
+  int get fractionDigits {
+    if (measureUnit.description == 'UN') {
+      return 0;
+    }
+    return 2;
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -111,4 +122,9 @@ class Product {
   String toString() {
     return 'Product{id: $id}';
   }
+
+  factory Product.fromJson(Map<String, dynamic> json) =>
+      _$ProductFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ProductToJson(this);
 }

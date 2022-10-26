@@ -49,7 +49,7 @@ class HomeAppBar {
                 BlocBuilder<DefaultAddressBloc, DefaultAddressState>(
                   bloc: Modular.get<DefaultAddressBloc>(),
                   builder: (context, state) {
-                    if (state is DefaultAddressSuccess) {
+                    if (state is DefaultAddressLoaded) {
                       return Row(
                         children: [
                           const Icon(

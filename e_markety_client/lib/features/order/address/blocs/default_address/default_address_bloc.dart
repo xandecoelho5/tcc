@@ -18,7 +18,7 @@ class DefaultAddressBloc
     final addresses = await _addressService.getDefaultAddress();
     addresses.fold(
       (l) => emit(DefaultAddressError(l.message)),
-      (r) => emit(DefaultAddressSuccess(r)),
+      (r) => emit(DefaultAddressLoaded(r)),
     );
   }
 }

@@ -38,6 +38,8 @@ class SharedPreferencesService implements ICacheService {
       await _plugin.setBool(key, value);
     } else if (value is List<String>) {
       await _plugin.setStringList(key, value);
+    } else {
+      print('not saved on Shared Preference');
     }
   }
 

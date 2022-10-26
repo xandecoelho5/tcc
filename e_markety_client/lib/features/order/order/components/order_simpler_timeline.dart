@@ -7,12 +7,16 @@ import '../models/order_status.dart';
 class OrderSimplerTimeline extends StatelessWidget {
   OrderSimplerTimeline({
     Key? key,
-    required this.processIndex,
-  })  : delivered = processIndex == OrderStatus.delivered.index,
+    required this.process,
+    required this.processes,
+  })  : delivered = process == OrderStatus.delivered,
+        processIndex = processes.indexOf(process),
         super(key: key);
 
-  final int processIndex;
+  final List<OrderStatus> processes;
+  final OrderStatus process;
   final bool delivered;
+  final int processIndex;
 
   Color _getColor(int index) {
     if (delivered) return kSecondaryColor;
@@ -38,7 +42,7 @@ class OrderSimplerTimeline extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  OrderStatus.values[index].label,
+                  processes[index].label,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: notProcessed
@@ -51,7 +55,7 @@ class OrderSimplerTimeline extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  notProcessed ? 'Pending' : 'Jan 26, 2021',
+                  notProcessed ? 'Pendente' : 'Jan 26, 2021',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: kDarkGreyColor,
@@ -67,7 +71,7 @@ class OrderSimplerTimeline extends StatelessWidget {
           color: _getColor(index),
         ),
         connectorBuilder: (_, i, __) => SolidLineConnector(color: _getColor(i)),
-        itemCount: OrderStatus.values.length,
+        itemCount: processes.length,
       ),
     );
   }

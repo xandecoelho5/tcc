@@ -1,6 +1,6 @@
 enum DeliveryType {
-  pickup,
-  delivery;
+  pickup('Retirada'),
+  delivery('Entrega');
 
   static DeliveryType fromString(String value) {
     switch (value.toUpperCase()) {
@@ -11,4 +11,8 @@ enum DeliveryType {
         return DeliveryType.pickup;
     }
   }
+
+  const DeliveryType(this.label);
+
+  final String label;
 }
