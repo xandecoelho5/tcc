@@ -34,8 +34,8 @@ public class SecurityConfiguration {
                         authorize -> {
                             try {
                                 authorize
-                                        .antMatchers(HttpMethod.POST, "/auth").permitAll()
-                                        .antMatchers(HttpMethod.POST, "/usuario").permitAll()
+                                        .antMatchers(HttpMethod.POST, "/pedido").denyAll()
+                                        .antMatchers(HttpMethod.POST, "/auth", "/usuario").permitAll()
                                         .antMatchers(HttpMethod.GET, "/endereco", "/pedido").hasRole("ADMIN")
                                         .anyRequest().permitAll() // authenticated()
                                         .and().csrf().disable()

@@ -31,10 +31,7 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long, Usuari
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<Usuario> user = repository.findByEmail(email);
-        if (user.isPresent()) {
-            return user.get();
-        }
-        throw new UsernameNotFoundException("Dados inválidos!");
+        return user.orElseThrow(() -> new UsernameNotFoundException("Dados inválidos!"));
     }
 
     @Override

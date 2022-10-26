@@ -3,8 +3,11 @@ package br.edu.utfpr.e_markety.model;
 import br.edu.utfpr.e_markety.model.enums.StatusPedido;
 import br.edu.utfpr.e_markety.model.enums.TipoEntrega;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -19,33 +22,36 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
 public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ColumnDefault("CURRENT_DATE")
-    private LocalDate data;
+    @Column(columnDefinition = "DATE DEFAULT CURRENT_DATE")
+    private LocalDate data = LocalDate.now();
 
     @Column(columnDefinition = "decimal(10,2) default 0.00")
-    private BigDecimal total;
+    private BigDecimal total = BigDecimal.ZERO;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "tipo_entrega_enum")
-    @ColumnDefault("'RETIRADA'")
-    private TipoEntrega tipoEntrega;
+    @Column(columnDefinition = "tipo_entrega_enum DEFAULT 'RETIRADA'::tipo_entrega_enum")
+    @Type(type = "pgsql_enum")
+    private TipoEntrega tipoEntrega = TipoEntrega.RETIRADA;
 
     @Column
     private LocalDateTime horarioEntrega;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "status_pedido_enum")
-    @ColumnDefault("'REALIZADO'")
-    private StatusPedido status;
+    @Column(columnDefinition = "status_pedido_enum DEFAULT 'PENDENTE'::status_pedido_enum")
+    @Type(type = "pgsql_enum")
+    private StatusPedido status = StatusPedido.PENDENTE;
 
+    @Column
     private String observacao;
 
+    @Column(columnDefinition = "decimal(5,2)")
     private BigDecimal taxaEntrega;
 
     @ManyToOne
@@ -59,4 +65,8 @@ public class Pedido {
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PedidoItem> items = new ArrayList<>();
+
+    public Pedido(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }
