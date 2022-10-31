@@ -49,3 +49,24 @@ const kDecorationBottomRadiusCircularBorder = BoxDecoration(
   color: Colors.white,
   borderRadius: kBottomRadiusCircularBorder,
 );
+
+final kDivider = Divider(color: Colors.grey.withOpacity(0.3), height: 1);
+
+const kLabelStyle = TextStyle(
+  color: Color(0XFF8a909d),
+  fontWeight: FontWeight.bold,
+);
+
+final kTextInputBorder = OutlineInputBorder(
+  borderRadius: BorderRadius.circular(15),
+  borderSide: const BorderSide(color: Color(0XFFEEEEEE)),
+);
+
+final kTextInputDecoration = InputDecoration(
+  enabledBorder: kTextInputBorder,
+  focusedBorder: kTextInputBorder,
+  contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+  errorBorder: kTextInputBorder.copyWith(
+    borderSide: BorderSide(color: Colors.red.shade700),
+  ),
+);

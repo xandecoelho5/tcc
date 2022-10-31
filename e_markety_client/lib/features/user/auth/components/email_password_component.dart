@@ -29,7 +29,7 @@ class _EmailPasswordComponentState extends State<EmailPasswordComponent> {
           label: 'E-mail',
           validator: Validatorless.multiple([
             Validatorless.email(Strings.emailInvalido),
-            Validatorless.required(Strings.campoObrigatorio),
+            Validatorless.required(Strings.obrigatorio),
           ]),
           onSaved: widget.onEmailSaved,
         ),
@@ -44,7 +44,7 @@ class _EmailPasswordComponentState extends State<EmailPasswordComponent> {
           onTapSuffix: () => setState(() => _obscureText = !_obscureText),
           validator: Validatorless.multiple([
             Validatorless.min(6, 'Deve ter pelo menos 6 caracteres'),
-            Validatorless.required(Strings.campoObrigatorio),
+            Validatorless.required(Strings.obrigatorio),
           ]),
           onSaved: widget.onPasswordSaved,
         ),

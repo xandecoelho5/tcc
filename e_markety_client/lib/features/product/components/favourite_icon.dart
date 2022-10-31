@@ -23,7 +23,7 @@ class FavouriteIcon extends StatelessWidget {
         if (!isFavorite) {
           Modular.get<FavouriteBloc>().add(FavouriteAdd(product));
         } else {
-          Modular.get<FavouriteBloc>().add(FavouriteRemove(product.id));
+          Modular.get<FavouriteBloc>().add(FavouriteRemove(product.id!));
         }
       },
       child: Icon(
@@ -40,7 +40,7 @@ class FavouriteIcon extends StatelessWidget {
       bloc: Modular.get<AuthBloc>(),
       builder: (context, state) {
         if (state is AuthLogged) {
-          return _icon(state.user.isFavourite(product.id));
+          return _icon(state.user.isFavourite(product.id!));
         }
         return Icon(
           Icons.favorite_border,

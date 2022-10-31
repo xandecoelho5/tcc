@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../core/services/cache/cache_service.dart';
+import '../../../../shared/environment/platform.dart';
 import '../blocs/auth_bloc.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -25,7 +26,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     final token = await Modular.get<ICacheService>().get(Strings.token);
     if (token != null) {
       Modular.get<AuthBloc>().add(AuthGetCurrentUserEvent());
-      Modular.to.navigate('/home');
+      Modular.to.navigate(Modular.get<AppPlatform>().defaultRoute);
     }
   }
 

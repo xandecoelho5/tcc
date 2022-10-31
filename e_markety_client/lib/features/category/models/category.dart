@@ -1,11 +1,12 @@
 import 'dart:ui';
 
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'category.g.dart';
 
 @JsonSerializable()
-class Category {
+class Category extends Equatable {
   final int id;
   final String name;
   final String imageUrl;
@@ -43,12 +44,13 @@ class Category {
   Color get color => Color(int.parse(colorString));
 
   @override
-  String toString() {
-    return 'Category{id: $id, name: $name}';
-  }
+  String toString() => name;
 
   factory Category.fromJson(Map<String, dynamic> json) =>
       _$CategoryFromJson(json);
 
   Map<String, dynamic> toJson() => _$CategoryToJson(this);
+
+  @override
+  List<Object?> get props => [id];
 }

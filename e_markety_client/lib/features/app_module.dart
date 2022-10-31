@@ -1,5 +1,6 @@
 import 'package:asuka/asuka.dart';
 import 'package:e_markety_client/core/core_module.dart';
+import 'package:e_markety_client/features/admin/admin_module.dart';
 import 'package:e_markety_client/features/category/blocs/category_bloc.dart';
 import 'package:e_markety_client/features/category/screens/category_screen.dart';
 import 'package:e_markety_client/features/category/services/category_service.dart';
@@ -13,16 +14,14 @@ import 'package:e_markety_client/features/order/order/blocs/current_order/curren
 import 'package:e_markety_client/features/order/order/services/current_order_service.dart';
 import 'package:e_markety_client/features/order/shopping_cart/blocs/overview/cart_item_overview_bloc.dart';
 import 'package:e_markety_client/features/order/shopping_cart/repositories/cart_item_repository.dart';
-import 'package:e_markety_client/features/product/blocs/favourite/favourite_bloc.dart';
 import 'package:e_markety_client/features/product/blocs/filter/filter_bloc.dart';
 import 'package:e_markety_client/features/product/blocs/product/product_bloc.dart';
 import 'package:e_markety_client/features/product/blocs/product_by_category/product_by_category_bloc.dart';
+import 'package:e_markety_client/features/product/favourite_module.dart';
 import 'package:e_markety_client/features/product/screens/apply_filters_screen.dart';
-import 'package:e_markety_client/features/product/screens/favourite_screen.dart';
 import 'package:e_markety_client/features/product/screens/product_details_screen.dart';
 import 'package:e_markety_client/features/product/screens/products_by_category_screen.dart';
 import 'package:e_markety_client/features/product/screens/search_result_screen.dart';
-import 'package:e_markety_client/features/product/services/favourite_service.dart';
 import 'package:e_markety_client/features/product/services/product_service.dart';
 import 'package:e_markety_client/features/user/auth/blocs/auth_bloc.dart';
 import 'package:e_markety_client/features/user/auth/screens/sign_in_screen.dart';
@@ -86,9 +85,6 @@ class AppModule extends Module {
     Bind.singleton<ICartItemService>((i) => CartItemService(i())),
     Bind.singleton((i) => CartItemRepository(i())),
     Bind.singleton((i) => CartItemOverviewBloc(i())),
-    // favourites
-    Bind.singleton<IFavouriteService>((i) => FavouriteService(i())),
-    Bind.singleton((i) => FavouriteBloc(i())),
   ];
 
   @override
@@ -152,12 +148,13 @@ class AppModule extends Module {
     ),
     ChildRoute('/about-me', child: (context, args) => const AboutMeScreen()),
     ChildRoute('/my-orders', child: (context, args) => const MyOrdersScreen()),
-    ChildRoute('/favourite', child: (context, args) => const FavouriteScreen()),
     ChildRoute('/address', child: (context, args) => const AddressScreen()),
     ChildRoute(
       '/add-new-address',
       child: (context, args) => const AddNewAddressScreen(),
     ),
+    ModuleRoute('/favourite/', module: FavouriteModule()),
+    ModuleRoute('/admin/', module: AdminModule()),
   ];
 }
 

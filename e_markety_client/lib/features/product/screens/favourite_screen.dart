@@ -14,9 +14,7 @@ class FavouriteScreen extends StatelessWidget {
       appBar: CustomAppBar.buildAppBar(context, title: 'Meus Favoritos'),
       body: BlocBuilder<FavouriteBloc, FavouriteState>(
         bloc: Modular.get<FavouriteBloc>()
-          ..add(
-            const FavouriteSubscriptionRequested(),
-          ),
+          ..add(const FavouriteSubscriptionRequested()),
         builder: (context, state) {
           if (state.status == FavouriteStatus.success) {
             if (state.products.isEmpty) {

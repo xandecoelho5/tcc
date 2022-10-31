@@ -80,7 +80,7 @@ class ProductCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Padding(
                   padding: const EdgeInsets.only(left: 12),
-                  child: CategoryChip.small(label: product.category.name),
+                  child: CategoryChip.small(label: product.category!.name),
                 ),
                 const SizedBox(height: 4),
                 Padding(

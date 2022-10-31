@@ -1,5 +1,6 @@
 import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
 import 'package:e_markety_client/features/user/auth/blocs/auth_bloc.dart';
+import 'package:e_markety_client/shared/environment/platform.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:e_markety_client/shared/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class _SignInScreenState extends State<SignInScreen> {
         bloc: Modular.get<AuthBloc>(),
         listener: (context, state) {
           if (state is AuthLogged) {
-            Modular.to.navigate('/home');
+            Modular.to.navigate(Modular.get<AppPlatform>().defaultRoute);
           }
           if (state is AuthError) {
             Modular.get<ISnackBarService>().showError(context, state.message);

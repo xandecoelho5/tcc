@@ -5,6 +5,7 @@ import 'package:e_markety_client/core/services/http/dio_service.dart';
 import 'package:e_markety_client/core/services/http/http_service.dart';
 import 'package:e_markety_client/core/services/snack_bar/asuka_service.dart';
 import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
+import 'package:e_markety_client/shared/environment/platform.dart';
 import 'package:e_markety_client/shared/utils/strings.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CoreModule extends Module {
   @override
   final List<Bind> binds = [
+    Bind.singleton((i) => AppPlatform.current, export: true),
     AsyncBind<SharedPreferences>(
       (i) => SharedPreferences.getInstance(),
       export: true,
@@ -21,14 +23,14 @@ class CoreModule extends Module {
       export: true,
     ),
     Bind.singleton<ISnackBarService>(
-      // (i) => BasicSnackBarService(),
       (i) => AsukaService(),
       export: true,
     ),
     Bind.singleton<IHttpService>(
       (i) {
+        final platform = i.get<AppPlatform>();
         final dio = Dio(
-          BaseOptions(baseUrl: 'http://10.0.2.2:8080', connectTimeout: 5000),
+          BaseOptions(baseUrl: platform.baseUrl, connectTimeout: 5000),
         );
         dio.interceptors.add(
           InterceptorsWrapper(

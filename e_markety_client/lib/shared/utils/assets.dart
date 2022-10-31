@@ -7,6 +7,7 @@ class Assets {
   static const String avatarPlaceholder = '$images/avatar_placeholder.png';
   static const String fruitsAndVegetablesImage =
       '$images/fruits_and_vegetables.png';
+  static const String productPlaceholder = '$images/product_placeholder.jpg';
 
   static const String icons = 'assets/icons';
   static const String fruitsAndVegetablesIcon =

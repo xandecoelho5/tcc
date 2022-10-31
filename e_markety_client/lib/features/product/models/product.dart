@@ -6,12 +6,12 @@ part 'product.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Product {
-  final int id;
+  final int? id;
   final String name;
   final String imageUrl;
   final String description;
   final double price;
-  final DateTime createdAt;
+  final DateTime? createdAt;
   final int stock;
   final int quantitySold;
   final double weightPrice; // In Kg, L, UN
@@ -19,10 +19,10 @@ class Product {
 
   final int discountPercent;
 
-  final Category category;
-  final MeasureUnit measureUnit;
+  final Category? category;
+  final MeasureUnit? measureUnit;
 
-  const Product({
+  Product({
     required this.id,
     required this.name,
     required this.imageUrl,
@@ -38,9 +38,25 @@ class Product {
     required this.measureUnit,
   });
 
-  bool get isNew => createdAt.isAfter(
-        DateTime.now().subtract(const Duration(days: 7)),
-      );
+  Product.empty({
+    this.id,
+    this.name = '',
+    this.imageUrl = '',
+    this.description = '',
+    this.price = 0,
+    this.createdAt,
+    this.stock = 0,
+    this.quantitySold = 0,
+    this.weightPrice = 0,
+    this.weightUnit = 0,
+    this.discountPercent = 0,
+    this.category,
+    this.measureUnit,
+  });
+
+  bool get isNew =>
+      createdAt?.isAfter(DateTime.now().subtract(const Duration(days: 7))) ??
+      false;
 
   bool get hasPromotion => discountPercent > 0;
 
@@ -51,6 +67,8 @@ class Product {
   }
 
   double get discount => hasPromotion ? (price - promotionPrice) : 0;
+
+  String get formattedDiscount => hasPromotion ? '$discountPercent%' : '-';
 
   String get formattedWeight {
     if (weightPrice < 1) {
@@ -66,7 +84,7 @@ class Product {
   }
 
   int get fractionDigits {
-    if (measureUnit.description == 'UN') {
+    if (measureUnit?.description == 'UN') {
       return 0;
     }
     return 2;
@@ -79,7 +97,7 @@ class Product {
       'imagemUrl': imageUrl,
       'descricao': description,
       'preco': price,
-      'data': createdAt,
+      'data': createdAt?.toIso8601String(),
       'estoque': stock,
       'quantidadeVendida': quantitySold,
       'pesoPreco': weightPrice,
@@ -108,23 +126,48 @@ class Product {
     );
   }
 
-  // @override
-  // String toString() {
-  //   return 'Product{id: $id, name: $name, imageUrl: $imageUrl, description: '
-  //       '$description, price: $price, createdAt: $createdAt, stock: $stock, '
-  //       'quantitySold: $quantitySold, '
-  //       'weightPrice: $weightPrice, weightUnit: $weightUnit, '
-  //       'discountPercent: $discountPercent, category: $category, '
-  //       'measureUnit: $measureUnit}';
-  // }
-
   @override
   String toString() {
-    return 'Product{id: $id}';
+    return 'Product{id: $id, name: $name, imageUrl: $imageUrl, description: $description, price: $price, createdAt: $createdAt, stock: $stock, quantitySold: $quantitySold, weightPrice: $weightPrice, weightUnit: $weightUnit, discountPercent: $discountPercent, category: $category, measureUnit: $measureUnit}';
   }
+
+  // @override
+  // String toString() {
+  //   return 'Product{id: $id}';
+  // }
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);
 
   Map<String, dynamic> toJson() => _$ProductToJson(this);
+
+  Product copyWith({
+    String? name,
+    String? imageUrl,
+    String? description,
+    double? price,
+    int? stock,
+    int? quantitySold,
+    double? weightPrice,
+    double? weightUnit,
+    int? discountPercent,
+    Category? category,
+    MeasureUnit? measureUnit,
+  }) {
+    return Product(
+      id: id,
+      name: name ?? this.name,
+      imageUrl: imageUrl ?? this.imageUrl,
+      description: description ?? this.description,
+      price: price ?? this.price,
+      createdAt: createdAt,
+      stock: stock ?? this.stock,
+      quantitySold: quantitySold ?? this.quantitySold,
+      weightPrice: weightPrice ?? this.weightPrice,
+      weightUnit: weightUnit ?? this.weightUnit,
+      discountPercent: discountPercent ?? this.discountPercent,
+      category: category ?? this.category,
+      measureUnit: measureUnit ?? this.measureUnit,
+    );
+  }
 }

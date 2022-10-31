@@ -95,9 +95,9 @@ final categoriesMock = [
 ];
 
 const measureUnitsMock = [
-  MeasureUnit(id: 1, description: 'UN'),
-  MeasureUnit(id: 2, description: 'KG'),
-  MeasureUnit(id: 3, description: 'LT'),
+  MeasureUnit(id: 1, description: 'Unidade', abbreviation: 'UN'),
+  MeasureUnit(id: 2, description: 'Quilograma', abbreviation: 'KG'),
+  MeasureUnit(id: 3, description: 'Litro', abbreviation: 'LT'),
 ];
 
 final productsMock = [

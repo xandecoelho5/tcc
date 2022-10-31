@@ -95,7 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         CustomTextFormField(
                           label: 'Nome',
                           validator: Validatorless.required(
-                            Strings.campoObrigatorio,
+                            Strings.obrigatorio,
                           ),
                           onSaved: _onNomeSaved,
                         ),
