@@ -17,5 +17,8 @@ public class UnidadeMedida {
     private Long id;
 
     @Column(length = 3, nullable = false)
+    private String abreviatura;
+
+    @Column(nullable = false)
     private String descricao;
 }

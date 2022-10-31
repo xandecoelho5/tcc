@@ -97,15 +97,15 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID,
         }
     }
 
-    private Y mapEntityToDto(T entity) {
+    protected Y mapEntityToDto(T entity) {
         return mapper.mapEntityToDto(entity, dtoClass);
     }
 
-    private T mapDtoToEntity(Y dto) {
+    protected T mapDtoToEntity(Y dto) {
         return mapper.mapDtoToEntity(dto, entityClass);
     }
 
-    private List<Y> mapEntityListToDto(List<T> entityList) {
+    protected List<Y> mapEntityListToDto(List<T> entityList) {
         return mapper.mapEntityListToDto(entityList, dtoClass);
     }
 }

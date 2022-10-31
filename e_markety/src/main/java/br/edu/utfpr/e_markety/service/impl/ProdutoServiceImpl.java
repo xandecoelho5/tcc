@@ -1,6 +1,8 @@
 package br.edu.utfpr.e_markety.service.impl;
 
+import br.edu.utfpr.e_markety.dto.ProdutoDto;
 import br.edu.utfpr.e_markety.model.Produto;
+import br.edu.utfpr.e_markety.repository.EmpresaRepository;
 import br.edu.utfpr.e_markety.repository.GenericRepository;
 import br.edu.utfpr.e_markety.repository.ProdutoRepository;
 import br.edu.utfpr.e_markety.service.ProdutoService;
@@ -9,13 +11,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProdutoServiceImpl extends GenericServiceImpl<Produto, Long, Produto> implements ProdutoService {
+public class ProdutoServiceImpl extends GenericServiceImpl<Produto, Long, ProdutoDto> implements ProdutoService {
 
     private final ProdutoRepository repository;
+    private final EmpresaRepository empresaRepository;
 
     @Override
     protected GenericRepository<Produto, Long> getRepository() {
@@ -23,18 +27,32 @@ public class ProdutoServiceImpl extends GenericServiceImpl<Produto, Long, Produt
     }
 
     @Override
-    public List<Produto> findAllByCategoriaId(Long id) {
-        return repository.findAllByCategoriaId(id);
+    protected void preSave(Produto entity, Long aLong) {
+        super.preSave(entity, aLong);
+        if (entity.getEmpresa() == null) {
+            entity.setEmpresa(empresaRepository.findById(1L).get());
+        }
+        if (entity.getData() == null) {
+            entity.setData(LocalDate.now());
+        }
     }
 
     @Override
-    public List<Produto> findAllByIdIn(List<Long> ids) {
-        return repository.findAllByIdIn(ids);
+    public List<ProdutoDto> findAllByCategoriaId(Long id) {
+        var list = repository.findAllByCategoriaId(id);
+        return mapEntityListToDto(list);
     }
 
     @Override
-    public List<Produto> findAllByFilter(String nome, Long categoriaId, BigDecimal precoMin, BigDecimal precoMax, Sort sort) {
-        return repository.findAllByFilter(getNome(nome), categoriaId, getPrecoMin(precoMin), getPrecoMax(precoMax), sort);
+    public List<ProdutoDto> findAllByIdIn(List<Long> ids) {
+        var list = repository.findAllByIdIn(ids);
+        return mapEntityListToDto(list);
+    }
+
+    @Override
+    public List<ProdutoDto> findAllByFilter(String nome, Long categoriaId, BigDecimal precoMin, BigDecimal precoMax, Sort sort) {
+        var list = repository.findAllByFilter(getNome(nome), categoriaId, getPrecoMin(precoMin), getPrecoMax(precoMax), sort);
+        return mapEntityListToDto(list);
     }
 
     private BigDecimal getPrecoMin(BigDecimal precoMin) {
