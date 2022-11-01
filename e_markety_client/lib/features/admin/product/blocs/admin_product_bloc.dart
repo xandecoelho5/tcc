@@ -13,6 +13,7 @@ class AdminProductBloc extends Bloc<AdminProductEvent, AdminProductState> {
     on<ProductGetByIdEvent>(_onProductGetByIdEvent);
     on<ProductAddEvent>(_onProductAddEvent);
     on<ProductEditEvent>(_onProductEditEvent);
+    on<ProductDeleteEvent>(_onProductDeleteEvent);
   }
 
   Future<void> _onProductGetByIdEvent(ProductGetByIdEvent event, emit) async {
@@ -39,6 +40,15 @@ class AdminProductBloc extends Bloc<AdminProductEvent, AdminProductState> {
     response.fold(
       (l) => emit(AdminProductError(l.message)),
       (r) => emit(AdminProductSuccess()),
+    );
+  }
+
+  Future<void> _onProductDeleteEvent(ProductDeleteEvent event, emit) async {
+    emit(AdminProductLoading());
+    final response = await _service.deleteProduct(event.id);
+    response.fold(
+      (l) => emit(AdminProductError(l.message)),
+      (r) => emit(AdminProductDeleteSuccess()),
     );
   }
 }

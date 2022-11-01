@@ -12,6 +12,12 @@ class ProductLoaded extends ProductState {
   ProductLoaded(this.products);
 }
 
+class ProductPageLoaded extends ProductState {
+  final ProductPageResponse pageResponse;
+
+  ProductPageLoaded(this.pageResponse);
+}
+
 class ProductError extends ProductState {
   final String message;
 

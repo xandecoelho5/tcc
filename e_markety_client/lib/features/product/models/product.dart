@@ -1,11 +1,12 @@
 import 'package:e_markety_client/features/category/models/category.dart';
 import 'package:e_markety_client/features/product/models/measure_unit.dart';
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'product.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class Product {
+class Product extends Equatable {
   final int? id;
   final String name;
   final String imageUrl;
@@ -126,15 +127,15 @@ class Product {
     );
   }
 
-  @override
-  String toString() {
-    return 'Product{id: $id, name: $name, imageUrl: $imageUrl, description: $description, price: $price, createdAt: $createdAt, stock: $stock, quantitySold: $quantitySold, weightPrice: $weightPrice, weightUnit: $weightUnit, discountPercent: $discountPercent, category: $category, measureUnit: $measureUnit}';
-  }
-
   // @override
   // String toString() {
-  //   return 'Product{id: $id}';
+  //   return 'Product{id: $id, name: $name, imageUrl: $imageUrl, description: $description, price: $price, createdAt: $createdAt, stock: $stock, quantitySold: $quantitySold, weightPrice: $weightPrice, weightUnit: $weightUnit, discountPercent: $discountPercent, category: $category, measureUnit: $measureUnit}';
   // }
+
+  @override
+  String toString() {
+    return 'Product{id: $id}';
+  }
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);
@@ -170,4 +171,7 @@ class Product {
       measureUnit: measureUnit ?? this.measureUnit,
     );
   }
+
+  @override
+  List<Object?> get props => [id];
 }

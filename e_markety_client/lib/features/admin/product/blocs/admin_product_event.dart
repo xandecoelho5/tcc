@@ -19,3 +19,9 @@ class ProductEditEvent implements AdminProductEvent {
 
   ProductEditEvent(this.product);
 }
+
+class ProductDeleteEvent implements AdminProductEvent {
+  final int id;
+
+  ProductDeleteEvent(this.id);
+}

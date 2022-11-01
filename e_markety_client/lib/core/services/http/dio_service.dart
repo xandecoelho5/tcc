@@ -20,7 +20,7 @@ class DioService implements IHttpService {
       final response = await _dio.get(url);
       return Right(response.data);
     } on DioError catch (e) {
-      return Left(DioGetException(e.response?.data ?? e.message, e.stackTrace));
+      return Left(DioGetException(_handleError(e), e.stackTrace));
     }
   }
 
@@ -30,8 +30,7 @@ class DioService implements IHttpService {
       final response = await _dio.get(url);
       return Right(response.data);
     } on DioError catch (e) {
-      print(e);
-      return Left(DioGetException(e.response?.data ?? e.message, e.stackTrace));
+      return Left(DioGetException(_handleError(e), e.stackTrace));
     }
   }
 
@@ -41,9 +40,7 @@ class DioService implements IHttpService {
       final response = await _dio.post(url, data: body);
       return Right(response.data);
     } on DioError catch (e) {
-      return Left(
-        DioPostException(e.response?.data ?? e.message, e.stackTrace),
-      );
+      return Left(DioPostException(_handleError(e), e.stackTrace));
     }
   }
 
@@ -53,7 +50,7 @@ class DioService implements IHttpService {
       final response = await _dio.put(url, data: body);
       return Right(response.data);
     } on DioError catch (e) {
-      return Left(DioPutException(e.response?.data ?? e.message, e.stackTrace));
+      return Left(DioPutException(_handleError(e), e.stackTrace));
     }
   }
 
@@ -63,9 +60,7 @@ class DioService implements IHttpService {
       final response = await _dio.delete(url);
       return Right(response.data);
     } on DioError catch (e) {
-      return Left(
-        DioDeleteException(e.response?.data ?? e.message, e.stackTrace),
-      );
+      return Left(DioDeleteException(_handleError(e), e.stackTrace));
     }
   }
 
@@ -75,9 +70,18 @@ class DioService implements IHttpService {
       final response = await _dio.patch(url, data: body);
       return Right(response.data);
     } on DioError catch (e) {
-      return Left(
-        DioPatchException(e.response?.data ?? e.message, e.stackTrace),
-      );
+      return Left(DioPatchException(_handleError(e), e.stackTrace));
     }
+  }
+
+  String _handleError(DioError e) {
+    if (e.response == null) return e.message;
+    final data = e.response?.data;
+    if (data is Map) {
+      return data['message'];
+    } else if (data is String) {
+      return data;
+    }
+    return '';
   }
 }

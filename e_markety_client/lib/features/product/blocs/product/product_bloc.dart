@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:e_markety_client/shared/data_responses/product_page_response.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../models/product.dart';
@@ -13,6 +14,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
   ProductBloc(this._service) : super(ProductInitial()) {
     on<ProductGetAllEvent>(_onProductGetAllEvent);
+    on<ProductGetPageEvent>(_onProductGetPageEvent);
   }
 
   Future<void> _onProductGetAllEvent(ProductGetAllEvent event, emit) async {
@@ -21,6 +23,20 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     return response.fold(
       (l) => emit(ProductError(l.message)),
       (r) => emit(ProductLoaded(r)),
+    );
+  }
+
+  Future<void> _onProductGetPageEvent(ProductGetPageEvent event, emit) async {
+    emit(ProductLoading());
+    final response = await _service.getProductsPaginated(
+      size: event.size,
+      page: event.page,
+      order: event.order,
+      asc: event.asc,
+    );
+    return response.fold(
+      (l) => emit(ProductError(l.message)),
+      (r) => emit(ProductPageLoaded(r)),
     );
   }
 }

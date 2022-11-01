@@ -29,6 +29,8 @@ abstract class IProductService {
   Future<Either<ProductException, void>> addProduct(Product product);
 
   Future<Either<ProductException, void>> editProduct(Product product);
+
+  Future<Either<ProductException, void>> deleteProduct(int id);
 }
 
 class ProductService implements IProductService {
@@ -112,6 +114,15 @@ class ProductService implements IProductService {
     return response.fold(
       (l) => Left(ProductException(l.message, l.stackTrace)),
       (r) => Right(Product.fromMap(r)),
+    );
+  }
+
+  @override
+  Future<Either<ProductException, void>> deleteProduct(int id) async {
+    final response = await _httpService.delete('$_baseUrl/$id');
+    return response.fold(
+      (l) => Left(ProductException(l.message, l.stackTrace)),
+      (r) => const Right(null),
     );
   }
 }

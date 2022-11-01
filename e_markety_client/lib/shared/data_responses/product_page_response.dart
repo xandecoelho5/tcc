@@ -28,4 +28,9 @@ class ProductPageResponse {
       size: map['size'],
     );
   }
+
+  @override
+  String toString() {
+    return 'ProductPageResponse{content: $content, totalElements: $totalElements, totalPages: $totalPages, size: $size}';
+  }
 }

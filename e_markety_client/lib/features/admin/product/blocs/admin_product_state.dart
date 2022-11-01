@@ -8,6 +8,8 @@ class AdminProductLoading implements AdminProductState {}
 
 class AdminProductSuccess implements AdminProductState {}
 
+class AdminProductDeleteSuccess implements AdminProductState {}
+
 class AdminProductLoaded implements AdminProductState {
   final Product product;
 

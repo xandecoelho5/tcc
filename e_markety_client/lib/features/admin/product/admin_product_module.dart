@@ -17,8 +17,8 @@ class AdminProductModule extends Module {
   List<Bind<Object>> get binds => [
         Bind.lazySingleton<IProductService>((i) => ProductService(i())),
         Bind.lazySingleton((i) => ProductBloc(i())),
-        Bind.lazySingleton((i) => ProductNotifier(i())),
         Bind.lazySingleton((i) => AdminProductBloc(i())),
+        Bind.lazySingleton((i) => ProductNotifier(i())),
         Bind.lazySingleton<ICategoryService>((i) => CategoryService(i())),
         Bind.lazySingleton((i) => CategoryNotifier(i())),
         Bind.lazySingleton<IMeasureUnitService>((i) => MeasureUnitService(i())),

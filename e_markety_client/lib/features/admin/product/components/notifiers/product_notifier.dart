@@ -1,8 +1,7 @@
-import 'package:e_markety_client/features/product/services/product_service.dart';
-import 'package:e_markety_client/shared/data_responses/product_page_response.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../product/models/product.dart';
+import '../../../../../shared/data_responses/product_page_response.dart';
+import '../../../../product/services/product_service.dart';
 
 class ProductNotifier with ChangeNotifier {
   final IProductService _service;
@@ -12,6 +11,7 @@ class ProductNotifier with ChangeNotifier {
   int _sortColumnIndex = 1;
   bool _sortAscending = true;
   int _currentPage = 0;
+  bool _isLoading = false;
 
   ProductNotifier(this._service) {
     fetchData();
@@ -21,15 +21,10 @@ class ProductNotifier with ChangeNotifier {
 
   ProductPageResponse get pageResponse => _pageResponse;
 
-  List<Product> get products => _pageResponse.content;
+  bool get isLoading => _isLoading;
 
-  void add(Product product) {
-    _pageResponse.content.add(product);
-    notifyListeners();
-  }
-
-  void remove(Product product) {
-    _pageResponse.content.remove(product);
+  set pageResponse(ProductPageResponse pageResponse) {
+    _pageResponse = pageResponse;
     notifyListeners();
   }
 
@@ -69,6 +64,9 @@ class ProductNotifier with ChangeNotifier {
   }
 
   Future<void> fetchData() async {
+    _isLoading = true;
+    notifyListeners();
+    await Future.delayed(const Duration(seconds: 1));
     final response = await _service.getProductsPaginated(
       page: _currentPage,
       size: _rowsPerPage,
@@ -79,6 +77,7 @@ class ProductNotifier with ChangeNotifier {
       (l) => print(l.message),
       (r) => _pageResponse = r,
     );
+    _isLoading = false;
     notifyListeners();
   }
 }
