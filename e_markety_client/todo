@@ -11,10 +11,6 @@ Tentar padronizar estilização de textos, ou pelo menos reduzir os estilos repe
 
 Baixar os outros ícones usados para as categorias e Status dos Pedidos.
 
-Adicionar mais campos relevantes para o produto;
-
-Na parte de Delivery Address, perguntar se o usuário quer por entrega ou retirada no local.;
-
 Implementar uso da exclusão de favoritos e produtos do carrinho, quando começar a usar gerência de estado;
 
 Adicionar FOCO nos componteis de input quando abrir a tela e quando der submit no input atual;
@@ -22,3 +18,11 @@ Adicionar FOCO nos componteis de input quando abrir a tela e quando der submit n
 Quando entrar em alguma rota na Web, verificar se o usuário está logado, se não estiver, redirecionar para a tela de login;
 
 Quando entrar em alguma rota na Web, atualizar o drawer de acordo com a rota atual;
+
+----
+Adicionar auditoria para cadastro de Produtos e de Pedidos;
+Adicionar auditoria para alteração de Produtos e de Pedidos;
+Implementar bloqueio deleção de certos registros, como pedidos;
+Verificar necessidade de adicionar nova tabela para auditar os status dos pedidos;
+
+
