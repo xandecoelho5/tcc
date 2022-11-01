@@ -1,9 +1,11 @@
 package br.edu.utfpr.e_markety.service.impl;
 
 import br.edu.utfpr.e_markety.dto.ProdutoDto;
+import br.edu.utfpr.e_markety.exceptions.ExistsLinkedDataException;
 import br.edu.utfpr.e_markety.model.Produto;
 import br.edu.utfpr.e_markety.repository.EmpresaRepository;
 import br.edu.utfpr.e_markety.repository.GenericRepository;
+import br.edu.utfpr.e_markety.repository.PedidoItemRepository;
 import br.edu.utfpr.e_markety.repository.ProdutoRepository;
 import br.edu.utfpr.e_markety.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ public class ProdutoServiceImpl extends GenericServiceImpl<Produto, Long, Produt
 
     private final ProdutoRepository repository;
     private final EmpresaRepository empresaRepository;
+    private final PedidoItemRepository pedidoItemRepository;
 
     @Override
     protected GenericRepository<Produto, Long> getRepository() {
@@ -53,6 +56,14 @@ public class ProdutoServiceImpl extends GenericServiceImpl<Produto, Long, Produt
     public List<ProdutoDto> findAllByFilter(String nome, Long categoriaId, BigDecimal precoMin, BigDecimal precoMax, Sort sort) {
         var list = repository.findAllByFilter(getNome(nome), categoriaId, getPrecoMin(precoMin), getPrecoMax(precoMax), sort);
         return mapEntityListToDto(list);
+    }
+
+    @Override
+    protected void preDelete(Long id) {
+        super.preDelete(id);
+        if (pedidoItemRepository.existsByProdutoId(id)) {
+            throw new ExistsLinkedDataException("Não é possível excluir um produto que já foi comprado.");
+        }
     }
 
     private BigDecimal getPrecoMin(BigDecimal precoMin) {

@@ -1,5 +1,6 @@
 package br.edu.utfpr.e_markety.service.impl;
 
+import br.edu.utfpr.e_markety.exceptions.NotFoundException;
 import br.edu.utfpr.e_markety.repository.GenericRepository;
 import br.edu.utfpr.e_markety.repository.GenericUserRepository;
 import br.edu.utfpr.e_markety.service.GenericService;
@@ -47,15 +48,13 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID,
     }
 
     @Override
-    public Optional<Y> update(ID id, Y dto) {
-        if (getRepository().findById(id).isPresent()) {
-            return Optional.of(save(dto, id));
-        }
-        return Optional.empty();
+    public Y update(ID id, Y dto) {
+        findById(id);
+        return save(dto, id);
     }
 
     private Y save(Y dto, ID id) {
-        T entity = mapDtoToEntity(dto);
+        var entity = mapDtoToEntity(dto);
         preSave(entity, id);
         entity = getRepository().save(entity);
         return mapEntityToDto(entity);
@@ -63,19 +62,17 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID,
 
     @Override
     @Transactional
-    public Optional<Y> getById(ID id) {
-        Optional<T> byId = getRepository().findById(id);
-        return byId.map(this::mapEntityToDto);
+    public Y getById(ID id) {
+        var entity = findById(id);
+        return mapEntityToDto(entity);
     }
 
     @Override
     @Transactional
-    public Optional<Boolean> delete(ID id) {
-        if (getRepository().findById(id).isPresent()) {
-            getRepository().deleteById(id);
-            return Optional.of(true);
-        }
-        return Optional.empty();
+    public void delete(ID id) {
+        findById(id);
+        preDelete(id);
+        getRepository().deleteById(id);
     }
 
     @Override
@@ -97,6 +94,9 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID,
         }
     }
 
+    protected void preDelete(ID id) {
+    }
+
     protected Y mapEntityToDto(T entity) {
         return mapper.mapEntityToDto(entity, dtoClass);
     }
@@ -107,5 +107,13 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID,
 
     protected List<Y> mapEntityListToDto(List<T> entityList) {
         return mapper.mapEntityListToDto(entityList, dtoClass);
+    }
+
+    private T findById(ID id) {
+        Optional<T> byId = getRepository().findById(id);
+        if (byId.isEmpty()) {
+            throw new NotFoundException((Long) id);
+        }
+        return byId.get();
     }
 }

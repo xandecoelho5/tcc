@@ -1,7 +1,9 @@
 package br.edu.utfpr.e_markety.controller;
 
 import br.edu.utfpr.e_markety.config.validator.CustomValidator;
+import br.edu.utfpr.e_markety.exceptions.ExistsLinkedDataException;
 import br.edu.utfpr.e_markety.exceptions.InvalidLoggedUserException;
+import br.edu.utfpr.e_markety.exceptions.NotFoundException;
 import br.edu.utfpr.e_markety.service.GenericService;
 import br.edu.utfpr.e_markety.utils.UserUtils;
 import org.springframework.data.domain.PageRequest;
@@ -40,7 +42,7 @@ public abstract class GenericController<ID, Y> {
     public ResponseEntity<?> getAllByCurrentUser() {
         try {
             var user = UserUtils.getLoggedUser();
-            return new ResponseEntity<>(getService().getAllByCurrentUser((ID)user.getId()), HttpStatus.OK);
+            return new ResponseEntity<>(getService().getAllByCurrentUser((ID) user.getId()), HttpStatus.OK);
         } catch (InvalidLoggedUserException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         } catch (UnsupportedOperationException e) {
@@ -49,9 +51,13 @@ public abstract class GenericController<ID, Y> {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Y> getById(@PathVariable @NotNull ID id) {
-        Optional<Y> dto = getService().getById(id);
-        return dto.map(y -> new ResponseEntity<>(y, HttpStatus.OK)).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<?> getById(@PathVariable @NotNull ID id) {
+        try {
+            var entity = getService().getById(id);
+            return new ResponseEntity<>(entity, HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping
@@ -62,14 +68,26 @@ public abstract class GenericController<ID, Y> {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable ID id, @RequestBody @Valid Y dto) {
-        Optional<Y> updated = getService().update(id, dto);
-        return updated.map(y -> new ResponseEntity<>(y, HttpStatus.OK)).orElseGet(() -> ResponseEntity.notFound().build());
+        try {
+            var updated = getService().update(id, dto);
+            return new ResponseEntity<>(updated, HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable @NotNull ID id) {
-        Optional<Boolean> wasDeleted = getService().delete(id);
-        return wasDeleted.map(y -> ResponseEntity.noContent().build()).orElseGet(() -> ResponseEntity.notFound().build());
+        try {
+            getService().delete(id);
+            return ResponseEntity.noContent().build();
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (ExistsLinkedDataException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

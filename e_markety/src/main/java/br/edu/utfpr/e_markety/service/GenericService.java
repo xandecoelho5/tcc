@@ -16,9 +16,9 @@ public interface GenericService <ID, Y> {
 
     Y save(Y dto);
 
-    Optional<Y> update(ID id, Y dto);
+    Y update(ID id, Y dto);
 
-    Optional<Y> getById(ID id);
+    Y getById(ID id);
 
-    Optional<Boolean> delete(ID id);
+    void delete(ID id);
 }
