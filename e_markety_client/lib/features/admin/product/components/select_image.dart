@@ -53,11 +53,11 @@ class _SelectImageState extends State<SelectImage> {
     return Column(
       children: [
         TextFieldWithLabel(
-          label: 'IMAGEM',
+          label: 'Imagem',
           onFocusLost: _onFocusLost,
+          data: _product.imageUrl,
           onSaved: _onUrlSaved,
           onValidate: Validatorless.required(Strings.obrigatorio),
-          data: _product.imageUrl,
         ),
         const SizedBox(height: 20),
         Container(

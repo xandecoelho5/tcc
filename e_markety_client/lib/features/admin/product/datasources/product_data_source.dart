@@ -1,11 +1,11 @@
 import 'package:asuka/asuka.dart';
 import 'package:e_markety_client/features/admin/product/blocs/admin_product_bloc.dart';
-import 'package:e_markety_client/shared/data_responses/product_page_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../shared/theme/constants.dart';
 import '../../../product/models/product.dart';
+import '../../shared/data_responses/product_page_response.dart';
 
 class ProductDataSource extends DataTableSource {
   final ProductPageResponse _pageResponse;

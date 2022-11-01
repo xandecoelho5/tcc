@@ -28,7 +28,21 @@ class ProductContainer extends StatefulWidget {
 class _ProductContainerState extends State<ProductContainer> {
   late Product _product = widget.product;
 
-  void _onProductChanged(Product v) => setState(() => _product = v);
+  void _onProductChanged(Product v) {
+    _product = _product.copyWith(
+      name: v.name,
+      imageUrl: v.imageUrl,
+      quantitySold: v.quantitySold,
+      description: v.description,
+      price: v.price,
+      stock: v.stock,
+      weightPrice: v.weightPrice,
+      weightUnit: v.weightUnit,
+      discountPercent: v.discountPercent,
+      category: v.category,
+      measureUnit: v.measureUnit,
+    );
+  }
 
   final _formKey = GlobalKey<FormState>();
 

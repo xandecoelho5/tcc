@@ -7,8 +7,8 @@ import '../../../product/models/product.dart';
 import '../blocs/admin_product_bloc.dart';
 import '../components/product_container.dart';
 
-class ProductEditScreen extends StatelessWidget {
-  ProductEditScreen({Key? key, required this.id}) : super(key: key);
+class ProductEditPage extends StatelessWidget {
+  ProductEditPage({Key? key, required this.id}) : super(key: key);
 
   final String id;
   final bloc = Modular.get<AdminProductBloc>();
@@ -25,10 +25,7 @@ class ProductEditScreen extends StatelessWidget {
         if (state is AdminProductSuccess) {
           Modular.get<ISnackBarService>()
               .showSuccess(context, 'Produto editado');
-          Future.delayed(
-            const Duration(seconds: 1),
-            () => Modular.to.navigate('/admin/product'),
-          );
+          Modular.to.navigate('/admin/product/');
         }
         if (state is AdminProductError) {
           Modular.get<ISnackBarService>()

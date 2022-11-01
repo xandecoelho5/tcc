@@ -58,7 +58,7 @@ class AdminSidebar extends StatelessWidget {
         CustomSidebarXItem(
           icon: Icons.home_outlined,
           label: 'Dashboard',
-          onTap: () => Modular.to.navigate('/admin/'),
+          onTap: () => Modular.to.navigate('/admin/dashboard'), // dashboard
         ),
         CustomSidebarXItem(
           icon: Icons.shopping_cart_outlined,
@@ -75,9 +75,10 @@ class AdminSidebar extends StatelessWidget {
             ),
           ],
         ),
-        const CustomSidebarXItem(
+        CustomSidebarXItem(
           icon: Icons.shopping_bag_outlined,
           label: 'Pedidos',
+          onTap: () => Modular.to.navigate('/admin/order/'),
         ),
         const CustomSidebarXItem(
           icon: Icons.home_work_outlined,

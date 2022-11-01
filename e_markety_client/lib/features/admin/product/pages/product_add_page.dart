@@ -7,8 +7,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../../../product/models/product.dart';
 import '../blocs/admin_product_bloc.dart';
 
-class ProductAddScreen extends StatelessWidget {
-  const ProductAddScreen({Key? key}) : super(key: key);
+class ProductAddPage extends StatelessWidget {
+  const ProductAddPage({Key? key}) : super(key: key);
 
   void _onSubmit(Product product) {
     Modular.get<AdminProductBloc>().add(ProductAddEvent(product));
@@ -32,7 +32,7 @@ class ProductAddScreen extends StatelessWidget {
         }
       },
       child: ProductContainer(
-        product: Product.empty(),
+        product: const Product.empty(),
         onSubmitProduct: _onSubmit,
         title: 'Adicionar Produto',
         buttonText: 'Cadastrar',

@@ -6,14 +6,14 @@ import 'package:sidebarx/sidebarx.dart';
 
 import '../../../../shared/theme/constants.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomePageState extends State<HomePage> {
   final _controller = SidebarXController(selectedIndex: 0, extended: true);
 
   @override

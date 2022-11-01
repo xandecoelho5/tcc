@@ -23,7 +23,7 @@ class Product extends Equatable {
   final Category? category;
   final MeasureUnit? measureUnit;
 
-  Product({
+  const Product({
     required this.id,
     required this.name,
     required this.imageUrl,
@@ -39,7 +39,7 @@ class Product extends Equatable {
     required this.measureUnit,
   });
 
-  Product.empty({
+  const Product.empty({
     this.id,
     this.name = '',
     this.imageUrl = '',
@@ -158,7 +158,8 @@ class Product extends Equatable {
     return Product(
       id: id,
       name: name ?? this.name,
-      imageUrl: imageUrl ?? this.imageUrl,
+      imageUrl:
+          imageUrl != null && imageUrl.isNotEmpty ? imageUrl : this.imageUrl,
       description: description ?? this.description,
       price: price ?? this.price,
       createdAt: createdAt,

@@ -1,83 +1,61 @@
+import 'package:e_markety_client/features/admin/shared/data_responses/page_response.dart';
+import 'package:e_markety_client/features/admin/shared/data_responses/provider_settings.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../shared/data_responses/product_page_response.dart';
 import '../../../../product/services/product_service.dart';
+import '../../../shared/data_responses/product_page_response.dart';
 
-class ProductNotifier with ChangeNotifier {
+class ProductNotifier extends ValueNotifier<ProviderSettings> {
   final IProductService _service;
 
-  int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
-  String _sortColumnName = 'nome';
-  int _sortColumnIndex = 1;
-  bool _sortAscending = true;
-  int _currentPage = 0;
-  bool _isLoading = false;
+  ProductNotifier(this._service)
+      : super(
+          ProviderSettings(
+            rowsPerPage: PaginatedDataTable.defaultRowsPerPage,
+            sortColumnName: 'nome',
+            pageResponse: ProductPageResponse.empty(),
+          ),
+        );
 
-  ProductNotifier(this._service) {
-    fetchData();
-  }
+  PageResponse get pageResponse => value.pageResponse;
 
-  ProductPageResponse _pageResponse = const ProductPageResponse.empty();
+  bool get hasData => pageResponse.content.isNotEmpty;
 
-  ProductPageResponse get pageResponse => _pageResponse;
+  String get sortColumnName => value.sortColumnName;
 
-  bool get isLoading => _isLoading;
+  set sortColumnName(String name) =>
+      value = value.copyWith(sortColumnName: name);
 
-  set pageResponse(ProductPageResponse pageResponse) {
-    _pageResponse = pageResponse;
-    notifyListeners();
-  }
+  int get sortColumnIndex => value.sortColumnIndex;
 
-  String get sortColumnName => _sortColumnName;
+  set sortColumnIndex(int index) =>
+      value = value.copyWith(sortColumnIndex: index);
 
-  set sortColumnName(String sortColumnName) {
-    _sortColumnName = sortColumnName;
-    notifyListeners();
-  }
+  bool get sortAscending => value.sortAscending;
 
-  int get sortColumnIndex => _sortColumnIndex;
+  set sortAscending(bool asc) => value = value.copyWith(sortAscending: asc);
 
-  set sortColumnIndex(int sortColumnIndex) {
-    _sortColumnIndex = sortColumnIndex;
-    notifyListeners();
-  }
+  int get rowsPerPage => value.rowsPerPage;
 
-  bool get sortAscending => _sortAscending;
+  set rowsPerPage(int rows) => value = value.copyWith(rowsPerPage: rows);
 
-  set sortAscending(bool sortAscending) {
-    _sortAscending = sortAscending;
-    notifyListeners();
-  }
+  int get currentPage => value.currentPage;
 
-  int get rowsPerPage => _rowsPerPage;
-
-  set rowsPerPage(int rowsPerPage) {
-    _rowsPerPage = rowsPerPage;
-    notifyListeners();
-  }
-
-  int get currentPage => _currentPage;
-
-  set currentPage(int currentPage) {
-    _currentPage = currentPage;
+  set currentPage(int page) {
+    value = value.copyWith(currentPage: page);
     fetchData();
   }
 
   Future<void> fetchData() async {
-    _isLoading = true;
-    notifyListeners();
-    await Future.delayed(const Duration(seconds: 1));
     final response = await _service.getProductsPaginated(
-      page: _currentPage,
-      size: _rowsPerPage,
-      order: _sortColumnName,
-      asc: _sortAscending,
+      page: currentPage,
+      size: rowsPerPage,
+      order: sortColumnName,
+      asc: sortAscending,
     );
     response.fold(
       (l) => print(l.message),
-      (r) => _pageResponse = r,
+      (r) => value = value.copyWith(pageResponse: r),
     );
-    _isLoading = false;
-    notifyListeners();
   }
 }

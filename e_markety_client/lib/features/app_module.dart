@@ -154,7 +154,11 @@ class AppModule extends Module {
       child: (context, args) => const AddNewAddressScreen(),
     ),
     ModuleRoute('/favourite/', module: FavouriteModule()),
-    ModuleRoute('/admin/', module: AdminModule()),
+    ModuleRoute(
+      '/admin/',
+      module: AdminModule(),
+      transition: TransitionType.scale,
+    ),
   ];
 }
 

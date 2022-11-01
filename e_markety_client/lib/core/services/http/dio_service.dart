@@ -78,7 +78,7 @@ class DioService implements IHttpService {
     if (e.response == null) return e.message;
     final data = e.response?.data;
     if (data is Map) {
-      return data['message'];
+      return data['message'] ?? data.toString();
     } else if (data is String) {
       return data;
     }

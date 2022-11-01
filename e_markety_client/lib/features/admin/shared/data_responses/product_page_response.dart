@@ -1,24 +1,15 @@
+import 'package:e_markety_client/features/admin/shared/data_responses/page_response.dart';
 import 'package:e_markety_client/features/product/models/product.dart';
 
-class ProductPageResponse {
-  final List<Product> content;
-  final int totalElements;
-  final int totalPages;
-  final int size;
-
+class ProductPageResponse extends PageResponse {
   const ProductPageResponse({
-    required this.content,
-    required this.totalElements,
-    required this.totalPages,
-    required this.size,
-  });
+    required super.content,
+    required super.totalElements,
+    required super.totalPages,
+    required super.size,
+  }) : super();
 
-  const ProductPageResponse.empty({
-    this.content = const [],
-    this.totalElements = 0,
-    this.totalPages = 0,
-    this.size = 0,
-  });
+  ProductPageResponse.empty() : super.empty();
 
   factory ProductPageResponse.fromMap(dynamic map) {
     return ProductPageResponse(

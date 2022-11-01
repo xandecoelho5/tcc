@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_markety_client/core/services/http/http_service.dart';
 import 'package:e_markety_client/features/product/models/filter.dart';
-import 'package:e_markety_client/shared/data_responses/product_page_response.dart';
 
+import '../../admin/shared/data_responses/product_page_response.dart';
 import '../exceptions/product_exception.dart';
 import '../models/product.dart';
 

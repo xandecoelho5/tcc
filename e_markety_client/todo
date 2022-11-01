@@ -18,3 +18,7 @@ Na parte de Delivery Address, perguntar se o usuário quer por entrega ou retira
 Implementar uso da exclusão de favoritos e produtos do carrinho, quando começar a usar gerência de estado;
 
 Adicionar FOCO nos componteis de input quando abrir a tela e quando der submit no input atual;
+
+Quando entrar em alguma rota na Web, verificar se o usuário está logado, se não estiver, redirecionar para a tela de login;
+
+Quando entrar em alguma rota na Web, atualizar o drawer de acordo com a rota atual;

@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:e_markety_client/shared/data_responses/product_page_response.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../admin/shared/data_responses/product_page_response.dart';
 import '../../models/product.dart';
 import '../../services/product_service.dart';
 

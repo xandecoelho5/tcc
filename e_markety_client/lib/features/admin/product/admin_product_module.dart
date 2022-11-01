@@ -1,9 +1,9 @@
 import 'package:e_markety_client/features/admin/product/components/notifiers/category_notifier.dart';
 import 'package:e_markety_client/features/admin/product/components/notifiers/measure_unit_notifier.dart';
 import 'package:e_markety_client/features/admin/product/components/notifiers/product_notifier.dart';
-import 'package:e_markety_client/features/admin/product/screens/product_add_screen.dart';
-import 'package:e_markety_client/features/admin/product/screens/product_edit_screen.dart';
-import 'package:e_markety_client/features/admin/product/screens/products_list_screen.dart';
+import 'package:e_markety_client/features/admin/product/pages/product_add_page.dart';
+import 'package:e_markety_client/features/admin/product/pages/product_edit_page.dart';
+import 'package:e_markety_client/features/admin/product/pages/products_list_page.dart';
 import 'package:e_markety_client/features/admin/product/services/measure_unit_service.dart';
 import 'package:e_markety_client/features/category/services/category_service.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -27,14 +27,17 @@ class AdminProductModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-        ChildRoute('/', child: (context, args) => const ProductsListScreen()),
+        ChildRoute(
+          '/',
+          child: (context, args) => const ProductsPage(),
+        ),
         ChildRoute(
           '/add',
-          child: (context, args) => const ProductAddScreen(),
+          child: (context, args) => const ProductAddPage(),
         ),
         ChildRoute(
           '/edit/:id',
-          child: (context, args) => ProductEditScreen(id: args.params['id']),
+          child: (context, args) => ProductEditPage(id: args.params['id']),
         ),
       ];
 }
