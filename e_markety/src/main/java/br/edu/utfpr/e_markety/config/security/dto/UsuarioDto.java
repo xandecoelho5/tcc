@@ -35,8 +35,8 @@ public class UsuarioDto {
         usuarioDto.setId(usuario.getId());
         usuarioDto.setNome(usuario.getNome());
         usuarioDto.setEmail(usuario.getEmail());
-        usuarioDto.setSenha(usuario.getSenha());
         usuarioDto.setImagemUrl(usuario.getImagemUrl());
+        usuarioDto.setFavoritosIds(usuario.getFavoritosIds());
 
         return usuarioDto;
     }

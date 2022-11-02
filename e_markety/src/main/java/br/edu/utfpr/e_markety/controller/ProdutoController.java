@@ -37,19 +37,4 @@ public class ProdutoController extends GenericController<Long, ProdutoDto> {
         return service.findAllByFilter(filtro.getNome(), filtro.getCategoriaId(), filtro.getPrecoMin(),
                 filtro.getPrecoMax(), filtro.getTipoOrdenacao().getSort());
     }
-
-    @GetMapping("page")
-    public ResponseEntity<PageResponseDto<ProdutoDto>> getAll(@RequestParam int page,
-                                                              @RequestParam int size,
-                                                              @RequestParam(required = false) String order,
-                                                              @RequestParam(required = false) Boolean asc) {
-        var pageRequest = PageRequest.of(page, size);
-
-        if (order != null && asc != null) {
-            pageRequest = PageRequest.of(page, size, asc ? Sort.Direction.ASC : Sort.Direction.DESC, order);
-        }
-        var produtoPage = getService().getAll(pageRequest);
-
-        return new ResponseEntity<>(PageResponseDto.of(produtoPage), HttpStatus.OK);
-    }
 }

@@ -1,8 +1,8 @@
 package br.edu.utfpr.e_markety.model;
 
+import br.edu.utfpr.e_markety.config.security.dto.UsuarioDto;
 import br.edu.utfpr.e_markety.model.enums.StatusPedido;
 import br.edu.utfpr.e_markety.model.enums.TipoEntrega;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -56,7 +56,6 @@ public class Pedido {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false)
-    @JsonIgnore
     private Usuario usuario;
 
     @ManyToOne
@@ -68,5 +67,9 @@ public class Pedido {
 
     public Pedido(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public UsuarioDto getUsuario() {
+        return UsuarioDto.fromUsuario(usuario);
     }
 }

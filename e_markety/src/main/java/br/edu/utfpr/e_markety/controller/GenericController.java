@@ -1,12 +1,14 @@
 package br.edu.utfpr.e_markety.controller;
 
 import br.edu.utfpr.e_markety.config.validator.CustomValidator;
+import br.edu.utfpr.e_markety.dto.PageResponseDto;
 import br.edu.utfpr.e_markety.exceptions.ExistsLinkedDataException;
 import br.edu.utfpr.e_markety.exceptions.InvalidLoggedUserException;
 import br.edu.utfpr.e_markety.exceptions.NotFoundException;
 import br.edu.utfpr.e_markety.service.GenericService;
 import br.edu.utfpr.e_markety.utils.UserUtils;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -23,19 +25,30 @@ public abstract class GenericController<ID, Y> {
     protected abstract GenericService<ID, Y> getService();
 
     @GetMapping
-    public ResponseEntity<List<Y>> getAll(@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+    public ResponseEntity<List<Y>> getAll(@RequestParam("size") Optional<Integer> size) {
         if (size.isPresent() && size.get() == 0) {
             return ResponseEntity.ok(getService().getAll());
         }
 
-        int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
 
-        var result = this.getService().getAll(PageRequest.of(currentPage - 1, pageSize));
-//        if (list.getTotalPages() > 0) {
-//            List<Integer> pageNumbers = IntStream.rangeClosed(1, list.getTotalPages()).boxed().toList();
-//        }
+        var result = this.getService().getAll(PageRequest.of(0, pageSize));
         return new ResponseEntity<>(result.toList(), HttpStatus.OK);
+    }
+
+    @GetMapping("page")
+    public ResponseEntity<PageResponseDto<Y>> getAll(@RequestParam int page,
+                                                     @RequestParam int size,
+                                                     @RequestParam(required = false) String order,
+                                                     @RequestParam(required = false) Boolean asc) {
+        var pageRequest = PageRequest.of(page, size);
+
+        if (order != null && asc != null) {
+            pageRequest = PageRequest.of(page, size, asc ? Sort.Direction.ASC : Sort.Direction.DESC, order);
+        }
+        var paginatedData = getService().getAll(pageRequest);
+
+        return new ResponseEntity<>(PageResponseDto.of(paginatedData), HttpStatus.OK);
     }
 
     @GetMapping("/current")

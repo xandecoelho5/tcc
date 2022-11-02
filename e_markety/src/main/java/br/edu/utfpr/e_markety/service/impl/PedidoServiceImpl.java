@@ -8,6 +8,8 @@ import br.edu.utfpr.e_markety.repository.GenericUserRepository;
 import br.edu.utfpr.e_markety.repository.PedidoRepository;
 import br.edu.utfpr.e_markety.service.PedidoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,5 +45,11 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, Pedido> 
     @Override
     public List<Pedido> getAllByCurrentUser(Long usuarioId) {
         return repository.findAllByUsuarioIdAndStatusIsNot(usuarioId, StatusPedido.PENDENTE);
+    }
+
+    @Override
+    public Page<Pedido> getAll(Pageable pageable) {
+        Page<Pedido> page = repository.findAllByEmpresaId(1L, pageable);
+        return page.map(this::mapEntityToDto);
     }
 }

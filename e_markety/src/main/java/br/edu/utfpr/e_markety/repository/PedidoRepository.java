@@ -2,9 +2,11 @@ package br.edu.utfpr.e_markety.repository;
 
 import br.edu.utfpr.e_markety.model.Pedido;
 import br.edu.utfpr.e_markety.model.enums.StatusPedido;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PedidoRepository extends GenericUserRepository<Pedido, Long> {
 
@@ -12,5 +14,11 @@ public interface PedidoRepository extends GenericUserRepository<Pedido, Long> {
 
     List<Pedido> findAllByUsuarioIdAndStatusIsNot(Long usuarioId, StatusPedido status);
 
-    Optional<Pedido> findByUsuarioIdAndStatusIs(Long usuarioId, StatusPedido status);
+    @Query("select distinct p " +
+            "from Pedido p " +
+            "inner join p.items i " +
+            "inner join i.produto pr " +
+            "inner join pr.empresa e " +
+            "where e.id = :id")
+    Page<Pedido> findAllByEmpresaId(Long id, Pageable pageable);
 }
