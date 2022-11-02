@@ -28,7 +28,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
   Future<void> _onProductGetPageEvent(ProductGetPageEvent event, emit) async {
     emit(ProductLoading());
-    final response = await _service.getProductsPaginated(
+    final response = await _service.getPaginated(
       size: event.size,
       page: event.page,
       order: event.order,
@@ -36,7 +36,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     );
     return response.fold(
       (l) => emit(ProductError(l.message)),
-      (r) => emit(ProductPageLoaded(r)),
+      (r) => emit(ProductPageLoaded(r as ProductPageResponse)),
     );
   }
 }

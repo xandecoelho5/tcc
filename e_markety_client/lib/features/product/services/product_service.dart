@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_markety_client/core/services/http/http_service.dart';
+import 'package:e_markety_client/features/admin/shared/services/paginated_service.dart';
 import 'package:e_markety_client/features/product/models/filter.dart';
 
 import '../../admin/shared/data_responses/product_page_response.dart';
 import '../exceptions/product_exception.dart';
 import '../models/product.dart';
 
-abstract class IProductService {
+abstract class IProductService extends IPaginatedService {
   Future<Either<ProductException, List<Product>>> getProducts(int? size);
 
   Future<Either<ProductException, List<Product>>> getProductsByCategory(
@@ -17,12 +18,12 @@ abstract class IProductService {
     Filter filter,
   );
 
-  Future<Either<ProductException, ProductPageResponse>> getProductsPaginated({
-    required int page,
-    required int size,
-    String? order,
-    bool? asc,
-  });
+  // Future<Either<ProductException, ProductPageResponse>> getProductsPaginated({
+  //   required int page,
+  //   required int size,
+  //   String? order,
+  //   bool? asc,
+  // });
 
   Future<Either<ProductException, Product>> getProductById(int id);
 
@@ -73,7 +74,7 @@ class ProductService implements IProductService {
   }
 
   @override
-  Future<Either<ProductException, ProductPageResponse>> getProductsPaginated({
+  Future<Either<ProductException, ProductPageResponse>> getPaginated({
     required int page,
     required int size,
     String? order,

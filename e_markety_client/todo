@@ -19,6 +19,7 @@ Quando entrar em alguma rota na Web, verificar se o usuário está logado, se n�
 
 Quando entrar em alguma rota na Web, atualizar o drawer de acordo com a rota atual;
 
+Trocar a requisição na Home page de produtos e Categorias para usar a paginação;
 ----
 Adicionar auditoria para cadastro de Produtos e de Pedidos;
 Adicionar auditoria para alteração de Produtos e de Pedidos;

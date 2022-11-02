@@ -59,33 +59,32 @@ class _ProductsPageState extends State<ProductsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<ProviderSettings>(
-      valueListenable: _provider,
-      builder: (context, value, child) {
-        final _dataSource =
-            ProductDataSource(value.pageResponse as ProductPageResponse);
-
-        if (value.pageResponse.content.isEmpty) {
-          return const SizedBox.shrink();
+    return BlocListener<AdminProductBloc, AdminProductState>(
+      bloc: Modular.get<AdminProductBloc>(),
+      listener: (context, state) {
+        if (state is AdminProductDeleteSuccess) {
+          _provider.fetchData();
+          Modular.get<ISnackBarService>()
+              .showSuccess(context, 'Produto excluído com sucesso');
         }
+        if (state is AdminProductError) {
+          Modular.get<ISnackBarService>().showError(
+            context,
+            'Erro ao excluir produto: ${state.message}',
+          );
+        }
+      },
+      child: ValueListenableBuilder<ProviderSettings>(
+        valueListenable: _provider,
+        builder: (context, value, child) {
+          final _dataSource =
+              ProductDataSource(value.pageResponse as ProductPageResponse);
 
-        return BlocListener<AdminProductBloc, AdminProductState>(
-          bloc: Modular.get<AdminProductBloc>(),
-          listener: (context, state) {
-            if (state is AdminProductDeleteSuccess) {
-              _provider.fetchData();
-              Modular.get<ISnackBarService>()
-                  .showSuccess(context, 'Produto excluído com sucesso');
-            }
-            if (state is AdminProductError) {
-              Modular.get<ISnackBarService>().showError(
-                context,
-                'Erro ao excluir produto: ${state.message}',
-              );
-            }
-          },
-          //TODO tentar generalizar o paginatedTable, mas tentar não perder muito tempo com isso
-          child: CustomPaginatedTable(
+          if (value.pageResponse.content.isEmpty) {
+            return const SizedBox.shrink();
+          }
+
+          return CustomPaginatedTable(
             dataColumns: _buildDataColumns(),
             header: const Text('Produtos'),
             onRowChanged: (index) => _provider.rowsPerPage = index!,
@@ -96,9 +95,9 @@ class _ProductsPageState extends State<ProductsPage> {
             source: _dataSource,
             sortColumnIndex: _provider.sortColumnIndex,
             sortColumnAsc: _provider.sortAscending,
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

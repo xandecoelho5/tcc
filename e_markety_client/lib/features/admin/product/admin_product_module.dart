@@ -5,6 +5,7 @@ import 'package:e_markety_client/features/admin/product/pages/product_add_page.d
 import 'package:e_markety_client/features/admin/product/pages/product_edit_page.dart';
 import 'package:e_markety_client/features/admin/product/pages/products_list_page.dart';
 import 'package:e_markety_client/features/admin/product/services/measure_unit_service.dart';
+import 'package:e_markety_client/features/admin/shared/widgets/custom_notifier.dart';
 import 'package:e_markety_client/features/category/services/category_service.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -18,7 +19,7 @@ class AdminProductModule extends Module {
         Bind.lazySingleton<IProductService>((i) => ProductService(i())),
         Bind.lazySingleton((i) => ProductBloc(i())),
         Bind.lazySingleton((i) => AdminProductBloc(i())),
-        Bind.lazySingleton((i) => ProductNotifier(i())),
+        Bind.lazySingleton<CustomNotifier>((i) => ProductNotifier(i())),
         Bind.lazySingleton<ICategoryService>((i) => CategoryService(i())),
         Bind.lazySingleton((i) => CategoryNotifier(i())),
         Bind.lazySingleton<IMeasureUnitService>((i) => MeasureUnitService(i())),

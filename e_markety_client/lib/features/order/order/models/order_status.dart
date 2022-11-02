@@ -1,15 +1,18 @@
-enum OrderStatus {
-  pending('Pedido Pendente'),
-  placed('Pedido Realizado'),
-  confirmed('Pedido Confirmado'),
-  readyToPickup('Pronto para Retirada'),
-  readyToDeliver('Pronto para Entrega'),
-  outForDelivery('Saiu para Entrega'),
-  delivered('Entregue');
+import 'package:flutter/material.dart';
 
-  const OrderStatus(this.label);
+enum OrderStatus {
+  pending('Pedido Pendente', Colors.blueGrey),
+  placed('Pedido Realizado', Colors.teal),
+  confirmed('Pedido Confirmado', Colors.deepOrange),
+  readyToPickup('Pronto para Retirada', Colors.yellow),
+  readyToDeliver('Pronto para Entrega', Colors.yellow),
+  outForDelivery('Saiu para Entrega', Colors.blue),
+  delivered('Entregue', Colors.green);
+
+  const OrderStatus(this.label, this.color);
 
   final String label;
+  final Color color;
 
   static OrderStatus fromString(String value) {
     switch (value.toUpperCase()) {
