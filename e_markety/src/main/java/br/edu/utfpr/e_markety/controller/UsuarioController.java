@@ -7,10 +7,11 @@ import br.edu.utfpr.e_markety.config.security.service.TokenService;
 import br.edu.utfpr.e_markety.config.security.service.UsuarioService;
 import br.edu.utfpr.e_markety.config.validator.CustomValidator;
 import br.edu.utfpr.e_markety.dto.FavoritoDto;
+import br.edu.utfpr.e_markety.exceptions.InvalidLoggedUserException;
 import br.edu.utfpr.e_markety.exceptions.UserAlreadyRegisteredException;
 import br.edu.utfpr.e_markety.service.MapperService;
 import br.edu.utfpr.e_markety.service.ProdutoService;
-import br.edu.utfpr.e_markety.utils.UserUtils;
+import br.edu.utfpr.e_markety.utils.PrincipalUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,11 +40,10 @@ public class UsuarioController {
         try {
             UsernamePasswordAuthenticationToken loginData = loginDto.convert();
             Authentication authentication = authProvider.authenticate(loginData);
-            String token = tokenService.generateToken(authentication);
+            String token = tokenService.generateToken(authentication, loginDto.getEmpresaId());
 
             return ResponseEntity.ok(new TokenDto(token, "Bearer"));
         } catch (AuthenticationException e) {
-            System.out.println(e.getMessage());
             return ResponseEntity.badRequest().body("Credenciais incorretas!");
         }
     }
@@ -66,43 +66,37 @@ public class UsuarioController {
 
     @GetMapping("/usuario/current")
     public ResponseEntity<?> getCurrentUser() {
-        try {
-            var user = UserUtils.getLoggedUser();
-            var userDto = mapper.mapEntityToDto(user, UsuarioDto.class);
-            return ResponseEntity.ok(userDto);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-        }
+        var user = PrincipalUtils.getLoggedUsuario();
+        var userDto = mapper.mapEntityToDto(user, UsuarioDto.class);
+        return ResponseEntity.ok(userDto);
     }
 
     @GetMapping("/usuario/favoritos")
     public ResponseEntity<?> getUserFavourites() {
-        try {
-            var user = UserUtils.getLoggedUser();
-            return ResponseEntity.ok(produtoService.findAllByIdIn(user.getFavoritosIds()));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-        }
+        var user = PrincipalUtils.getLoggedUsuario();
+        return ResponseEntity.ok(produtoService.findAllByIdIn(user.getFavoritosIds()));
     }
 
     @PatchMapping("/usuario/favoritos")
     public ResponseEntity<?> addFavouriteToUser(@RequestBody FavoritoDto favoritoDto) {
-        try {
-            var user = UserUtils.getLoggedUser();
-            if (user.getFavoritosIds().contains(favoritoDto.getId())) {
-                user.getFavoritosIds().remove(favoritoDto.getId());
-            } else {
-                user.getFavoritosIds().add(favoritoDto.getId());
-            }
-            return ResponseEntity.ok(usuarioService.update(user.getId(), mapper.mapEntityToDto(user, UsuarioDto.class)));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        var user = PrincipalUtils.getLoggedUsuario();
+        if (user.getFavoritosIds().contains(favoritoDto.getId())) {
+            user.getFavoritosIds().remove(favoritoDto.getId());
+        } else {
+            user.getFavoritosIds().add(favoritoDto.getId());
         }
+        return ResponseEntity.ok(usuarioService.update(user.getId(), mapper.mapEntityToDto(user, UsuarioDto.class)));
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
         return CustomValidator.handleMethodArgumentNotValidException(ex);
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(InvalidLoggedUserException.class)
+    public String handleValidationExceptions(InvalidLoggedUserException ex) {
+        return CustomValidator.handleCustomRuntimeException(ex);
     }
 }

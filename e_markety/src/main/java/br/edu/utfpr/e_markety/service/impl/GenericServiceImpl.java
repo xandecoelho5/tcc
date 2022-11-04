@@ -5,6 +5,7 @@ import br.edu.utfpr.e_markety.repository.GenericRepository;
 import br.edu.utfpr.e_markety.repository.GenericUserRepository;
 import br.edu.utfpr.e_markety.service.GenericService;
 import br.edu.utfpr.e_markety.service.MapperService;
+import br.edu.utfpr.e_markety.utils.PrincipalUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,15 +32,21 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID,
     @Override
     @Transactional(readOnly = true)
     public List<Y> getAll() {
-        List<T> list = getRepository().findAll();
+        List<T> list = getRepository() instanceof GenericUserRepository ? (List<T>) findAllByUsuario(null) : getRepository().findAll();
         return mapEntityListToDto(list);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<Y> getAll(Pageable pageable) {
-        Page<T> page = getRepository().findAll(pageable);
+        Page<T> page = getRepository() instanceof GenericUserRepository ? (Page<T>) findAllByUsuario(pageable) : getRepository().findAll(pageable);
         return page.map(this::mapEntityToDto);
+    }
+
+    protected Iterable<T> findAllByUsuario(Pageable pageable) {
+        var usuarioId = (ID) PrincipalUtils.getLoggedUsuario().getId();
+        var repository = (GenericUserRepository<T, ID>) getRepository();
+        return pageable == null ? repository.findAllByUsuarioId(usuarioId) : repository.findAllByUsuarioId(usuarioId, pageable);
     }
 
     @Override
@@ -73,15 +80,6 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID,
         findById(id);
         preDelete(id);
         getRepository().deleteById(id);
-    }
-
-    @Override
-    public List<Y> getAllByCurrentUser(ID id) {
-        if (!(getRepository() instanceof GenericUserRepository)) {
-            throw new UnsupportedOperationException("Esse repositório não suporta busca por usuário");
-        }
-        var list = ((GenericUserRepository<T, ID>) getRepository()).findAllByUsuarioId(id);
-        return mapEntityListToDto(list);
     }
 
     protected void changeEntityId(ID id, T entity) {

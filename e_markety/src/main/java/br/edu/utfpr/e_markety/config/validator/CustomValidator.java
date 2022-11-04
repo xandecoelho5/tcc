@@ -20,4 +20,8 @@ public class CustomValidator {
         });
         return errors;
     }
+
+    public static String handleCustomRuntimeException(RuntimeException ex) {
+        return ex.getMessage();
+    }
 }

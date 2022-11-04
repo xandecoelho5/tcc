@@ -1,11 +1,10 @@
 package br.edu.utfpr.e_markety.controller;
 
-import br.edu.utfpr.e_markety.exceptions.InvalidLoggedUserException;
 import br.edu.utfpr.e_markety.exceptions.NoneDefaultAddressFoundException;
 import br.edu.utfpr.e_markety.model.Endereco;
 import br.edu.utfpr.e_markety.service.EnderecoService;
 import br.edu.utfpr.e_markety.service.GenericService;
-import br.edu.utfpr.e_markety.utils.UserUtils;
+import br.edu.utfpr.e_markety.utils.PrincipalUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +24,11 @@ public class EnderecoController extends GenericController<Long, Endereco> {
     }
 
     @GetMapping("padrao")
-    public ResponseEntity<?> getDefaultAddress() {
+    public ResponseEntity<?> getDefaultEndereco() {
         try {
-            var user = UserUtils.getLoggedUser();
-            var defaultAddress = service.getDefaultAddress(user.getId());
-            return new ResponseEntity<>(defaultAddress, HttpStatus.OK);
-        } catch (InvalidLoggedUserException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+            var usuario = PrincipalUtils.getLoggedUsuario();
+            var defaultEndereco = service.getDefaultEndereco(usuario.getId());
+            return new ResponseEntity<>(defaultEndereco, HttpStatus.OK);
         } catch (NoneDefaultAddressFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }

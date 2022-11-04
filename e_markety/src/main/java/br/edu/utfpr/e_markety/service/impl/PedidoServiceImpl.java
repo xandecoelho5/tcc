@@ -7,12 +7,11 @@ import br.edu.utfpr.e_markety.model.enums.StatusPedido;
 import br.edu.utfpr.e_markety.repository.GenericUserRepository;
 import br.edu.utfpr.e_markety.repository.PedidoRepository;
 import br.edu.utfpr.e_markety.service.PedidoService;
+import br.edu.utfpr.e_markety.utils.PrincipalUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -42,14 +41,23 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, Pedido> 
         return pedidos.get(pedidos.size() - 1);
     }
 
-    @Override
-    public List<Pedido> getAllByCurrentUser(Long usuarioId) {
-        return repository.findAllByUsuarioIdAndStatusIsNot(usuarioId, StatusPedido.PENDENTE);
+    public Page<Pedido> findAllByEmpresa(Pageable pageable) {
+        Page<Pedido> page = repository.findAllByEmpresaId(PrincipalUtils.getLoggedEmpresa().getId(), pageable);
+        return page.map(this::mapEntityToDto);
     }
 
     @Override
     public Page<Pedido> getAll(Pageable pageable) {
-        Page<Pedido> page = repository.findAllByEmpresaId(1L, pageable);
+        Page<Pedido> page = repository.findAllByEmpresaIdAndUsuarioId(PrincipalUtils.getLoggedEmpresa().getId(),
+                PrincipalUtils.getLoggedUsuario().getId(), pageable);
         return page.map(this::mapEntityToDto);
+    }
+
+    @Override
+    protected Iterable<Pedido> findAllByUsuario(Pageable pageable) {
+        var usuarioId = PrincipalUtils.getLoggedUsuario().getId();
+        return pageable == null ?
+                repository.findAllByUsuarioIdAndStatusIsNot(usuarioId, StatusPedido.PENDENTE) :
+                repository.findAllByUsuarioIdAndStatusIsNot(usuarioId, StatusPedido.PENDENTE, pageable);
     }
 }

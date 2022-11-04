@@ -1,5 +1,6 @@
 package br.edu.utfpr.e_markety.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,7 +26,8 @@ public class Empresa {
     @Column(length = 17)
     private String celular;
 
-    private byte[] logo;
+    @Column(length = 1024, nullable = false)
+    private String logo;
 
     @Column(length = 20)
     private String deliveryAbertura;

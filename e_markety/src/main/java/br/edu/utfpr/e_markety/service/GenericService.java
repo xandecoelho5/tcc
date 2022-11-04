@@ -11,8 +11,6 @@ public interface GenericService <ID, Y> {
 
     Page<Y> getAll(Pageable pageable);
 
-    List<Y> getAllByCurrentUser(ID id);
-
     Y save(Y dto);
 
     Y update(ID id, Y dto);

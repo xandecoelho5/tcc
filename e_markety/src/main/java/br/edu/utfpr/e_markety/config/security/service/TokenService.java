@@ -4,9 +4,11 @@ import org.springframework.security.core.Authentication;
 
 public interface TokenService {
 
-    String generateToken(Authentication authentication);
+    String generateToken(Authentication authentication, Long empresaId);
 
     boolean isValidToken(String token);
 
-    Long getUserId(String token);
+    Long getUsuarioId(String token);
+
+    Long getEmpresaId(String token);
 }

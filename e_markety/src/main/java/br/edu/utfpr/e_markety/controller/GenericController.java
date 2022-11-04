@@ -6,8 +6,9 @@ import br.edu.utfpr.e_markety.exceptions.ExistsLinkedDataException;
 import br.edu.utfpr.e_markety.exceptions.InvalidLoggedUserException;
 import br.edu.utfpr.e_markety.exceptions.NotFoundException;
 import br.edu.utfpr.e_markety.service.GenericService;
-import br.edu.utfpr.e_markety.utils.UserUtils;
+import br.edu.utfpr.e_markety.utils.PrincipalUtils;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,49 +33,37 @@ public abstract class GenericController<ID, Y> {
 
         int pageSize = size.orElse(5);
 
-        var result = this.getService().getAll(PageRequest.of(0, pageSize));
+        var result = getService().getAll(PageRequest.of(0, pageSize));
         return new ResponseEntity<>(result.toList(), HttpStatus.OK);
     }
 
-    @GetMapping("page")
-    public ResponseEntity<PageResponseDto<Y>> getAll(@RequestParam int page,
-                                                     @RequestParam int size,
-                                                     @RequestParam(required = false) String order,
-                                                     @RequestParam(required = false) Boolean asc) {
+    @GetMapping("/page")
+    public ResponseEntity<PageResponseDto<Y>> getAllPaginated(@RequestParam int page,
+                                                              @RequestParam int size,
+                                                              @RequestParam(required = false) String order,
+                                                              @RequestParam(required = false) Boolean asc) {
+        var paginatedData = getService().getAll(getPageable(page, size, order, asc));
+        return new ResponseEntity<>(PageResponseDto.of(paginatedData), HttpStatus.OK);
+    }
+
+    protected Pageable getPageable(int page, int size, String order, Boolean asc) {
         var pageRequest = PageRequest.of(page, size);
 
         if (order != null && asc != null) {
             pageRequest = PageRequest.of(page, size, asc ? Sort.Direction.ASC : Sort.Direction.DESC, order);
         }
-        var paginatedData = getService().getAll(pageRequest);
 
-        return new ResponseEntity<>(PageResponseDto.of(paginatedData), HttpStatus.OK);
-    }
-
-    @GetMapping("/current")
-    public ResponseEntity<?> getAllByCurrentUser() {
-        try {
-            var user = UserUtils.getLoggedUser();
-            return new ResponseEntity<>(getService().getAllByCurrentUser((ID) user.getId()), HttpStatus.OK);
-        } catch (InvalidLoggedUserException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
-        } catch (UnsupportedOperationException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
+        return pageRequest;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable @NotNull ID id) {
-        try {
-            var entity = getService().getById(id);
-            return new ResponseEntity<>(entity, HttpStatus.OK);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<Y> getById(@PathVariable @NotNull ID id) {
+        var entity = getService().getById(id);
+        return new ResponseEntity<>(entity, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody @Valid Y dto) {
+    public ResponseEntity<Y> save(@RequestBody @Valid Y dto) {
         Y registered = getService().save(dto);
         return new ResponseEntity<>(registered, HttpStatus.CREATED);
     }
@@ -84,8 +73,6 @@ public abstract class GenericController<ID, Y> {
         try {
             var updated = getService().update(id, dto);
             return new ResponseEntity<>(updated, HttpStatus.OK);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -96,8 +83,6 @@ public abstract class GenericController<ID, Y> {
         try {
             getService().delete(id);
             return ResponseEntity.noContent().build();
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (ExistsLinkedDataException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -107,5 +92,17 @@ public abstract class GenericController<ID, Y> {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
         return CustomValidator.handleMethodArgumentNotValidException(ex);
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(InvalidLoggedUserException.class)
+    public String handleValidationExceptions(InvalidLoggedUserException ex) {
+        return CustomValidator.handleCustomRuntimeException(ex);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public String handleValidationExceptions(NotFoundException ex) {
+        return CustomValidator.handleCustomRuntimeException(ex);
     }
 }

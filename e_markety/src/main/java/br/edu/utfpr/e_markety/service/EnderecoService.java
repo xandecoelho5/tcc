@@ -4,5 +4,5 @@ import br.edu.utfpr.e_markety.model.Endereco;
 
 public interface EnderecoService extends GenericService<Long, Endereco> {
 
-    Endereco getDefaultAddress(Long id);
+    Endereco getDefaultEndereco(Long id);
 }

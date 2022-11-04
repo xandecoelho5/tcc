@@ -2,8 +2,10 @@ package br.edu.utfpr.e_markety.model;
 
 import br.edu.utfpr.e_markety.model.enums.Tag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 
@@ -13,6 +15,7 @@ import javax.persistence.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
 public class Endereco {
 
     @Id
@@ -20,9 +23,9 @@ public class Endereco {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "tag_enum")
-    @ColumnDefault("'OUTRO'")
-    private Tag tag;
+    @Column(columnDefinition = "tag_enum DEFAULT 'OUTRO'::tag_enum")
+    @Type(type = "pgsql_enum")
+    private Tag tag = Tag.OUTRO;
 
     @Column(length = 60, nullable = false)
     private String nome;

@@ -21,14 +21,15 @@ public class TokenServiceImpl implements TokenService {
     private String secret;
 
     @Override
-    public String generateToken(Authentication authentication) {
+    public String generateToken(Authentication authentication, Long empresaId) {
         Usuario logged = (Usuario) authentication.getPrincipal();
         Date today = new Date();
         Date expirationDate = new Date(today.getTime() + Long.parseLong(expiration));
 
         return Jwts.builder()
-                .setIssuer("API Controle de Finanças")
-                .setSubject(logged.getId().toString())
+                .setIssuer("API e-Markety")
+                .claim("usuarioId", logged.getId())
+                .claim("empresaId", empresaId)
                 .setIssuedAt(today)
                 .setExpiration(expirationDate)
                 .signWith(SignatureAlgorithm.HS256, secret)
@@ -37,17 +38,30 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public boolean isValidToken(String token) {
+        if (token == null || token.isEmpty()) return false;
+
         try {
             Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
             return true;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
     }
 
     @Override
-    public Long getUserId(String token) {
-        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-        return Long.parseLong(claims.getSubject());
+    public Long getUsuarioId(String token) {
+        var claims = getClaims(token);
+        return ((Integer) claims.get("usuarioId")).longValue();
+    }
+
+    @Override
+    public Long getEmpresaId(String token) {
+        var claims = getClaims(token);
+        return ((Integer) claims.get("empresaId")).longValue();
+    }
+
+    private Claims getClaims(String token) {
+        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 }

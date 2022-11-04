@@ -2,6 +2,7 @@ package br.edu.utfpr.e_markety.config.security;
 
 import br.edu.utfpr.e_markety.config.security.service.TokenService;
 import br.edu.utfpr.e_markety.config.security.service.UsuarioService;
+import br.edu.utfpr.e_markety.repository.EmpresaRepository;
 import br.edu.utfpr.e_markety.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +25,7 @@ public class SecurityConfiguration {
     private final UsuarioRepository usuarioRepository;
     private final UsuarioService usuarioService;
     private final TokenService tokenService;
+    private final EmpresaRepository empresaRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Bean
@@ -36,11 +38,10 @@ public class SecurityConfiguration {
                                 authorize
                                         .antMatchers(HttpMethod.POST, "/pedido").denyAll()
                                         .antMatchers(HttpMethod.POST, "/auth", "/usuario").permitAll()
-                                        .antMatchers(HttpMethod.GET, "/endereco", "/pedido").hasRole("ADMIN")
                                         .anyRequest().permitAll() // authenticated()
                                         .and().csrf().disable()
                                         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                                        .and().addFilterBefore(new AuthByTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
+                                        .and().addFilterBefore(new AuthByTokenFilter(tokenService, usuarioRepository, empresaRepository), UsernamePasswordAuthenticationFilter.class);
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }

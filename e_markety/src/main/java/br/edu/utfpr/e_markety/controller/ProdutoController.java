@@ -1,15 +1,10 @@
 package br.edu.utfpr.e_markety.controller;
 
 import br.edu.utfpr.e_markety.dto.FiltroDto;
-import br.edu.utfpr.e_markety.dto.PageResponseDto;
 import br.edu.utfpr.e_markety.dto.ProdutoDto;
 import br.edu.utfpr.e_markety.service.GenericService;
 import br.edu.utfpr.e_markety.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
