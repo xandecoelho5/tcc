@@ -42,7 +42,7 @@ class TrackOrderSummary extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                'Realizado em ${DateTimeUtils.getFormattedDate(order.createdAt)}',
+                'Realizado em ${DateTimeUtils.getAbbrMonth(order.createdAt)}',
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

@@ -30,6 +30,8 @@ class AddressContainer extends StatefulWidget {
 
 class _AddressContainerState extends State<AddressContainer> {
   late Address _address = widget.address;
+  late bool _isDefault = _address.isDefault;
+  final _formKey = GlobalKey<FormState>();
 
   late final _inputSaveMap = <String, void Function(String?)>{
     'name': (v) => _address = _address.copyWith(name: v),
@@ -38,30 +40,23 @@ class _AddressContainerState extends State<AddressContainer> {
     'reference': (v) => _address = _address.copyWith(reference: v),
   };
 
-  void _onSaved(String? field, String? value) {
-    _inputSaveMap[field]?.call(value);
-    // widget.onSubmitAddress(_address);
-  }
+  void _onSaved(String? field, String? value) =>
+      _inputSaveMap[field]?.call(value);
 
-  void _onTagSaved(Tag? v) {
-    _address = _address.copyWith(tag: v);
-    // widget.onSubmitAddress(_address);
-  }
+  void _onTagSaved(Tag? v) => _address = _address.copyWith(tag: v);
 
-  void _onDistrictSaved(District? v) {
-    _address = _address.copyWith(district: v);
-    // widget.onSubmitAddress(_address);
-  }
+  void _onDistrictSaved(District? v) =>
+      _address = _address.copyWith(district: v);
 
   void _onDefaultChanged(bool? v) {
-    _address = _address.copyWith(isDefault: v);
-    // widget.onSubmitAddress(_address);
+    setState(() {
+      _isDefault = v!;
+      _address = _address.copyWith(isDefault: _isDefault);
+    });
   }
 
   String? _onValidateDistrict(District? v) =>
       v == null ? Strings.obrigatorio : null;
-
-  final _formKey = GlobalKey<FormState>();
 
   void _onSubmit() {
     if (_formKey.currentState!.validate()) {
@@ -142,7 +137,7 @@ class _AddressContainerState extends State<AddressContainer> {
                       children: [
                         Checkbox(
                           activeColor: kPrimaryColor,
-                          value: _address.isDefault,
+                          value: _isDefault,
                           onChanged: _onDefaultChanged,
                         ),
                         Text(

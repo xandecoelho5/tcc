@@ -11,8 +11,8 @@ import '../../shared/widgets/empty_container.dart';
 
 final sortColumns = [
   'id',
-  'usuarioId',
-  'usuarioEmail',
+  'nome',
+  'email',
   'total',
   'status',
   'data',
@@ -42,8 +42,8 @@ class _OrdersPageState extends State<OrdersPage> {
   List<DataColumn> _buildDataColumns() {
     return [
       DataColumn(label: const Text('Código'), numeric: true, onSort: sort),
-      DataColumn(label: const Text('Cliente'), onSort: sort),
-      DataColumn(label: const Text('Email'), onSort: sort),
+      const DataColumn(label: Text('Cliente')),
+      const DataColumn(label: Text('Email')),
       DataColumn(label: const Text('Preço'), numeric: true, onSort: sort),
       DataColumn(label: const Text('Status'), onSort: sort),
       DataColumn(label: const Text('Data'), onSort: sort),

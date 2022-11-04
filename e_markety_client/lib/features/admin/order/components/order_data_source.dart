@@ -2,6 +2,7 @@ import 'package:e_markety_client/features/admin/order/models/order_admin.dart';
 import 'package:e_markety_client/features/admin/shared/data_responses/order_page_response.dart';
 import 'package:e_markety_client/features/order/order/models/order_status.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
+import 'package:e_markety_client/shared/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
 
 class OrderDataSource extends DataTableSource {
@@ -36,8 +37,8 @@ class OrderDataSource extends DataTableSource {
         DataCell(Text(order.user.email)),
         DataCell(Text('\$${order.total.toStringAsFixed(2)}')),
         DataCell(_StatusChip(status: order.status)),
-        DataCell(Text(order.createdAt.toString().split(' ')[0])),
-        const DataCell(_ActionButton()),
+        DataCell(Text(DateTimeUtils.getyMd(order.createdAt))),
+        DataCell(_ActionButton(status: order.status)),
       ],
     );
   }
@@ -73,18 +74,77 @@ class _StatusChip extends StatelessWidget {
   }
 }
 
-class _ActionButton extends StatelessWidget {
-  const _ActionButton({Key? key}) : super(key: key);
+class _ActionButton extends StatefulWidget {
+  const _ActionButton({Key? key, required this.status}) : super(key: key);
+
+  final OrderStatus status;
+
+  @override
+  State<_ActionButton> createState() => _ActionButtonState();
+}
+
+class _ActionButtonState extends State<_ActionButton> {
+  bool _isHovering = false;
+
+  void _onHover(bool value) => setState(() => _isHovering = value);
+
+  late final actions = widget.status == OrderStatus.placed
+      ? ['Confirmar', 'Cancelar']
+      : ['Cancelar'];
+
+  void _onTap() {}
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: IconButton(
-        onPressed: () {},
-        splashRadius: 20,
-        hoverColor: kPrimaryColor.withOpacity(0.35),
-        icon: const Icon(Icons.close, color: kPrimaryColor),
+    const borderRadius = BorderRadius.all(Radius.circular(20));
+
+    return Container(
+      height: 30,
+      width: 60,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: borderRadius,
+        border: Border.all(color: kSecondaryColor),
+      ),
+      child: Material(
+        color: Colors.white,
+        borderRadius: borderRadius,
+        child: InkWell(
+          borderRadius: borderRadius,
+          onTap: _onTap,
+          hoverColor: kSecondaryColor,
+          onHover: _onHover,
+          child: Theme(
+            data: ThemeData(
+              hoverColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+            ),
+            child: PopupMenuButton(
+              tooltip: '',
+              onSelected: (value) {
+                if (value == 'Confirmar') {
+                  print('Confirmar');
+                }
+                if (value == 'Cancelar') {
+                  print('Cancelar');
+                }
+              },
+              itemBuilder: (context) => List.generate(
+                actions.length,
+                (index) => PopupMenuItem<String>(
+                  value: actions[index],
+                  child: Text(actions[index]),
+                ),
+              ),
+              child: Icon(
+                Icons.arrow_drop_down,
+                color: _isHovering ? Colors.white : kSecondaryColor,
+                size: 28,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
