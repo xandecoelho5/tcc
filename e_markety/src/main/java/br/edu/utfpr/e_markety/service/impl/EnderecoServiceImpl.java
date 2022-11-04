@@ -31,11 +31,11 @@ public class EnderecoServiceImpl extends GenericServiceImpl<Endereco, Long, Ende
 
     @Override
     protected void preSave(Endereco entity, Long id) {
-//        if (entity.getPadrao()) {
-//            repository.updateAllEnderecosToNotDefault(entity.getUsuario().getId());
-//        }
         if (entity.getUsuario() == null) {
             entity.setUsuario(PrincipalUtils.getLoggedUsuario());
+        }
+        if (entity.isPadrao()) {
+            repository.updateAllEnderecosToNotDefault(entity.getUsuario().getId());
         }
     }
 }

@@ -16,7 +16,7 @@ public interface PedidoRepository extends GenericUserRepository<Pedido, Long> {
 
     Page<Pedido> findAllByUsuarioIdAndStatusIsNot(Long usuarioId, StatusPedido status, Pageable pageable);
 
-    @Query("select distinct p " +
+    @Query("select distinct p " +// , p.usuario.nome, p.usuario.email
             "from Pedido p " +
             "inner join p.items i " +
             "inner join i.produto pr " +

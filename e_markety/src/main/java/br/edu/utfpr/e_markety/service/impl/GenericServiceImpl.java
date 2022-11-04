@@ -50,11 +50,13 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID,
     }
 
     @Override
+    @Transactional()
     public Y save(Y dto) {
         return save(dto, null);
     }
 
     @Override
+    @Transactional()
     public Y update(ID id, Y dto) {
         findById(id);
         return save(dto, id);
