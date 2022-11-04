@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 enum Tag {
   home('Casa', Icons.house_outlined),
   office('Trabalho', Icons.work_outline),
-  other('Outros', Icons.location_on_outlined);
+  other('Outro', Icons.location_on_outlined);
 
   const Tag(this.label, this.icon);
 
@@ -20,4 +20,18 @@ enum Tag {
         return Tag.other;
     }
   }
+
+  String toRemoteName() {
+    switch (this) {
+      case Tag.home:
+        return 'CASA';
+      case Tag.office:
+        return 'TRABALHO';
+      case Tag.other:
+        return 'OUTRO';
+    }
+  }
+
+  @override
+  String toString() => label;
 }

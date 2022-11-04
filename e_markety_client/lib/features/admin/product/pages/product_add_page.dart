@@ -21,10 +21,7 @@ class ProductAddPage extends StatelessWidget {
       listener: (context, state) {
         if (state is AdminProductSuccess) {
           Modular.get<ISnackBarService>().showSuccess(context, 'Produto salvo');
-          Future.delayed(
-            const Duration(seconds: 1),
-            () => Modular.to.navigate('/admin/product'),
-          );
+          Modular.to.navigate('/admin/product');
         }
         if (state is AdminProductError) {
           Modular.get<ISnackBarService>()

@@ -4,8 +4,10 @@ import 'package:e_markety_client/features/admin/product/components/notifiers/mea
 import 'package:e_markety_client/features/admin/product/components/text_field_with_label.dart';
 import 'package:e_markety_client/features/category/models/category.dart';
 import 'package:e_markety_client/features/product/models/measure_unit.dart';
+import 'package:e_markety_client/shared/utils/mask_formatter_utils.dart';
 import 'package:e_markety_client/shared/utils/strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:validatorless/validatorless.dart';
 
@@ -122,9 +124,6 @@ class _ProductInputFieldsState extends State<ProductInputFields> {
                 onValidate: Validatorless.required(Strings.obrigatorio),
               ),
             ),
-            Expanded(
-              child: Text(_product.createdAt.toString()),
-            ),
           ],
         ),
         const SizedBox(height: 24),
@@ -144,6 +143,7 @@ class _ProductInputFieldsState extends State<ProductInputFields> {
                     Strings.valorMinimo,
                   ),
                 ]),
+                inputFormatters: [MaskFormatterUtils.decimalNumber],
               ),
             ),
             const SizedBox(width: 16),
@@ -153,6 +153,7 @@ class _ProductInputFieldsState extends State<ProductInputFields> {
                 fieldName: 'stock',
                 data: _product.stock.toString(),
                 onCustomSaved: _onSaved,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
             ),
             const SizedBox(width: 16),
@@ -162,6 +163,7 @@ class _ProductInputFieldsState extends State<ProductInputFields> {
                 fieldName: 'discountPercent',
                 data: _product.discountPercent.toString(),
                 onCustomSaved: _onSaved,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
             ),
           ],
@@ -194,6 +196,7 @@ class _ProductInputFieldsState extends State<ProductInputFields> {
                 data: _product.weightPrice.toString(),
                 onCustomSaved: _onSaved,
                 onValidate: _onValidateWeight,
+                inputFormatters: [MaskFormatterUtils.decimalNumber],
               ),
             ),
             const SizedBox(width: 16),
@@ -204,6 +207,7 @@ class _ProductInputFieldsState extends State<ProductInputFields> {
                 data: _product.weightUnit.toString(),
                 onCustomSaved: _onSaved,
                 onValidate: _onValidateWeight,
+                inputFormatters: [MaskFormatterUtils.decimalNumber],
               ),
             ),
           ],

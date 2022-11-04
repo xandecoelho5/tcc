@@ -8,8 +8,12 @@ abstract class IAddressService {
   Future<Either<AddressException, List<Address>>> getAddresses();
 
   Future<Either<AddressException, Address>> getDefaultAddress();
+
+  Future<Either<AddressException, Address>> getAddressById(int id);
+
 // Future<Address> addAddress(Address address);
-// Future<Address> updateAddress(Address address);
+
+  Future<Either<AddressException, Address>> updateAddress(Address address);
 // Future<void> deleteAddress(Address address);
 }
 
@@ -21,7 +25,7 @@ class AddressService implements IAddressService {
 
   @override
   Future<Either<AddressException, List<Address>>> getAddresses() async {
-    final response = await _httpService.getAll('$_baseUrl/current');
+    final response = await _httpService.getAll(_baseUrl);
     return response.fold(
       (l) => Left(AddressException(l.message, l.stackTrace)),
       (r) => Right(r.map(Address.fromMap).toList()),
@@ -31,6 +35,29 @@ class AddressService implements IAddressService {
   @override
   Future<Either<AddressException, Address>> getDefaultAddress() async {
     final response = await _httpService.get('$_baseUrl/padrao');
+    return response.fold(
+      (l) => Left(AddressException(l.message, l.stackTrace)),
+      (r) => Right(Address.fromMap(r)),
+    );
+  }
+
+  @override
+  Future<Either<AddressException, Address>> getAddressById(int id) async {
+    final response = await _httpService.get('$_baseUrl/$id');
+    return response.fold(
+      (l) => Left(AddressException(l.message, l.stackTrace)),
+      (r) => Right(Address.fromMap(r)),
+    );
+  }
+
+  @override
+  Future<Either<AddressException, Address>> updateAddress(
+    Address address,
+  ) async {
+    final response = await _httpService.put(
+      '$_baseUrl/${address.id}',
+      address.toMap(),
+    );
     return response.fold(
       (l) => Left(AddressException(l.message, l.stackTrace)),
       (r) => Right(Address.fromMap(r)),

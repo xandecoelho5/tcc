@@ -7,12 +7,12 @@ part 'address.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Address {
-  final int id;
+  final int? id;
   final Tag tag;
   final String name;
   final String phone;
   final String street;
-  final District district; // Bairro
+  final District? district; // Bairro
   final String? reference;
   final bool isDefault;
 
@@ -27,7 +27,31 @@ class Address {
     this.isDefault = false,
   });
 
-  String get fullAddress => '$street, ${district.name}';
+  const Address.empty({
+    this.id,
+    this.tag = Tag.other,
+    this.name = '',
+    this.phone = '',
+    this.street = '',
+    this.district,
+    this.reference,
+    this.isDefault = false,
+  });
+
+  String get fullAddress => '$street, ${district?.name}';
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'tag': tag.toRemoteName(),
+      'nome': name,
+      'telefone': phone,
+      'rua': street,
+      'bairro': district,
+      'referencia': reference,
+      'padrao': isDefault,
+    };
+  }
 
   factory Address.fromMap(dynamic map) {
     return Address(
@@ -46,4 +70,25 @@ class Address {
       _$AddressFromJson(json);
 
   Map<String, dynamic> toJson() => _$AddressToJson(this);
+
+  Address copyWith({
+    Tag? tag,
+    String? name,
+    String? phone,
+    String? street,
+    District? district,
+    String? reference,
+    bool? isDefault,
+  }) {
+    return Address(
+      id: id ?? id,
+      tag: tag ?? this.tag,
+      name: name ?? this.name,
+      phone: phone ?? this.phone,
+      street: street ?? this.street,
+      district: district ?? this.district,
+      reference: reference ?? this.reference,
+      isDefault: isDefault ?? this.isDefault,
+    );
+  }
 }

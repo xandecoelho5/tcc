@@ -6,6 +6,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 import '../../../../shared/theme/constants.dart';
+import '../../../../shared/utils/bloc_utils.dart';
 import '../../../user/auth/blocs/auth_bloc.dart';
 import 'custom_sidebarx/custom_sidebarx.dart';
 import 'custom_sidebarx/custom_sidebarx_item.dart';
@@ -40,6 +41,7 @@ class AdminSidebar extends StatelessWidget {
         CustomSidebarXItem(
           icon: Icons.logout,
           label: 'Logout',
+          onTap: BlocUtils.signOut,
         ),
       ],
       headerDivider: kDivider,
@@ -80,9 +82,10 @@ class AdminSidebar extends StatelessWidget {
           label: 'Pedidos',
           onTap: () => Modular.to.navigate('/admin/order/'),
         ),
-        const CustomSidebarXItem(
+        CustomSidebarXItem(
           icon: Icons.home_work_outlined,
           label: 'Configurações',
+          onTap: () => Modular.to.navigate('/admin/settings/'),
         ),
       ],
     );

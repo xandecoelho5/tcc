@@ -56,55 +56,35 @@ class _ProductContainerState extends State<ProductContainer> {
   @override
   Widget build(BuildContext context) {
     return TableContainer(
-      child: SingleChildScrollView(
-        child: Column(
+      title: widget.title,
+      child: Form(
+        key: _formKey,
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
-              child: Text(
-                widget.title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+            Expanded(
+              flex: 4,
+              child: SelectImage(
+                product: _product,
+                onProductChanged: _onProductChanged,
               ),
             ),
-            const Divider(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-              child: Form(
-                key: _formKey,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 4,
-                      child: SelectImage(
-                        product: _product,
-                        onProductChanged: _onProductChanged,
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      flex: 8,
-                      child: Column(
-                        children: [
-                          ProductInputFields(
-                            product: _product,
-                            onProductChanged: _onProductChanged,
-                          ),
-                          const SizedBox(height: 20),
-                          FilledButton(
-                            text: widget.buttonText,
-                            color: kPrimaryColor,
-                            onPressed: _onSubmit,
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+            const SizedBox(width: 20),
+            Expanded(
+              flex: 8,
+              child: Column(
+                children: [
+                  ProductInputFields(
+                    product: _product,
+                    onProductChanged: _onProductChanged,
+                  ),
+                  const SizedBox(height: 20),
+                  FilledButton(
+                    text: widget.buttonText,
+                    color: kPrimaryColor,
+                    onPressed: _onSubmit,
+                  ),
+                ],
               ),
             )
           ],

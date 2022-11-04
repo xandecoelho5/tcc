@@ -1,5 +1,6 @@
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextFieldWithLabel extends StatefulWidget {
   const TextFieldWithLabel({
@@ -11,6 +12,8 @@ class TextFieldWithLabel extends StatefulWidget {
     this.onSaved,
     this.onCustomSaved,
     this.data,
+    this.inputFormatters,
+    this.readOnly = false,
   }) : super(key: key);
 
   final String label;
@@ -20,6 +23,8 @@ class TextFieldWithLabel extends StatefulWidget {
   final void Function(String?)? onSaved;
   final void Function(String?, String?)? onCustomSaved;
   final String? data;
+  final List<TextInputFormatter>? inputFormatters;
+  final bool readOnly;
 
   @override
   State<TextFieldWithLabel> createState() => _TextFieldWithLabelState();
@@ -32,7 +37,17 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
   @override
   void initState() {
     super.initState();
-    _controller.text = widget.data ?? '';
+
+    final data = widget.data ?? '';
+    if (widget.inputFormatters != null) {
+      _controller.value = widget.inputFormatters![0].formatEditUpdate(
+        TextEditingValue.empty,
+        TextEditingValue(text: data),
+      );
+    } else {
+      _controller.text = data;
+    }
+
     _focus.addListener(() {
       if (!_focus.hasFocus) {
         widget.onFocusLost?.call(_controller.text);
@@ -46,6 +61,10 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
     super.dispose();
   }
 
+  //TODO usar regex para validar url, e se for url, fazer o request e verificar se é valido
+  //TODO usar regex para validar telefone
+  //TODO usar regex para validar horario
+  //TODO validar todos os campos tanto de empresa quanto de produto
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -58,7 +77,6 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
           focusNode: _focus,
           decoration: kTextInputDecoration,
           validator: widget.onValidate,
-          // onSaved: widget.onSaved,
           onSaved: (value) {
             if (widget.onSaved != null) {
               widget.onSaved!.call(value);
@@ -66,6 +84,8 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
               widget.onCustomSaved!.call(widget.fieldName, value);
             }
           },
+          inputFormatters: widget.inputFormatters,
+          readOnly: widget.readOnly,
         ),
       ],
     );

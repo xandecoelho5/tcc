@@ -23,7 +23,7 @@ class AddressScreen extends StatelessWidget {
             child: BlocBuilder<AddressBloc, AddressState>(
               bloc: Modular.get<AddressBloc>()..add(AddressGetAllEvent()),
               builder: (context, state) {
-                if (state is AddressLoaded) {
+                if (state is AddressListLoaded) {
                   return AddressList(addresses: state.addresses);
                 }
                 if (state is AddressError) {
@@ -42,7 +42,7 @@ class AddressScreen extends StatelessWidget {
               ),
               child: FilledButton(
                 text: 'Adicionar Endereço',
-                onPressed: () => Modular.to.pushNamed('/add-new-address'),
+                onPressed: () => Modular.to.pushNamed('/address/add'),
                 color: kSecondaryColor,
               ),
             ),

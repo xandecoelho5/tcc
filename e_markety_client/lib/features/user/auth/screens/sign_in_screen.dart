@@ -1,4 +1,5 @@
 import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
+import 'package:e_markety_client/features/company/blocs/company_bloc.dart';
 import 'package:e_markety_client/features/user/auth/blocs/auth_bloc.dart';
 import 'package:e_markety_client/shared/environment/platform.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
@@ -8,7 +9,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../shared/theme/constants.dart';
+import '../../../../shared/utils/strings.dart';
 import '../../../../shared/widgets/filled_button.dart';
+import '../../../admin/product/components/dropdown_with_label.dart';
+import '../../../company/models/company.dart';
 import '../components/email_password_component.dart';
 import '../components/text_button_auth.dart';
 import '../models/login_model.dart';
@@ -23,7 +27,7 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final _loginFormKey = GlobalKey<FormState>();
 
-  LoginModel login = const LoginModel(login: '', password: '');
+  LoginModel login = const LoginModel(login: '', password: '', companyId: 0);
 
   Future<void> _signIn() async {
     if (_loginFormKey.currentState!.validate()) {
@@ -36,6 +40,42 @@ class _SignInScreenState extends State<SignInScreen> {
 
   void _onSenhaSaved(String? value) => login = login.copyWith(password: value);
 
+  void _onCompanySaved(Company? value) =>
+      login = login.copyWith(companyId: value?.id);
+
+  String? _onValidateCompany(Company? v) =>
+      v == null ? Strings.obrigatorio : null;
+
+  BlocBuilder<CompanyBloc, CompanyState> _buildDropdown() {
+    return BlocBuilder<CompanyBloc, CompanyState>(
+      bloc: Modular.get<CompanyBloc>()..add(CompanyGetAllEvent()),
+      builder: (context, state) {
+        if (state is CompanyLoadedListState) {
+          return DropdownWithLabel(
+            label: 'Escolha o mercado',
+            items: state.companies,
+            data: state.companies.first,
+            onSaved: _onCompanySaved,
+            onValidate: _onValidateCompany,
+            backgroundColor: Colors.white,
+          );
+        }
+
+        if (state is CompanyErrorState) {
+          Modular.get<ISnackBarService>().showError(context, state.message);
+        }
+
+        if (state is CompanyLoadingState) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        return const SizedBox.shrink();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +84,7 @@ class _SignInScreenState extends State<SignInScreen> {
       body: BlocListener<AuthBloc, AuthState>(
         bloc: Modular.get<AuthBloc>(),
         listener: (context, state) {
+          print(Modular.get<AppPlatform>().defaultRoute);
           if (state is AuthLogged) {
             Modular.to.navigate(Modular.get<AppPlatform>().defaultRoute);
           }
@@ -54,53 +95,57 @@ class _SignInScreenState extends State<SignInScreen> {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Form(
-                  key: _loginFormKey,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.055,
-                      ),
-                      const LogoWidget(),
-                      const SizedBox(height: 60),
-                      EmailPasswordComponent(
-                        onEmailSaved: _onEmailSaved,
-                        onPasswordSaved: _onSenhaSaved,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Esqueci minha senha',
-                              style: TextStyle(
-                                color: kBasicDarkColor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Form(
+                    key: _loginFormKey,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.055,
+                        ),
+                        const LogoWidget(),
+                        const SizedBox(height: 60),
+                        _buildDropdown(),
+                        const SizedBox(height: 20),
+                        EmailPasswordComponent(
+                          onEmailSaved: _onEmailSaved,
+                          onPasswordSaved: _onSenhaSaved,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                              onPressed: () {},
+                              child: const Text(
+                                'Esqueci minha senha',
+                                style: TextStyle(
+                                  color: kBasicDarkColor,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 32),
-                      FilledButton(
-                        text: 'Entrar',
-                        color: Theme.of(context).colorScheme.secondary,
-                        onPressed: _signIn,
-                      ),
-                    ],
+                          ],
+                        ),
+                        const SizedBox(height: 32),
+                        FilledButton(
+                          text: 'Entrar',
+                          color: Theme.of(context).colorScheme.secondary,
+                          onPressed: _signIn,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                TextButtonAuth(
-                  textLabel: 'Não tem uma conta?',
-                  textButtonLabel: 'Cadastre-se',
-                  onPressed: () => Modular.to.navigate('/sign-up'),
-                ),
-              ],
+                  TextButtonAuth(
+                    textLabel: 'Não tem uma conta?',
+                    textButtonLabel: 'Cadastre-se',
+                    onPressed: () => Modular.to.navigate('/sign-up'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

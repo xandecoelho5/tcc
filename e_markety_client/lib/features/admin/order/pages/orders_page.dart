@@ -1,11 +1,13 @@
 import 'package:e_markety_client/features/admin/order/components/order_data_source.dart';
 import 'package:e_markety_client/features/admin/order/components/order_notifier.dart';
 import 'package:e_markety_client/features/admin/shared/data_responses/order_page_response.dart';
+import 'package:e_markety_client/shared/utils/data_table_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../shared/widgets/custom_data_table/custom_paginated_table.dart';
 import '../../shared/data_responses/provider_settings.dart';
+import '../../shared/widgets/empty_container.dart';
 
 final sortColumns = [
   'id',
@@ -34,12 +36,7 @@ class _OrdersPageState extends State<OrdersPage> {
   }
 
   void sort(int columnIndex, bool ascending) {
-    final columnName = sortColumns[columnIndex];
-    _provider
-      ..sortAscending = ascending
-      ..sortColumnIndex = columnIndex
-      ..sortColumnName = columnName
-      ..fetchData();
+    DataTableUtils.sort(_provider, sortColumns, columnIndex, ascending);
   }
 
   List<DataColumn> _buildDataColumns() {
@@ -63,7 +60,7 @@ class _OrdersPageState extends State<OrdersPage> {
             OrderDataSource(value.pageResponse as OrderPageResponse);
 
         if (value.pageResponse.content.isEmpty) {
-          return const SizedBox.shrink();
+          return const EmptyContainer();
         }
 
         return CustomPaginatedTable(

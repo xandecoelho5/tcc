@@ -6,10 +6,22 @@ class AddressInitial implements AddressState {}
 
 class AddressLoading implements AddressState {}
 
-class AddressLoaded implements AddressState {
+class AddressSuccess implements AddressState {
+  final Address address;
+
+  AddressSuccess(this.address);
+}
+
+class AddressListLoaded implements AddressState {
   final List<Address> addresses;
 
-  AddressLoaded(this.addresses);
+  AddressListLoaded(this.addresses);
+}
+
+class AddressLoaded implements AddressState {
+  final Address address;
+
+  AddressLoaded(this.address);
 }
 
 class AddressError implements AddressState {

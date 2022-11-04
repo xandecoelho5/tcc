@@ -1,9 +1,10 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'district.g.dart';
 
 @JsonSerializable()
-class District {
+class District extends Equatable {
   final int id;
   final String name;
 
@@ -16,7 +17,7 @@ class District {
     };
   }
 
-  factory District.fromMap(Map<String, dynamic> map) {
+  factory District.fromMap(dynamic map) {
     return District(
       id: map['id'],
       name: map['nome'],
@@ -27,4 +28,10 @@ class District {
       _$DistrictFromJson(json);
 
   Map<String, dynamic> toJson() => _$DistrictToJson(this);
+
+  @override
+  String toString() => name;
+
+  @override
+  List<Object?> get props => [id];
 }

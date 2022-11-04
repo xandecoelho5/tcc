@@ -55,7 +55,7 @@ class OrderService implements IOrderService {
     bool? asc,
   }) async {
     final response =
-        await _httpService.get('$_baseUrl/page?page=$page&size=$size'
+        await _httpService.get('$_baseUrl/empresa/page?page=$page&size=$size'
             '${order != null ? '&order=$order' : ''}'
             '${asc != null ? '&asc=$asc' : ''}');
     return response.fold(

@@ -4,11 +4,12 @@ import 'package:e_markety_client/features/admin/admin_module.dart';
 import 'package:e_markety_client/features/category/blocs/category_bloc.dart';
 import 'package:e_markety_client/features/category/screens/category_screen.dart';
 import 'package:e_markety_client/features/category/services/category_service.dart';
+import 'package:e_markety_client/features/company/services/company_service.dart';
 import 'package:e_markety_client/features/home/screens/home_screen.dart';
 import 'package:e_markety_client/features/order/address/blocs/default_address/default_address_bloc.dart';
-import 'package:e_markety_client/features/order/address/screens/add_new_address_screen.dart';
-import 'package:e_markety_client/features/order/address/screens/address_screen.dart';
+import 'package:e_markety_client/features/order/address/components/notifiers/district_notifier.dart';
 import 'package:e_markety_client/features/order/address/services/address_service.dart';
+import 'package:e_markety_client/features/order/address/services/district_service.dart';
 import 'package:e_markety_client/features/order/checkout/screens/checkout_screen.dart';
 import 'package:e_markety_client/features/order/order/blocs/current_order/current_order_bloc.dart';
 import 'package:e_markety_client/features/order/order/services/current_order_service.dart';
@@ -38,6 +39,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../shared/theme/theme.dart';
+import 'company/blocs/company_bloc.dart';
 import 'order/address/blocs/address/address_bloc.dart';
 import 'order/address/screens/delivery_address_screen.dart';
 import 'order/order/blocs/order/order_bloc.dart';
@@ -65,6 +67,9 @@ class AppModule extends Module {
     // auth
     Bind.singleton<IAuthService>((i) => AuthService(i(), i())),
     Bind.singleton((i) => AuthBloc(i(), i())),
+    // company
+    Bind.singleton<ICompanyService>((i) => CompanyService(i())),
+    Bind.singleton((i) => CompanyBloc(i())),
     // product
     Bind.singleton<IProductService>((i) => ProductService(i())),
     Bind.singleton((i) => ProductBloc(i())),
@@ -74,8 +79,10 @@ class AppModule extends Module {
     Bind.singleton((i) => Global()),
     // address
     Bind.singleton<IAddressService>((i) => AddressService(i())),
+    Bind.lazySingleton<IDistrictService>((i) => DistrictService(i())),
     Bind.singleton((i) => AddressBloc(i())),
     Bind.singleton((i) => DefaultAddressBloc(i())),
+    Bind.lazySingleton((i) => DistrictNotifier(i())),
     // order
     Bind.singleton<IOrderService>((i) => OrderService(i())),
     Bind.singleton((i) => OrderBloc(i())),
@@ -148,11 +155,6 @@ class AppModule extends Module {
     ),
     ChildRoute('/about-me', child: (context, args) => const AboutMeScreen()),
     ChildRoute('/my-orders', child: (context, args) => const MyOrdersScreen()),
-    ChildRoute('/address', child: (context, args) => const AddressScreen()),
-    ChildRoute(
-      '/add-new-address',
-      child: (context, args) => const AddNewAddressScreen(),
-    ),
     ModuleRoute('/favourite/', module: FavouriteModule()),
     ModuleRoute(
       '/admin/',

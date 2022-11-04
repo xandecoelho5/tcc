@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../../shared/utils/data_table_utils.dart';
 import '../../../../shared/widgets/custom_data_table/custom_paginated_table.dart';
 import '../../shared/data_responses/product_page_response.dart';
+import '../../shared/widgets/empty_container.dart';
 
 final sortColumns = [
   'produto',
@@ -37,12 +39,7 @@ class _ProductsPageState extends State<ProductsPage> {
   }
 
   void sort(int columnIndex, bool ascending) {
-    final columnName = sortColumns[columnIndex];
-    _provider
-      ..sortAscending = ascending
-      ..sortColumnIndex = columnIndex
-      ..sortColumnName = columnName
-      ..fetchData();
+    DataTableUtils.sort(_provider, sortColumns, columnIndex, ascending);
   }
 
   List<DataColumn> _buildDataColumns() {
@@ -81,7 +78,7 @@ class _ProductsPageState extends State<ProductsPage> {
               ProductDataSource(value.pageResponse as ProductPageResponse);
 
           if (value.pageResponse.content.isEmpty) {
-            return const SizedBox.shrink();
+            return const EmptyContainer();
           }
 
           return CustomPaginatedTable(

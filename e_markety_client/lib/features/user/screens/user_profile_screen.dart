@@ -2,11 +2,10 @@ import 'package:e_markety_client/features/user/components/avatar_container.dart'
 import 'package:e_markety_client/features/user/components/icon_buttons_list.dart';
 import 'package:e_markety_client/features/user/models/user.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
+import 'package:e_markety_client/shared/utils/bloc_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../shared/widgets/custom_app_bar.dart';
-import '../auth/blocs/auth_bloc.dart';
 import '../components/icon_button_container_big.dart';
 import '../components/icon_button_model.dart';
 
@@ -14,13 +13,6 @@ class UserProfileScreen extends StatelessWidget {
   const UserProfileScreen({Key? key, required this.user}) : super(key: key);
 
   final User user;
-
-  Future<void> _signOut() async {
-    Modular.get<AuthBloc>().add(AuthSignOutEvent());
-    Future.delayed(const Duration(milliseconds: 500), () {
-      Modular.to.navigate('/');
-    });
-  }
 
   Padding _header(context) {
     return Padding(
@@ -91,13 +83,13 @@ class UserProfileScreen extends StatelessWidget {
               const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: const [
                   IconButtonContainerBig(
                     iconButton: IconButtonModel(
                       icon: Icons.logout,
                       label: 'Sair',
                       color: kSecondaryColor,
-                      onTap: _signOut,
+                      onTap: BlocUtils.signOut,
                     ),
                   ),
                 ],

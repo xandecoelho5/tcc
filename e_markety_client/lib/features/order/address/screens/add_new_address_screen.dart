@@ -108,7 +108,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
             ),
             Expanded(
               child: FilledButton(
-                text: 'Save Address',
+                text: 'Salvar',
                 color: kSecondaryColor,
                 onPressed: () {},
               ),
