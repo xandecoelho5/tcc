@@ -44,6 +44,9 @@ class _CustomSidebarXCellState extends State<CustomSidebarXCell> {
 
   @override
   Widget build(BuildContext context) {
+    if (_expanded && !widget.selected) {
+      _expanded = false;
+    }
     final theme = widget.theme;
     final iconTheme =
         widget.selected ? theme.selectedIconTheme : theme.iconTheme;

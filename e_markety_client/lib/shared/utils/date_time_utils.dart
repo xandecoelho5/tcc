@@ -4,15 +4,13 @@ import 'package:intl/intl.dart';
 class DateTimeUtils {
   static const String _locale = 'pt_BR';
 
-  DateTimeUtils._() {
-    initializeDateFormatting(_locale);
-  }
-
   static String getAbbrMonth(DateTime date) {
+    initializeDateFormatting(_locale);
     return DateFormat.yMMMd(_locale).format(date);
   }
 
   static String getyMd(DateTime date) {
+    initializeDateFormatting(_locale);
     return DateFormat.yMd(_locale).format(date);
   }
 }

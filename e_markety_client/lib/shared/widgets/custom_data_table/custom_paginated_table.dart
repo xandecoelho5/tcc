@@ -60,7 +60,6 @@ class CustomPaginatedTable extends StatelessWidget {
       child: Theme(
         data: Theme.of(context).copyWith(
           cardTheme: CardTheme(
-            margin: const EdgeInsets.all(15),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
               side: BorderSide(color: Colors.grey.shade50),

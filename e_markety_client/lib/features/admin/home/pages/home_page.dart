@@ -37,7 +37,12 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     const SizedBox(height: 90),
                     kDivider,
-                    const Expanded(child: RouterOutlet()),
+                    const Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.all(16),
+                        child: RouterOutlet(),
+                      ),
+                    ),
                   ],
                 ),
               ),
