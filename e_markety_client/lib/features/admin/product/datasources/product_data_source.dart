@@ -1,9 +1,9 @@
-import 'package:asuka/asuka.dart';
 import 'package:e_markety_client/features/admin/product/blocs/admin_product_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../shared/theme/constants.dart';
+import '../../../../shared/utils/dialog_utils.dart';
 import '../../../product/models/product.dart';
 import '../../shared/data_responses/product_page_response.dart';
 
@@ -13,26 +13,10 @@ class ProductDataSource extends DataTableSource {
   ProductDataSource(this._pageResponse);
 
   void _onDeleteProduct(int id) {
-    Asuka.showDialog(
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Excluir produto'),
-          content: const Text('Deseja realmente excluir o produto?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancelar'),
-            ),
-            TextButton(
-              onPressed: () {
-                Modular.get<AdminProductBloc>().add(ProductDeleteEvent(id));
-                Navigator.of(context).pop();
-              },
-              child: const Text('Excluir'),
-            ),
-          ],
-        );
-      },
+    DialogUtils.showDialog(
+      'Excluir produto',
+      'Deseja realmente excluir o produto?',
+      () => Modular.get<AdminProductBloc>().add(ProductDeleteEvent(id)),
     );
   }
 

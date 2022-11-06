@@ -14,8 +14,7 @@ class IconButtonContainerBig extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.2,
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+        padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
           color: iconButton.color,
           borderRadius: BorderRadius.circular(32),

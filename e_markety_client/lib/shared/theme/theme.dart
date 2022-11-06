@@ -19,7 +19,7 @@ final kThemeData = ThemeData(
   appBarTheme: const AppBarTheme(
     backgroundColor: kScaffoldColor,
     elevation: 0,
-    toolbarHeight: 80,
+    toolbarHeight: 56,
   ),
   inputDecorationTheme: const InputDecorationTheme(
     border: kOutlineInputBorder,

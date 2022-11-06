@@ -1,3 +1,4 @@
+import 'package:e_markety_client/shared/utils/dialog_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -15,28 +16,11 @@ class SlidableCard extends StatelessWidget {
   final int valueKey;
   final void Function() onConfirmDelete;
 
-  Future<bool> _confirmDelete(context) async {
-    return await showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Remover Produto'),
-        content: const Text(
-          'Você quer realmente remover este produto da sua lista?',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              onConfirmDelete();
-              Navigator.of(ctx).pop(true);
-            },
-            child: const Text('Sim'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Não'),
-          ),
-        ],
-      ),
+  Future<bool> _confirmDelete() async {
+    return DialogUtils.showDialog(
+      'Remover Produto',
+      'Você quer realmente remover este produto da sua lista?',
+      onConfirmDelete,
     );
   }
 
@@ -56,7 +40,7 @@ class SlidableCard extends StatelessWidget {
                 color: kPrimaryColor,
                 borderRadius: BorderRadius.circular(12),
                 child: InkWell(
-                  onTap: () => _confirmDelete(context),
+                  onTap: _confirmDelete,
                   child: const Icon(Icons.delete, color: Colors.white),
                 ),
               ),

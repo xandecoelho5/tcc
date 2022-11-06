@@ -1,12 +1,29 @@
+import 'package:e_markety_client/features/order/address/blocs/address/address_bloc.dart';
 import 'package:e_markety_client/features/order/address/components/default_flag.dart';
 import 'package:e_markety_client/features/order/address/models/address.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+
+import '../../../../shared/utils/dialog_utils.dart';
 
 class AddressItem extends StatelessWidget {
   const AddressItem({Key? key, required this.address}) : super(key: key);
 
   final Address address;
+
+  void _onDeleteAddress() {
+    DialogUtils.showDialog(
+      'Excluir Endereço',
+      'Deseja realmente excluir o endereço?',
+      () => Modular.get<AddressBloc>().add(AddressDeleteByIdEvent(address.id!)),
+    );
+  }
+
+  Future<void> _onEditAddress() async {
+    await Modular.to.pushNamed('/address/edit/${address.id}');
+    Modular.get<AddressBloc>().add(AddressGetAllEvent());
+  }
 
   Material _addressContainer() {
     final color = address.isDefault ? kPrimaryColor : kSecondaryColor;
@@ -45,12 +62,12 @@ class AddressItem extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
+                  horizontal: 12,
+                  vertical: 6,
                 ),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade50.withOpacity(0.85),
-                  borderRadius: const BorderRadius.only(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(12),
                     topRight: Radius.circular(12),
                   ),
@@ -66,6 +83,24 @@ class AddressItem extends StatelessWidget {
                         fontSize: 20,
                       ),
                     ),
+                    const Spacer(),
+                    PopupMenuButton(
+                      icon: const Icon(Icons.more_horiz),
+                      itemBuilder: (context) => [
+                        const PopupMenuItem(
+                          value: 0,
+                          child: Text('Editar'),
+                        ),
+                        const PopupMenuItem(
+                          value: 1,
+                          child: Text('Deletar'),
+                        ),
+                      ],
+                      onSelected: (value) {
+                        if (value == 0) _onEditAddress();
+                        if (value == 1) _onDeleteAddress();
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -78,7 +113,7 @@ class AddressItem extends StatelessWidget {
             ],
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
               color: Colors.grey.shade50.withOpacity(0.95),
               borderRadius: const BorderRadius.only(

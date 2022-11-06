@@ -75,15 +75,21 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(context, title: 'Checkout'),
+      appBar: CustomAppBar.buildAppBar(
+        context,
+        title: 'Checkout',
+        showAction: false,
+      ),
       body: Column(
         children: [
           Expanded(
             flex: 9,
             child: SingleChildScrollView(
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16,
+                ),
                 child: Column(
                   children: [
                     CheckoutHeader(order: _order),

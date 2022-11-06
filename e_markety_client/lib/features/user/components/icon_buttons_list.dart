@@ -18,12 +18,12 @@ final List<IconButtonModel> iconButtons = [
   IconButtonModel(
     icon: Icons.favorite,
     label: 'Meus Favoritos',
-    onTap: () => Modular.to.pushNamed('/favourite'),
+    onTap: () => Modular.to.pushNamed('/favourite/'),
   ),
   IconButtonModel(
     icon: Icons.location_on,
     label: 'Meus Endereços',
-    onTap: () => Modular.to.pushNamed('/address'),
+    onTap: () => Modular.to.pushNamed('/address/'),
   ),
   IconButtonModel(
     icon: Icons.settings_outlined,

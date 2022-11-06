@@ -91,4 +91,9 @@ class Address {
       isDefault: isDefault ?? this.isDefault,
     );
   }
+
+  @override
+  String toString() {
+    return 'Address{id: $id, tag: $tag, name: $name, phone: $phone, street: $street, district: $district, reference: $reference, isDefault: $isDefault}';
+  }
 }

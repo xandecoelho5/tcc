@@ -92,60 +92,59 @@ class _SignInScreenState extends State<SignInScreen> {
             Modular.get<ISnackBarService>().showError(context, state.message);
           }
         },
-        child: SafeArea(
+        child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Form(
-                    key: _loginFormKey,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.055,
-                        ),
-                        const LogoWidget(),
-                        const SizedBox(height: 60),
-                        _buildDropdown(),
-                        const SizedBox(height: 20),
-                        EmailPasswordComponent(
-                          onEmailSaved: _onEmailSaved,
-                          onPasswordSaved: _onSenhaSaved,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                'Esqueci minha senha',
-                                style: TextStyle(
-                                  color: kBasicDarkColor,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Form(
+                  key: _loginFormKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.055,
+                      ),
+                      const LogoWidget(),
+                      const SizedBox(height: 40),
+                      _buildDropdown(),
+                      const SizedBox(height: 20),
+                      EmailPasswordComponent(
+                        onEmailSaved: _onEmailSaved,
+                        onPasswordSaved: _onSenhaSaved,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: () {},
+                            child: const Text(
+                              'Esqueci minha senha',
+                              style: TextStyle(
+                                color: kBasicDarkColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
-                          ],
-                        ),
-                        const SizedBox(height: 32),
-                        FilledButton(
-                          text: 'Entrar',
-                          color: Theme.of(context).colorScheme.secondary,
-                          onPressed: _signIn,
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                      FilledButton(
+                        text: 'Entrar',
+                        color: Theme.of(context).colorScheme.secondary,
+                        onPressed: _signIn,
+                      ),
+                    ],
                   ),
-                  TextButtonAuth(
-                    textLabel: 'Não tem uma conta?',
-                    textButtonLabel: 'Cadastre-se',
-                    onPressed: () => Modular.to.navigate('/sign-up'),
-                  ),
-                ],
-              ),
+                ),
+                TextButtonAuth(
+                  textLabel: 'Não tem uma conta?',
+                  textButtonLabel: 'Cadastre-se',
+                  onPressed: () => Modular.to.navigate('/sign-up'),
+                ),
+              ],
             ),
           ),
         ),

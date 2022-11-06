@@ -7,3 +7,9 @@ class UserRegisterEvent implements UserEvent {
 
   UserRegisterEvent(this.user);
 }
+
+class UserUpdateEvent implements UserEvent {
+  final User user;
+
+  UserUpdateEvent(this.user);
+}

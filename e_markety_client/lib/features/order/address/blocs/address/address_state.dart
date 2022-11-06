@@ -6,11 +6,15 @@ class AddressInitial implements AddressState {}
 
 class AddressLoading implements AddressState {}
 
-class AddressSuccess implements AddressState {
+class AddressEditSuccess implements AddressState {
   final Address address;
 
-  AddressSuccess(this.address);
+  AddressEditSuccess(this.address);
 }
+
+class AddressAddSuccess implements AddressState {}
+
+class AddressDeletedSuccess implements AddressState {}
 
 class AddressListLoaded implements AddressState {
   final List<Address> addresses;

@@ -74,14 +74,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         context,
         backgroundColor: Colors.transparent,
       ),
-      extendBodyBehindAppBar: true,
+      // extendBodyBehindAppBar: true,
       body: Column(
         children: [
           Expanded(
             flex: 9,
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 124, 16, 16),
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                 child: ProductDetails(
                   product: widget.product,
                   onQuantityChanged: _onQuantityChanged,

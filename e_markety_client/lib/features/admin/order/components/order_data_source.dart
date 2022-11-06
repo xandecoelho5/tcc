@@ -37,7 +37,7 @@ class OrderDataSource extends DataTableSource {
         DataCell(Text(order.user.email)),
         DataCell(Text('\$${order.total.toStringAsFixed(2)}')),
         DataCell(_StatusChip(status: order.status)),
-        DataCell(Text(DateTimeUtils.getyMd(order.createdAt))),
+        DataCell(Text(DateTimeUtils.getyMd(order.createdAt!))),
         DataCell(_ActionButton(status: order.status)),
       ],
     );

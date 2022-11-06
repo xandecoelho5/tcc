@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class QuantityButton extends StatelessWidget {
   const QuantityButton.plus({
     Key? key,
-    this.icon = '+',
+    this.icon = Icons.add,
     this.height,
     this.width,
     this.borderRadius,
@@ -12,14 +12,14 @@ class QuantityButton extends StatelessWidget {
 
   const QuantityButton.minus({
     Key? key,
-    this.icon = '-',
+    this.icon = Icons.remove,
     this.height,
     this.width,
     this.borderRadius,
     this.onTap,
   }) : super(key: key);
 
-  final String icon;
+  final IconData icon;
   final double? height;
   final double? width;
   final BorderRadiusGeometry? borderRadius;
@@ -35,16 +35,7 @@ class QuantityButton extends StatelessWidget {
         borderRadius: borderRadius,
         child: InkWell(
           onTap: onTap,
-          child: Center(
-            child: Text(
-              icon,
-              style: TextStyle(
-                fontSize: 35,
-                color: Colors.grey.shade700,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ),
+          child: Icon(icon, size: 28, color: Colors.grey.shade700),
         ),
       ),
     );

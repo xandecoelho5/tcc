@@ -14,8 +14,8 @@ class EditAddressScreen extends StatelessWidget {
   final String id;
   final bloc = Modular.get<AddressBloc>();
 
-  void _onSubmit(Address product) {
-    bloc.add(AddressEditEvent(product));
+  void _onSubmit(Address address) {
+    bloc.add(AddressEditEvent(address));
   }
 
   @override
@@ -36,7 +36,7 @@ class EditAddressScreen extends StatelessWidget {
       body: BlocListener<AddressBloc, AddressState>(
         bloc: bloc,
         listener: (context, state) {
-          if (state is AddressSuccess) {
+          if (state is AddressEditSuccess) {
             Modular.get<ISnackBarService>()
                 .showSuccess(context, 'Endereço editado');
             Navigator.pop(context, state.address);
@@ -51,6 +51,7 @@ class EditAddressScreen extends StatelessWidget {
           builder: (context, state) {
             if (state is AddressLoaded) {
               return AddressContainer(
+                textButton: 'Salvar',
                 address: state.address,
                 onSubmitAddress: _onSubmit,
               );

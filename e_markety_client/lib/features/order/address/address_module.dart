@@ -6,7 +6,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 class AddressModule extends Module {
   @override
   final List<ModularRoute> routes = [
-    ChildRoute('/', child: (context, args) => const AddressScreen()),
+    ChildRoute('/', child: (context, args) => AddressScreen()),
     ChildRoute(
       '/add',
       child: (context, args) => const AddNewAddressScreen(),

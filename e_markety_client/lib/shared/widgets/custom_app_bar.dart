@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../theme/constants.dart';
+import 'action_cart.dart';
 
 class CustomAppBar {
   CustomAppBar._();
 
   static Container _leadingIcon(context, onLeadingTap) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(16, 32, 8, 16),
+      margin: const EdgeInsets.fromLTRB(16, 16, 8, 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: kBackgroundColor,
@@ -44,24 +45,13 @@ class CustomAppBar {
     TextStyle? titleStyle,
     Color? backgroundColor,
     Function()? onLeadingTap,
+    bool showAction = true,
   }) {
     return AppBar(
       title: title != null ? _title(title) : null,
       backgroundColor: backgroundColor ?? kScaffoldColor,
       centerTitle: true,
-      actions: [
-        // const ActionCart(),
-        PopupMenuButton<String>(
-          icon: const Icon(Icons.more_vert, color: kBasicDarkColor),
-          onSelected: (String item) => Modular.to.pushNamed(item),
-          itemBuilder: (BuildContext context) => routes.map((String item) {
-            return PopupMenuItem<String>(
-              value: item,
-              child: Text(item),
-            );
-          }).toList(),
-        ),
-      ],
+      actions: showAction ? [const ActionCart()] : [],
       leading: _leadingIcon(context, onLeadingTap),
       titleTextStyle: titleStyle ??
           const TextStyle(

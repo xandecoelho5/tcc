@@ -26,6 +26,8 @@ class NotesContainer extends StatelessWidget {
           border: border,
           enabledBorder: border,
           focusedBorder: border,
+          fillColor: Colors.white,
+          filled: true,
         ),
         maxLines: 5,
         onChanged: onChange,

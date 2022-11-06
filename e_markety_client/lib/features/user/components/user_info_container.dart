@@ -18,21 +18,22 @@ class UserInfoContainer extends StatelessWidget {
       color: Colors.grey.shade50,
       borderRadius: BorderRadius.circular(10),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(8),
         child: Row(
           children: [
-            const SizedBox(width: 8),
             CircleAvatar(
               backgroundColor: Colors.white,
               child: Icon(icon, color: kPrimaryColor),
             ),
-            const SizedBox(width: 20),
-            Text(
-              text,
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey.shade700,
-                fontWeight: FontWeight.bold,
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                text,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey.shade700,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],

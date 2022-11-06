@@ -18,14 +18,14 @@ class CartItemQuantity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 40,
+    return IntrinsicHeight(
       child: Column(
         children: [
           Expanded(
             child: QuantityButton.minus(
-              borderRadius:
-                  const BorderRadius.only(topRight: Radius.circular(10)),
+              borderRadius: const BorderRadius.only(
+                topRight: Radius.circular(10),
+              ),
               onTap: _onMinusTapped,
             ),
           ),
@@ -47,8 +47,9 @@ class CartItemQuantity extends StatelessWidget {
           ),
           Expanded(
             child: QuantityButton.plus(
-              borderRadius:
-                  const BorderRadius.only(bottomRight: Radius.circular(10)),
+              borderRadius: const BorderRadius.only(
+                bottomRight: Radius.circular(10),
+              ),
               onTap: _onPlusTapped,
             ),
           ),

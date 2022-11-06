@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 
-const routes = [
-  '/delivery-address',
-  '/track-order',
-];
-
 const kPrimaryColor = Color(0xFFEB3E4B);
 const kSecondaryColor = Color(0xFF2AC17E);
 const kBasicDarkColor = Color(0xFF322C46);

@@ -16,15 +16,15 @@ class AboutMeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar.buildAppBar(context, title: 'Sobre Mim'),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 32, 16, 16),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
                 'Detalhes Pessoais',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 12),
               BlocBuilder<AuthBloc, AuthState>(
@@ -73,10 +73,10 @@ class AboutMeScreen extends StatelessWidget {
                   );
                 },
               ),
-              const SizedBox(height: 48),
+              const SizedBox(height: 24),
               const Text(
                 'Segurança',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 12),
               const UserInfoContainer(

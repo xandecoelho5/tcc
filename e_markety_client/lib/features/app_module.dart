@@ -6,6 +6,7 @@ import 'package:e_markety_client/features/category/screens/category_screen.dart'
 import 'package:e_markety_client/features/category/services/category_service.dart';
 import 'package:e_markety_client/features/company/services/company_service.dart';
 import 'package:e_markety_client/features/home/screens/home_screen.dart';
+import 'package:e_markety_client/features/order/address/address_module.dart';
 import 'package:e_markety_client/features/order/address/blocs/default_address/default_address_bloc.dart';
 import 'package:e_markety_client/features/order/address/components/notifiers/district_notifier.dart';
 import 'package:e_markety_client/features/order/address/services/address_service.dart';
@@ -15,6 +16,7 @@ import 'package:e_markety_client/features/order/order/blocs/current_order/curren
 import 'package:e_markety_client/features/order/order/services/current_order_service.dart';
 import 'package:e_markety_client/features/order/shopping_cart/blocs/overview/cart_item_overview_bloc.dart';
 import 'package:e_markety_client/features/order/shopping_cart/repositories/cart_item_repository.dart';
+import 'package:e_markety_client/features/product/blocs/favourite/favourite_bloc.dart';
 import 'package:e_markety_client/features/product/blocs/filter/filter_bloc.dart';
 import 'package:e_markety_client/features/product/blocs/product/product_bloc.dart';
 import 'package:e_markety_client/features/product/blocs/product_by_category/product_by_category_bloc.dart';
@@ -23,6 +25,7 @@ import 'package:e_markety_client/features/product/screens/apply_filters_screen.d
 import 'package:e_markety_client/features/product/screens/product_details_screen.dart';
 import 'package:e_markety_client/features/product/screens/products_by_category_screen.dart';
 import 'package:e_markety_client/features/product/screens/search_result_screen.dart';
+import 'package:e_markety_client/features/product/services/favourite_service.dart';
 import 'package:e_markety_client/features/product/services/product_service.dart';
 import 'package:e_markety_client/features/user/auth/blocs/auth_bloc.dart';
 import 'package:e_markety_client/features/user/auth/screens/sign_in_screen.dart';
@@ -74,6 +77,9 @@ class AppModule extends Module {
     Bind.singleton<IProductService>((i) => ProductService(i())),
     Bind.singleton((i) => ProductBloc(i())),
     Bind.singleton((i) => ProductByCategoryBloc(i())),
+    // favourite
+    Bind.singleton<IFavouriteService>((i) => FavouriteService(i())),
+    Bind.singleton((i) => FavouriteBloc(i())),
     // filter
     Bind.singleton((i) => FilterBloc(i())),
     Bind.singleton((i) => Global()),
@@ -155,9 +161,11 @@ class AppModule extends Module {
     ),
     ChildRoute('/about-me', child: (context, args) => const AboutMeScreen()),
     ChildRoute('/my-orders', child: (context, args) => const MyOrdersScreen()),
-    ModuleRoute('/favourite/', module: FavouriteModule()),
+    // modules
+    ModuleRoute('/favourite', module: FavouriteModule()),
+    ModuleRoute('/address', module: AddressModule()),
     ModuleRoute(
-      '/admin/',
+      '/admin',
       module: AdminModule(),
       transition: TransitionType.scale,
     ),

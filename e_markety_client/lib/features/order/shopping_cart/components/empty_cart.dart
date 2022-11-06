@@ -17,40 +17,44 @@ class EmptyCart extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                SizedBox(height: MediaQuery.of(context).size.height * 0.13),
-                const Icon(
-                  Icons.shopping_bag_outlined,
-                  size: 150,
-                  color: kPrimaryColor,
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-                const Text(
-                  'Seu carrinho está vazio!',
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                Text(
-                  'Faça sua cesta feliz e adicione produtos para comprar',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey.shade600,
-                    height: 1.5,
+          Expanded(
+            flex: 8,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+                  const Icon(
+                    Icons.shopping_bag_outlined,
+                    size: 150,
+                    color: kPrimaryColor,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                  const Text(
+                    'Seu carrinho está vazio!',
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                  Text(
+                    'Faça sua cesta feliz e adicione produtos para comprar',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey.shade600,
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
             ),
           ),
-          const Spacer(),
-          FilledButton(
-            text: 'Começar a comprar',
-            color: kSecondaryColor,
-            onPressed: () => Modular.to.navigate('/home'),
+          Expanded(
+            child: FilledButton(
+              text: 'Começar a comprar',
+              color: kSecondaryColor,
+              onPressed: () => Modular.to.navigate('/home'),
+            ),
           ),
         ],
       ),

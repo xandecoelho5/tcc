@@ -10,28 +10,53 @@ import '../blocs/address/address_bloc.dart';
 import '../components/address_list.dart';
 
 class AddressScreen extends StatelessWidget {
-  const AddressScreen({Key? key}) : super(key: key);
+  AddressScreen({Key? key}) : super(key: key);
+
+  final bloc = Modular.get<AddressBloc>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(context, title: 'Meus Endereços'),
+      appBar: CustomAppBar.buildAppBar(
+        context,
+        title: 'Meus Endereços',
+        showAction: false,
+      ),
       body: Column(
         children: [
           Expanded(
             flex: 8,
-            child: BlocBuilder<AddressBloc, AddressState>(
-              bloc: Modular.get<AddressBloc>()..add(AddressGetAllEvent()),
-              builder: (context, state) {
-                if (state is AddressListLoaded) {
-                  return AddressList(addresses: state.addresses);
-                }
+            child: BlocListener<AddressBloc, AddressState>(
+              bloc: bloc,
+              listener: (context, state) {
                 if (state is AddressError) {
                   Modular.get<ISnackBarService>()
                       .showError(context, state.message);
                 }
-                return const Center(child: CircularProgressIndicator());
+                if (state is AddressAddSuccess) {
+                  Modular.get<ISnackBarService>()
+                      .showSuccess(context, 'Endereço adicionado');
+                }
+                if (state is AddressDeletedSuccess) {
+                  Modular.get<ISnackBarService>()
+                      .showSuccess(context, 'Endereço deletado');
+                }
               },
+              child: BlocBuilder<AddressBloc, AddressState>(
+                bloc: bloc..add(AddressGetAllEvent()),
+                buildWhen: (prev, curr) {
+                  if (prev is AddressListLoaded && curr is AddressError) {
+                    return false;
+                  }
+                  return true;
+                },
+                builder: (context, state) {
+                  if (state is AddressListLoaded) {
+                    return AddressList(addresses: state.addresses);
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                },
+              ),
             ),
           ),
           Expanded(
@@ -42,7 +67,10 @@ class AddressScreen extends StatelessWidget {
               ),
               child: FilledButton(
                 text: 'Adicionar Endereço',
-                onPressed: () => Modular.to.pushNamed('/address/add'),
+                onPressed: () async {
+                  await Modular.to.pushNamed('/address/add');
+                  bloc.add(AddressGetAllEvent());
+                },
                 color: kSecondaryColor,
               ),
             ),

@@ -13,17 +13,13 @@ class ProductsList extends StatelessWidget {
   final List<Product> products;
   final bool needWrap;
 
-  List<ProductCard> _getProductsList() {
-    return products.map((product) => ProductCard(product: product)).toList();
-  }
-
   @override
   Widget build(BuildContext context) {
     if (needWrap) {
       return Wrap(
-        spacing: 20,
-        runSpacing: 30,
-        children: _getProductsList(),
+        spacing: 10,
+        runSpacing: 15,
+        children: products.map((p) => ProductCard(product: p)).toList(),
       );
     }
 
@@ -34,9 +30,9 @@ class ProductsList extends StatelessWidget {
         crossAxisCount: 2,
         crossAxisSpacing: 20,
         mainAxisSpacing: 20,
-        mainAxisExtent: MediaQuery.of(context).size.height * 0.4,
+        mainAxisExtent: MediaQuery.of(context).size.height * 0.45,
       ),
-      padding: const EdgeInsets.fromLTRB(18, 28, 18, 32),
+      padding: const EdgeInsets.fromLTRB(18, 16, 18, 32),
       itemBuilder: (ctx, i) => ProductCard(product: products[i]),
     );
   }

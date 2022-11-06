@@ -43,7 +43,6 @@ class _SearchBarWithFilterState extends State<SearchBarWithFilter> {
 
   Expanded _searchBar() {
     return Expanded(
-      flex: 7,
       child: Padding(
         padding: const EdgeInsets.only(left: 14),
         child: TextField(
@@ -54,7 +53,7 @@ class _SearchBarWithFilterState extends State<SearchBarWithFilter> {
             filled: true,
             fillColor: kBackgroundColor,
             prefixIcon: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12),
+              padding: EdgeInsets.symmetric(horizontal: 8),
               child: Icon(Icons.search, color: kBasicDarkColor, size: 28),
             ),
             suffixIcon: Padding(
@@ -83,7 +82,7 @@ class _SearchBarWithFilterState extends State<SearchBarWithFilter> {
             hintStyle: const TextStyle(color: Colors.grey),
           ),
           style: const TextStyle(
-            fontSize: 16,
+            fontSize: 14,
             fontWeight: FontWeight.w700,
             letterSpacing: -0.5,
           ),
@@ -116,9 +115,9 @@ class _SearchBarWithFilterState extends State<SearchBarWithFilter> {
     return Row(
       children: [
         _searchBar(),
-        const SizedBox(width: 16),
+        const SizedBox(width: 12),
         Padding(
-          padding: const EdgeInsets.only(right: 14),
+          padding: const EdgeInsets.only(right: 12),
           child: _filterButton(),
         ),
       ],

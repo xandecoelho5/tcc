@@ -15,12 +15,13 @@ abstract class IUserService {
 
 class UserService implements IUserService {
   final IHttpService _httpService;
+  final _baseUrl = '/usuario';
 
   UserService(this._httpService);
 
   @override
   Future<Either<UserException, void>> register(RegisterModel user) async {
-    final response = await _httpService.post('/usuario', user.toMap());
+    final response = await _httpService.post(_baseUrl, user.toMap());
     return response.fold(
       (l) => Left(UserException(l.message, l.stackTrace)),
       (r) => const Right(null),
@@ -28,14 +29,20 @@ class UserService implements IUserService {
   }
 
   @override
-  Future<Either<UserException, User>> updateUser(User user) {
-    // TODO: implement updateUser
-    throw UnimplementedError();
+  Future<Either<UserException, User>> updateUser(User user) async {
+    final response = await _httpService.put(
+      '$_baseUrl/${user.id}',
+      user.toUserEditMap(),
+    );
+    return response.fold(
+      (l) => Left(UserException(l.message, l.stackTrace)),
+      (r) => Right(User.fromMap(r)),
+    );
   }
 
   @override
   Future<Either<UserException, User>> getCurrentUser() async {
-    final response = await _httpService.get('/usuario/current');
+    final response = await _httpService.get('$_baseUrl/current');
     return response.fold(
       (l) => Left(UserException(l.message, l.stackTrace)),
       (r) => Right(User.fromMap(r)),

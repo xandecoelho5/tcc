@@ -22,7 +22,7 @@ class OrderService implements IOrderService {
 
   @override
   Future<Either<OrderException, List<Order>>> getOrders() async {
-    final response = await _httpService.getAll('$_baseUrl/current');
+    final response = await _httpService.getAll(_baseUrl);
     return response.fold(
       (l) => Left(OrderException(l.message, l.stackTrace)),
       (r) => Right(r.map(Order.fromMap).toList()),

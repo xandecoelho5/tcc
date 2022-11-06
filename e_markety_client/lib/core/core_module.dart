@@ -57,5 +57,6 @@ class CoreModule extends Module {
       },
       export: true,
     ),
+    Bind.lazySingleton((i) => Dio(), export: true),
   ];
 }

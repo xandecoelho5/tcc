@@ -11,6 +11,7 @@ class TextFieldWithLabel extends StatefulWidget {
     this.onValidate,
     this.onSaved,
     this.onCustomSaved,
+    this.onChanged,
     this.data,
     this.inputFormatters,
     this.readOnly = false,
@@ -22,6 +23,7 @@ class TextFieldWithLabel extends StatefulWidget {
   final String? Function(String?)? onValidate;
   final void Function(String?)? onSaved;
   final void Function(String?, String?)? onCustomSaved;
+  final void Function(String)? onChanged;
   final String? data;
   final List<TextInputFormatter>? inputFormatters;
   final bool readOnly;
@@ -84,8 +86,10 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
               widget.onCustomSaved!.call(widget.fieldName, value);
             }
           },
+          onChanged: widget.onChanged,
           inputFormatters: widget.inputFormatters,
           readOnly: widget.readOnly,
+          onEditingComplete: _focus.unfocus,
         ),
       ],
     );

@@ -10,7 +10,7 @@ part 'order.g.dart';
 @JsonSerializable(explicitToJson: true)
 class Order {
   final int id;
-  final DateTime createdAt;
+  final DateTime? createdAt;
   final double total;
   final DeliveryType deliveryType;
   final List<CartItem> items;
@@ -22,7 +22,7 @@ class Order {
 
   const Order({
     required this.id,
-    required this.createdAt,
+    this.createdAt,
     required this.total,
     required this.deliveryType, // TODO adiconar asserts para obrigar a passar o endereço
     required this.items,
@@ -52,7 +52,7 @@ class Order {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'data': createdAt,
+      'data': createdAt?.toIso8601String(),
       'total': total,
       'tipoEntrega': deliveryType,
       'items': items,
@@ -88,7 +88,6 @@ class Order {
 
   Order copyWith({
     int? id,
-    DateTime? createdAt,
     double? total,
     DeliveryType? deliveryType,
     List<CartItem>? items,
@@ -100,7 +99,6 @@ class Order {
   }) {
     return Order(
       id: id ?? this.id,
-      createdAt: createdAt ?? this.createdAt,
       total: total ?? this.total,
       deliveryType: deliveryType ?? this.deliveryType,
       items: items ?? this.items,

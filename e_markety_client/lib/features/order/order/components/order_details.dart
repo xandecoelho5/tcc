@@ -64,7 +64,7 @@ class _OrderDetailsState extends State<OrderDetails> {
         ),
         const SizedBox(height: 4),
         Text(
-          'Realizado em: ${DateTimeUtils.getAbbrMonth(widget.order.createdAt)}',
+          'Realizado em: ${DateTimeUtils.getAbbrMonth(widget.order.createdAt!)}',
           style: TextStyle(
             color: Colors.grey.shade600,
             fontWeight: FontWeight.bold,
@@ -144,7 +144,7 @@ class _OrderDetailsState extends State<OrderDetails> {
           ),
           const Spacer(),
           Text(
-            DateTimeUtils.getAbbrMonth(widget.order.createdAt),
+            DateTimeUtils.getAbbrMonth(widget.order.createdAt!),
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: kDarkGreyColor,

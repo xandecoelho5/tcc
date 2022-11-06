@@ -15,3 +15,15 @@ class AddressEditEvent implements AddressEvent {
 
   AddressEditEvent(this.address);
 }
+
+class AddressAddEvent implements AddressEvent {
+  final Address address;
+
+  AddressAddEvent(this.address);
+}
+
+class AddressDeleteByIdEvent implements AddressEvent {
+  final int id;
+
+  AddressDeleteByIdEvent(this.id);
+}

@@ -18,7 +18,7 @@ class ProductsByCategoryScreen extends StatelessWidget {
 
   Container _imageContainer() {
     return Container(
-      height: 258,
+      height: 200,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(category.imageUrl),
@@ -36,6 +36,42 @@ class ProductsByCategoryScreen extends StatelessWidget {
     );
   }
 
+  SizedBox _header(context) {
+    return SizedBox(
+      height: 280,
+      child: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          _imageContainer(),
+          Positioned(
+            top: 120,
+            left: MediaQuery.of(context).size.width * 0.5 - 65,
+            child: CategoryCircleAvatar(
+              category: category,
+              outerRadius: 72,
+              innerRadius: 60,
+              iconSize: 85,
+              filled: false,
+            ),
+          ),
+          Positioned(
+            top: 40,
+            width: 270,
+            child: Text(
+              category.name,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,40 +82,9 @@ class ProductsByCategoryScreen extends StatelessWidget {
       extendBodyBehindAppBar: true,
       body: Column(
         children: [
-          SizedBox(
-            height: 345,
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                _imageContainer(),
-                Positioned(
-                  top: 170,
-                  left: MediaQuery.of(context).size.width * 0.5 - 65,
-                  child: CategoryCircleAvatar(
-                    category: category,
-                    outerRadius: 72,
-                    innerRadius: 60,
-                    iconSize: 85,
-                    filled: false,
-                  ),
-                ),
-                Positioned(
-                  top: 70,
-                  width: 270,
-                  child: Text(
-                    category.name,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          _header(context),
           const SearchBarWithFilter(),
+          const SizedBox(height: 8),
           Expanded(
             child: BlocBuilder<ProductByCategoryBloc, ProductByCategoryState>(
               bloc: Modular.get<ProductByCategoryBloc>()
@@ -87,10 +92,13 @@ class ProductsByCategoryScreen extends StatelessWidget {
               builder: (context, state) {
                 if (state is ProductByCategoryLoaded) {
                   if (state.products.isEmpty) {
-                    return Center(
-                      child: Text(
-                        'Nenhum produto encontrado para esta categoria',
-                        style: Theme.of(context).textTheme.headline6,
+                    return Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Center(
+                        child: Text(
+                          'Nenhum produto encontrado para esta categoria',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
                       ),
                     );
                   }

@@ -51,6 +51,14 @@ class User {
     };
   }
 
+  Map<String, dynamic> toUserEditMap() {
+    return {
+      'nome': name,
+      'email': email,
+      'imagemUrl': avatarUrl,
+    };
+  }
+
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       id: map['id'],

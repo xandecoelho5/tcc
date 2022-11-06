@@ -43,8 +43,8 @@ class ProductCard extends StatelessWidget {
 
   Positioned _buildCartButton() {
     return Positioned(
-      bottom: 10,
-      right: 10,
+      bottom: 6,
+      right: 6,
       child: FloatingActionButton(
         heroTag: product.name,
         backgroundColor: kPrimaryColor,
@@ -91,6 +91,8 @@ class ProductCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       letterSpacing: -0.5,
                     ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 const SizedBox(height: 2),

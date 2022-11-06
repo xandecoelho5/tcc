@@ -29,10 +29,10 @@ class CategoryList extends StatelessWidget {
     }
 
     return GridView.count(
-      padding: const EdgeInsets.fromLTRB(18, 40, 18, 32),
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
       crossAxisCount: 2,
-      crossAxisSpacing: 20,
-      mainAxisSpacing: 30,
+      crossAxisSpacing: 15,
+      mainAxisSpacing: 15,
       childAspectRatio: 0.85,
       children: categories.map((c) => CategoryCard.big(category: c)).toList(),
     );

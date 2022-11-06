@@ -11,10 +11,11 @@ abstract class IAddressService {
 
   Future<Either<AddressException, Address>> getAddressById(int id);
 
-// Future<Address> addAddress(Address address);
+  Future<Either<AddressException, void>> addAddress(Address address);
 
   Future<Either<AddressException, Address>> updateAddress(Address address);
-// Future<void> deleteAddress(Address address);
+
+  Future<Either<AddressException, void>> deleteAddressById(int id);
 }
 
 class AddressService implements IAddressService {
@@ -61,6 +62,24 @@ class AddressService implements IAddressService {
     return response.fold(
       (l) => Left(AddressException(l.message, l.stackTrace)),
       (r) => Right(Address.fromMap(r)),
+    );
+  }
+
+  @override
+  Future<Either<AddressException, void>> addAddress(Address address) async {
+    final response = await _httpService.post(_baseUrl, address.toMap());
+    return response.fold(
+      (l) => Left(AddressException(l.message, l.stackTrace)),
+      (r) => const Right(null),
+    );
+  }
+
+  @override
+  Future<Either<AddressException, void>> deleteAddressById(int id) async {
+    final response = await _httpService.delete('$_baseUrl/$id');
+    return response.fold(
+      (l) => Left(AddressException(l.message, l.stackTrace)),
+      (r) => const Right(null),
     );
   }
 }

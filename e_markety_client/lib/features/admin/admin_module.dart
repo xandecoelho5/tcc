@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:e_markety_client/features/admin/home/pages/dashboard_page.dart';
 import 'package:e_markety_client/features/admin/home/pages/home_page.dart';
 import 'package:e_markety_client/features/admin/order/admin_order_module.dart';
@@ -9,9 +8,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class AdminModule extends Module {
   @override
-  List<Bind<Object>> get binds => [
-        Bind.singleton((i) => Dio()),
-      ];
+  List<Bind<Object>> get binds => [];
 
   @override
   List<ModularRoute> get routes => [

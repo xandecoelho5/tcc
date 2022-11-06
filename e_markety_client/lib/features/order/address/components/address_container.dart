@@ -1,5 +1,4 @@
 import 'package:e_markety_client/features/admin/product/components/dropdown_with_label.dart';
-import 'package:e_markety_client/features/order/address/blocs/address/address_bloc.dart';
 import 'package:e_markety_client/features/order/address/components/notifiers/district_notifier.dart';
 import 'package:e_markety_client/features/order/address/models/address.dart';
 import 'package:e_markety_client/features/order/address/models/district.dart';
@@ -19,10 +18,12 @@ class AddressContainer extends StatefulWidget {
     Key? key,
     required this.address,
     required this.onSubmitAddress,
+    required this.textButton,
   }) : super(key: key);
 
   final Address address;
   final void Function(Address) onSubmitAddress;
+  final String textButton;
 
   @override
   State<AddressContainer> createState() => _AddressContainerState();
@@ -61,7 +62,8 @@ class _AddressContainerState extends State<AddressContainer> {
   void _onSubmit() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      Modular.get<AddressBloc>().add(AddressEditEvent(_address));
+      print(_address);
+      widget.onSubmitAddress(_address);
     }
   }
 
@@ -157,7 +159,7 @@ class _AddressContainerState extends State<AddressContainer> {
           ),
           Expanded(
             child: FilledButton(
-              text: 'Salvar',
+              text: widget.textButton,
               color: kSecondaryColor,
               onPressed: _onSubmit,
             ),

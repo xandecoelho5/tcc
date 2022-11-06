@@ -35,7 +35,7 @@ class ProductDetails extends StatelessWidget {
 
   Positioned _buildStockFlag() {
     return const Positioned(
-      top: 20,
+      top: 15,
       left: 3,
       child: ProductFlagWidget.big(flagType: FlagType.inStock),
     );
