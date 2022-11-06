@@ -21,12 +21,12 @@ public class ProdutoController extends GenericController<Long, ProdutoDto> {
         return service;
     }
 
-    @GetMapping("categoria/{id}")
+    @GetMapping("/categoria/{id}")
     public List<ProdutoDto> findAllByCategoriaId(@PathVariable @NotNull Long id) {
         return service.findAllByCategoriaId(id);
     }
 
-    @PostMapping("filtro")
+    @PostMapping("/filtro")
     public List<ProdutoDto> findAllByFilter(@RequestBody FiltroDto filtro) {
         System.out.println(filtro);
         return service.findAllByFilter(filtro.getNome(), filtro.getCategoriaId(), filtro.getPrecoMin(),

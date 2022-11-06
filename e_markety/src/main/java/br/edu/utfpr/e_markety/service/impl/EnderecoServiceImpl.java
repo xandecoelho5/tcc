@@ -1,9 +1,13 @@
 package br.edu.utfpr.e_markety.service.impl;
 
+import br.edu.utfpr.e_markety.exceptions.ExistsLinkedDataException;
 import br.edu.utfpr.e_markety.exceptions.NoneDefaultAddressFoundException;
+import br.edu.utfpr.e_markety.exceptions.OnlyExistsOneAddressException;
 import br.edu.utfpr.e_markety.model.Endereco;
+import br.edu.utfpr.e_markety.repository.EmpresaRepository;
 import br.edu.utfpr.e_markety.repository.EnderecoRepository;
 import br.edu.utfpr.e_markety.repository.GenericUserRepository;
+import br.edu.utfpr.e_markety.repository.PedidoRepository;
 import br.edu.utfpr.e_markety.service.EnderecoService;
 import br.edu.utfpr.e_markety.utils.PrincipalUtils;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +18,8 @@ import org.springframework.stereotype.Service;
 public class EnderecoServiceImpl extends GenericServiceImpl<Endereco, Long, Endereco> implements EnderecoService {
 
     private final EnderecoRepository repository;
+    private final EmpresaRepository empresaRepository;
+    private final PedidoRepository pedidoRepository;
 
     @Override
     protected GenericUserRepository<Endereco, Long> getRepository() {
@@ -36,6 +42,27 @@ public class EnderecoServiceImpl extends GenericServiceImpl<Endereco, Long, Ende
         }
         if (entity.isPadrao()) {
             repository.updateAllEnderecosToNotDefault(entity.getUsuario().getId());
+        }
+    }
+
+    @Override
+    protected void preDelete(Long id) {
+        verifyAddressCount(id);
+        verifyLinkedData(id);
+        super.preDelete(id);
+    }
+
+    private void verifyAddressCount(Long id) {
+        var count = repository.countAllByUsuarioId(id);
+        if (count == 1) throw new OnlyExistsOneAddressException();
+    }
+
+    private void verifyLinkedData(Long id) {
+        if (empresaRepository.existsByEnderecoId(id)) {
+            throw new ExistsLinkedDataException("Não é possível excluir um endereço que está vinculado a uma empresa");
+        }
+        if (pedidoRepository.existsByEnderecoId(id)) {
+            throw new ExistsLinkedDataException("Não é possível excluir um endereço que está vinculado a um pedido");
         }
     }
 }

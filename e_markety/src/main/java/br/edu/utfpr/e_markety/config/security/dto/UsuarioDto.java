@@ -4,24 +4,26 @@ import br.edu.utfpr.e_markety.model.Usuario;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Setter
 @Getter
+@ToString
 public class UsuarioDto {
 
     private Long id;
 
-    @NotEmpty @NotNull
+    @NotBlank
     private String nome;
 
-    @NotEmpty @NotNull
+    @NotBlank @Email
     private String email;
 
-    @NotEmpty @NotNull
+//    @NotBlank
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
 
@@ -39,5 +41,11 @@ public class UsuarioDto {
         usuarioDto.setFavoritosIds(usuario.getFavoritosIds());
 
         return usuarioDto;
+    }
+
+    public void setFromUsuarioEdit(UsuarioEditDto dto) {
+        this.setNome(dto.getNome());
+        this.setEmail(dto.getEmail());
+        this.setImagemUrl(dto.getImagemUrl());
     }
 }

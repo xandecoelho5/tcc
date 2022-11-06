@@ -21,7 +21,7 @@ public class PedidoController extends GenericController<Long, Pedido> {
         return service;
     }
 
-    @PostMapping("novo")
+    @PostMapping("/novo")
     public ResponseEntity<?> createPedido() {
         try {
             var usuario = PrincipalUtils.getLoggedUsuario();
@@ -34,7 +34,7 @@ public class PedidoController extends GenericController<Long, Pedido> {
         }
     }
 
-    @GetMapping("aberto")
+    @GetMapping("/aberto")
     public ResponseEntity<?> getOpenPedido() {
         try {
             var usuario = PrincipalUtils.getLoggedUsuario();
@@ -44,7 +44,7 @@ public class PedidoController extends GenericController<Long, Pedido> {
         }
     }
 
-    @GetMapping("empresa/page")
+    @GetMapping("/empresa/page")
     public ResponseEntity<PageResponseDto<Pedido>> getAllByEmpresa(@RequestParam int page,
                                                                    @RequestParam int size,
                                                                    @RequestParam(required = false) String order,

@@ -8,9 +8,9 @@ import br.edu.utfpr.e_markety.utils.PrincipalUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("endereco")
@@ -23,7 +23,7 @@ public class EnderecoController extends GenericController<Long, Endereco> {
         return service;
     }
 
-    @GetMapping("padrao")
+    @GetMapping("/padrao")
     public ResponseEntity<?> getDefaultEndereco() {
         try {
             var usuario = PrincipalUtils.getLoggedUsuario();
@@ -31,6 +31,16 @@ public class EnderecoController extends GenericController<Long, Endereco> {
             return new ResponseEntity<>(defaultEndereco, HttpStatus.OK);
         } catch (NoneDefaultAddressFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @Override
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable @NotNull Long id) {
+        try {
+            return super.delete(id);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

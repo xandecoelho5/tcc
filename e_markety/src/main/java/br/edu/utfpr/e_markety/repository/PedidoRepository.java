@@ -31,4 +31,6 @@ public interface PedidoRepository extends GenericUserRepository<Pedido, Long> {
             "inner join pr.empresa e " +
             "where e.id = :empresaId and p.usuario.id = :usuarioId")
     Page<Pedido> findAllByEmpresaIdAndUsuarioId(Long empresaId, Long usuarioId, Pageable pageable);
+
+    boolean existsByEnderecoId(Long id);
 }

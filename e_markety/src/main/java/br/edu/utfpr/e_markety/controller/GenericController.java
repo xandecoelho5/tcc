@@ -6,7 +6,6 @@ import br.edu.utfpr.e_markety.exceptions.ExistsLinkedDataException;
 import br.edu.utfpr.e_markety.exceptions.InvalidLoggedUserException;
 import br.edu.utfpr.e_markety.exceptions.NotFoundException;
 import br.edu.utfpr.e_markety.service.GenericService;
-import br.edu.utfpr.e_markety.utils.PrincipalUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -33,7 +32,7 @@ public abstract class GenericController<ID, Y> {
 
         int pageSize = size.orElse(5);
 
-        var result = getService().getAll(PageRequest.of(0, pageSize));
+        var result = getService().getAll(PageRequest.of(0, pageSize, Sort.by("id")));
         return new ResponseEntity<>(result.toList(), HttpStatus.OK);
     }
 
@@ -80,12 +79,8 @@ public abstract class GenericController<ID, Y> {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable @NotNull ID id) {
-        try {
-            getService().delete(id);
-            return ResponseEntity.noContent().build();
-        } catch (ExistsLinkedDataException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        getService().delete(id);
+        return ResponseEntity.noContent().build();
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -103,6 +98,12 @@ public abstract class GenericController<ID, Y> {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
     public String handleValidationExceptions(NotFoundException ex) {
+        return CustomValidator.handleCustomRuntimeException(ex);
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(ExistsLinkedDataException.class)
+    public String handleValidationExceptions(ExistsLinkedDataException ex) {
         return CustomValidator.handleCustomRuntimeException(ex);
     }
 }

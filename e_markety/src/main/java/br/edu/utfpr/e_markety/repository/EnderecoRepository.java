@@ -12,4 +12,5 @@ public interface EnderecoRepository extends GenericUserRepository<Endereco, Long
     @Query("update Endereco e set e.padrao = false where e.usuario.id = :id")
     void updateAllEnderecosToNotDefault(Long id);
 
+    int countAllByUsuarioId(Long id);
 }
