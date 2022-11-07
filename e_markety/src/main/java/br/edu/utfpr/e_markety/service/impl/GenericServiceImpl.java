@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
-import java.util.Optional;
 
 public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID, Y> {
 
@@ -50,15 +49,16 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID,
     }
 
     @Override
-    @Transactional()
+    @Transactional
     public Y save(Y dto) {
         return save(dto, null);
     }
 
     @Override
-    @Transactional()
+    @Transactional
     public Y update(ID id, Y dto) {
         findById(id);
+        preUpdate(dto);
         return save(dto, id);
     }
 
@@ -88,6 +88,10 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID,
 
     }
 
+    protected void preUpdate(Y dto) {
+
+    }
+
     protected void preSave(T entity, ID id) {
         if (id != null) {
             changeEntityId(id, entity);
@@ -110,7 +114,9 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID,
     }
 
     private T findById(ID id) {
-        Optional<T> byId = getRepository().findById(id);
+        var byId = getRepository() instanceof GenericUserRepository ?
+                ((GenericUserRepository<T, ID>) getRepository()).findByIdAndUsuarioId(id, (ID) PrincipalUtils.getLoggedUsuario().getId()) :
+                getRepository().findById(id);
         if (byId.isEmpty()) {
             throw new NotFoundException((Long) id);
         }

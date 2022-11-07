@@ -5,7 +5,6 @@ import br.edu.utfpr.e_markety.model.enums.StatusPedido;
 import br.edu.utfpr.e_markety.model.enums.TipoEntrega;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
@@ -30,15 +29,15 @@ public class Pedido {
     private Long id;
 
     @Column(columnDefinition = "DATE DEFAULT CURRENT_DATE")
-    private LocalDate data = LocalDate.now();
+    private LocalDate data;
 
     @Column(columnDefinition = "decimal(10,2) default 0.00")
-    private BigDecimal total = BigDecimal.ZERO;
+    private BigDecimal total;
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "tipo_entrega_enum DEFAULT 'RETIRADA'::tipo_entrega_enum")
     @Type(type = "pgsql_enum")
-    private TipoEntrega tipoEntrega = TipoEntrega.RETIRADA;
+    private TipoEntrega tipoEntrega;
 
     @Column
     private LocalDateTime horarioEntrega;
@@ -46,7 +45,7 @@ public class Pedido {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "status_pedido_enum DEFAULT 'PENDENTE'::status_pedido_enum")
     @Type(type = "pgsql_enum")
-    private StatusPedido status = StatusPedido.PENDENTE;
+    private StatusPedido status;
 
     @Column
     private String observacao;

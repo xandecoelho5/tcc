@@ -1,5 +1,6 @@
 package br.edu.utfpr.e_markety.service.impl;
 
+import br.edu.utfpr.e_markety.dto.PedidoDto;
 import br.edu.utfpr.e_markety.exceptions.AlreadyExistsPendingOrderException;
 import br.edu.utfpr.e_markety.exceptions.NoneOpenOrderException;
 import br.edu.utfpr.e_markety.model.Pedido;
@@ -13,9 +14,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 @RequiredArgsConstructor
-public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, Pedido> implements PedidoService {
+public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, PedidoDto> implements PedidoService {
 
     private final PedidoRepository repository;
 
@@ -32,22 +35,23 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, Pedido> 
     }
 
     @Override
-    public Pedido findOpenPedidoByUsuarioId(Long usuarioId) {
+    public PedidoDto findOpenPedidoByUsuarioId(Long usuarioId) {
 //        var optionalPedido = repository.findByUsuarioIdAndStatusIs(usuarioId, StatusPedido.PENDENTE);
         var pedidos = repository.findAllByUsuarioIdAndStatusIsNot(usuarioId, StatusPedido.ENTREGUE);
         if (pedidos.isEmpty()) {
             throw new NoneOpenOrderException();
         }
-        return pedidos.get(pedidos.size() - 1);
+
+        return mapEntityToDto(pedidos.get(pedidos.size() - 1));
     }
 
-    public Page<Pedido> findAllByEmpresa(Pageable pageable) {
+    public Page<PedidoDto> findAllByEmpresa(Pageable pageable) {
         Page<Pedido> page = repository.findAllByEmpresaId(PrincipalUtils.getLoggedEmpresa().getId(), pageable);
         return page.map(this::mapEntityToDto);
     }
 
     @Override
-    public Page<Pedido> getAll(Pageable pageable) {
+    public Page<PedidoDto> getAll(Pageable pageable) {
         Page<Pedido> page = repository.findAllByEmpresaIdAndUsuarioId(PrincipalUtils.getLoggedEmpresa().getId(),
                 PrincipalUtils.getLoggedUsuario().getId(), pageable);
         return page.map(this::mapEntityToDto);
@@ -59,5 +63,21 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, Pedido> 
         return pageable == null ?
                 repository.findAllByUsuarioIdAndStatusIsNot(usuarioId, StatusPedido.PENDENTE) :
                 repository.findAllByUsuarioIdAndStatusIsNot(usuarioId, StatusPedido.PENDENTE, pageable);
+    }
+
+    @Override
+    protected void preSave(Pedido entity, Long id) {
+        super.preSave(entity, id);
+        if (id != null && StatusPedido.PENDENTE == entity.getStatus()) {
+            entity.setStatus(StatusPedido.REALIZADO);
+            entity.setData(LocalDate.now());
+        }
+    }
+
+    @Override
+    protected void preUpdate(PedidoDto dto) {
+        dto.setUsuario(PrincipalUtils.getLoggedUsuario());
+        dto.getItems().forEach(item -> item.setPedido(mapDtoToEntity(dto)));
+        System.out.println(dto);
     }
 }

@@ -23,6 +23,7 @@ public class PedidoItem {
     @ManyToOne
     @JoinColumn(name = "pedido_id", referencedColumnName = "id")
     @JsonIgnore
+    @ToString.Exclude
     private Pedido pedido;
 
     @ManyToOne
