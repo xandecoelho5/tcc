@@ -1,6 +1,7 @@
 import 'package:e_markety_client/features/order/order/components/order_view.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class OrderResultScreen extends StatelessWidget {
   const OrderResultScreen({Key? key, required this.isSuccess})
@@ -11,7 +12,7 @@ class OrderResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isSuccess) {
-      return const OrderView(
+      return OrderView(
         title: 'Pedido realizado',
         mainMessage: 'Seu pedido foi realizado com sucesso!',
         subMessage: '''
@@ -21,10 +22,11 @@ Você receberá uma resposta em alguns minutos...
         buttonText: 'Rastrear pedido',
         backgroundColor: kSecondaryColor,
         buttonColor: kBasicDarkColor,
+        onButtonPressed: () => Modular.to.navigate('/track-order'),
       );
     }
 
-    return const OrderView(
+    return OrderView(
       title: 'Pedido recusado',
       mainMessage: 'Seu pedido foi recusado',
       subMessage: '''
@@ -34,6 +36,8 @@ Por favor, tente novamente mais tarde.'
       buttonText: 'Tentar novamente',
       backgroundColor: kBasicDarkColor,
       buttonColor: kPrimaryColor,
+      onButtonPressed: () =>
+          Modular.to.pushNamedAndRemoveUntil('/', (_) => false),
     );
   }
 }

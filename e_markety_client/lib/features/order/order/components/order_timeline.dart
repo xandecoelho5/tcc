@@ -24,10 +24,10 @@ class OrderTimeline extends StatelessWidget {
 
   DotIndicator _dotIndicator(backgroundColor, foregroundColor) {
     return DotIndicator(
-      size: 72,
+      size: 60,
       color: backgroundColor,
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(12),
         child: Image.asset(
           'assets/icons/fruits_and_vegetables.png',
           color: foregroundColor,
@@ -39,18 +39,18 @@ class OrderTimeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Timeline.tileBuilder(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.only(top: 12),
       theme: TimelineThemeData(
         connectorTheme: const ConnectorThemeData(thickness: 2.3),
-        nodePosition: 0.15,
+        nodePosition: 0.1,
       ),
       builder: TimelineTileBuilder.connected(
         connectionDirection: ConnectionDirection.before,
-        itemExtent: 110,
+        itemExtent: 80,
         contentsBuilder: (context, index) {
           final notProcessed = index > processIndex;
           return Padding(
-            padding: const EdgeInsets.only(left: 40),
+            padding: const EdgeInsets.only(left: 12),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +58,7 @@ class OrderTimeline extends StatelessWidget {
                 Text(
                   processes[index].label,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: notProcessed ? kDarkGreyColor : kSecondaryColor,
                   ),

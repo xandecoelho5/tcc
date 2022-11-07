@@ -1,6 +1,7 @@
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:e_markety_client/shared/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../models/delivery_tipe.dart';
 import '../models/order.dart';
@@ -26,106 +27,11 @@ class _OrderDetailsState extends State<OrderDetails> {
       ? OrderStatus.caseDelivery()
       : OrderStatus.casePickup();
 
-  Material _icon() {
-    return Material(
-      shape: const CircleBorder(
-        side: BorderSide(
-          color: Colors.white,
-          width: 4,
-        ),
-      ),
-      elevation: 12,
-      child: Container(
-        decoration: ShapeDecoration(
-          color: color.withOpacity(0.15),
-          shape: const CircleBorder(),
-        ),
-        padding: const EdgeInsets.all(12),
-        child: Image.asset(
-          'assets/icons/fruits_and_vegetables.png',
-          color: color,
-          width: 35,
-          height: 40,
-        ),
-      ),
-    );
-  }
-
-  Column _details() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Código: #OD${widget.order.id}',
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          'Realizado em: ${DateTimeUtils.getAbbrMonth(widget.order.createdAt!)}',
-          style: TextStyle(
-            color: Colors.grey.shade600,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Row(
-          children: [
-            Text(
-              'Items:',
-              style: TextStyle(
-                color: Colors.grey.shade600,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              widget.order.items.length.toString(),
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(width: 16),
-            Text(
-              'Total:',
-              style: TextStyle(
-                color: Colors.grey.shade600,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              '\$${widget.order.total.toStringAsFixed(2)}',
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Material _expandIcon(onTap) {
-    return Material(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(10),
-      elevation: 0.1,
-      child: InkWell(
-        onTap: onTap,
-        splashColor: color,
-        borderRadius: BorderRadius.circular(10),
-        child: Padding(
-          padding: const EdgeInsets.all(2),
-          child: Icon(
-            _expanded ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_up,
-          ),
-        ),
-      ),
-    );
-  }
-
   Container _firstChild() {
     return Container(
       decoration: kDecorationBottomRadiusCircularBorder,
       padding: EdgeInsets.only(
-        top: 20,
+        top: 16,
         left: MediaQuery.of(context).size.width * 0.05,
         bottom: 16,
         right: 24,
@@ -158,7 +64,8 @@ class _OrderDetailsState extends State<OrderDetails> {
 
   Container _secondChild() {
     return Container(
-      height: 185,
+      // height: 185,
+      height: 36.0 * processes.length,
       decoration: kDecorationBottomRadiusCircularBorder,
       child: OrderSimplerTimeline(
         process: widget.order.status,
@@ -169,37 +76,169 @@ class _OrderDetailsState extends State<OrderDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey.shade50,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade50,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+            boxShadow: kElevationToShadow[2],
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                child: Row(
+                  children: [
+                    _OrderIcon(color: color),
+                    const SizedBox(width: 12),
+                    _Details(order: widget.order),
+                    const Spacer(),
+                    _ActionButton(
+                      color: color,
+                      onTap: () => setState(() => _expanded = !_expanded),
+                      icon: _expanded
+                          ? Icons.keyboard_arrow_down
+                          : Icons.keyboard_arrow_up,
+                    ),
+                  ],
+                ),
+              ),
+              AnimatedCrossFade(
+                firstChild: _firstChild(),
+                secondChild: _secondChild(),
+                crossFadeState: _expanded
+                    ? CrossFadeState.showSecond
+                    : CrossFadeState.showFirst,
+                duration: const Duration(milliseconds: 200),
+              ),
+            ],
+          ),
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: _ActionButton(
+            color: color,
+            onTap: () => Modular.to.pushNamed('/track-order'),
+            icon: Icons.track_changes,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ActionButton extends StatelessWidget {
+  const _ActionButton({
+    Key? key,
+    required this.color,
+    required this.icon,
+    this.onTap,
+  }) : super(key: key);
+
+  final VoidCallback? onTap;
+  final Color color;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(10),
+      elevation: 0.1,
+      child: InkWell(
+        onTap: onTap,
+        splashColor: color,
+        borderRadius: BorderRadius.circular(10),
+        child: Padding(
+          padding: const EdgeInsets.all(2),
+          child: Icon(icon),
         ),
       ),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-            child: Row(
+    );
+  }
+}
+
+class _OrderIcon extends StatelessWidget {
+  const _OrderIcon({Key? key, required this.color}) : super(key: key);
+
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      shape: const CircleBorder(
+        side: BorderSide(color: Colors.white, width: 4),
+      ),
+      elevation: 12,
+      child: Container(
+        decoration: ShapeDecoration(
+          color: color.withOpacity(0.15),
+          shape: const CircleBorder(),
+        ),
+        padding: const EdgeInsets.all(12),
+        child: Image.asset(
+          'assets/icons/fruits_and_vegetables.png',
+          color: color,
+          width: 35,
+          height: 40,
+        ),
+      ),
+    );
+  }
+}
+
+class _Details extends StatelessWidget {
+  const _Details({Key? key, required this.order}) : super(key: key);
+
+  final Order order;
+
+  @override
+  Widget build(BuildContext context) {
+    final detailStyle = TextStyle(
+      color: Colors.grey.shade600,
+      fontWeight: FontWeight.bold,
+      fontSize: 13,
+    );
+
+    return Expanded(
+      flex: 4,
+      child: FittedBox(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Código: #OD${order.id}',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Data: ${DateTimeUtils.getAbbrMonth(order.createdAt!)}',
+              style: detailStyle,
+            ),
+            const SizedBox(height: 4),
+            Row(
               children: [
-                _icon(),
-                const SizedBox(width: 20),
-                _details(),
-                const Spacer(),
-                _expandIcon(() => setState(() => _expanded = !_expanded)),
+                Text('Items:', style: detailStyle),
+                Text(
+                  order.items.length.toString(),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(width: 16),
+                Text('Total:', style: detailStyle),
+                Text(
+                  '\$${order.total.toStringAsFixed(2)}',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
               ],
             ),
-          ),
-          AnimatedCrossFade(
-            firstChild: _firstChild(),
-            secondChild: _secondChild(),
-            crossFadeState: _expanded
-                ? CrossFadeState.showSecond
-                : CrossFadeState.showFirst,
-            duration: const Duration(milliseconds: 200),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -12,6 +12,8 @@ abstract class IOrderService extends IPaginatedService {
   Future<Either<OrderException, Order>> getOpenOrder();
 
   Future<Either<OrderException, Order>> createOrder();
+
+  Future<Either<OrderException, Order>> placeOrder(Order order);
 }
 
 class OrderService implements IOrderService {
@@ -61,6 +63,16 @@ class OrderService implements IOrderService {
     return response.fold(
       (l) => Left(OrderException(l.message, l.stackTrace)),
       (r) => Right(OrderPageResponse.fromMap(r)),
+    );
+  }
+
+  @override
+  Future<Either<OrderException, Order>> placeOrder(Order order) async {
+    final response =
+        await _httpService.put('$_baseUrl/realizar', order.toMap());
+    return response.fold(
+      (l) => Left(OrderException(l.message, l.stackTrace)),
+      (r) => Right(Order.fromMap(r)),
     );
   }
 }

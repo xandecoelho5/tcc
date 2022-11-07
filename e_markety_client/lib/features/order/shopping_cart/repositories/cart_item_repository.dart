@@ -18,4 +18,6 @@ class CartItemRepository {
 
   void quantityDecrement(CartItem cartItem) =>
       _cartItemService.quantityDecrement(cartItem);
+
+  void clearCart() => _cartItemService.clearCart();
 }

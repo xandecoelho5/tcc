@@ -104,8 +104,8 @@ class Product extends Equatable {
       'pesoPreco': weightPrice,
       'pesoUnidade': weightUnit,
       'percentualDesconto': discountPercent,
-      'categoria': category,
-      'unidadeMedida': measureUnit,
+      'categoria': category?.toMap(),
+      'unidadeMedida': measureUnit?.toMap(),
     };
   }
 
@@ -127,15 +127,15 @@ class Product extends Equatable {
     );
   }
 
-  // @override
-  // String toString() {
-  //   return 'Product{id: $id, name: $name, imageUrl: $imageUrl, description: $description, price: $price, createdAt: $createdAt, stock: $stock, quantitySold: $quantitySold, weightPrice: $weightPrice, weightUnit: $weightUnit, discountPercent: $discountPercent, category: $category, measureUnit: $measureUnit}';
-  // }
-
   @override
   String toString() {
-    return 'Product{id: $id}';
+    return 'Product{id: $id, name: $name, imageUrl: $imageUrl, description: $description, price: $price, createdAt: $createdAt, stock: $stock, quantitySold: $quantitySold, weightPrice: $weightPrice, weightUnit: $weightUnit, discountPercent: $discountPercent, category: $category, measureUnit: $measureUnit}';
   }
+
+  // @override
+  // String toString() {
+  //   return 'Product{id: $id}';
+  // }
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);

@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
         listenWhen: (previous, current) {
           if ((previous.status == CartItemOverviewStatus.loading &&
                   current.status == CartItemOverviewStatus.success) ||
-              (current.cartItems.length < previous.cartItems.length)) {
+              (current.cartItems.length <= previous.cartItems.length)) {
             return false;
           }
           return true;

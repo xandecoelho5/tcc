@@ -66,7 +66,7 @@ class TotalContainer extends StatelessWidget {
             ),
             const Spacer(),
             Text(
-              '\$${order.calculateTotal().toStringAsFixed(2)}',
+              '\$${order.total.toStringAsFixed(2)}',
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ],

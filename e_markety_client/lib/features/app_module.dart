@@ -89,15 +89,15 @@ class AppModule extends Module {
     Bind.singleton((i) => AddressBloc(i())),
     Bind.singleton((i) => DefaultAddressBloc(i())),
     Bind.lazySingleton((i) => DistrictNotifier(i())),
-    // order
-    Bind.singleton<IOrderService>((i) => OrderService(i())),
-    Bind.singleton((i) => OrderBloc(i())),
-    Bind.singleton<ICurrentOrderService>((i) => CurrentOrderService(i(), i())),
-    Bind.singleton((i) => CurrentOrderBloc(i())),
     // cart item
     Bind.singleton<ICartItemService>((i) => CartItemService(i())),
     Bind.singleton((i) => CartItemRepository(i())),
     Bind.singleton((i) => CartItemOverviewBloc(i())),
+    // order
+    Bind.singleton<IOrderService>((i) => OrderService(i())),
+    Bind.singleton<ICurrentOrderService>((i) => CurrentOrderService(i(), i())),
+    Bind.singleton((i) => OrderBloc(i(), i(), i())),
+    Bind.singleton((i) => CurrentOrderBloc(i())),
   ];
 
   @override
@@ -145,7 +145,7 @@ class AppModule extends Module {
     ),
     ChildRoute(
       '/order-result',
-      child: (context, args) => const OrderResultScreen(isSuccess: false),
+      child: (context, args) => OrderResultScreen(isSuccess: args.data),
     ),
     ChildRoute(
       '/track-order',
@@ -157,7 +157,7 @@ class AppModule extends Module {
     ),
     ChildRoute(
       '/user-profile',
-      child: (context, args) => UserProfileScreen(user: args.data),
+      child: (context, args) => const UserProfileScreen(),
     ),
     ChildRoute('/about-me', child: (context, args) => const AboutMeScreen()),
     ChildRoute('/my-orders', child: (context, args) => const MyOrdersScreen()),

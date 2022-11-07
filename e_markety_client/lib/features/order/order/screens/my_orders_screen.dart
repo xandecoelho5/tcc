@@ -15,7 +15,7 @@ class MyOrdersScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar.buildAppBar(context, title: 'Meus Pedidos'),
       body: BlocBuilder<OrderBloc, OrderState>(
-        bloc: Modular.get<OrderBloc>()..add(OrderGetAllOrders()),
+        bloc: Modular.get<OrderBloc>()..add(OrderGetAllEvent()),
         builder: (context, state) {
           if (state is OrderLoading) {
             return const Center(child: CircularProgressIndicator());
@@ -29,7 +29,7 @@ class MyOrdersScreen extends StatelessWidget {
             }
 
             return ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               itemBuilder: (ctx, i) => OrderDetails(order: state.orders[i]),
               separatorBuilder: (ctx, i) => const SizedBox(height: 20),
               itemCount: state.orders.length,

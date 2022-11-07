@@ -29,7 +29,7 @@ class OrderSimplerTimeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Timeline.tileBuilder(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       theme: TimelineThemeData(nodePosition: 0.06),
       builder: TimelineTileBuilder.connected(
         connectionDirection: ConnectionDirection.before,

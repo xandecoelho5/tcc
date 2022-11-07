@@ -12,7 +12,7 @@ class TrackOrderSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
         color: kSecondaryColor,
         borderRadius: BorderRadius.circular(10),
@@ -21,72 +21,76 @@ class TrackOrderSummary extends StatelessWidget {
         children: [
           const CircleAvatar(
             backgroundColor: Colors.white,
-            radius: 50,
+            radius: 40,
             child: Icon(
               Icons.shopping_bag_outlined,
-              size: 60,
+              size: 50,
               color: Colors.black,
             ),
           ),
-          const SizedBox(width: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Código: #OD${order.id}',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                'Realizado em ${DateTimeUtils.getAbbrMonth(order.createdAt!)}',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16),
-              Row(
+          const SizedBox(width: 12),
+          Expanded(
+            child: FittedBox(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Items: ',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
                   Text(
-                    '${order.items.length}',
+                    'Código: #OD${order.id}',
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  const Text(
-                    'Total: ',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+                  const SizedBox(height: 4),
                   Text(
-                    '\$${order.total.toStringAsFixed(2)}',
+                    'Data: ${DateTimeUtils.getAbbrMonth(order.createdAt ?? DateTime.now())}',
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      const Text(
+                        'Items: ',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        '${order.items.length}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      const Text(
+                        'Total: ',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        '\$${order.total.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
+            ),
           ),
         ],
       ),

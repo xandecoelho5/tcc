@@ -13,20 +13,72 @@ import '../components/icon_button_container_big.dart';
 import '../components/icon_button_model.dart';
 
 class UserProfileScreen extends StatelessWidget {
-  const UserProfileScreen({Key? key, required this.user}) : super(key: key);
+  const UserProfileScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar.buildAppBar(
+        context,
+        backgroundColor: Colors.transparent,
+      ),
+      extendBodyBehindAppBar: true,
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            BlocBuilder<AuthBloc, AuthState>(
+              bloc: Modular.get<AuthBloc>(),
+              builder: (context, state) {
+                if (state is AuthLogged) {
+                  return Flexible(
+                    flex: 5,
+                    child: _Header(user: state.user),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
+            const SizedBox(height: 16),
+            const Flexible(
+              flex: 4,
+              child: IconButtonsList(),
+            ),
+            const Flexible(
+              flex: 2,
+              child: IconButtonContainerBig(
+                iconButton: IconButtonModel(
+                  icon: Icons.logout,
+                  label: 'Sair',
+                  color: kSecondaryColor,
+                  onTap: BlocUtils.signOut,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Header extends StatelessWidget {
+  const _Header({Key? key, required this.user}) : super(key: key);
 
   final User user;
 
-  Padding _header(User user, context) {
+  @override
+  Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 66, bottom: 24),
+      padding: const EdgeInsets.only(top: 60),
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Container(height: MediaQuery.of(context).size.height * 0.32),
+          Container(height: MediaQuery.of(context).size.height * 0.29),
           Positioned(
             bottom: 0,
-            height: 160,
+            height: 135,
             width: MediaQuery.of(context).size.width - 32,
             child: Container(
               decoration: BoxDecoration(
@@ -40,7 +92,7 @@ class UserProfileScreen extends StatelessWidget {
             child: AvatarContainer(user: user),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.23,
+            top: MediaQuery.of(context).size.height * 0.2,
             child: Column(
               children: [
                 Text(
@@ -51,7 +103,6 @@ class UserProfileScreen extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                const SizedBox(height: 2),
                 Text(
                   user.email,
                   style: const TextStyle(
@@ -64,50 +115,6 @@ class UserProfileScreen extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar.buildAppBar(
-        context,
-        backgroundColor: Colors.transparent,
-      ),
-      extendBodyBehindAppBar: true,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-          child: Column(
-            children: [
-              BlocBuilder<AuthBloc, AuthState>(
-                bloc: Modular.get<AuthBloc>(),
-                builder: (context, state) {
-                  if (state is AuthLogged) {
-                    return _header(state.user, context);
-                  }
-                  return const SizedBox.shrink();
-                },
-              ),
-              const IconButtonsList(),
-              const SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  IconButtonContainerBig(
-                    iconButton: IconButtonModel(
-                      icon: Icons.logout,
-                      label: 'Sair',
-                      color: kSecondaryColor,
-                      onTap: BlocUtils.signOut,
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
       ),
     );
   }

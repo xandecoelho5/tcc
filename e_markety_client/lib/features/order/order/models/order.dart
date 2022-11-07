@@ -38,33 +38,32 @@ class Order {
         (total, item) => total + item.product.finalPrice * item.quantity,
       );
 
-  double calculateTotal() => subTotal + (deliveryCharge ?? 0) - discount;
-
-  String get formattedCharge => deliveryCharge != null && deliveryCharge! > 0
-      ? '\$ ${deliveryCharge!.toStringAsFixed(2)}'
-      : 'Grátis';
-
   double get discount => items.fold(
         0,
         (total, item) => total + item.product.discount * item.quantity,
       );
+
+  String get formattedCharge => deliveryCharge != null && deliveryCharge! > 0
+      ? '\$ ${deliveryCharge!.toStringAsFixed(2)}'
+      : 'Grátis';
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'data': createdAt?.toIso8601String(),
       'total': total,
-      'tipoEntrega': deliveryType,
-      'items': items,
+      'tipoEntrega': deliveryType.toRemoteName(),
+      'items': items.map((e) => e.toMap()).toList(),
       'observacao': notes,
       'endereco': deliveryAddress,
       'horarioEntrega': deliveryTime,
       'taxaEntrega': deliveryCharge,
-      'status': status,
+      'status': status.toRemoteName(),
     };
   }
 
   factory Order.fromMap(dynamic map) {
+    // print(map);
     return Order(
       id: map['id'],
       createdAt: DateTime.parse(map['data']),
@@ -99,9 +98,10 @@ class Order {
   }) {
     return Order(
       id: id ?? this.id,
+      createdAt: createdAt,
       total: total ?? this.total,
       deliveryType: deliveryType ?? this.deliveryType,
-      items: items ?? this.items,
+      items: (items != null && items.isNotEmpty) ? items : this.items,
       notes: notes ?? this.notes,
       deliveryAddress: deliveryAddress ?? this.deliveryAddress,
       deliveryTime: deliveryTime ?? this.deliveryTime,

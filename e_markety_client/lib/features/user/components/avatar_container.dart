@@ -55,10 +55,10 @@ class _AvatarContainerState extends State<AvatarContainer> {
     return Stack(
       children: [
         CircleAvatar(
-          radius: _deviceWidth * 0.185, // 95 // 0.225
+          radius: _deviceWidth * 0.16, // 95 // 0.225
           backgroundColor: Colors.white.withOpacity(0.4),
           child: CircleAvatar(
-            radius: _deviceWidth * 0.16, // 83 // 0.2
+            radius: _deviceWidth * 0.135, // 83 // 0.2
             backgroundImage: NetworkImage(_user.avatarUrl),
           ),
         ),
@@ -72,7 +72,7 @@ class _AvatarContainerState extends State<AvatarContainer> {
             shadowColor: kPrimaryColor,
             child: CircleAvatar(
               backgroundColor: kPrimaryColor,
-              radius: 24,
+              radius: 20,
               child: Material(
                 color: Colors.transparent,
                 shape: const CircleBorder(),
@@ -81,7 +81,7 @@ class _AvatarContainerState extends State<AvatarContainer> {
                   splashColor: kPrimaryColor,
                   borderRadius: BorderRadius.circular(50),
                   child: const Padding(
-                    padding: EdgeInsets.all(12),
+                    padding: EdgeInsets.all(8),
                     child: Icon(Icons.camera_alt, color: Colors.white),
                   ),
                 ),
@@ -121,16 +121,6 @@ class _AvatarSelectorState extends State<_AvatarSelector> {
     return Image.network(_url, fit: BoxFit.fill);
   }
 
-  // Future<void> _onFocusLost(String url) async {
-  //   try {
-  //     await Modular.get<Dio>().get(url);
-  //     setState(() => _url = url);
-  //   } catch (e) {
-  //     setState(() => _url = '');
-  //   }
-  //   widget.onUrlChanged(_url);
-  // }
-
   Future<void> _onChanged(String url) async {
     try {
       await Modular.get<Dio>().get(url);
@@ -148,7 +138,6 @@ class _AvatarSelectorState extends State<_AvatarSelector> {
       children: [
         TextFieldWithLabel(
           label: 'Imagem URL',
-          // onFocusLost: _onFocusLost,
           onChanged: _onChanged,
           data: _url,
         ),

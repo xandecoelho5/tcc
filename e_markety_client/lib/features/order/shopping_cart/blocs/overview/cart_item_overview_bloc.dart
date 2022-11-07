@@ -41,7 +41,7 @@ class CartItemOverviewBloc
   }
 
   void _onCartItemDeleted(CartItemOverviewCartItemDeleted event, emit) {
-    _repository.removeFromCart(event.cartItem.id);
+    _repository.removeFromCart(event.cartItem.product.id!);
   }
 
   void _onCartItemAdd(CartItemOverviewCartItemAdd event, emit) {

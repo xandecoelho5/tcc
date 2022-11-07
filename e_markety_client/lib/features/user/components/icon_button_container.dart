@@ -15,7 +15,6 @@ class IconButtonContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.14,
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Colors.grey.shade100,
@@ -47,11 +46,12 @@ class IconButtonContainer extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(height: 4),
             FittedBox(
               child: Text(
                 iconButton.label,
                 style: TextStyle(
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                   color: Colors.grey.shade600,
                   letterSpacing: -0.5,

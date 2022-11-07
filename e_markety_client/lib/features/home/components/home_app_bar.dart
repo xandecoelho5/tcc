@@ -21,8 +21,7 @@ class HomeAppBar {
               elevation: 1,
               borderRadius: BorderRadius.circular(50),
               child: InkWell(
-                onTap: () =>
-                    Modular.to.pushNamed('/user-profile', arguments: user),
+                onTap: () => Modular.to.pushNamed('/user-profile'),
                 borderRadius: BorderRadius.circular(50),
                 child: CircleAvatar(
                   backgroundColor: Colors.white,

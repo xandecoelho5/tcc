@@ -1,3 +1,4 @@
+import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
 import 'package:e_markety_client/features/order/address/blocs/default_address/default_address_bloc.dart';
 import 'package:e_markety_client/features/order/address/models/address.dart';
 import 'package:e_markety_client/features/order/checkout/components/checkout_header.dart';
@@ -9,9 +10,11 @@ import 'package:e_markety_client/features/order/order/models/delivery_tipe.dart'
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../shared/widgets/filled_button.dart';
+import '../../order/blocs/order/order_bloc.dart';
 import '../../order/components/total_container.dart';
 import '../../order/models/order.dart';
 import '../components/information_container.dart';
@@ -27,6 +30,13 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   late Order _order = widget.order;
+
+  void _onPlaceOrder() {
+    // _order.items.forEach((element) {
+    //   print(element.product);
+    // });
+    Modular.get<OrderBloc>().add(OrderPlaceEvent(_order));
+  }
 
   void _onDeliveryTypeChanged(bool value) {
     setState(() {
@@ -80,48 +90,70 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         title: 'Checkout',
         showAction: false,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 9,
-            child: SingleChildScrollView(
+      body: BlocListener<OrderBloc, OrderState>(
+        bloc: Modular.get<OrderBloc>(),
+        listener: (context, state) {
+          print(state);
+          if (state is OrderSuccess) {
+            Modular.to.navigate('/order-result', arguments: true);
+          } else if (state is OrderError) {
+            print(state.message);
+            Modular.get<ISnackBarService>().showError(context, state.message);
+            Modular.to.navigate('/order-result', arguments: false);
+          }
+        },
+        child: Column(
+          children: [
+            Expanded(
+              flex: 9,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 16,
+                  ),
+                  child: Column(
+                    children: [
+                      CheckoutHeader(order: _order),
+                      const SizedBox(height: 20),
+                      DeliveryTypeSwitch(
+                        deliveryType: _order.deliveryType,
+                        onDeliveryTypeChanged: _onDeliveryTypeChanged,
+                      ),
+                      const SizedBox(height: 20),
+                      if (_order.deliveryType == DeliveryType.delivery)
+                        ..._deliveryRelated(),
+                      _orderBill(),
+                      const SizedBox(height: 20),
+                      NotesContainer(onChange: _onNotesChange),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
-                  vertical: 16,
+                  vertical: 8,
                 ),
-                child: Column(
-                  children: [
-                    CheckoutHeader(order: _order),
-                    const SizedBox(height: 20),
-                    DeliveryTypeSwitch(
-                      deliveryType: _order.deliveryType,
-                      onDeliveryTypeChanged: _onDeliveryTypeChanged,
-                    ),
-                    const SizedBox(height: 20),
-                    if (_order.deliveryType == DeliveryType.delivery)
-                      ..._deliveryRelated(),
-                    _orderBill(),
-                    const SizedBox(height: 20),
-                    NotesContainer(onChange: _onNotesChange),
-                  ],
+                child: BlocBuilder<OrderBloc, OrderState>(
+                  bloc: Modular.get<OrderBloc>(),
+                  builder: (context, state) {
+                    if (state is OrderLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    return FilledButton(
+                      text: 'Finalizar Pedido',
+                      color: kSecondaryColor,
+                      onPressed: _onPlaceOrder,
+                    );
+                  },
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: FilledButton(
-                text: 'Finalizar Pedido',
-                color: kSecondaryColor,
-                onPressed: () {
-                  print(_order);
-                },
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

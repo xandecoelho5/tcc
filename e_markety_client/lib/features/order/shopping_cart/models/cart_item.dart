@@ -5,14 +5,10 @@ part 'cart_item.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class CartItem {
-  static int _id = 1;
-
-  final int id;
   final Product product;
   final double quantity;
 
   const CartItem({
-    required this.id,
     required this.product,
     required this.quantity,
   });
@@ -20,11 +16,10 @@ class CartItem {
   CartItem.empty({
     required this.product,
     this.quantity = 1,
-  }) : id = _id++;
+  });
 
   factory CartItem.fromMap(dynamic map) {
     return CartItem(
-      id: map['id'],
       product: Product.fromMap(map['produto']),
       quantity: map['quantidade'],
     );
@@ -32,19 +27,16 @@ class CartItem {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'produto': product,
+      'produto': product.toMap(),
       'quantidade': quantity,
     };
   }
 
   CartItem copyWith({
-    int? id,
     Product? product,
     double? quantity,
   }) {
     return CartItem(
-      id: id ?? this.id,
       product: product ?? this.product,
       quantity: quantity ?? this.quantity,
     );
@@ -52,12 +44,12 @@ class CartItem {
 
   // @override
   // String toString() {
-  //   return 'CartItem{id: $id, product: $product, quantity: $quantity}';
+  //   return 'CartItem{product: $product, quantity: $quantity}';
   // }
 
   @override
   String toString() {
-    return 'CartItem{id: $id}';
+    return 'CartItem{id: ${product.id}';
   }
 
   factory CartItem.fromJson(Map<String, dynamic> json) =>

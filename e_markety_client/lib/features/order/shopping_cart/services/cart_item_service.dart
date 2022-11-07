@@ -7,13 +7,15 @@ import 'package:rxdart/rxdart.dart';
 abstract class ICartItemService {
   void addToCart(CartItem cartItem);
 
-  void removeFromCart(int id);
+  void removeFromCart(int productId);
 
   Stream<List<CartItem>> getCartItems();
 
   void quantityIncrement(CartItem cartItem);
 
   void quantityDecrement(CartItem cartItem);
+
+  void clearCart();
 }
 
 class CartItemService implements ICartItemService {
@@ -56,9 +58,9 @@ class CartItemService implements ICartItemService {
   }
 
   @override
-  Future<void> removeFromCart(int id) async {
+  Future<void> removeFromCart(int productId) async {
     final cartItems = [..._streamController.value];
-    final index = cartItems.indexWhere((t) => t.id == id);
+    final index = cartItems.indexWhere((t) => t.product.id == productId);
     if (index >= 0) {
       cartItems.removeAt(index);
       _streamController.add(cartItems);
@@ -94,4 +96,10 @@ class CartItemService implements ICartItemService {
 
   int _findIndexByProductId(CartItem item) => [..._streamController.value]
       .indexWhere((t) => t.product.id == item.product.id);
+
+  @override
+  void clearCart() {
+    _streamController.add(const []);
+    _cacheService.delete(_kCartItemKey);
+  }
 }

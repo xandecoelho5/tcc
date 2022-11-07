@@ -34,6 +34,25 @@ enum OrderStatus {
     }
   }
 
+  String toRemoteName() {
+    switch (this) {
+      case OrderStatus.pending:
+        return 'PENDENTE';
+      case OrderStatus.placed:
+        return 'REALIZADO';
+      case OrderStatus.confirmed:
+        return 'CONFIRMADO';
+      case OrderStatus.readyToPickup:
+        return 'PRONTO_PARA_RETIRADA';
+      case OrderStatus.readyToDeliver:
+        return 'PRONTO_PARA_ENTREGA';
+      case OrderStatus.outForDelivery:
+        return 'SAIU_PARA_ENTREGA';
+      case OrderStatus.delivered:
+        return 'ENTREGUE';
+    }
+  }
+
   static List<OrderStatus> casePickup() {
     return [
       OrderStatus.placed,

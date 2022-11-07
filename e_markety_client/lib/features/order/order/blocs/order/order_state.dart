@@ -6,6 +6,12 @@ class OrderInitial implements OrderState {}
 
 class OrderLoading implements OrderState {}
 
+class OrderSuccess implements OrderState {
+  final Order order;
+
+  OrderSuccess(this.order);
+}
+
 class OrderLoaded implements OrderState {
   final List<Order> orders;
 

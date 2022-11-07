@@ -12,6 +12,7 @@ class OrderView extends StatelessWidget {
     required this.buttonText,
     required this.backgroundColor,
     required this.buttonColor,
+    this.onButtonPressed,
   }) : super(key: key);
 
   final String title;
@@ -20,11 +21,17 @@ class OrderView extends StatelessWidget {
   final String buttonText;
   final Color backgroundColor;
   final Color buttonColor;
+  final VoidCallback? onButtonPressed;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(context, title: title),
+      appBar: CustomAppBar.buildAppBar(
+        context,
+        title: title,
+        showLeading: false,
+        showAction: false,
+      ),
       body: Container(
         margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
@@ -72,11 +79,10 @@ class OrderView extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 1,
               child: FilledButton(
                 text: buttonText,
                 color: buttonColor,
-                onPressed: () {},
+                onPressed: onButtonPressed,
               ),
             ),
           ],

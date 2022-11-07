@@ -16,7 +16,17 @@ class TrackOrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(context, title: 'Rastrear pedido'),
+      appBar: CustomAppBar.buildAppBar(
+        context,
+        title: 'Rastrear pedido',
+        showAction: false,
+        onLeadingTap: () {
+          final routes = Modular.to.navigateHistory;
+          routes[routes.length - 2].name == '/my-orders'
+              ? Modular.to.pop()
+              : Modular.to.pushNamedAndRemoveUntil('/', (_) => false);
+        },
+      ),
       body: BlocBuilder<CurrentOrderBloc, CurrentOrderState>(
         bloc: Modular.get<CurrentOrderBloc>()..add(GetCurrentOrder()),
         builder: (context, state) {
@@ -29,7 +39,7 @@ class TrackOrderScreen extends StatelessWidget {
           }
 
           if (state is CurrentOrderLoaded) {
-            return TrackOrderView(order: state.order);
+            return _TrackOrderView(order: state.order);
           }
 
           return Container();
@@ -39,8 +49,8 @@ class TrackOrderScreen extends StatelessWidget {
   }
 }
 
-class TrackOrderView extends StatelessWidget {
-  const TrackOrderView({Key? key, required this.order}) : super(key: key);
+class _TrackOrderView extends StatelessWidget {
+  const _TrackOrderView({Key? key, required this.order}) : super(key: key);
 
   final Order order;
 
@@ -51,7 +61,7 @@ class TrackOrderView extends StatelessWidget {
       child: Column(
         children: [
           TrackOrderSummary(order: order),
-          const SizedBox(height: 20),
+          const SizedBox(height: 16),
           Expanded(
             child: Container(
               decoration: BoxDecoration(

@@ -46,13 +46,14 @@ class CustomAppBar {
     Color? backgroundColor,
     Function()? onLeadingTap,
     bool showAction = true,
+    bool showLeading = true,
   }) {
     return AppBar(
       title: title != null ? _title(title) : null,
       backgroundColor: backgroundColor ?? kScaffoldColor,
       centerTitle: true,
       actions: showAction ? [const ActionCart()] : [],
-      leading: _leadingIcon(context, onLeadingTap),
+      leading: showLeading ? _leadingIcon(context, onLeadingTap) : null,
       titleTextStyle: titleStyle ??
           const TextStyle(
             fontSize: 20,

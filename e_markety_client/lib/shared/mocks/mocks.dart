@@ -168,10 +168,10 @@ final productsMock = [
 ];
 
 final cartItemsMock = [
-  CartItem(id: 1, product: productsMock[0], quantity: 1),
-  CartItem(id: 2, product: productsMock[1], quantity: 2),
-  CartItem(id: 3, product: productsMock[2], quantity: 1),
-  CartItem(id: 4, product: productsMock[3], quantity: 5),
+  CartItem(product: productsMock[0], quantity: 1),
+  CartItem(product: productsMock[1], quantity: 2),
+  CartItem(product: productsMock[2], quantity: 1),
+  CartItem(product: productsMock[3], quantity: 5),
 ];
 
 const districsMock = [
