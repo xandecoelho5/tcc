@@ -5,6 +5,7 @@ import 'package:e_markety_client/features/order/order/services/order_service.dar
 import 'package:e_markety_client/features/order/shopping_cart/models/cart_item.dart';
 
 import '../../../../core/services/cache/cache_service.dart';
+import '../exceptions/current_order_exception.dart';
 import '../models/order.dart';
 
 abstract class ICurrentOrderService {
@@ -12,17 +13,18 @@ abstract class ICurrentOrderService {
 
   Future<Order> updateCartItemsOrder(List<CartItem> items);
 
-  Future<void> clear();
+  Stream<Order> streamCurrentOrder();
+
+  void closeStream();
 }
 
 class CurrentOrderService implements ICurrentOrderService {
   final IOrderService _orderService;
   final ICacheService _cacheService;
-  final String _kCurrentOrderKey = 'current_order';
 
-  CurrentOrderService(this._orderService, this._cacheService) {
-    _cacheService.delete(_kCurrentOrderKey);
-  }
+  bool _isStreamOpen = false;
+
+  CurrentOrderService(this._orderService, this._cacheService);
 
   Future<Order> _getCurrentOrder() async {
     Future<Order> _createOrder(OrderException ex) async {
@@ -55,17 +57,12 @@ class CurrentOrderService implements ICurrentOrderService {
 
   @override
   Future<Order> getCurrentOrder() async {
-    final order = await _cacheService.get(_kCurrentOrderKey);
-    if (order != null) {
-      return Order.fromJson(jsonDecode(order));
-    }
-
     var currentOrder = await _getCurrentOrder();
     if (currentOrder.items.isEmpty) {
       currentOrder = currentOrder.copyWith(items: await _getItemsFromCache());
+      currentOrder = _orderWithTotal(currentOrder);
     }
 
-    await _cacheService.save(_kCurrentOrderKey, jsonEncode(currentOrder));
     return currentOrder;
   }
 
@@ -73,20 +70,33 @@ class CurrentOrderService implements ICurrentOrderService {
   Future<Order> updateCartItemsOrder(List<CartItem> items) async {
     var order = await getCurrentOrder();
     order = order.copyWith(items: items);
-    final total = _calculateTotal(order);
-    order = order.copyWith(total: total);
-    print(order);
 
-    await _cacheService.save(_kCurrentOrderKey, jsonEncode(order));
-    return order;
+    return _orderWithTotal(order);
   }
 
-  double _calculateTotal(Order order) {
-    return order.subTotal + (order.deliveryCharge ?? 0) - order.discount;
+  Order _orderWithTotal(Order order) {
+    final total = order.subTotal + (order.deliveryCharge ?? 0) - order.discount;
+    return order.copyWith(total: total);
   }
 
   @override
-  Future<void> clear() async {
-    await _cacheService.delete(_kCurrentOrderKey);
+  Stream<Order> streamCurrentOrder() async* {
+    Stream<Order> _emit() async* {
+      final response = await _orderService.getOpenOrder();
+      yield response.fold(
+        (l) => throw CurrentOrderException(l.message),
+        (r) => r,
+      );
+    }
+
+    yield* _emit();
+    _isStreamOpen = true;
+    while (_isStreamOpen) {
+      await Future.delayed(const Duration(seconds: 5));
+      yield* _emit();
+    }
   }
+
+  @override
+  void closeStream() => _isStreamOpen = false;
 }

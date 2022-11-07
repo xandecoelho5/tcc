@@ -32,9 +32,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   late Order _order = widget.order;
 
   void _onPlaceOrder() {
-    // _order.items.forEach((element) {
-    //   print(element.product);
-    // });
     Modular.get<OrderBloc>().add(OrderPlaceEvent(_order));
   }
 
@@ -93,11 +90,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       body: BlocListener<OrderBloc, OrderState>(
         bloc: Modular.get<OrderBloc>(),
         listener: (context, state) {
-          print(state);
           if (state is OrderSuccess) {
             Modular.to.navigate('/order-result', arguments: true);
           } else if (state is OrderError) {
-            print(state.message);
             Modular.get<ISnackBarService>().showError(context, state.message);
             Modular.to.navigate('/order-result', arguments: false);
           }

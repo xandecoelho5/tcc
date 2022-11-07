@@ -30,9 +30,21 @@ class _OrdersPageState extends State<OrdersPage> {
   final _provider = Modular.get<OrderNotifier>();
 
   @override
+  void initState() {
+    super.initState();
+    _provider.streamData();
+  }
+
+  @override
   void didChangeDependencies() {
     _provider.fetchData();
     super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _provider.closeStream();
   }
 
   void sort(int columnIndex, bool ascending) {

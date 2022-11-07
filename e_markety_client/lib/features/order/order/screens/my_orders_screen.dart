@@ -1,4 +1,5 @@
 import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
+import 'package:e_markety_client/features/order/order/models/order_status.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,7 +23,10 @@ class MyOrdersScreen extends StatelessWidget {
           }
 
           if (state is OrderLoaded) {
-            if (state.orders.isEmpty) {
+            final _orders = state.orders
+                .where((o) => o.status != OrderStatus.pending)
+                .toList();
+            if (_orders.isEmpty) {
               return const Center(
                 child: Text('Ainda não há pedidos realizados!'),
               );
@@ -30,9 +34,9 @@ class MyOrdersScreen extends StatelessWidget {
 
             return ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              itemBuilder: (ctx, i) => OrderDetails(order: state.orders[i]),
+              itemBuilder: (ctx, i) => OrderDetails(order: _orders[i]),
               separatorBuilder: (ctx, i) => const SizedBox(height: 20),
-              itemCount: state.orders.length,
+              itemCount: _orders.length,
             );
           }
 

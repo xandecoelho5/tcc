@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../shared/widgets/custom_app_bar.dart';
 import '../../../../shared/widgets/filled_button.dart';
@@ -29,8 +30,9 @@ class OrderView extends StatelessWidget {
       appBar: CustomAppBar.buildAppBar(
         context,
         title: title,
-        showLeading: false,
         showAction: false,
+        onLeadingTap: () =>
+            Modular.to.pushNamedAndRemoveUntil('/', (_) => false),
       ),
       body: Container(
         margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),

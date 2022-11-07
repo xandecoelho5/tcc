@@ -36,12 +36,26 @@ class ProductSlidableItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '\$${product.finalPrice.toStringAsFixed(2)}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: kSecondaryColor,
-                  ),
+                Row(
+                  children: [
+                    Text(
+                      '\$${product.finalPrice.toStringAsFixed(2)}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: kSecondaryColor,
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    if (product.hasPromotion)
+                      Text(
+                        '\$${product.price.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          color: kDiscountColor,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                      ),
+                  ],
                 ),
                 Text(
                   product.name,

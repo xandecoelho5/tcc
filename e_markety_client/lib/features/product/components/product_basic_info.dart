@@ -47,16 +47,16 @@ class ProductBasicInfo extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 10),
-              // if (product.hasPromotion)
-              Text(
-                '\$${product.price.toStringAsFixed(2)}',
-                style: const TextStyle(
-                  color: Color(0XFFCEB35C),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  decoration: TextDecoration.lineThrough,
+              if (product.hasPromotion)
+                Text(
+                  '\$${product.price.toStringAsFixed(2)}',
+                  style: const TextStyle(
+                    color: kDiscountColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    decoration: TextDecoration.lineThrough,
+                  ),
                 ),
-              ),
             ],
           ),
         ],

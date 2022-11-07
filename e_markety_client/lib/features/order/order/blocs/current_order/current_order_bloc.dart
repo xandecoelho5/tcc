@@ -13,6 +13,8 @@ class CurrentOrderBloc extends Bloc<CurrentOrderEvent, CurrentOrderState> {
   CurrentOrderBloc(this._service) : super(CurrentOrderInitial()) {
     on<GetCurrentOrder>(_onGetCurrentOrder);
     on<UpdateOrderItems>(_onUpdateItemsOrder);
+    on<StreamCurrentOrder>(_onStreamCurrentOrder);
+    on<CloseStreamCurrentOrder>(_onCloseStreamCurrentOrder);
   }
 
   Future<void> _onGetCurrentOrder(GetCurrentOrder event, emit) async {
@@ -32,5 +34,21 @@ class CurrentOrderBloc extends Bloc<CurrentOrderEvent, CurrentOrderState> {
     } catch (e) {
       emit(CurrentOrderError(e.toString()));
     }
+  }
+
+  Future<void> _onStreamCurrentOrder(
+    StreamCurrentOrder event,
+    Emitter emit,
+  ) async {
+    emit(CurrentOrderLoading());
+    await emit.onEach<Order>(
+      _service.streamCurrentOrder(),
+      onData: (order) => emit(CurrentOrderLoaded(order)),
+      onError: (_, __) => emit(CurrentOrderError(_.toString())),
+    );
+  }
+
+  void _onCloseStreamCurrentOrder(event, emit) {
+    _service.closeStream();
   }
 }

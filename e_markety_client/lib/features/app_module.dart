@@ -96,7 +96,7 @@ class AppModule extends Module {
     // order
     Bind.singleton<IOrderService>((i) => OrderService(i())),
     Bind.singleton<ICurrentOrderService>((i) => CurrentOrderService(i(), i())),
-    Bind.singleton((i) => OrderBloc(i(), i(), i())),
+    Bind.singleton((i) => OrderBloc(i(), i())),
     Bind.singleton((i) => CurrentOrderBloc(i())),
   ];
 

@@ -10,12 +10,55 @@ import '../../order/components/total_container.dart';
 import '../../order/models/order.dart';
 import 'cart_item_list.dart';
 
-class LoadedCart extends StatelessWidget {
+class LoadedCart extends StatefulWidget {
   const LoadedCart({Key? key, required this.cartItems}) : super(key: key);
 
   final List<CartItem> cartItems;
 
-  Expanded _buildBottomContainer(Order order) {
+  @override
+  State<LoadedCart> createState() => _LoadedCartState();
+}
+
+class _LoadedCartState extends State<LoadedCart> {
+  @override
+  void initState() {
+    super.initState();
+    Modular.get<CurrentOrderBloc>().add(GetCurrentOrder());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          flex: 5,
+          child: CartItemList(cartItems: widget.cartItems),
+        ),
+        BlocBuilder<CurrentOrderBloc, CurrentOrderState>(
+          bloc: Modular.get<CurrentOrderBloc>(),
+          builder: (context, state) {
+            if (state is CurrentOrderError) {
+              return Center(child: Text(state.message));
+            }
+            if (state is CurrentOrderLoaded) {
+              return _BottomContainer(order: state.order);
+            }
+
+            return Container();
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _BottomContainer extends StatelessWidget {
+  const _BottomContainer({Key? key, required this.order}) : super(key: key);
+
+  final Order order;
+
+  @override
+  Widget build(BuildContext context) {
     return Expanded(
       flex: 3,
       child: Padding(
@@ -42,31 +85,6 @@ class LoadedCart extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          flex: 5,
-          child: CartItemList(cartItems: cartItems),
-        ),
-        BlocBuilder<CurrentOrderBloc, CurrentOrderState>(
-          bloc: Modular.get<CurrentOrderBloc>()..add(GetCurrentOrder()),
-          builder: (context, state) {
-            if (state is CurrentOrderError) {
-              return Center(child: Text(state.message));
-            }
-            if (state is CurrentOrderLoaded) {
-              return _buildBottomContainer(state.order);
-            }
-
-            return Container();
-          },
-        ),
-      ],
     );
   }
 }

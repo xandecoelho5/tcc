@@ -74,6 +74,16 @@ class DioService implements IHttpService {
     }
   }
 
+  Future<Stream<dynamic>> getSream(String url) async {
+    try {
+      final response = await _dio.get(url);
+      return response.data;
+    } on DioError catch (e) {
+      print(e);
+      return Stream.empty();
+    }
+  }
+
   String _handleError(DioError e) {
     if (e.response == null) return e.message;
     final data = e.response?.data;

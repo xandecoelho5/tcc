@@ -6,12 +6,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../../shared/utils/strings.dart';
 import '../components/order_timeline.dart';
 import '../models/delivery_tipe.dart';
 import '../models/order.dart';
 
-class TrackOrderScreen extends StatelessWidget {
+class TrackOrderScreen extends StatefulWidget {
   const TrackOrderScreen({Key? key}) : super(key: key);
+
+  @override
+  State<TrackOrderScreen> createState() => _TrackOrderScreenState();
+}
+
+class _TrackOrderScreenState extends State<TrackOrderScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Modular.get<CurrentOrderBloc>().add(StreamCurrentOrder());
+  }
+
+  @override
+  void dispose() {
+    Modular.get<CurrentOrderBloc>().add(CloseStreamCurrentOrder());
+    super.dispose();
+  }
+
+  void _onTapBack() {
+    Modular.to.navigateHistory.length == 1
+        ? Modular.to.pushNamedAndRemoveUntil('/', (_) => false)
+        : Modular.to.pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,18 +44,14 @@ class TrackOrderScreen extends StatelessWidget {
         context,
         title: 'Rastrear pedido',
         showAction: false,
-        onLeadingTap: () {
-          final routes = Modular.to.navigateHistory;
-          routes[routes.length - 2].name == '/my-orders'
-              ? Modular.to.pop()
-              : Modular.to.pushNamedAndRemoveUntil('/', (_) => false);
-        },
+        onLeadingTap: _onTapBack,
       ),
       body: BlocBuilder<CurrentOrderBloc, CurrentOrderState>(
-        bloc: Modular.get<CurrentOrderBloc>()..add(GetCurrentOrder()),
+        bloc: Modular.get<CurrentOrderBloc>(),
         builder: (context, state) {
-          if (state is CurrentOrderError) {
-            return Center(child: Text(state.message));
+          if (state is CurrentOrderError &&
+              state.message == Strings.noneOpenPedido) {
+            _onTapBack();
           }
 
           if (state is CurrentOrderLoading) {

@@ -38,7 +38,11 @@ class OrderDataSource extends DataTableSource {
         DataCell(Text('\$${order.total.toStringAsFixed(2)}')),
         DataCell(_StatusChip(status: order.status)),
         DataCell(Text(DateTimeUtils.getyMd(order.createdAt!))),
-        DataCell(_ActionButton(status: order.status)),
+        DataCell(
+          order.status != OrderStatus.delivered
+              ? _ActionButton(id: order.id, status: order.status)
+              : Container(),
+        ),
       ],
     );
   }
@@ -75,8 +79,13 @@ class _StatusChip extends StatelessWidget {
 }
 
 class _ActionButton extends StatefulWidget {
-  const _ActionButton({Key? key, required this.status}) : super(key: key);
+  const _ActionButton({
+    Key? key,
+    required this.id,
+    required this.status,
+  }) : super(key: key);
 
+  final int id;
   final OrderStatus status;
 
   @override
@@ -88,14 +97,11 @@ class _ActionButtonState extends State<_ActionButton> {
 
   void _onHover(bool value) => setState(() => _isHovering = value);
 
-  late final actions = widget.status == OrderStatus.placed
-      ? ['Confirmar', 'Cancelar']
-      : ['Cancelar'];
-
-  void _onTap() {}
-
   @override
   Widget build(BuildContext context) {
+    final actions = widget.status.popupActions(widget.id);
+    final entries = actions.entries.toList();
+
     const borderRadius = BorderRadius.all(Radius.circular(20));
 
     return Container(
@@ -111,7 +117,7 @@ class _ActionButtonState extends State<_ActionButton> {
         borderRadius: borderRadius,
         child: InkWell(
           borderRadius: borderRadius,
-          onTap: _onTap,
+          onTap: () {},
           hoverColor: kSecondaryColor,
           onHover: _onHover,
           child: Theme(
@@ -122,19 +128,12 @@ class _ActionButtonState extends State<_ActionButton> {
             ),
             child: PopupMenuButton(
               tooltip: '',
-              onSelected: (value) {
-                if (value == 'Confirmar') {
-                  print('Confirmar');
-                }
-                if (value == 'Cancelar') {
-                  print('Cancelar');
-                }
-              },
+              onSelected: (value) => actions[value]!(),
               itemBuilder: (context) => List.generate(
-                actions.length,
+                entries.length,
                 (index) => PopupMenuItem<String>(
-                  value: actions[index],
-                  child: Text(actions[index]),
+                  value: entries[index].key,
+                  child: Text(entries[index].key),
                 ),
               ),
               child: Icon(

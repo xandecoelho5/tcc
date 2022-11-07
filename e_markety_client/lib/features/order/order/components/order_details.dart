@@ -119,15 +119,16 @@ class _OrderDetailsState extends State<OrderDetails> {
             ],
           ),
         ),
-        Positioned(
-          top: 0,
-          right: 0,
-          child: _ActionButton(
-            color: color,
-            onTap: () => Modular.to.pushNamed('/track-order'),
-            icon: Icons.track_changes,
+        if (widget.order.status != OrderStatus.delivered)
+          Positioned(
+            top: 0,
+            right: 0,
+            child: _ActionButton(
+              color: color,
+              onTap: () => Modular.to.pushNamed('/track-order'),
+              icon: Icons.track_changes,
+            ),
           ),
-        ),
       ],
     );
   }

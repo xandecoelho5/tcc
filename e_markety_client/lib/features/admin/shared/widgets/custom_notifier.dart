@@ -5,10 +5,11 @@ import '../data_responses/provider_settings.dart';
 import '../services/paginated_service.dart';
 
 class CustomNotifier extends ValueNotifier<ProviderSettings> {
-  final IPaginatedService service;
+  final IPaginatedService _service;
 
-  CustomNotifier(this.service, ProviderSettings providerSettings)
-      : super(providerSettings);
+  CustomNotifier(IPaginatedService service, ProviderSettings providerSettings)
+      : _service = service,
+        super(providerSettings);
 
   PageResponse get pageResponse => value.pageResponse;
 
@@ -40,7 +41,7 @@ class CustomNotifier extends ValueNotifier<ProviderSettings> {
   }
 
   Future<void> fetchData() async {
-    final response = await service.getPaginated(
+    final response = await _service.getPaginated(
       page: currentPage,
       size: rowsPerPage,
       order: sortColumnName,

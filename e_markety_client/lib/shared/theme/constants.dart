@@ -22,6 +22,7 @@ const kWeakBrownColor = Color(0XFFB7823C);
 const kGoogleColor = Color(0XFFEA4335);
 const kFacebookColor = Color(0XFF3B5998);
 final kDarkGreyColor = Colors.grey.shade600;
+const kDiscountColor = Color(0XFFCEB35C);
 
 const kBorderRadius = BorderRadius.all(Radius.circular(8));
 

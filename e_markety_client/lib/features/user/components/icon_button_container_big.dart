@@ -16,7 +16,7 @@ class IconButtonContainerBig extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4),
       decoration: BoxDecoration(
         color: iconButton.color,
-        borderRadius: BorderRadius.circular(32),
+        borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.2),

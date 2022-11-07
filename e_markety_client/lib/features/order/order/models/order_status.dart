@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+
+import '../../../admin/order/components/order_notifier.dart';
 
 enum OrderStatus {
   pending('Pedido Pendente', Colors.blueGrey),
   placed('Pedido Realizado', Colors.teal),
   confirmed('Pedido Confirmado', Colors.deepOrange),
-  readyToPickup('Pronto para Retirada', Colors.yellow),
-  readyToDeliver('Pronto para Entrega', Colors.yellow),
+  readyToPickup('Pronto para Retirada', Colors.deepPurpleAccent),
+  readyToDeliver('Pronto para Entrega', Colors.deepPurple),
   outForDelivery('Saiu para Entrega', Colors.blue),
   delivered('Entregue', Colors.green);
 
@@ -70,5 +73,48 @@ enum OrderStatus {
       OrderStatus.outForDelivery,
       OrderStatus.delivered,
     ];
+  }
+
+  Map<String, VoidCallback> popupActions(int id) {
+    final cancelar = {
+      'Cancelar': () {
+        print('Cancelar');
+      }
+    };
+
+    Future<void> updateAction() =>
+        Modular.get<OrderNotifier>().updateOrderStatus(id);
+
+    switch (this) {
+      case OrderStatus.pending:
+        return {};
+      case OrderStatus.placed:
+        return {
+          'Confirmado': updateAction,
+          ...cancelar,
+        };
+      case OrderStatus.confirmed:
+        return {
+          'Pronto': updateAction,
+          ...cancelar,
+        };
+      case OrderStatus.readyToPickup:
+        return {
+          'Entregue': updateAction,
+          ...cancelar,
+        };
+      case OrderStatus.readyToDeliver:
+        return {
+          'Saiu para entrega': updateAction,
+          ...cancelar,
+        };
+      case OrderStatus.outForDelivery:
+        return {
+          'Entregue': updateAction,
+          ...cancelar,
+        };
+      case OrderStatus.delivered:
+        return {};
+    }
   }
 }
