@@ -1,20 +1,22 @@
 package br.edu.utfpr.e_markety.service.impl;
 
 import br.edu.utfpr.e_markety.dto.PedidoDto;
-import br.edu.utfpr.e_markety.exceptions.AlreadyExistsPendingOrderException;
-import br.edu.utfpr.e_markety.exceptions.NoneOpenOrderException;
+import br.edu.utfpr.e_markety.exceptions.AlreadyExistsPendingPedidoException;
+import br.edu.utfpr.e_markety.exceptions.NoneOpenPedidoException;
 import br.edu.utfpr.e_markety.model.Pedido;
 import br.edu.utfpr.e_markety.model.enums.StatusPedido;
 import br.edu.utfpr.e_markety.repository.GenericUserRepository;
 import br.edu.utfpr.e_markety.repository.PedidoRepository;
 import br.edu.utfpr.e_markety.service.PedidoService;
-import br.edu.utfpr.e_markety.utils.PrincipalUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+
+import static br.edu.utfpr.e_markety.utils.PrincipalUtils.getLoggedUsuario;
+import static br.edu.utfpr.e_markety.utils.PrincipalUtils.getLoggedEmpresa;
 
 @Service
 @RequiredArgsConstructor
@@ -28,38 +30,46 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, PedidoDt
     }
 
     @Override
-    public void existsPendingPedidoByUsuarioId(Long usuarioId) {
-        if (repository.existsByUsuarioIdAndStatusIs(usuarioId, StatusPedido.PENDENTE)) {
-            throw new AlreadyExistsPendingOrderException();
+    public PedidoDto createPedido() {
+        var usuario = getLoggedUsuario();
+        if (repository.existsByUsuarioIdAndStatusIs(usuario.getId(), StatusPedido.PENDENTE)) {
+            throw new AlreadyExistsPendingPedidoException();
         }
+        return save(new PedidoDto(usuario, getLoggedEmpresa()));
     }
 
     @Override
-    public PedidoDto findOpenPedidoByUsuarioId(Long usuarioId) {
+    public PedidoDto findOpenPedidoByUsuario() {
 //        var optionalPedido = repository.findByUsuarioIdAndStatusIs(usuarioId, StatusPedido.PENDENTE);
-        var pedidos = repository.findAllByUsuarioIdAndStatusIsNot(usuarioId, StatusPedido.ENTREGUE);
+        var pedidos = repository.findAllByUsuarioIdAndStatusIsNot(getLoggedUsuario().getId(), StatusPedido.ENTREGUE);
         if (pedidos.isEmpty()) {
-            throw new NoneOpenOrderException();
+            throw new NoneOpenPedidoException();
         }
 
         return mapEntityToDto(pedidos.get(pedidos.size() - 1));
     }
 
     public Page<PedidoDto> findAllByEmpresa(Pageable pageable) {
-        Page<Pedido> page = repository.findAllByEmpresaId(PrincipalUtils.getLoggedEmpresa().getId(), pageable);
+        Page<Pedido> page = repository.findAllByEmpresaId(getLoggedEmpresa().getId(), pageable);
         return page.map(this::mapEntityToDto);
     }
 
     @Override
+    public PedidoDto findByIdAndEmpresa(Long id) {
+        var pedido = repository.findByIdAndEmpresaId(id, getLoggedEmpresa().getId());
+        return mapEntityToDto(pedido);
+    }
+
+    @Override
     public Page<PedidoDto> getAll(Pageable pageable) {
-        Page<Pedido> page = repository.findAllByEmpresaIdAndUsuarioId(PrincipalUtils.getLoggedEmpresa().getId(),
-                PrincipalUtils.getLoggedUsuario().getId(), pageable);
+        Page<Pedido> page = repository.findAllByEmpresaIdAndUsuarioId(getLoggedEmpresa().getId(),
+                getLoggedUsuario().getId(), pageable);
         return page.map(this::mapEntityToDto);
     }
 
     @Override
     protected Iterable<Pedido> findAllByUsuario(Pageable pageable) {
-        var usuarioId = PrincipalUtils.getLoggedUsuario().getId();
+        var usuarioId = getLoggedUsuario().getId();
         return pageable == null ?
                 repository.findAllByUsuarioIdAndStatusIsNot(usuarioId, StatusPedido.PENDENTE) :
                 repository.findAllByUsuarioIdAndStatusIsNot(usuarioId, StatusPedido.PENDENTE, pageable);
@@ -76,8 +86,10 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, PedidoDt
 
     @Override
     protected void preUpdate(PedidoDto dto) {
-        dto.setUsuario(PrincipalUtils.getLoggedUsuario());
-        dto.getItems().forEach(item -> item.setPedido(mapDtoToEntity(dto)));
-        System.out.println(dto);
+        if (dto.getUsuario() == null) {
+            dto.setUsuario(getLoggedUsuario());
+            dto.setEmpresa(getLoggedEmpresa());
+            dto.getItems().forEach(item -> item.setPedido(mapDtoToEntity(dto)));
+        }
     }
 }

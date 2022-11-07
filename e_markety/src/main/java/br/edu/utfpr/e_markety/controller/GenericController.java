@@ -22,6 +22,7 @@ import java.util.Optional;
 
 public abstract class GenericController<ID, Y> {
 
+    protected Sort sort = Sort.by("id");
     protected abstract GenericService<ID, Y> getService();
 
     @GetMapping
@@ -30,9 +31,9 @@ public abstract class GenericController<ID, Y> {
             return ResponseEntity.ok(getService().getAll());
         }
 
-        int pageSize = size.orElse(5);
+        int pageSize = size.orElse(10);
 
-        var result = getService().getAll(PageRequest.of(0, pageSize, Sort.by("id")));
+        var result = getService().getAll(PageRequest.of(0, pageSize, sort));
         return new ResponseEntity<>(result.toList(), HttpStatus.OK);
     }
 

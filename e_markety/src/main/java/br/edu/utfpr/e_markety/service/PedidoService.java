@@ -6,9 +6,11 @@ import org.springframework.data.domain.Pageable;
 
 public interface PedidoService extends GenericService<Long, PedidoDto> {
 
-    void existsPendingPedidoByUsuarioId(Long usuarioId);
-
-    PedidoDto findOpenPedidoByUsuarioId(Long usuarioId);
+    PedidoDto findOpenPedidoByUsuario();
 
     Page<PedidoDto> findAllByEmpresa(Pageable pageable);
+
+    PedidoDto findByIdAndEmpresa(Long id);
+
+    PedidoDto createPedido();
 }

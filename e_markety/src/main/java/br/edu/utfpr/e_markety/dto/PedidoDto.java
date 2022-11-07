@@ -1,11 +1,13 @@
 package br.edu.utfpr.e_markety.dto;
 
 import br.edu.utfpr.e_markety.config.security.dto.UsuarioDto;
+import br.edu.utfpr.e_markety.model.Empresa;
 import br.edu.utfpr.e_markety.model.Endereco;
 import br.edu.utfpr.e_markety.model.PedidoItem;
 import br.edu.utfpr.e_markety.model.Usuario;
 import br.edu.utfpr.e_markety.model.enums.StatusPedido;
 import br.edu.utfpr.e_markety.model.enums.TipoEntrega;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,15 +45,19 @@ public class PedidoDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Usuario usuario;
 
+    @JsonIgnore
+    private Empresa empresa;
+
     private Endereco endereco;
 
     private List<PedidoItem> items = new ArrayList<>();
 
-    public PedidoDto(Usuario usuario) {
+    public PedidoDto(Usuario usuario, Empresa empresa) {
         this.usuario = usuario;
+        this.empresa = empresa;
     }
 
     public UsuarioDto getUsuario() {
-        return UsuarioDto.fromUsuario(usuario);
+        return usuario != null ? UsuarioDto.fromUsuario(usuario) : null;
     }
 }

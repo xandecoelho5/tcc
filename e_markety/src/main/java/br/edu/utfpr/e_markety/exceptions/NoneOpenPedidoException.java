@@ -1,7 +1,7 @@
 package br.edu.utfpr.e_markety.exceptions;
 
-public class NoneOpenOrderException extends RuntimeException {
-    public NoneOpenOrderException() {
+public class NoneOpenPedidoException extends RuntimeException {
+    public NoneOpenPedidoException() {
         super("Não existe um pedido em aberto para este usuário");
     }
 }
