@@ -1,8 +1,8 @@
 package br.edu.utfpr.e_markety.service.impl;
 
 import br.edu.utfpr.e_markety.exceptions.ExistsLinkedDataException;
-import br.edu.utfpr.e_markety.exceptions.NoneDefaultAddressFoundException;
-import br.edu.utfpr.e_markety.exceptions.OnlyExistsOneAddressException;
+import br.edu.utfpr.e_markety.exceptions.NoneDefaultEnderecoFoundException;
+import br.edu.utfpr.e_markety.exceptions.OnlyExistsOneEnderecoException;
 import br.edu.utfpr.e_markety.model.Endereco;
 import br.edu.utfpr.e_markety.repository.EmpresaRepository;
 import br.edu.utfpr.e_markety.repository.EnderecoRepository;
@@ -30,7 +30,7 @@ public class EnderecoServiceImpl extends GenericServiceImpl<Endereco, Long, Ende
     public Endereco getDefaultEndereco(Long id) {
         var endereco = repository.findEnderecoByUsuarioIdAndPadraoIsTrue(id);
         if (endereco == null) {
-            throw new NoneDefaultAddressFoundException();
+            throw new NoneDefaultEnderecoFoundException();
         }
         return endereco;
     }
@@ -54,7 +54,7 @@ public class EnderecoServiceImpl extends GenericServiceImpl<Endereco, Long, Ende
 
     private void verifyAddressCount(Long id) {
         var count = repository.countAllByUsuarioId(id);
-        if (count == 1) throw new OnlyExistsOneAddressException();
+        if (count == 1) throw new OnlyExistsOneEnderecoException();
     }
 
     private void verifyLinkedData(Long id) {

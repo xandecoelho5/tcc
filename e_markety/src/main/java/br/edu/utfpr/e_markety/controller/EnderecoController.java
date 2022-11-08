@@ -1,6 +1,6 @@
 package br.edu.utfpr.e_markety.controller;
 
-import br.edu.utfpr.e_markety.exceptions.NoneDefaultAddressFoundException;
+import br.edu.utfpr.e_markety.exceptions.NoneDefaultEnderecoFoundException;
 import br.edu.utfpr.e_markety.model.Endereco;
 import br.edu.utfpr.e_markety.service.EnderecoService;
 import br.edu.utfpr.e_markety.service.GenericService;
@@ -29,7 +29,7 @@ public class EnderecoController extends GenericController<Long, Endereco> {
             var usuario = PrincipalUtils.getLoggedUsuario();
             var defaultEndereco = service.getDefaultEndereco(usuario.getId());
             return new ResponseEntity<>(defaultEndereco, HttpStatus.OK);
-        } catch (NoneDefaultAddressFoundException e) {
+        } catch (NoneDefaultEnderecoFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }

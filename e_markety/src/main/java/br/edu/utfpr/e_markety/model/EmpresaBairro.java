@@ -24,5 +24,6 @@ public class EmpresaBairro {
     @JoinColumn(name = "bairro_id", referencedColumnName = "id")
     private Bairro bairro;
 
+    @Column(columnDefinition = "decimal(5,2)")
     private BigDecimal taxaEntrega;
 }
