@@ -3,6 +3,9 @@ package br.edu.utfpr.e_markety.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -11,9 +14,8 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
-@AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Produto {
 
     @Id
@@ -26,14 +28,19 @@ public class Produto {
     @Column(length = 2048, nullable = false)
     private String imagemUrl;
 
-    @Column(length = 512)
+    @Column(length = 1024)
     private String descricao;
 
     @Column(nullable = false)
     private BigDecimal preco;
 
-    @ColumnDefault("CURRENT_DATE")
-    private LocalDate data;
+    @Column(name = "data_criacao", nullable = false, updatable = false)
+    @CreatedDate
+    private LocalDate dataCriacao;
+
+    @Column(name = "data_atualizacao")
+    @LastModifiedDate
+    private LocalDate dataAtualizacao;
 
     @Column(nullable = false)
     private int estoque;

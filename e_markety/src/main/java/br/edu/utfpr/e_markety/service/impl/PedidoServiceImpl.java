@@ -80,7 +80,6 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, PedidoDt
         super.preSave(entity, id);
         if (id != null && StatusPedido.PENDENTE == entity.getStatus()) {
             entity.setStatus(StatusPedido.REALIZADO);
-            entity.setData(LocalDate.now());
         }
     }
 

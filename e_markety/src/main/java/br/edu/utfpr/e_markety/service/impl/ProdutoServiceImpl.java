@@ -38,9 +38,6 @@ public class ProdutoServiceImpl extends GenericServiceImpl<Produto, Long, Produt
         if (entity.getEmpresa() == null) {
             entity.setEmpresa(empresaRepository.findById(1L).get());
         }
-        if (entity.getData() == null) {
-            entity.setData(LocalDate.now());
-        }
     }
 
     @Override

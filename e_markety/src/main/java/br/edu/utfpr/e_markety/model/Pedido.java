@@ -1,12 +1,14 @@
 package br.edu.utfpr.e_markety.model;
 
-import br.edu.utfpr.e_markety.config.security.dto.UsuarioDto;
 import br.edu.utfpr.e_markety.model.enums.StatusPedido;
 import br.edu.utfpr.e_markety.model.enums.TipoEntrega;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import lombok.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -18,18 +20,22 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
-@AllArgsConstructor
 @TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
+@EntityListeners(AuditingEntityListener.class)
 public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "DATE DEFAULT CURRENT_DATE")
-    private LocalDate data;
+    @Column(name = "data_criacao", nullable = false, updatable = false)
+    @CreatedDate
+    private LocalDate dataCriacao;
+
+    @Column(name = "data_atualizacao")
+    @LastModifiedDate
+    private LocalDate dataAtualizacao;
 
     @Column(columnDefinition = "decimal(10,2) default 0.00")
     private BigDecimal total;
@@ -67,12 +73,4 @@ public class Pedido {
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PedidoItem> items = new ArrayList<>();
-
-    public Pedido(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public UsuarioDto getUsuario() {
-        return UsuarioDto.fromUsuario(usuario);
-    }
 }

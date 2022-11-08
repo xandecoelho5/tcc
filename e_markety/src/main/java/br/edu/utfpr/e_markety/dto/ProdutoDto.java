@@ -37,7 +37,9 @@ public class ProdutoDto {
     @Min(value = 0, message = "Preço deve ser maior que 0")
     private BigDecimal preco;
 
-    private LocalDate data = LocalDate.now();
+    private LocalDate dataCriacao;
+
+    private LocalDate dataAtualizacao;
 
     private int estoque = 0;
 

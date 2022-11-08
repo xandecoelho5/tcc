@@ -28,7 +28,9 @@ public class PedidoDto {
 
     private Long id;
 
-    private LocalDate data = LocalDate.now();
+    private LocalDate dataCriacao;
+
+    private LocalDate dataAtualizacao;
 
     private BigDecimal total = BigDecimal.valueOf(0.00);
 
