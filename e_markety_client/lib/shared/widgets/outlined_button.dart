@@ -7,18 +7,21 @@ class CustomOutlinedButton extends StatelessWidget {
     required this.text,
     required this.icon,
     this.onPressed,
+    this.height,
   }) : super(key: key);
 
   final Color color;
   final String text;
   final Function()? onPressed;
   final IconData icon;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton.icon(
       style: OutlinedButton.styleFrom(
-        minimumSize: const Size(0, 54),
+        foregroundColor: color,
+        minimumSize: Size(0, height ?? 54),
         side: BorderSide(color: color, width: 2),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),

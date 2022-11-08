@@ -11,7 +11,7 @@ class CategoryCard extends StatelessWidget {
     required this.category,
   })  : height = 140,
         fontSize = 12,
-        iconSize = 38,
+        iconSize = 36,
         imageHeight = 54,
         _isBig = false,
         super(key: key);
@@ -20,8 +20,8 @@ class CategoryCard extends StatelessWidget {
     Key? key,
     required this.category,
   })  : height = 200,
-        fontSize = 20,
-        iconSize = 60,
+        fontSize = 18,
+        iconSize = 45,
         imageHeight = 86,
         _isBig = true,
         super(key: key);
@@ -56,8 +56,8 @@ class CategoryCard extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               Positioned(
-                width: width * 0.835, //100
-                top: 16,
+                width: width * 0.9, //100
+                top: 12,
                 child: Text(
                   category.name,
                   style: TextStyle(
@@ -79,14 +79,14 @@ class CategoryCard extends StatelessWidget {
               ),
               Positioned(
                 width: width * 0.75, //90
-                top: _isBig ? 76 : 48,
+                top: _isBig ? 65 : 48,
                 child: CategoryCircleAvatar(
                   category: category,
                   iconSize: iconSize,
                   innerRadius:
-                      _isBig ? deviceWidth * 0.11 : deviceWidth * 0.065,
+                      _isBig ? deviceWidth * 0.09 : deviceWidth * 0.065,
                   outerRadius:
-                      _isBig ? deviceWidth * 0.12 : deviceWidth * 0.075,
+                      _isBig ? deviceWidth * 0.10 : deviceWidth * 0.075,
                 ),
               ),
             ],

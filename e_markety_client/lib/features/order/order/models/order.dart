@@ -16,7 +16,7 @@ class Order {
   final List<CartItem> items;
   final String? notes;
   final Address? deliveryAddress;
-  final DateTime? deliveryTime; // hora da entrega
+  final DateTime? deliveryTime;
   final double? deliveryCharge;
   final OrderStatus status;
 
@@ -54,7 +54,7 @@ class Order {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'data': createdAt?.toIso8601String(),
+      'dataCriacao': createdAt?.toIso8601String(),
       'total': total,
       'tipoEntrega': deliveryType.toRemoteName(),
       'items': items.map((e) => e.toMap()).toList(),
@@ -69,7 +69,7 @@ class Order {
   factory Order.fromMap(dynamic map) {
     return Order(
       id: map['id'],
-      createdAt: DateTime.parse(map['data']),
+      createdAt: DateTime.parse(map['dataCriacao']),
       total: map['total'],
       deliveryType: DeliveryType.fromString(map['tipoEntrega']),
       items: (map['items'] as List).map(CartItem.fromMap).toList(),

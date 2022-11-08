@@ -40,14 +40,21 @@ class DropdownWithLabel<T> extends StatelessWidget {
             color: backgroundColor,
             borderRadius: BorderRadius.circular(15),
           ),
-          child: DropdownButtonFormField<T>(
-            decoration: kTextInputDecoration,
-            menuMaxHeight: 350,
-            items: _buildItems(),
-            value: data,
-            onChanged: onChanged ?? (_) {},
-            onSaved: onSaved,
-            validator: onValidate,
+          child: Theme(
+            data: Theme.of(context).copyWith(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+            ),
+            child: DropdownButtonFormField<T>(
+              decoration: kTextInputDecoration,
+              menuMaxHeight: 350,
+              items: _buildItems(),
+              value: data,
+              onChanged: onChanged ?? (_) {},
+              onSaved: onSaved,
+              validator: onValidate,
+              dropdownColor: backgroundColor,
+            ),
           ),
         )
       ],

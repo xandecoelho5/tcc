@@ -6,17 +6,19 @@ class FilledButton extends StatelessWidget {
     required this.text,
     required this.color,
     required this.onPressed,
+    this.height,
   }) : super(key: key);
 
   final Color color;
   final String text;
   final Function()? onPressed;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        minimumSize: const Size(double.infinity, 70),
+        minimumSize: Size(double.infinity, height ?? 70),
         backgroundColor: color,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),

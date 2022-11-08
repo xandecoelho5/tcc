@@ -17,14 +17,56 @@ import '../components/email_password_component.dart';
 import '../components/text_button_auth.dart';
 import '../models/login_model.dart';
 
-class SignInScreen extends StatefulWidget {
+class SignInScreen extends StatelessWidget {
   const SignInScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: CustomAppBar.buildAppBar(context, showAction: false),
+      body: BlocListener<AuthBloc, AuthState>(
+        bloc: Modular.get<AuthBloc>(),
+        listener: (context, state) {
+          if (state is AuthLogged) {
+            Modular.to.navigate(Modular.get<AppPlatform>().defaultRoute);
+          }
+          if (state is AuthError) {
+            Modular.get<ISnackBarService>().showError(context, state.message);
+          }
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
+                child: _SignInForm(),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+              child: TextButtonAuth(
+                textLabel: 'Não tem uma conta?',
+                textButtonLabel: 'Cadastre-se',
+                onPressed: () => Modular.to.navigate('/sign-up'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignInForm extends StatefulWidget {
+  const _SignInForm({Key? key}) : super(key: key);
+
+  @override
+  State<_SignInForm> createState() => _SignInFormState();
+}
+
+class _SignInFormState extends State<_SignInForm> {
   final _loginFormKey = GlobalKey<FormState>();
 
   LoginModel login = const LoginModel(login: '', password: '', companyId: 0);
@@ -66,9 +108,7 @@ class _SignInScreenState extends State<SignInScreen> {
         }
 
         if (state is CompanyLoadingState) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         }
 
         return const SizedBox.shrink();
@@ -78,76 +118,42 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar.buildAppBar(context),
-      body: BlocListener<AuthBloc, AuthState>(
-        bloc: Modular.get<AuthBloc>(),
-        listener: (context, state) {
-          print(Modular.get<AppPlatform>().defaultRoute);
-          if (state is AuthLogged) {
-            Modular.to.navigate(Modular.get<AppPlatform>().defaultRoute);
-          }
-          if (state is AuthError) {
-            Modular.get<ISnackBarService>().showError(context, state.message);
-          }
-        },
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Form(
-                  key: _loginFormKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.055,
-                      ),
-                      const LogoWidget(),
-                      const SizedBox(height: 40),
-                      _buildDropdown(),
-                      const SizedBox(height: 20),
-                      EmailPasswordComponent(
-                        onEmailSaved: _onEmailSaved,
-                        onPasswordSaved: _onSenhaSaved,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Esqueci minha senha',
-                              style: TextStyle(
-                                color: kBasicDarkColor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
-                      FilledButton(
-                        text: 'Entrar',
-                        color: Theme.of(context).colorScheme.secondary,
-                        onPressed: _signIn,
-                      ),
-                    ],
+    return Form(
+      key: _loginFormKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const LogoWidget(),
+          const SizedBox(height: 24),
+          EmailPasswordComponent(
+            onEmailSaved: _onEmailSaved,
+            onPasswordSaved: _onSenhaSaved,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                onPressed: () {},
+                child: const Text(
+                  'Esqueci minha senha',
+                  style: TextStyle(
+                    color: kBasicDarkColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
-                TextButtonAuth(
-                  textLabel: 'Não tem uma conta?',
-                  textButtonLabel: 'Cadastre-se',
-                  onPressed: () => Modular.to.navigate('/sign-up'),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ),
+          _buildDropdown(),
+          const SizedBox(height: 20),
+          FilledButton(
+            text: 'Entrar',
+            color: Theme.of(context).colorScheme.secondary,
+            onPressed: _signIn,
+            height: 50,
+          ),
+        ],
       ),
     );
   }

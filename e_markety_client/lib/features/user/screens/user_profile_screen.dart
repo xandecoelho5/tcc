@@ -31,13 +31,12 @@ class UserProfileScreen extends StatelessWidget {
             BlocBuilder<AuthBloc, AuthState>(
               bloc: Modular.get<AuthBloc>(),
               builder: (context, state) {
-                if (state is AuthLogged) {
-                  return Flexible(
-                    flex: 5,
-                    child: _Header(user: state.user),
-                  );
-                }
-                return const SizedBox.shrink();
+                return Flexible(
+                  flex: 5,
+                  child: _Header(
+                    user: state is AuthLogged ? state.user : const User.empty(),
+                  ),
+                );
               },
             ),
             const SizedBox(height: 16),

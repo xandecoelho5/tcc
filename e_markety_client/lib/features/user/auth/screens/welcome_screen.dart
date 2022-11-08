@@ -33,6 +33,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(18),
@@ -46,7 +47,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 color: Theme.of(context).colorScheme.primary,
                 onPressed: () => Modular.to.pushNamed('/sign-in'),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
               FilledButton(
                 text: 'Criar uma conta',
                 color: Theme.of(context).colorScheme.secondary,

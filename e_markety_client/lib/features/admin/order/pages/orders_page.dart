@@ -15,7 +15,7 @@ final sortColumns = [
   'email',
   'total',
   'status',
-  'data',
+  'dataCriacao',
   'Ações',
 ];
 

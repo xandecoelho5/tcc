@@ -2,6 +2,7 @@ import 'package:e_markety_client/features/product/components/product_basic_info.
 import 'package:e_markety_client/features/product/components/product_flag_widget.dart';
 import 'package:e_markety_client/features/product/components/product_quantity.dart';
 import 'package:e_markety_client/features/product/models/product.dart';
+import 'package:e_markety_client/shared/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/theme/constants.dart';
@@ -18,20 +19,6 @@ class ProductDetails extends StatelessWidget {
 
   final Product product;
   final void Function(double) onQuantityChanged;
-
-  Text _productDescription() {
-    return Text(
-      product.description,
-      style: TextStyle(
-        fontSize: 16,
-        color: Colors.grey.shade700,
-        fontWeight: FontWeight.w500,
-        letterSpacing: -0.5,
-      ),
-      maxLines: 5,
-      overflow: TextOverflow.ellipsis, // TODO implementar botão de ver mais
-    );
-  }
 
   Positioned _buildStockFlag() {
     return const Positioned(
@@ -55,6 +42,7 @@ class ProductDetails extends StatelessWidget {
       children: [
         Card(
           color: kScaffoldColor, // TODO GRADIENT de branco pra cinza
+          elevation: 3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -74,7 +62,15 @@ class ProductDetails extends StatelessWidget {
               const SizedBox(height: 8),
               Accordion(
                 title: 'Descrição',
-                content: _productDescription(),
+                content: CustomText(
+                  text: product.description,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey.shade700,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: -0.5,
+                  ),
+                ),
               ),
             ],
           ),

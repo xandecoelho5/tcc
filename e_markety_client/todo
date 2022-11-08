@@ -1,6 +1,5 @@
 Testar todas as strings variáveis com valores extensos, para saber se tem casos que vai dar overflow render;
 - ajustar tamanho de acordo (pode ter casos que vai ficar muito pequeno de ler)
-- colocar um identificador para o overflow (ellipsis, por exemplo);
 
 Testar em mais resoluções para ver como vai se comportar.
 - Verificar onde pode ser usado a ideia de alterar o tamanho do componente de acordo com o tamanho da tela;
@@ -11,8 +10,6 @@ Tentar padronizar estilização de textos, ou pelo menos reduzir os estilos repe
 
 Baixar os outros ícones usados para as categorias e Status dos Pedidos.
 
-Implementar uso da exclusão de favoritos e produtos do carrinho, quando começar a usar gerência de estado;
-
 Adicionar FOCO nos componteis de input quando abrir a tela e quando der submit no input atual;
 
 Quando entrar em alguma rota na Web, verificar se o usuário está logado, se não estiver, redirecionar para a tela de login;
@@ -20,9 +17,9 @@ Quando entrar em alguma rota na Web, verificar se o usuário está logado, se n�
 Quando entrar em alguma rota na Web, atualizar o drawer de acordo com a rota atual;
 
 Trocar a requisição na Home page de produtos e Categorias para usar a paginação;
+
+Dar possibilidade de atualizar o Sobre Mim.
 ----
-Adicionar auditoria para cadastro de Produtos e de Pedidos;
-Adicionar auditoria para alteração de Produtos e de Pedidos;
 Implementar bloqueio deleção de certos registros, como pedidos;
 Verificar necessidade de adicionar nova tabela para auditar os status dos pedidos;
 

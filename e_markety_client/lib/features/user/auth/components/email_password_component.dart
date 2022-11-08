@@ -1,8 +1,8 @@
+import 'package:e_markety_client/features/admin/product/components/text_field_with_label.dart';
 import 'package:flutter/material.dart';
 import 'package:validatorless/validatorless.dart';
 
 import '../../../../shared/utils/strings.dart';
-import '../../../../shared/widgets/custom_text_form_field.dart';
 
 class EmailPasswordComponent extends StatefulWidget {
   const EmailPasswordComponent({
@@ -25,24 +25,26 @@ class _EmailPasswordComponentState extends State<EmailPasswordComponent> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CustomTextFormField(
+        TextFieldWithLabel(
           label: 'E-mail',
-          validator: Validatorless.multiple([
+          onValidate: Validatorless.multiple([
             Validatorless.email(Strings.emailInvalido),
             Validatorless.required(Strings.obrigatorio),
           ]),
           onSaved: widget.onEmailSaved,
+          fillColor: Colors.white,
         ),
-        const SizedBox(height: 20),
-        CustomTextFormField(
-          obscureText: _obscureText,
+        const SizedBox(height: 8),
+        TextFieldWithLabel(
           label: 'Senha',
+          obscureText: _obscureText,
+          fillColor: Colors.white,
           icon: Icon(
             _obscureText ? Icons.visibility_off : Icons.visibility,
             color: Colors.grey,
           ),
           onTapSuffix: () => setState(() => _obscureText = !_obscureText),
-          validator: Validatorless.multiple([
+          onValidate: Validatorless.multiple([
             Validatorless.min(6, 'Deve ter pelo menos 6 caracteres'),
             Validatorless.required(Strings.obrigatorio),
           ]),

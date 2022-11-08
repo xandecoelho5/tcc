@@ -15,6 +15,10 @@ class TextFieldWithLabel extends StatefulWidget {
     this.data,
     this.inputFormatters,
     this.readOnly = false,
+    this.fillColor,
+    this.obscureText = false,
+    this.icon,
+    this.onTapSuffix,
   }) : super(key: key);
 
   final String label;
@@ -27,6 +31,10 @@ class TextFieldWithLabel extends StatefulWidget {
   final String? data;
   final List<TextInputFormatter>? inputFormatters;
   final bool readOnly;
+  final Color? fillColor;
+  final bool obscureText;
+  final Icon? icon;
+  final void Function()? onTapSuffix;
 
   @override
   State<TextFieldWithLabel> createState() => _TextFieldWithLabelState();
@@ -75,9 +83,21 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
         Text(widget.label.toUpperCase(), style: kLabelStyle),
         const SizedBox(height: 8),
         TextFormField(
+          obscureText: widget.obscureText,
+          obscuringCharacter: '*',
           controller: _controller,
           focusNode: _focus,
-          decoration: kTextInputDecoration,
+          decoration: kTextInputDecoration.copyWith(
+            filled: widget.fillColor != null,
+            fillColor: widget.fillColor,
+            suffixIcon: InkWell(
+              onTap: widget.onTapSuffix,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 24),
+                child: widget.icon,
+              ),
+            ),
+          ),
           validator: widget.onValidate,
           onSaved: (value) {
             if (widget.onSaved != null) {

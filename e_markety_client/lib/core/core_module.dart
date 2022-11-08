@@ -47,7 +47,7 @@ class CoreModule extends Module {
               print(error);
               if (error.response?.statusCode == 401) {
                 print('Sessão expirada');
-                Modular.to.navigate('/sign-in');
+                Modular.to.navigate('/');
               }
               return handler.next(error);
             },
