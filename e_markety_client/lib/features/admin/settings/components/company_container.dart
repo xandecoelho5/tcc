@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:e_markety_client/features/company/blocs/company_bloc.dart';
+import 'package:e_markety_client/features/company/blocs/company/company_bloc.dart';
 import 'package:e_markety_client/features/company/models/company.dart';
 import 'package:e_markety_client/features/order/address/models/address.dart';
 import 'package:e_markety_client/shared/utils/mask_formatter_utils.dart';

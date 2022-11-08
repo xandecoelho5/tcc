@@ -4,6 +4,7 @@ import 'package:e_markety_client/features/admin/admin_module.dart';
 import 'package:e_markety_client/features/category/blocs/category_bloc.dart';
 import 'package:e_markety_client/features/category/screens/category_screen.dart';
 import 'package:e_markety_client/features/category/services/category_service.dart';
+import 'package:e_markety_client/features/company/services/company_district_service.dart';
 import 'package:e_markety_client/features/company/services/company_service.dart';
 import 'package:e_markety_client/features/home/screens/home_screen.dart';
 import 'package:e_markety_client/features/order/address/address_module.dart';
@@ -42,7 +43,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../shared/theme/theme.dart';
-import 'company/blocs/company_bloc.dart';
+import 'company/blocs/company/company_bloc.dart';
+import 'company/blocs/company_district/company_district_bloc.dart';
 import 'order/address/blocs/address/address_bloc.dart';
 import 'order/address/screens/delivery_address_screen.dart';
 import 'order/order/blocs/order/order_bloc.dart';
@@ -73,6 +75,7 @@ class AppModule extends Module {
     // company
     Bind.singleton<ICompanyService>((i) => CompanyService(i())),
     Bind.singleton((i) => CompanyBloc(i())),
+    Bind.singleton((i) => CompanyDistrictBloc(i())),
     // product
     Bind.singleton<IProductService>((i) => ProductService(i())),
     Bind.singleton((i) => ProductBloc(i())),
@@ -86,6 +89,9 @@ class AppModule extends Module {
     // address
     Bind.singleton<IAddressService>((i) => AddressService(i())),
     Bind.lazySingleton<IDistrictService>((i) => DistrictService(i())),
+    Bind.lazySingleton<ICompanyDistrictService>(
+      (i) => CompanyDistrictService(i()),
+    ),
     Bind.singleton((i) => AddressBloc(i())),
     Bind.singleton((i) => DefaultAddressBloc(i())),
     Bind.lazySingleton((i) => DistrictNotifier(i())),

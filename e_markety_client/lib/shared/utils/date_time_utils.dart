@@ -13,4 +13,16 @@ class DateTimeUtils {
     initializeDateFormatting(_locale);
     return DateFormat.yMd(_locale).format(date);
   }
+
+  static DateTime fromHourString(String value) {
+    final timeParts = value.split(':');
+    final today = DateTime.now();
+    return DateTime(
+      today.year,
+      today.month,
+      today.day,
+      int.parse(timeParts[0]),
+      int.parse(timeParts[1]),
+    );
+  }
 }

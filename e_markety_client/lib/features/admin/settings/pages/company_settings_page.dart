@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../company/blocs/company_bloc.dart';
+import '../../../company/blocs/company/company_bloc.dart';
 
 class CompanySettingsPage extends StatefulWidget {
   const CompanySettingsPage({Key? key}) : super(key: key);

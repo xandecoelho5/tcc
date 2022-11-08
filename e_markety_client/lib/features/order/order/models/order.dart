@@ -47,6 +47,10 @@ class Order {
       ? '\$ ${deliveryCharge!.toStringAsFixed(2)}'
       : 'Grátis';
 
+  double get totalWithoutCharge => subTotal - discount;
+
+  double get calculatedTotal => subTotal + (deliveryCharge ?? 0) - discount;
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -55,15 +59,14 @@ class Order {
       'tipoEntrega': deliveryType.toRemoteName(),
       'items': items.map((e) => e.toMap()).toList(),
       'observacao': notes,
-      'endereco': deliveryAddress,
-      'horarioEntrega': deliveryTime,
+      'endereco': deliveryAddress?.toMap(),
+      'horarioEntrega': deliveryTime?.toIso8601String(),
       'taxaEntrega': deliveryCharge,
       'status': status.toRemoteName(),
     };
   }
 
   factory Order.fromMap(dynamic map) {
-    // print(map);
     return Order(
       id: map['id'],
       createdAt: DateTime.parse(map['data']),

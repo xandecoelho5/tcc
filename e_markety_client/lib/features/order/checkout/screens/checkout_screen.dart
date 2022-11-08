@@ -1,4 +1,5 @@
 import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
+import 'package:e_markety_client/features/company/blocs/company_district/company_district_bloc.dart';
 import 'package:e_markety_client/features/order/address/blocs/default_address/default_address_bloc.dart';
 import 'package:e_markety_client/features/order/address/models/address.dart';
 import 'package:e_markety_client/features/order/checkout/components/checkout_header.dart';
@@ -32,6 +33,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   late Order _order = widget.order;
 
   void _onPlaceOrder() {
+    if (_order.deliveryType == DeliveryType.delivery) {
+      final snack = Modular.get<ISnackBarService>();
+      if (_order.deliveryAddress == null) {
+        snack.showError(context, 'Selecione um endereço de entrega');
+        return;
+      }
+      if (_order.deliveryTime == null) {
+        snack.showError(context, 'Selecione um horário de entrega');
+        return;
+      }
+    }
     Modular.get<OrderBloc>().add(OrderPlaceEvent(_order));
   }
 
@@ -41,23 +53,50 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         deliveryType: value ? DeliveryType.delivery : DeliveryType.pickup,
       );
 
+      if (_order.deliveryType == DeliveryType.pickup) {
+        _order = Order(
+          id: _order.id,
+          total: _order.totalWithoutCharge,
+          createdAt: _order.createdAt,
+          status: _order.status,
+          deliveryType: DeliveryType.pickup,
+          notes: _order.notes,
+          items: _order.items,
+        );
+      }
+
       if (_order.deliveryType == DeliveryType.delivery &&
           _order.deliveryAddress == null) {
-        // se Loaded é porque conseguiu pegar o endereço padrão, então seta
         final state = Modular.get<DefaultAddressBloc>().state;
         if (state is DefaultAddressLoaded) {
-          _order = _order.copyWith(deliveryAddress: state.address);
+          _onAddressSelected(state.address);
         }
       }
     });
   }
 
   void _onAddressSelected(Address address) {
-    setState(() => _order = _order.copyWith(deliveryAddress: address));
+    setState(() {
+      _order = _order.copyWith(deliveryAddress: address);
+      Modular.get<CompanyDistrictBloc>().add(
+        CompanyDistrictCalculateTaxEvent(_order.deliveryAddress!.district!.id),
+      );
+    });
   }
 
   void _onNotesChange(String notes) {
     setState(() => _order = _order.copyWith(notes: notes));
+  }
+
+  void _onTimeChanged(DateTime? dateTime) {
+    setState(() => _order = _order.copyWith(deliveryTime: dateTime));
+  }
+
+  void _onDistrictTaxChanged(double tax) {
+    setState(() {
+      _order = _order.copyWith(deliveryCharge: tax);
+      _order = _order.copyWith(total: _order.calculatedTotal);
+    });
   }
 
   List<Widget> _deliveryRelated() {
@@ -67,16 +106,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         deliveryAddress: _order.deliveryAddress,
       ),
       const SizedBox(height: 20),
-      const DeliveryTimeSettings(),
+      DeliveryTimeSettings(onTimeChanged: _onTimeChanged),
       const SizedBox(height: 20),
     ];
-  }
-
-  InformationContainer _orderBill() {
-    return InformationContainer(
-      title: 'Resumo da Conta',
-      child: TotalContainer(order: _order, showDiscount: true),
-    );
   }
 
   @override
@@ -87,16 +119,34 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         title: 'Checkout',
         showAction: false,
       ),
-      body: BlocListener<OrderBloc, OrderState>(
-        bloc: Modular.get<OrderBloc>(),
-        listener: (context, state) {
-          if (state is OrderSuccess) {
-            Modular.to.navigate('/order-result', arguments: true);
-          } else if (state is OrderError) {
-            Modular.get<ISnackBarService>().showError(context, state.message);
-            Modular.to.navigate('/order-result', arguments: false);
-          }
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<OrderBloc, OrderState>(
+            bloc: Modular.get<OrderBloc>(),
+            listener: (context, state) {
+              if (state is OrderSuccess) {
+                Modular.to.navigate('/order-result', arguments: true);
+              } else if (state is OrderError) {
+                Modular.get<ISnackBarService>()
+                    .showError(context, state.message);
+                Modular.to.navigate('/order-result', arguments: false);
+              }
+            },
+          ),
+          BlocListener<CompanyDistrictBloc, CompanyDistrictState>(
+            bloc: Modular.get<CompanyDistrictBloc>(),
+            listener: (context, state) {
+              if (state is CompanyDistrictSuccessState) {
+                _onDistrictTaxChanged(state.tax);
+              }
+
+              if (state is CompanyDistrictErrorState) {
+                Modular.get<ISnackBarService>()
+                    .showError(context, state.message);
+              }
+            },
+          ),
+        ],
         child: Column(
           children: [
             Expanded(
@@ -118,7 +168,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       const SizedBox(height: 20),
                       if (_order.deliveryType == DeliveryType.delivery)
                         ..._deliveryRelated(),
-                      _orderBill(),
+                      _OrderBill(_order),
                       const SizedBox(height: 20),
                       NotesContainer(onChange: _onNotesChange),
                     ],
@@ -150,6 +200,20 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _OrderBill extends StatelessWidget {
+  const _OrderBill(this._order, {Key? key}) : super(key: key);
+
+  final Order _order;
+
+  @override
+  Widget build(BuildContext context) {
+    return InformationContainer(
+      title: 'Resumo da Conta',
+      child: TotalContainer(order: _order, showDiscount: true),
     );
   }
 }

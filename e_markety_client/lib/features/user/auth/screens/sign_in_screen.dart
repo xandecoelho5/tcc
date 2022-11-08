@@ -1,5 +1,5 @@
 import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
-import 'package:e_markety_client/features/company/blocs/company_bloc.dart';
+import 'package:e_markety_client/features/company/blocs/company/company_bloc.dart';
 import 'package:e_markety_client/features/user/auth/blocs/auth_bloc.dart';
 import 'package:e_markety_client/shared/environment/platform.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';

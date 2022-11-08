@@ -1,5 +1,5 @@
 import 'package:e_markety_client/features/admin/settings/pages/company_settings_page.dart';
-import 'package:e_markety_client/features/company/blocs/company_bloc.dart';
+import 'package:e_markety_client/features/company/blocs/company/company_bloc.dart';
 import 'package:e_markety_client/features/company/services/company_service.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 

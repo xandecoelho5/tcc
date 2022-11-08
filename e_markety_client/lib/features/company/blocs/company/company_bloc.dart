@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../models/company.dart';
-import '../services/company_service.dart';
+import '../../models/company.dart';
+import '../../services/company_service.dart';
 
 part 'company_event.dart';
 part 'company_state.dart';
