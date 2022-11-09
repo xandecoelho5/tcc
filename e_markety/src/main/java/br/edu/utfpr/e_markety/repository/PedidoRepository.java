@@ -15,7 +15,7 @@ public interface PedidoRepository extends GenericUserRepository<Pedido, Long> {
 
     Page<Pedido> findAllByUsuarioIdAndStatusIsNot(Long usuarioId, StatusPedido status, Pageable pageable);
 
-    Page<Pedido> findAllByEmpresaId(Long id, Pageable pageable);
+    Page<Pedido> findAllByEmpresaIdAndStatusIsNot(Long id, StatusPedido status, Pageable pageable);
 
     Page<Pedido> findAllByEmpresaIdAndUsuarioId(Long empresaId, Long usuarioId, Pageable pageable);
 

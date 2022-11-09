@@ -50,7 +50,7 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, PedidoDt
     }
 
     public Page<PedidoDto> findAllByEmpresa(Pageable pageable) {
-        Page<Pedido> page = repository.findAllByEmpresaId(getLoggedEmpresa().getId(), pageable);
+        Page<Pedido> page = repository.findAllByEmpresaIdAndStatusIsNot(getLoggedEmpresa().getId(), StatusPedido.PENDENTE, pageable);
         return page.map(this::mapEntityToDto);
     }
 

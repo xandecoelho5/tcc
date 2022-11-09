@@ -9,16 +9,16 @@ INSERT INTO BAIRRO(NOME) VALUES ('Aleixo Araújo');
 INSERT INTO BAIRRO(NOME) VALUES ('Mithakhali');
 INSERT INTO BAIRRO(NOME) VALUES ('Pondichory');
 
-INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Fruits & Vegetables', 'assets/images/fruits_and_vegetables.png', 'assets/icons/fruits_and_vegetables.png', '0XFF4CA64C');
-INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Dairy & Bakery', 'assets/images/fruits_and_vegetables.png', 'assets/icons/fruits_and_vegetables.png', '0xFFD39447');
-INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Staples', 'assets/images/fruits_and_vegetables.png', 'assets/icons/fruits_and_vegetables.png', '0xFF7E724C');
-INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Snacks & Branded Foods', 'assets/images/fruits_and_vegetables.png', 'assets/icons/fruits_and_vegetables.png', '0xFFB34F2D');
-INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Beverages', 'assets/images/fruits_and_vegetables.png', 'assets/icons/fruits_and_vegetables.png', '0xFF646A8A');
-INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Personal Care', 'assets/images/fruits_and_vegetables.png', 'assets/icons/fruits_and_vegetables.png', '0XFF945DA1');
-INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Home Care', 'assets/images/fruits_and_vegetables.png', 'assets/icons/fruits_and_vegetables.png', '0XFF2788BB');
-INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Baby Care', 'assets/images/fruits_and_vegetables.png', 'assets/icons/fruits_and_vegetables.png', '0XFFF2598D');
-INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Home & Kitchen', 'assets/images/fruits_and_vegetables.png', 'assets/icons/fruits_and_vegetables.png', '0XFF787161');
-INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Pet Foods', 'assets/images/fruits_and_vegetables.png', 'assets/icons/fruits_and_vegetables.png', '0XFFB7823C');
+INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Hortifruti', 'assets/images/fruits_and_vegetables.png', 'assets/icons/hortifruti.png', '0XFF4CA64C');
+INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Padaria', 'assets/images/fruits_and_vegetables.png', 'assets/icons/padaria.png', '0xFFD39447');
+INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Mercearia e Alimentos', 'assets/images/fruits_and_vegetables.png', 'assets/icons/mercearia.png', '0xFF7E724C');
+INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Congelados', 'assets/images/fruits_and_vegetables.png', 'assets/icons/congelados.png', '0xFFB34F2D');
+INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Bebidas', 'assets/images/fruits_and_vegetables.png', 'assets/icons/bebidas.png', '0xFF646A8A');
+INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Frios e Laticínios', 'assets/images/fruits_and_vegetables.png', 'assets/icons/laticinios.png', '0XFF945DA1');
+INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Higiene e Beleza', 'assets/images/fruits_and_vegetables.png', 'assets/icons/higiene.png', '0XFF2788BB');
+INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Limpeza', 'assets/images/fruits_and_vegetables.png', 'assets/icons/limpeza.png', '0XFFF2598D');
+INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Carnes, Aves e Peixes', 'assets/images/fruits_and_vegetables.png', 'assets/icons/carnes.png', '0XFF787161');
+INSERT INTO CATEGORIA(NOME, IMAGEM_URL, ICON_URL, COR) VALUES('Pet Shop', 'assets/images/fruits_and_vegetables.png', 'assets/icons/pet_shop.png', '0XFFB7823C');
 
 INSERT INTO UNIDADE_MEDIDA(ABREVIATURA, DESCRICAO) VALUES('UN', 'Unidade');
 INSERT INTO UNIDADE_MEDIDA(ABREVIATURA, DESCRICAO) VALUES('KG', 'Quilograma');
