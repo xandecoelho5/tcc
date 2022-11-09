@@ -1,4 +1,5 @@
 import 'package:e_markety_client/shared/theme/constants.dart';
+import 'package:e_markety_client/shared/utils/assets.dart';
 import 'package:e_markety_client/shared/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -93,7 +94,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                 child: Row(
                   children: [
-                    _OrderIcon(color: color),
+                    _OrderIcon(color: color, iconUrl: widget.order.status.icon),
                     const SizedBox(width: 12),
                     _Details(order: widget.order),
                     const Spacer(),
@@ -101,8 +102,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                       color: color,
                       onTap: () => setState(() => _expanded = !_expanded),
                       icon: _expanded
-                          ? Icons.keyboard_arrow_down
-                          : Icons.keyboard_arrow_up,
+                          ? const Icon(Icons.keyboard_arrow_down)
+                          : const Icon(Icons.keyboard_arrow_up),
                     ),
                   ],
                 ),
@@ -125,7 +126,11 @@ class _OrderDetailsState extends State<OrderDetails> {
             child: _ActionButton(
               color: color,
               onTap: () => Modular.to.pushNamed('/order/track-order'),
-              icon: Icons.track_changes,
+              icon: Image.asset(
+                Assets.track,
+                color: Colors.black,
+                width: 22,
+              ),
             ),
           ),
       ],
@@ -143,7 +148,7 @@ class _ActionButton extends StatelessWidget {
 
   final VoidCallback? onTap;
   final Color color;
-  final IconData icon;
+  final Widget icon;
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +162,7 @@ class _ActionButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         child: Padding(
           padding: const EdgeInsets.all(2),
-          child: Icon(icon),
+          child: icon,
         ),
       ),
     );
@@ -165,9 +170,14 @@ class _ActionButton extends StatelessWidget {
 }
 
 class _OrderIcon extends StatelessWidget {
-  const _OrderIcon({Key? key, required this.color}) : super(key: key);
+  const _OrderIcon({
+    Key? key,
+    required this.color,
+    required this.iconUrl,
+  }) : super(key: key);
 
   final Color color;
+  final String iconUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -183,7 +193,7 @@ class _OrderIcon extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(12),
         child: Image.asset(
-          'assets/icons/fruits_and_vegetables.png',
+          iconUrl,
           color: color,
           width: 35,
           height: 40,

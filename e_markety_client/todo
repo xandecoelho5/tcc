@@ -8,8 +8,6 @@ Componentizar melhor a aplicação, tornando mais legível e reduzindo número d
 
 Tentar padronizar estilização de textos, ou pelo menos reduzir os estilos repetidos.
 
-Baixar os outros ícones usados para as categorias e Status dos Pedidos.
-
 Adicionar FOCO nos componteis de input quando abrir a tela e quando der submit no input atual;
 
 Quando entrar em alguma rota na Web, verificar se o usuário está logado, se não estiver, redirecionar para a tela de login;
@@ -17,6 +15,10 @@ Quando entrar em alguma rota na Web, verificar se o usuário está logado, se n�
 Quando entrar em alguma rota na Web, atualizar o drawer de acordo com a rota atual;
 
 Trocar a requisição na Home page de produtos e Categorias para usar a paginação;
+
+implementar tela de Mais vendidos;
+
+adicionar Sliver na tela de Produtos por Categoria;
 
 Dar possibilidade de atualizar o Sobre Mim.
 ----

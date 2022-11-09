@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../../shared/utils/assets.dart';
 import '../../../admin/order/components/order_notifier.dart';
 
 enum OrderStatus {
-  pending('Pedido Pendente', Colors.blueGrey),
-  placed('Pedido Realizado', Colors.teal),
-  confirmed('Pedido Confirmado', Colors.deepOrange),
-  readyToPickup('Pronto para Retirada', Colors.deepPurpleAccent),
-  readyToDeliver('Pronto para Entrega', Colors.deepPurple),
-  outForDelivery('Saiu para Entrega', Colors.blue),
-  delivered('Entregue', Colors.green);
+  pending('Pedido Pendente', Colors.blueGrey, Assets.placed),
+  placed('Pedido Realizado', Colors.teal, Assets.placed),
+  confirmed('Pedido Confirmado', Colors.deepOrange, Assets.confirmed),
+  readyToPickup('Pronto para Retirada', Colors.deepPurpleAccent, Assets.ready),
+  readyToDeliver('Pronto para Entrega', Colors.deepPurple, Assets.ready),
+  outForDelivery('Saiu para Entrega', Colors.blue, Assets.delivery),
+  delivered('Entregue', Colors.green, Assets.sent);
 
-  const OrderStatus(this.label, this.color);
+  const OrderStatus(this.label, this.color, this.icon);
 
   final String label;
   final Color color;
+  final String icon;
 
   static OrderStatus fromString(String value) {
     switch (value.toUpperCase()) {

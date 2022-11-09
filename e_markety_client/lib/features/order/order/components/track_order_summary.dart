@@ -2,6 +2,7 @@ import 'package:e_markety_client/features/order/order/models/order.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../shared/theme/constants.dart';
+import '../../../../shared/utils/assets.dart';
 import '../../../../shared/utils/date_time_utils.dart';
 
 class TrackOrderSummary extends StatelessWidget {
@@ -19,13 +20,13 @@ class TrackOrderSummary extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             backgroundColor: Colors.white,
             radius: 40,
-            child: Icon(
-              Icons.shopping_bag_outlined,
-              size: 50,
-              color: Colors.black,
+            child: Image.asset(
+              Assets.shoppingBag,
+              width: 55,
+              color: kBasicDarkColor,
             ),
           ),
           const SizedBox(width: 12),

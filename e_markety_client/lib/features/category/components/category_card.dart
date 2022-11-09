@@ -38,59 +38,54 @@ class CategoryCard extends StatelessWidget {
     final deviceWidth = MediaQuery.of(context).size.width;
     final width = _isBig ? deviceWidth * 0.43 : 120.0;
 
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        color: kBackgroundColor,
-        borderRadius: BorderRadius.circular(8),
+    return GestureDetector(
+      onTap: () => Modular.to.pushNamed(
+        '/product/products-by-category',
+        arguments: category,
       ),
-      child: Material(
-        color: Colors.transparent,
-        child: GestureDetector(
-          onTap: () => Modular.to.pushNamed(
-            '/product/products-by-category',
-            arguments: category,
-          ),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Positioned(
-                width: width * 0.9,
-                top: 12,
-                child: Text(
-                  category.name,
-                  style: TextStyle(
-                    fontSize: fontSize,
-                    fontWeight: FontWeight.w700,
-                    color: category.color,
-                  ),
-                  textAlign: TextAlign.center,
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          color: kBackgroundColor,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Positioned(
+              width: width * 0.9,
+              top: 12,
+              child: Text(
+                category.name,
+                style: TextStyle(
+                  fontSize: fontSize,
+                  fontWeight: FontWeight.w700,
+                  color: category.color,
                 ),
+                textAlign: TextAlign.center,
               ),
-              Positioned(
-                bottom: 0,
-                width: width,
-                child: Container(
-                  height: imageHeight,
-                  color: Colors.white,
-                  child: Image.asset(category.imageUrl, fit: BoxFit.cover),
-                ),
+            ),
+            Positioned(
+              bottom: 0,
+              width: width,
+              child: Container(
+                height: imageHeight,
+                color: Colors.white,
+                child: Image.asset(category.imageUrl, fit: BoxFit.cover),
               ),
-              Positioned(
-                width: width * 0.75,
-                top: _isBig ? 60 : 48,
-                child: CategoryCircleAvatar(
-                  category: category,
-                  iconSize: iconSize,
-                  innerRadius:
-                      _isBig ? deviceWidth * 0.09 : deviceWidth * 0.065,
-                  outerRadius:
-                      _isBig ? deviceWidth * 0.10 : deviceWidth * 0.075,
-                ),
+            ),
+            Positioned(
+              width: width * 0.75,
+              top: _isBig ? 60 : 48,
+              child: CategoryCircleAvatar(
+                category: category,
+                iconSize: iconSize,
+                innerRadius: _isBig ? deviceWidth * 0.09 : deviceWidth * 0.065,
+                outerRadius: _isBig ? deviceWidth * 0.10 : deviceWidth * 0.075,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

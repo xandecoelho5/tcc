@@ -22,14 +22,14 @@ class OrderTimeline extends StatelessWidget {
     return Colors.grey.shade300;
   }
 
-  DotIndicator _dotIndicator(backgroundColor, foregroundColor) {
+  DotIndicator _dotIndicator(index, backgroundColor, foregroundColor) {
     return DotIndicator(
       size: 60,
       color: backgroundColor,
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Image.asset(
-          'assets/icons/fruits_and_vegetables.png',
+          processes[index].icon,
           color: foregroundColor,
         ),
       ),
@@ -64,9 +64,9 @@ class OrderTimeline extends StatelessWidget {
         },
         indicatorBuilder: (_, index) {
           if (index <= processIndex) {
-            return _dotIndicator(kWeakSecondaryColor, kSecondaryColor);
+            return _dotIndicator(index, kWeakSecondaryColor, kSecondaryColor);
           }
-          return _dotIndicator(Colors.grey.shade300, kDarkGreyColor);
+          return _dotIndicator(index, Colors.grey.shade300, kDarkGreyColor);
         },
         connectorBuilder: (_, i, __) => SolidLineConnector(color: _getColor(i)),
         itemCount: processes.length,

@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../core/services/snack_bar/snackbar_service.dart';
+import '../../../shared/theme/constants.dart';
 import '../blocs/product_by_category/product_by_category_bloc.dart';
 import '../components/products_list.dart';
 
@@ -18,19 +19,15 @@ class ProductsByCategoryScreen extends StatelessWidget {
 
   Container _imageContainer() {
     return Container(
-      height: 200,
+      height: 160,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(category.imageUrl),
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(
-            category.color.withOpacity(0.75),
+            kMediumBrownColor.withOpacity(0.4),
             BlendMode.darken,
           ),
-        ),
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
         ),
       ),
     );
@@ -38,30 +35,30 @@ class ProductsByCategoryScreen extends StatelessWidget {
 
   SizedBox _header(context) {
     return SizedBox(
-      height: 280,
+      height: 220,
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
           _imageContainer(),
           Positioned(
-            top: 120,
-            left: MediaQuery.of(context).size.width * 0.5 - 65,
+            top: 110,
+            left: MediaQuery.of(context).size.width * 0.5 - 48,
             child: CategoryCircleAvatar(
               category: category,
-              outerRadius: 72,
-              innerRadius: 60,
-              iconSize: 85,
+              outerRadius: 50,
+              innerRadius: 38,
+              iconSize: 48,
               filled: false,
             ),
           ),
           Positioned(
-            top: 40,
-            width: 270,
+            top: 35,
+            width: 260,
             child: Text(
               category.name,
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 28,
+                fontSize: 26,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,

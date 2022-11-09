@@ -16,7 +16,10 @@ class ProductBasicInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CategoryChip.big(label: product.category!.name),
+          CategoryChip.big(
+            label: product.category!.name,
+            color: product.category!.color,
+          ),
           const SizedBox(height: 4),
           Text(
             product.name,
