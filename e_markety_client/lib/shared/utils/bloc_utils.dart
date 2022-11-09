@@ -7,7 +7,7 @@ class BlocUtils {
 
   static Future<void> signOut() async {
     Modular.get<AuthBloc>().add(AuthSignOutEvent());
-    Future.delayed(const Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 10), () {
       Modular.to.navigate('/');
     });
   }

@@ -18,7 +18,7 @@ class ActionCart extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () => Modular.to.pushNamed('/shopping-cart'),
+          onTap: () => Modular.to.pushNamed('/order/shopping-cart'),
           borderRadius: BorderRadius.circular(8),
           child: const Icon(
             Icons.camera_alt_outlined,

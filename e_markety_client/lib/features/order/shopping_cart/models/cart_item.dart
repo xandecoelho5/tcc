@@ -52,8 +52,7 @@ class CartItem {
     return 'CartItem{id: ${product.id}';
   }
 
-  factory CartItem.fromJson(Map<String, dynamic> json) =>
-      _$CartItemFromJson(json);
+  factory CartItem.fromJson(dynamic json) => _$CartItemFromJson(json);
 
   Map<String, dynamic> toJson() => _$CartItemToJson(this);
 }

@@ -24,7 +24,7 @@ class Order {
     required this.id,
     this.createdAt,
     required this.total,
-    required this.deliveryType, // TODO adiconar asserts para obrigar a passar o endereço
+    required this.deliveryType,
     required this.items,
     required this.notes,
     this.deliveryAddress,
@@ -35,7 +35,7 @@ class Order {
 
   double get subTotal => items.fold(
         0,
-        (total, item) => total + item.product.finalPrice * item.quantity,
+        (total, item) => total + item.product.price * item.quantity,
       );
 
   double get discount => items.fold(
@@ -46,8 +46,6 @@ class Order {
   String get formattedCharge => deliveryCharge != null && deliveryCharge! > 0
       ? '\$ ${deliveryCharge!.toStringAsFixed(2)}'
       : 'Grátis';
-
-  double get totalWithoutCharge => subTotal - discount;
 
   double get calculatedTotal => subTotal + (deliveryCharge ?? 0) - discount;
 

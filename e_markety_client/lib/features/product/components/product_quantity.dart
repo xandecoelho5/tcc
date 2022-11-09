@@ -46,7 +46,6 @@ class _ProductQuantityState extends State<ProductQuantity> {
         width: double.infinity,
         decoration: BoxDecoration(
           color: kBasicLightColor.withOpacity(1),
-          // TODO - add gradient from white to kBasicLightColor
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(

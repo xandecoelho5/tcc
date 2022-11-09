@@ -65,4 +65,7 @@ final kTextInputDecoration = InputDecoration(
   errorBorder: kTextInputBorder.copyWith(
     borderSide: BorderSide(color: Colors.red.shade700),
   ),
+  focusedErrorBorder: kTextInputBorder.copyWith(
+    borderSide: BorderSide(color: Colors.red.shade700),
+  ),
 );

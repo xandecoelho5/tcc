@@ -28,8 +28,13 @@ class SignInScreen extends StatelessWidget {
       body: BlocListener<AuthBloc, AuthState>(
         bloc: Modular.get<AuthBloc>(),
         listener: (context, state) {
+          print(Modular.get<AppPlatform>().defaultRoute);
           if (state is AuthLogged) {
-            Modular.to.navigate(Modular.get<AppPlatform>().defaultRoute);
+            // Modular.to.navigate(Modular.get<AppPlatform>().defaultRoute);
+            Modular.to.pushNamedAndRemoveUntil(
+              Modular.get<AppPlatform>().defaultRoute,
+              (route) => false,
+            );
           }
           if (state is AuthError) {
             Modular.get<ISnackBarService>().showError(context, state.message);

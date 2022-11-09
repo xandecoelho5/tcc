@@ -78,7 +78,7 @@ class _BottomContainer extends StatelessWidget {
               child: FilledButton(
                 color: kSecondaryColor,
                 onPressed: () =>
-                    Modular.to.pushNamed('/checkout', arguments: order),
+                    Modular.to.pushNamed('/order/checkout', arguments: order),
                 text: 'Checkout',
               ),
             ),

@@ -53,7 +53,7 @@ class EmptyCart extends StatelessWidget {
             child: FilledButton(
               text: 'Começar a comprar',
               color: kSecondaryColor,
-              onPressed: () => Modular.to.navigate('/home'),
+              onPressed: () => Modular.to.navigate('/home/'),
             ),
           ),
         ],

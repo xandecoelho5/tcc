@@ -56,7 +56,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       if (_order.deliveryType == DeliveryType.pickup) {
         _order = Order(
           id: _order.id,
-          total: _order.totalWithoutCharge,
+          total: _order.subTotal,
           createdAt: _order.createdAt,
           status: _order.status,
           deliveryType: DeliveryType.pickup,
@@ -125,11 +125,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             bloc: Modular.get<OrderBloc>(),
             listener: (context, state) {
               if (state is OrderSuccess) {
-                Modular.to.navigate('/order-result', arguments: true);
+                Modular.to.navigate('/order/order-result', arguments: true);
               } else if (state is OrderError) {
                 Modular.get<ISnackBarService>()
                     .showError(context, state.message);
-                Modular.to.navigate('/order-result', arguments: false);
+                Modular.to.navigate('/order/order-result', arguments: false);
               }
             },
           ),

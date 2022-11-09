@@ -29,7 +29,8 @@ class DeliveryAddressContainer extends StatelessWidget {
         ],
         onSelected: (value) async {
           if (value == 1) {
-            final address = await Modular.to.pushNamed('/delivery-address');
+            final address =
+                await Modular.to.pushNamed('/order/delivery-address');
             if (address != null) {
               onAddressSelected(address as Address);
             }

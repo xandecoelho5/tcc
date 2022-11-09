@@ -27,12 +27,20 @@ class _DeliveryTimeSettingsState extends State<DeliveryTimeSettings> {
 
   void _onDeliveryTimeChanged(DateTime? value) => widget.onTimeChanged(value);
 
-  //TODO - Implementar a lógica de horários de entrega de acordo com a hora atual, bloqueando horários anteriores
-  List<DateTime> _buildItems(start, end) {
+  List<DateTime> _buildItems(DateTime start, DateTime end) {
+    var _start = start;
+    if (_start.isAfter(end)) {
+      return [];
+    }
+
+    final now = DateTime.now();
+    if (_start.isBefore(now)) {
+      _start = now;
+    }
+
     final items = <DateTime>[];
-    for (var i = start.hour; i < end.hour; i++) {
-      final today = DateTime.now();
-      items.add(DateTime(today.year, today.month, today.day, i, start.minute));
+    for (var i = _start.hour; i < end.hour; i++) {
+      items.add(DateTime(now.year, now.month, now.day, i, start.minute));
     }
     return items;
   }

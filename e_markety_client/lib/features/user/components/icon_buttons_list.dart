@@ -8,12 +8,12 @@ final List<IconButtonModel> iconButtons = [
   IconButtonModel(
     icon: Icons.person,
     label: 'Sobre Mim',
-    onTap: () => Modular.to.pushNamed('/about-me'),
+    onTap: () => Modular.to.pushNamed('/user/about-me'),
   ),
   IconButtonModel(
     icon: Icons.shopping_bag,
     label: 'Meus Pedidos',
-    onTap: () => Modular.to.pushNamed('/my-orders'),
+    onTap: () => Modular.to.pushNamed('/order/my-orders'),
   ),
   IconButtonModel(
     icon: Icons.favorite,

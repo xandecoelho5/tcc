@@ -4,6 +4,4 @@ abstract class ICacheService {
   Future<dynamic> get(String key);
 
   Future<void> delete(String key);
-
-  Stream<List<dynamic>> getStream(String key);
 }

@@ -33,41 +33,28 @@ class OrderSimplerTimeline extends StatelessWidget {
       theme: TimelineThemeData(nodePosition: 0.06),
       builder: TimelineTileBuilder.connected(
         connectionDirection: ConnectionDirection.before,
-        itemExtent: 32,
+        itemExtent: 34,
         contentsBuilder: (context, index) {
           final notProcessed = index > processIndex;
           return Padding(
-            padding: const EdgeInsets.only(left: 16, right: 24),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  processes[index].label,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: notProcessed
-                        ? kDarkGreyColor
-                        : delivered
-                            ? kSecondaryColor
-                            : kPrimaryColor,
-                    letterSpacing: -0.5,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  notProcessed ? 'Pendente' : 'Jan 26, 2021',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: kDarkGreyColor,
-                    letterSpacing: -0.5,
-                  ),
-                ),
-              ],
+            padding: const EdgeInsets.only(left: 12, right: 24),
+            child: Text(
+              processes[index].label,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: notProcessed
+                    ? kDarkGreyColor
+                    : delivered
+                        ? kSecondaryColor
+                        : kPrimaryColor,
+                letterSpacing: -0.5,
+              ),
             ),
           );
         },
         indicatorBuilder: (_, index) => DotIndicator(
-          size: 14,
+          size: 16,
           color: _getColor(index),
         ),
         connectorBuilder: (_, i, __) => SolidLineConnector(color: _getColor(i)),

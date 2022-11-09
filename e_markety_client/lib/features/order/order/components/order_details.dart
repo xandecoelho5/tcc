@@ -64,8 +64,7 @@ class _OrderDetailsState extends State<OrderDetails> {
 
   Container _secondChild() {
     return Container(
-      // height: 185,
-      height: 36.0 * processes.length,
+      height: 38.0 * processes.length,
       decoration: kDecorationBottomRadiusCircularBorder,
       child: OrderSimplerTimeline(
         process: widget.order.status,
@@ -125,7 +124,7 @@ class _OrderDetailsState extends State<OrderDetails> {
             right: 0,
             child: _ActionButton(
               color: color,
-              onTap: () => Modular.to.pushNamed('/track-order'),
+              onTap: () => Modular.to.pushNamed('/order/track-order'),
               icon: Icons.track_changes,
             ),
           ),

@@ -1,6 +1,6 @@
+import 'package:e_markety_client/features/order/shopping_cart/services/cart_item_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../shopping_cart/repositories/cart_item_repository.dart';
 import '../../models/order.dart';
 import '../../services/order_service.dart';
 
@@ -9,12 +9,9 @@ part 'order_state.dart';
 
 class OrderBloc extends Bloc<OrderEvent, OrderState> {
   final IOrderService _orderService;
-  final CartItemRepository _cartItemRepository;
+  final ICartItemService _cartItemService;
 
-  OrderBloc(
-    this._orderService,
-    this._cartItemRepository,
-  ) : super(OrderInitial()) {
+  OrderBloc(this._orderService, this._cartItemService) : super(OrderInitial()) {
     on<OrderGetAllEvent>(_onOrderGetAllOrders);
     on<OrderPlaceEvent>(_onOrderPlace);
   }
@@ -33,7 +30,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     await response.fold(
       (l) => emit(OrderError(l.message)),
       (r) async {
-        _cartItemRepository.clearCart();
+        _cartItemService.clearCart();
         emit(OrderSuccess(r));
       },
     );

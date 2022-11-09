@@ -23,7 +23,7 @@ class ApplyFiltersScreen extends StatelessWidget {
     void _onApply() {
       Modular.get<FilterBloc>().add(FilterApplyEvent(_filter));
       Modular.get<Global>().filter = _filter;
-      Modular.to.navigate('/search-result');
+      Modular.to.navigate('/product/search-result');
     }
 
     return Scaffold(

@@ -17,13 +17,14 @@ abstract class IFavouriteService {
 class FavouriteService implements IFavouriteService {
   final IHttpService _httpService;
   final _streamController = BehaviorSubject<List<Product>>.seeded(const []);
+  final String _baseUrl = '/usuario/favoritos';
 
   FavouriteService(this._httpService) {
     _init();
   }
 
   Future<void> _init() async {
-    final response = await _httpService.getAll('/usuario/favoritos');
+    final response = await _httpService.getAll(_baseUrl);
     try {
       response.fold(
         (error) => throw FavouriteException(error.message),
@@ -47,9 +48,7 @@ class FavouriteService implements IFavouriteService {
     final index = favourites.indexWhere((t) => t.id == product.id);
     if (index < 0) {
       favourites.add(product);
-      _streamController.add(favourites);
-      await _httpService.patch('/usuario/favoritos', {'id': product.id});
-      Modular.get<AuthBloc>().add(AuthGetCurrentUserEvent());
+      await _updateFavourites(favourites, product.id!);
     }
   }
 
@@ -59,9 +58,13 @@ class FavouriteService implements IFavouriteService {
     final index = favourites.indexWhere((t) => t.id == id);
     if (index >= 0) {
       favourites.removeAt(index);
-      _streamController.add(favourites);
-      await _httpService.patch('/usuario/favoritos', {'id': id});
-      Modular.get<AuthBloc>().add(AuthGetCurrentUserEvent());
+      await _updateFavourites(favourites, id);
     }
+  }
+
+  Future<void> _updateFavourites(List<Product> favourites, int id) async {
+    _streamController.add(favourites);
+    await _httpService.patch(_baseUrl, {'id': id});
+    Modular.get<AuthBloc>().add(AuthGetCurrentUserEvent());
   }
 }

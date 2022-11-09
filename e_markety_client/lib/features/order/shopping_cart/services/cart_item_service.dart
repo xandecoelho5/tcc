@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:e_markety_client/core/services/cache/cache_service.dart';
+import 'package:e_markety_client/features/company/services/company_service.dart';
 import 'package:e_markety_client/features/order/shopping_cart/models/cart_item.dart';
+import 'package:e_markety_client/features/user/services/user_service.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class ICartItemService {
@@ -16,27 +18,42 @@ abstract class ICartItemService {
   void quantityDecrement(CartItem cartItem);
 
   void clearCart();
+
+  Future<void> init();
+
+  Future<List<CartItem>> getFromCache();
 }
 
 class CartItemService implements ICartItemService {
   final ICacheService _cacheService;
-  final _streamController = BehaviorSubject<List<CartItem>>.seeded(const []);
-  static const _kCartItemKey = '__cart_item_key__';
+  final ICompanyService _companyService;
+  final IUserService _userService;
 
-  CartItemService(this._cacheService) {
-    _init();
+  final _streamController = BehaviorSubject<List<CartItem>>.seeded(const []);
+  String? _cartItemKey;
+
+  CartItemService(this._cacheService, this._companyService, this._userService);
+
+  @override
+  Future<void> init() async {
+    Future<void> _setKey() async {
+      final userResponse = await _userService.getCurrentUser();
+      final user = userResponse.fold((l) => null, (r) => r.id);
+      final companyResponse = await _companyService.getCurrentCompany();
+      final company = companyResponse.fold((l) => null, (r) => r.id);
+      _cartItemKey = '__cart_item_key__${user ?? ''}${company ?? ''}';
+    }
+
+    await _setKey();
+    _streamController.add(await getFromCache());
   }
 
-  Future<void> _init() async {
-    final cartItemsJson = await _cacheService.get(_kCartItemKey);
-    if (cartItemsJson != null) {
-      final cartItems = (jsonDecode(cartItemsJson) as List)
-          .map((e) => CartItem.fromJson(e))
-          .toList();
-      _streamController.add(cartItems);
-    } else {
-      _streamController.add(const []);
-    }
+  @override
+  Future<List<CartItem>> getFromCache() async {
+    final cartItemsJson = await _cacheService.get(_cartItemKey!);
+    return cartItemsJson != null
+        ? (jsonDecode(cartItemsJson) as List).map(CartItem.fromJson).toList()
+        : const [];
   }
 
   @override
@@ -53,8 +70,7 @@ class CartItemService implements ICartItemService {
       cartItems.add(cartItem);
     }
 
-    _streamController.add(cartItems);
-    await _cacheService.save(_kCartItemKey, jsonEncode(cartItems));
+    await _addToStreamAndSave(cartItems);
   }
 
   @override
@@ -63,35 +79,42 @@ class CartItemService implements ICartItemService {
     final index = cartItems.indexWhere((t) => t.product.id == productId);
     if (index >= 0) {
       cartItems.removeAt(index);
-      _streamController.add(cartItems);
-      await _cacheService.save(_kCartItemKey, jsonEncode(cartItems));
+      await _addToStreamAndSave(cartItems);
     }
   }
 
   @override
   Future<void> quantityIncrement(CartItem cartItem) async {
-    final cartItems = [..._streamController.value];
-    final index = _findIndexByProductId(cartItem);
-    cartItems[index] = cartItem.copyWith(
-      quantity: cartItem.quantity + cartItem.product.weightUnit,
+    await _updateQuantity(
+      cartItem,
+      () => cartItem.copyWith(
+        quantity: cartItem.quantity + cartItem.product.weightUnit,
+      ),
     );
-
-    _streamController.add(cartItems);
-    await _cacheService.save(_kCartItemKey, jsonEncode(cartItems));
   }
 
   @override
   Future<void> quantityDecrement(CartItem cartItem) async {
-    final cartItems = [..._streamController.value];
-    final index = _findIndexByProductId(cartItem);
-    if (cartItem.quantity > cartItem.product.weightUnit) {
-      cartItems[index] = cartItem.copyWith(
-        quantity: cartItem.quantity - cartItem.product.weightUnit,
-      );
-    }
+    await _updateQuantity(cartItem, () {
+      if (cartItem.quantity > cartItem.product.weightUnit) {
+        return cartItem.copyWith(
+          quantity: cartItem.quantity - cartItem.product.weightUnit,
+        );
+      }
+      return cartItem;
+    });
+  }
 
+  Future<void> _updateQuantity(CartItem item, CartItem Function() f) async {
+    final cartItems = [..._streamController.value];
+    final index = _findIndexByProductId(item);
+    cartItems[index] = f();
+    await _addToStreamAndSave(cartItems);
+  }
+
+  Future<void> _addToStreamAndSave(List<CartItem> cartItems) async {
     _streamController.add(cartItems);
-    await _cacheService.save(_kCartItemKey, jsonEncode(cartItems));
+    await _cacheService.save(_cartItemKey!, jsonEncode(cartItems));
   }
 
   int _findIndexByProductId(CartItem item) => [..._streamController.value]
@@ -100,6 +123,6 @@ class CartItemService implements ICartItemService {
   @override
   void clearCart() {
     _streamController.add(const []);
-    _cacheService.delete(_kCartItemKey);
+    _cacheService.delete(_cartItemKey!);
   }
 }

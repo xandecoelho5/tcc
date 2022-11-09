@@ -42,10 +42,4 @@ class SharedPreferencesService implements ICacheService {
       print('not saved on Shared Preference');
     }
   }
-
-  @override
-  Stream<List> getStream(String key) {
-    // TODO: implement getStream
-    throw UnimplementedError();
-  }
 }

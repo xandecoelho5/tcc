@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
 import 'package:e_markety_client/features/company/blocs/company/company_bloc.dart';
 import 'package:e_markety_client/features/company/models/company.dart';
 import 'package:e_markety_client/features/order/address/models/address.dart';
+import 'package:e_markety_client/shared/utils/date_time_utils.dart';
 import 'package:e_markety_client/shared/utils/mask_formatter_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -31,7 +33,9 @@ class _CompanyContainerState extends State<CompanyContainer> {
   void _onSubmit() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      Modular.get<CompanyBloc>().add(CompanyUpdateEvent(_company));
+      if (_validateTimeFields()) {
+        Modular.get<CompanyBloc>().add(CompanyUpdateEvent(_company));
+      }
     }
   }
 
@@ -63,6 +67,51 @@ class _CompanyContainerState extends State<CompanyContainer> {
     } catch (e) {
       setState(() => _company = _company.copyWith(logoUrl: ''));
     }
+  }
+
+  bool _validateTimeFields() {
+    var message = _onValidateTime(
+      _company.deliveryOpeningTime,
+      _company.deliveryClosingTime,
+    );
+    if (message != null) {
+      Modular.get<ISnackBarService>().showError(context, message);
+      return false;
+    }
+    message = _onValidateTime(
+      _company.storeOpeningTime,
+      _company.storeClosingTime,
+    );
+    if (message != null) {
+      Modular.get<ISnackBarService>().showError(context, message);
+      return false;
+    }
+    return true;
+  }
+
+  String? _onValidateTime(String? opening, String? closing) {
+    if (!_hasAnyTimeSetted(opening, closing)) {
+      return null;
+    }
+
+    final dateOpening = DateTimeUtils.fromString(opening!);
+    final dateClosing = DateTimeUtils.fromString(closing!);
+
+    if (dateOpening == null || dateClosing == null) {
+      return Strings.ambosHorariosObrigatorios;
+    }
+    if (dateOpening.isAfter(dateClosing)) {
+      return Strings.horarioAberturaMaiorQueFechamento;
+    }
+    return null;
+  }
+
+  bool _hasAnyTimeSetted(String? opening, String? closing) {
+    if ((opening == null || opening.isEmpty) &&
+        (closing == null || closing.isEmpty)) {
+      return false;
+    }
+    return true;
   }
 
   Expanded _buildLogo() {
@@ -148,21 +197,23 @@ class _CompanyContainerState extends State<CompanyContainer> {
             children: [
               Expanded(
                 child: TextFieldWithLabel(
-                  label: 'Horário de Abertura para Entrega',
-                  fieldName: 'deliveryOpeningTime',
-                  data: _company.deliveryOpeningTime,
+                  label: 'Horário de Abertura',
+                  fieldName: 'storeOpeningTime',
+                  data: _company.storeOpeningTime,
                   onCustomSaved: _onSaved,
                   inputFormatters: [MaskFormatterUtils.time],
+                  onValidate: Validatorless.min(5, Strings.horarioInvalido),
                 ),
               ),
               const SizedBox(width: 20),
               Expanded(
                 child: TextFieldWithLabel(
-                  label: 'Horário de Fechamento para Entrega',
-                  fieldName: 'deliveryClosingTime',
-                  data: _company.deliveryClosingTime,
+                  label: 'Horário de Fechamento',
+                  fieldName: 'storeClosingTime',
+                  data: _company.storeClosingTime,
                   onCustomSaved: _onSaved,
                   inputFormatters: [MaskFormatterUtils.time],
+                  onValidate: Validatorless.min(5, Strings.horarioInvalido),
                 ),
               ),
             ],
@@ -172,21 +223,23 @@ class _CompanyContainerState extends State<CompanyContainer> {
             children: [
               Expanded(
                 child: TextFieldWithLabel(
-                  label: 'Horário de Abertura para Retirada',
-                  fieldName: 'storeOpeningTime',
-                  data: _company.storeOpeningTime,
+                  label: 'Horário de Abertura para Entregas',
+                  fieldName: 'deliveryOpeningTime',
+                  data: _company.deliveryOpeningTime,
                   onCustomSaved: _onSaved,
                   inputFormatters: [MaskFormatterUtils.time],
+                  onValidate: Validatorless.min(5, Strings.horarioInvalido),
                 ),
               ),
               const SizedBox(width: 20),
               Expanded(
                 child: TextFieldWithLabel(
-                  label: 'Horário de Fechamento para Retirada',
-                  fieldName: 'storeClosingTime',
-                  data: _company.storeClosingTime,
+                  label: 'Horário de Fechamento para Entregas',
+                  fieldName: 'deliveryClosingTime',
+                  data: _company.deliveryClosingTime,
                   onCustomSaved: _onSaved,
                   inputFormatters: [MaskFormatterUtils.time],
+                  onValidate: Validatorless.min(5, Strings.horarioInvalido),
                 ),
               ),
             ],

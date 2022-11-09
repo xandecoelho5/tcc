@@ -33,7 +33,7 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
 
   void _onTapBack() {
     Modular.to.navigateHistory.length == 1
-        ? Modular.to.pushNamedAndRemoveUntil('/', (_) => false)
+        ? Modular.to.pushNamedAndRemoveUntil('/home/', (_) => false)
         : Modular.to.pop();
   }
 

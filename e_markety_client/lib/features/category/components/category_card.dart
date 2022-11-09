@@ -10,8 +10,8 @@ class CategoryCard extends StatelessWidget {
     Key? key,
     required this.category,
   })  : height = 140,
-        fontSize = 12,
-        iconSize = 36,
+        fontSize = 14,
+        iconSize = 32,
         imageHeight = 54,
         _isBig = false,
         super(key: key);
@@ -21,7 +21,7 @@ class CategoryCard extends StatelessWidget {
     required this.category,
   })  : height = 200,
         fontSize = 18,
-        iconSize = 45,
+        iconSize = 40,
         imageHeight = 86,
         _isBig = true,
         super(key: key);
@@ -46,17 +46,17 @@ class CategoryCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Material(
-        child: InkWell(
-          splashColor: category.color,
+        color: Colors.transparent,
+        child: GestureDetector(
           onTap: () => Modular.to.pushNamed(
-            '/products-by-category',
+            '/product/products-by-category',
             arguments: category,
           ),
           child: Stack(
             alignment: Alignment.center,
             children: [
               Positioned(
-                width: width * 0.9, //100
+                width: width * 0.9,
                 top: 12,
                 child: Text(
                   category.name,
@@ -70,7 +70,7 @@ class CategoryCard extends StatelessWidget {
               ),
               Positioned(
                 bottom: 0,
-                width: width, //120
+                width: width,
                 child: Container(
                   height: imageHeight,
                   color: Colors.white,
@@ -78,8 +78,8 @@ class CategoryCard extends StatelessWidget {
                 ),
               ),
               Positioned(
-                width: width * 0.75, //90
-                top: _isBig ? 65 : 48,
+                width: width * 0.75,
+                top: _isBig ? 60 : 48,
                 child: CategoryCircleAvatar(
                   category: category,
                   iconSize: iconSize,

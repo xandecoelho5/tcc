@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:e_markety_client/features/order/order/exceptions/order_exception.dart';
 import 'package:e_markety_client/features/order/order/services/order_service.dart';
 import 'package:e_markety_client/features/order/shopping_cart/models/cart_item.dart';
+import 'package:e_markety_client/features/order/shopping_cart/services/cart_item_service.dart';
 
-import '../../../../core/services/cache/cache_service.dart';
 import '../exceptions/current_order_exception.dart';
 import '../models/order.dart';
 
@@ -20,11 +18,11 @@ abstract class ICurrentOrderService {
 
 class CurrentOrderService implements ICurrentOrderService {
   final IOrderService _orderService;
-  final ICacheService _cacheService;
+  final ICartItemService _cartItemService;
 
   bool _isStreamOpen = false;
 
-  CurrentOrderService(this._orderService, this._cacheService);
+  CurrentOrderService(this._orderService, this._cartItemService);
 
   Future<Order> _getCurrentOrder() async {
     Future<Order> _createOrder(OrderException ex) async {
@@ -45,21 +43,13 @@ class CurrentOrderService implements ICurrentOrderService {
     );
   }
 
-  Future<dynamic> _getItemsFromCache() async {
-    final cartItemsJson = await _cacheService.get('__cart_item_key__');
-    if (cartItemsJson != null) {
-      return (jsonDecode(cartItemsJson) as List)
-          .map((e) => CartItem.fromJson(e))
-          .toList();
-    }
-    return null;
-  }
-
   @override
   Future<Order> getCurrentOrder() async {
     var currentOrder = await _getCurrentOrder();
     if (currentOrder.items.isEmpty) {
-      currentOrder = currentOrder.copyWith(items: await _getItemsFromCache());
+      currentOrder = currentOrder.copyWith(
+        items: await _cartItemService.getFromCache(),
+      );
       currentOrder = _orderWithTotal(currentOrder);
     }
 

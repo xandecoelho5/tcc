@@ -73,7 +73,6 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
 
   //TODO usar regex para validar url, e se for url, fazer o request e verificar se é valido
   //TODO usar regex para validar telefone
-  //TODO usar regex para validar horario
   //TODO validar todos os campos tanto de empresa quanto de produto
   @override
   Widget build(BuildContext context) {
@@ -90,13 +89,15 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
           decoration: kTextInputDecoration.copyWith(
             filled: widget.fillColor != null,
             fillColor: widget.fillColor,
-            suffixIcon: InkWell(
-              onTap: widget.onTapSuffix,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 24),
-                child: widget.icon,
-              ),
-            ),
+            suffixIcon: widget.icon != null
+                ? InkWell(
+                    onTap: widget.onTapSuffix,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 24),
+                      child: widget.icon,
+                    ),
+                  )
+                : null,
           ),
           validator: widget.onValidate,
           onSaved: (value) {

@@ -132,7 +132,8 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Modular.to.pushNamed('/product-details', arguments: product),
+      onTap: () =>
+          Modular.to.pushNamed('/product/product-details', arguments: product),
       child: Card(
         child: SizedBox(
           height: 265,

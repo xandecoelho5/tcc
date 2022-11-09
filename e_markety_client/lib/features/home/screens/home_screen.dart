@@ -89,7 +89,7 @@ class _Categories extends StatelessWidget {
       children: [
         ViewAllRow(
           text: 'Categorias',
-          onViewAll: () => Modular.to.pushNamed('/category'),
+          onViewAll: () => Modular.to.pushNamed('/category/'),
         ),
         const SizedBox(height: 4),
         BlocBuilder<CategoryBloc, CategoryState>(

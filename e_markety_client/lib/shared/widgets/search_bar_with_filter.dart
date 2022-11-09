@@ -34,7 +34,7 @@ class _SearchBarWithFilterState extends State<SearchBarWithFilter> {
   void _onApply() {
     Modular.get<FilterBloc>().add(FilterApplyEvent(_filter));
     Modular.get<Global>().filter = _filter;
-    Modular.to.navigate('/search-result');
+    Modular.to.navigate('/product/search-result');
   }
 
   Filter get _filter => Modular.get<Global>().filter.copyWith(
@@ -99,7 +99,7 @@ class _SearchBarWithFilterState extends State<SearchBarWithFilter> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
       onPressed: () => Modular.to.pushNamed(
-        '/apply-filters',
+        '/product/apply-filters',
         arguments: _filter,
       ),
       child: const Icon(

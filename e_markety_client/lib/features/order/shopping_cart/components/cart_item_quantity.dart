@@ -3,7 +3,6 @@ import 'package:e_markety_client/features/order/shopping_cart/models/cart_item.d
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../shared/theme/constants.dart';
 import '../../../../shared/widgets/quantity_button.dart';
 
 class CartItemQuantity extends StatelessWidget {
@@ -30,16 +29,13 @@ class CartItemQuantity extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Container(
-              color: kBasicLightColor.withOpacity(0.25),
-              child: Center(
-                child: FittedBox(
-                  child: Text(
-                    item.quantity.toStringAsFixed(item.product.fractionDigits),
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+            child: Center(
+              child: FittedBox(
+                child: Text(
+                  item.quantity.toStringAsFixed(item.product.fractionDigits),
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

@@ -50,29 +50,15 @@ class OrderTimeline extends StatelessWidget {
         contentsBuilder: (context, index) {
           final notProcessed = index > processIndex;
           return Padding(
-            padding: const EdgeInsets.only(left: 12),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  processes[index].label,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: notProcessed ? kDarkGreyColor : kSecondaryColor,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  notProcessed ? 'Pendente' : 'Jan 26, 2021',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: notProcessed ? Colors.grey : kDarkGreyColor,
-                  ),
-                ),
-              ],
+            padding: const EdgeInsets.only(left: 16),
+            child: Text(
+              processes[index].label,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: notProcessed ? kDarkGreyColor : kSecondaryColor,
+                letterSpacing: -0.3,
+              ),
             ),
           );
         },
