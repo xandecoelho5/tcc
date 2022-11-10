@@ -19,7 +19,7 @@ class AvatarContainer extends StatefulWidget {
 }
 
 class _AvatarContainerState extends State<AvatarContainer> {
-  late User _user = widget.user;
+  late User _user;
 
   void _onUrlChanged(String url) => _user = _user.copyWith(avatarUrl: url);
 
@@ -50,15 +50,16 @@ class _AvatarContainerState extends State<AvatarContainer> {
 
   @override
   Widget build(BuildContext context) {
+    _user = widget.user;
     final _deviceWidth = MediaQuery.of(context).size.width;
 
     return Stack(
       children: [
         CircleAvatar(
-          radius: _deviceWidth * 0.16, // 95 // 0.225
+          radius: _deviceWidth * 0.16,
           backgroundColor: Colors.white.withOpacity(0.4),
           child: CircleAvatar(
-            radius: _deviceWidth * 0.135, // 83 // 0.2
+            radius: _deviceWidth * 0.135,
             backgroundImage: NetworkImage(_user.avatarUrl),
           ),
         ),

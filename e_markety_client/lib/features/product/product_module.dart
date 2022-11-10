@@ -1,4 +1,5 @@
 import 'package:e_markety_client/features/product/screens/apply_filters_screen.dart';
+import 'package:e_markety_client/features/product/screens/best_sellers_screen.dart';
 import 'package:e_markety_client/features/product/screens/product_details_screen.dart';
 import 'package:e_markety_client/features/product/screens/products_by_category_screen.dart';
 import 'package:e_markety_client/features/product/screens/search_result_screen.dart';
@@ -26,6 +27,10 @@ class ProductModule extends Module {
         ChildRoute(
           '/apply-filters',
           child: (context, args) => ApplyFiltersScreen(filter: args.data),
+        ),
+        ChildRoute(
+          '/best-sellers',
+          child: (context, args) => const BestSellersScreen(),
         ),
       ];
 }

@@ -6,6 +6,7 @@ import 'package:e_markety_client/features/home/components/home_app_bar.dart';
 import 'package:e_markety_client/features/order/address/blocs/default_address/default_address_bloc.dart';
 import 'package:e_markety_client/features/order/shopping_cart/blocs/overview/cart_item_overview_bloc.dart';
 import 'package:e_markety_client/features/product/components/products_list.dart';
+import 'package:e_markety_client/features/product/models/product.dart';
 import 'package:e_markety_client/shared/widgets/search_bar_with_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,13 +25,21 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final snackBarService = Modular.get<ISnackBarService>();
+  final productBloc = Modular.get<ProductBloc>();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Modular.get<DefaultAddressBloc>().add(DefaultAddressGetEvent());
-      Modular.get<ProductBloc>().add(ProductGetAllEvent(4));
+      productBloc.add(
+        ProductGetPageEvent(
+          page: 0,
+          size: 4,
+          order: 'quantidadeVendida',
+          asc: false,
+        ),
+      );
       Modular.get<CategoryBloc>().add(CategoryGetAllEvent());
       Modular.get<CartItemOverviewBloc>()
           .add(const CartItemOverviewSubscriptionRequested());
@@ -53,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         listener: (context, state) {
           if (state.status == CartItemOverviewStatus.failure) {
-            Modular.get<ISnackBarService>().showError(context, 'Deu Merda');
+            Modular.get<ISnackBarService>().showError(context, 'Deu Ruim');
           }
           if (state.status == CartItemOverviewStatus.success) {
             Modular.get<ISnackBarService>()
@@ -62,16 +71,16 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: SingleChildScrollView(
           child: Column(
-            children: const [
-              SizedBox(height: 16),
-              SearchBarWithFilter(),
-              SizedBox(height: 24),
-              Banners(items: bannersMock),
-              SizedBox(height: 16),
-              _Categories(),
-              SizedBox(height: 16),
-              _BestSellers(),
-              SizedBox(height: 16),
+            children: [
+              const SizedBox(height: 16),
+              const SearchBarWithFilter(),
+              const SizedBox(height: 24),
+              const Banners(items: bannersMock),
+              const SizedBox(height: 16),
+              const _Categories(),
+              const SizedBox(height: 16),
+              _BestSellers(productBloc),
+              const SizedBox(height: 16),
             ],
           ),
         ),
@@ -110,19 +119,27 @@ class _Categories extends StatelessWidget {
 }
 
 class _BestSellers extends StatelessWidget {
-  const _BestSellers({Key? key}) : super(key: key);
+  const _BestSellers(this.productBloc, {Key? key}) : super(key: key);
+
+  final ProductBloc productBloc;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const ViewAllRow(text: 'Mais Vendidos'),
+        ViewAllRow(
+          text: 'Mais Vendidos',
+          onViewAll: () => Modular.to.pushNamed('/product/best-sellers'),
+        ),
         const SizedBox(height: 4),
         BlocBuilder<ProductBloc, ProductState>(
-          bloc: Modular.get<ProductBloc>(),
+          bloc: productBloc,
           builder: (context, state) {
-            if (state is ProductLoaded) {
-              return ProductsList(products: state.products, needWrap: true);
+            if (state is ProductPageLoaded) {
+              return ProductsList(
+                products: state.pageResponse.content as List<Product>,
+                needWrap: true,
+              );
             }
             if (state is ProductError) {
               Modular.get<ISnackBarService>().showError(context, state.message);

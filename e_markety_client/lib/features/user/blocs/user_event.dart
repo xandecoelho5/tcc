@@ -13,3 +13,9 @@ class UserUpdateEvent implements UserEvent {
 
   UserUpdateEvent(this.user);
 }
+
+class UserUpdatePasswordEvent implements UserEvent {
+  final Password password;
+
+  UserUpdatePasswordEvent(this.password);
+}

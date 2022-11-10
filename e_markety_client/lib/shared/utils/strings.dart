@@ -4,6 +4,8 @@ class Strings {
   static const String obrigatorio = 'Campo obrigatório';
   static const String emailInvalido = 'Informe um email válido';
   static const String valorMinimo = 'Este valor deve ser maior que 0';
+  static const String senhaMinimo = 'Deve ter pelo menos 6 caracteres';
+  static const String senhaDiferente = 'As senhas não são iguais';
   static const String token = 'authToken';
   static const String ambosHorariosObrigatorios =
       'Ambos os horários são obrigatórios';

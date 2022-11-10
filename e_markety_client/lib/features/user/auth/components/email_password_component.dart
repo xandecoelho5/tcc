@@ -45,7 +45,7 @@ class _EmailPasswordComponentState extends State<EmailPasswordComponent> {
           ),
           onTapSuffix: () => setState(() => _obscureText = !_obscureText),
           onValidate: Validatorless.multiple([
-            Validatorless.min(6, 'Deve ter pelo menos 6 caracteres'),
+            Validatorless.min(6, Strings.senhaMinimo),
             Validatorless.required(Strings.obrigatorio),
           ]),
           onSaved: widget.onPasswordSaved,

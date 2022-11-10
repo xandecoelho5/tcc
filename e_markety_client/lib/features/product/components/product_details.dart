@@ -41,7 +41,7 @@ class ProductDetails extends StatelessWidget {
     return Stack(
       children: [
         Card(
-          color: kScaffoldColor, // TODO GRADIENT de branco pra cinza
+          color: kScaffoldColor,
           elevation: 3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

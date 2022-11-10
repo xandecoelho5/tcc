@@ -1,9 +1,11 @@
 import 'package:e_markety_client/shared/utils/assets.dart';
+import 'package:equatable/equatable.dart';
 
-class User {
+class User extends Equatable {
   final int id;
   final String name;
   final String email;
+  final String? phone;
   final String avatarUrl;
   final List<int> favouritesIds;
 
@@ -12,6 +14,7 @@ class User {
     required this.name,
     required this.email,
     required this.avatarUrl,
+    this.phone,
     this.favouritesIds = const [],
   });
 
@@ -19,6 +22,7 @@ class User {
     this.id = 0,
     this.name = '',
     this.email = '',
+    this.phone = '',
     this.avatarUrl = Assets.avatarPlaceholderUrl,
     this.favouritesIds = const [],
   });
@@ -28,7 +32,7 @@ class User {
   User copyWith({
     String? name,
     String? email,
-    String? password,
+    String? phone,
     String? avatarUrl,
     List<int>? favouritesIds,
   }) {
@@ -36,6 +40,7 @@ class User {
       id: id,
       name: name ?? this.name,
       email: email ?? this.email,
+      phone: phone ?? this.phone,
       avatarUrl: avatarUrl ?? this.avatarUrl,
       favouritesIds: favouritesIds ?? this.favouritesIds,
     );
@@ -46,6 +51,7 @@ class User {
       'id': id,
       'nome': name,
       'email': email,
+      'telefone': phone,
       'imagemUrl': avatarUrl,
       'favoritosIds': favouritesIds,
     };
@@ -55,6 +61,7 @@ class User {
     return {
       'nome': name,
       'email': email,
+      'telefone': phone,
       'imagemUrl': avatarUrl,
     };
   }
@@ -64,8 +71,17 @@ class User {
       id: map['id'],
       name: map['nome'],
       email: map['email'],
+      phone: map['telefone'],
       avatarUrl: map['imagemUrl'],
       favouritesIds: List<int>.from(map['favoritosIds']),
     );
   }
+
+  @override
+  String toString() {
+    return 'User{id: $id, name: $name, email: $email, phone: $phone, avatarUrl: $avatarUrl, favouritesIds: $favouritesIds}';
+  }
+
+  @override
+  List<Object?> get props => [id, email];
 }

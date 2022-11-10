@@ -4,8 +4,6 @@ Testar todas as strings variáveis com valores extensos, para saber se tem casos
 Testar em mais resoluções para ver como vai se comportar.
 - Verificar onde pode ser usado a ideia de alterar o tamanho do componente de acordo com o tamanho da tela;
 
-Componentizar melhor a aplicação, tornando mais legível e reduzindo número de linhas por arquivo.
-
 Tentar padronizar estilização de textos, ou pelo menos reduzir os estilos repetidos.
 
 Adicionar FOCO nos componteis de input quando abrir a tela e quando der submit no input atual;
@@ -14,15 +12,6 @@ Quando entrar em alguma rota na Web, verificar se o usuário está logado, se n�
 
 Quando entrar em alguma rota na Web, atualizar o drawer de acordo com a rota atual;
 
-Trocar a requisição na Home page de produtos e Categorias para usar a paginação;
-
-implementar tela de Mais vendidos;
-
 adicionar Sliver na tela de Produtos por Categoria;
-
-Dar possibilidade de atualizar o Sobre Mim.
 ----
 Implementar bloqueio deleção de certos registros, como pedidos;
-Verificar necessidade de adicionar nova tabela para auditar os status dos pedidos;
-
-

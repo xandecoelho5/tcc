@@ -6,8 +6,12 @@ import 'package:e_markety_client/features/company/services/company_service.dart'
 import 'package:e_markety_client/features/home/home_module.dart';
 import 'package:e_markety_client/features/order/address/address_module.dart';
 import 'package:e_markety_client/features/order/order_module.dart';
+import 'package:e_markety_client/features/product/blocs/filter/filter_bloc.dart';
+import 'package:e_markety_client/features/product/blocs/product/product_bloc.dart';
+import 'package:e_markety_client/features/product/blocs/product_by_category/product_by_category_bloc.dart';
 import 'package:e_markety_client/features/product/favourite_module.dart';
 import 'package:e_markety_client/features/product/product_module.dart';
+import 'package:e_markety_client/features/product/services/product_service.dart';
 import 'package:e_markety_client/features/user/auth/blocs/auth_bloc.dart';
 import 'package:e_markety_client/features/user/auth/screens/sign_in_screen.dart';
 import 'package:e_markety_client/features/user/auth/screens/welcome_screen.dart';
@@ -21,6 +25,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../shared/theme/theme.dart';
+import '../shared/utils/global.dart';
+import 'category/blocs/category_bloc.dart';
+import 'category/services/category_service.dart';
 import 'company/blocs/company/company_bloc.dart';
 import 'company/blocs/company_district/company_district_bloc.dart';
 import 'company/services/company_district_service.dart';
@@ -62,6 +69,16 @@ class AppModule extends Module {
     ),
     Bind.singleton((i) => OrderBloc(i(), i())),
     Bind.singleton((i) => CurrentOrderBloc(i())),
+    // category
+    Bind.singleton<ICategoryService>((i) => CategoryService(i())),
+    Bind.singleton((i) => CategoryBloc(i())),
+    // product
+    Bind.singleton<IProductService>((i) => ProductService(i())),
+    Bind.factory((i) => ProductBloc(i())),
+    Bind.singleton((i) => ProductByCategoryBloc(i())),
+    // filter
+    Bind.singleton((i) => FilterBloc(i())),
+    Bind.singleton((i) => Global()),
   ];
 
   @override

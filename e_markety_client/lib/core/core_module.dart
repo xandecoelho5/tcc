@@ -46,7 +46,6 @@ class CoreModule extends Module {
             onError: (error, handler) async {
               print(error);
               if (error.response?.statusCode == 401) {
-                print('Sessão expirada');
                 Modular.to.navigate('/');
               }
               return handler.next(error);

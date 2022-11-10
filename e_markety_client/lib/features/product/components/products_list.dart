@@ -8,10 +8,12 @@ class ProductsList extends StatelessWidget {
     Key? key,
     required this.products,
     this.needWrap = false,
+    this.length,
   }) : super(key: key);
 
   final List<Product> products;
   final bool needWrap;
+  final int? length;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class ProductsList extends StatelessWidget {
       return Wrap(
         spacing: 10,
         runSpacing: 15,
-        children: products.map((p) => ProductCard(product: p)).toList(),
+        children: products.map((p) => ProductCard(product: p)).take(4).toList(),
       );
     }
 
