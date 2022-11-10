@@ -25,21 +25,38 @@ class SignInScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar.buildAppBar(context, showAction: false),
-      body: BlocListener<AuthBloc, AuthState>(
-        bloc: Modular.get<AuthBloc>(),
-        listener: (context, state) {
-          print(Modular.get<AppPlatform>().defaultRoute);
-          if (state is AuthLogged) {
-            // Modular.to.navigate(Modular.get<AppPlatform>().defaultRoute);
-            Modular.to.pushNamedAndRemoveUntil(
-              Modular.get<AppPlatform>().defaultRoute,
-              (route) => false,
-            );
-          }
-          if (state is AuthError) {
-            ModularUtils.showError(state.message);
-          }
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<AuthBloc, AuthState>(
+            bloc: Modular.get<AuthBloc>(),
+            listener: (context, state) {
+              if (state is AuthLogged) {
+                if (state.user.isAdmin) {
+                  Modular.to.pushNamedAndRemoveUntil(
+                    Modular.get<AppPlatform>().defaultRoute,
+                    (route) => false,
+                  );
+                } else {
+                  Modular.to.pushNamedAndRemoveUntil(
+                    '/home/',
+                    (route) => false,
+                  );
+                }
+              }
+              if (state is AuthError) {
+                ModularUtils.showError(state.message);
+              }
+            },
+          ),
+          BlocListener<CompanyBloc, CompanyState>(
+            bloc: Modular.get<CompanyBloc>()..add(CompanyGetAllEvent()),
+            listener: (context, state) {
+              if (state is CompanyErrorState) {
+                ModularUtils.showError(state.message);
+              }
+            },
+          ),
+        ],
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -95,7 +112,7 @@ class _SignInFormState extends State<_SignInForm> {
 
   BlocBuilder<CompanyBloc, CompanyState> _buildDropdown() {
     return BlocBuilder<CompanyBloc, CompanyState>(
-      bloc: Modular.get<CompanyBloc>()..add(CompanyGetAllEvent()),
+      bloc: Modular.get<CompanyBloc>(),
       builder: (context, state) {
         if (state is CompanyLoadedListState) {
           return DropdownWithLabel(
@@ -106,10 +123,6 @@ class _SignInFormState extends State<_SignInForm> {
             onValidate: _onValidateCompany,
             backgroundColor: Colors.white,
           );
-        }
-
-        if (state is CompanyErrorState) {
-          ModularUtils.showError(state.message);
         }
 
         if (state is CompanyLoadingState) {

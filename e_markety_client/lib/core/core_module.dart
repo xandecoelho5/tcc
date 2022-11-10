@@ -48,6 +48,9 @@ class CoreModule extends Module {
               if (error.response?.statusCode == 401) {
                 Modular.to.navigate('/');
               }
+              if (error.response?.statusCode == 403) {
+                error.response?.data = {'message': 'Acesso negado'};
+              }
               return handler.next(error);
             },
           ),

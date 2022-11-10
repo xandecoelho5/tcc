@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 
 enum AppPlatform {
-  mobile('http://10.0.2.2:8080', 'home/'),
-  web('http://localhost:8080', 'admin/dashboard'),
-  desktop('http://localhost:8080', 'admin/dashboard');
+  mobile('http://10.0.2.2:8080', '/home/'),
+  web('http://localhost:8080', '/admin/dashboard'),
+  desktop('http://localhost:8080', '/admin/dashboard');
 
   const AppPlatform(this.baseUrl, this.defaultRoute);
 

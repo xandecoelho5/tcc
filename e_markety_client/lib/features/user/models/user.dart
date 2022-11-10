@@ -8,6 +8,7 @@ class User extends Equatable {
   final String? phone;
   final String avatarUrl;
   final List<int> favouritesIds;
+  final bool? admin;
 
   const User({
     required this.id,
@@ -16,6 +17,7 @@ class User extends Equatable {
     required this.avatarUrl,
     this.phone,
     this.favouritesIds = const [],
+    this.admin,
   });
 
   const User.empty({
@@ -25,9 +27,12 @@ class User extends Equatable {
     this.phone = '',
     this.avatarUrl = Assets.avatarPlaceholderUrl,
     this.favouritesIds = const [],
+    this.admin,
   });
 
   bool isFavourite(int id) => favouritesIds.contains(id);
+
+  bool get isAdmin => admin ?? false;
 
   User copyWith({
     String? name,
@@ -43,6 +48,7 @@ class User extends Equatable {
       phone: phone ?? this.phone,
       avatarUrl: avatarUrl ?? this.avatarUrl,
       favouritesIds: favouritesIds ?? this.favouritesIds,
+      admin: admin,
     );
   }
 
@@ -74,12 +80,13 @@ class User extends Equatable {
       phone: map['telefone'],
       avatarUrl: map['imagemUrl'],
       favouritesIds: List<int>.from(map['favoritosIds']),
+      admin: map['admin'],
     );
   }
 
   @override
   String toString() {
-    return 'User{id: $id, name: $name, email: $email, phone: $phone, avatarUrl: $avatarUrl, favouritesIds: $favouritesIds}';
+    return 'User{id: $id, name: $name, email: $email, phone: $phone, avatarUrl: $avatarUrl, favouritesIds: $favouritesIds} admin: $admin';
   }
 
   @override

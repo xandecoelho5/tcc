@@ -14,4 +14,4 @@ Quando entrar em alguma rota na Web, atualizar o drawer de acordo com a rota atu
 
 adicionar Sliver na tela de Produtos por Categoria;
 ----
-Implementar bloqueio deleção de certos registros, como pedidos;
+tentar ver o que tá acontecendo quando cadastra mais de 3 pedidos;
