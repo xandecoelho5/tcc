@@ -10,4 +10,5 @@ public class UsuarioEditDto {
     private String nome;
     private String email;
     private String imagemUrl;
+    private String telefone;
 }

@@ -1,5 +1,6 @@
 package br.edu.utfpr.e_markety.model;
 
+import br.edu.utfpr.e_markety.config.security.dto.UsuarioEditDto;
 import com.vladmihalcea.hibernate.type.array.ListArrayType;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -34,6 +35,9 @@ public class Usuario implements UserDetails {
 
     @Column(length = 60, nullable = false)
     private String nome;
+
+    @Column(length = 17)
+    private String telefone;
 
     @Column(length = 512, nullable = false)
     private String senha;
@@ -82,5 +86,12 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void setFromUsuarioEdit(UsuarioEditDto editDto) {
+        this.setNome(editDto.getNome());
+        this.setEmail(editDto.getEmail());
+        this.setTelefone(editDto.getTelefone());
+        this.setImagemUrl(editDto.getImagemUrl());
     }
 }

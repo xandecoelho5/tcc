@@ -23,7 +23,8 @@ public class UsuarioDto {
     @NotBlank @Email
     private String email;
 
-//    @NotBlank
+    private String telefone;
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
 
@@ -37,15 +38,10 @@ public class UsuarioDto {
         usuarioDto.setId(usuario.getId());
         usuarioDto.setNome(usuario.getNome());
         usuarioDto.setEmail(usuario.getEmail());
+        usuarioDto.setTelefone(usuario.getTelefone());
         usuarioDto.setImagemUrl(usuario.getImagemUrl());
         usuarioDto.setFavoritosIds(usuario.getFavoritosIds());
 
         return usuarioDto;
-    }
-
-    public void setFromUsuarioEdit(UsuarioEditDto dto) {
-        this.setNome(dto.getNome());
-        this.setEmail(dto.getEmail());
-        this.setImagemUrl(dto.getImagemUrl());
     }
 }

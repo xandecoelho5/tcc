@@ -1,7 +1,10 @@
 package br.edu.utfpr.e_markety.config.security.service.impl;
 
+import br.edu.utfpr.e_markety.config.security.dto.SenhaDto;
 import br.edu.utfpr.e_markety.config.security.dto.UsuarioDto;
+import br.edu.utfpr.e_markety.config.security.dto.UsuarioEditDto;
 import br.edu.utfpr.e_markety.config.security.service.UsuarioService;
+import br.edu.utfpr.e_markety.exceptions.CurrentPasswordException;
 import br.edu.utfpr.e_markety.exceptions.UserAlreadyRegisteredException;
 import br.edu.utfpr.e_markety.model.Usuario;
 import br.edu.utfpr.e_markety.repository.GenericRepository;
@@ -15,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Optional;
+
+import static br.edu.utfpr.e_markety.utils.PrincipalUtils.getLoggedUsuario;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +41,6 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long, Usuari
 
     @Override
     protected void preSave(Usuario entity, Long id) {
-        System.out.println("id: " + id);
         if (id == null) {
             String encoded = encoder.encode(entity.getSenha());
             entity.setSenha(encoded);
@@ -49,6 +53,25 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long, Usuari
         var optionalUser = repository.findByEmail(email);
         if (optionalUser.isPresent()) {
             throw new UserAlreadyRegisteredException();
+        }
+    }
+
+    @Override
+    public UsuarioDto updateUsuario(UsuarioEditDto usuarioDto) {
+        var usuario = getLoggedUsuario();
+        usuario.setFromUsuarioEdit(usuarioDto);
+        usuario = repository.save(usuario);
+        return mapEntityToDto(usuario);
+    }
+
+    @Override
+    public void updateSenha(SenhaDto senhaDto) {
+        var usuario = getLoggedUsuario();
+        if (encoder.matches(senhaDto.getSenhaAtual(), usuario.getSenha())) {
+            usuario.setSenha(encoder.encode(senhaDto.getNovaSenha()));
+            repository.save(usuario);
+        } else {
+            throw new CurrentPasswordException();
         }
     }
 }

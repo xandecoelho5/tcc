@@ -1,5 +1,6 @@
 package br.edu.utfpr.e_markety.controller;
 
+import br.edu.utfpr.e_markety.config.security.dto.SenhaDto;
 import br.edu.utfpr.e_markety.config.security.dto.UsuarioDto;
 import br.edu.utfpr.e_markety.config.security.dto.UsuarioEditDto;
 import br.edu.utfpr.e_markety.config.security.service.UsuarioService;
@@ -40,12 +41,21 @@ public class UsuarioController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid UsuarioEditDto dto) {
+    @PutMapping
+    public ResponseEntity<?> update(@RequestBody @Valid UsuarioEditDto dto) {
         try {
-            var usuarioDto = usuarioService.getById(id);
-            usuarioDto.setFromUsuarioEdit(dto);
-            return ResponseEntity.ok(usuarioService.update(id, usuarioDto));
+            var usuario = usuarioService.updateUsuario(dto);
+            return ResponseEntity.ok(usuario);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/senha")
+    public ResponseEntity<?> update(@RequestBody @Valid SenhaDto senhaDto) {
+        try {
+            usuarioService.updateSenha(senhaDto);
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
