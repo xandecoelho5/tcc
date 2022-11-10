@@ -7,6 +7,7 @@ import 'package:e_markety_client/features/order/address/blocs/default_address/de
 import 'package:e_markety_client/features/order/shopping_cart/blocs/overview/cart_item_overview_bloc.dart';
 import 'package:e_markety_client/features/product/components/products_list.dart';
 import 'package:e_markety_client/features/product/models/product.dart';
+import 'package:e_markety_client/shared/utils/modular_utils.dart';
 import 'package:e_markety_client/shared/widgets/search_bar_with_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,11 +63,10 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         listener: (context, state) {
           if (state.status == CartItemOverviewStatus.failure) {
-            Modular.get<ISnackBarService>().showError(context, 'Deu Ruim');
+            ModularUtils.showError('Erro ao carregar os itens do carrinho!');
           }
           if (state.status == CartItemOverviewStatus.success) {
-            Modular.get<ISnackBarService>()
-                .showSuccess(context, 'Produto adicionado ao carrinho');
+            ModularUtils.showSuccess('Produto adicionado ao carrinho');
           }
         },
         child: SingleChildScrollView(
@@ -108,7 +108,7 @@ class _Categories extends StatelessWidget {
               return CategoryList(categories: state.categories, needWrap: true);
             }
             if (state is CategoryError) {
-              Modular.get<ISnackBarService>().showError(context, state.message);
+              ModularUtils.showError(state.message);
             }
             return const Center(child: CircularProgressIndicator());
           },
@@ -142,7 +142,7 @@ class _BestSellers extends StatelessWidget {
               );
             }
             if (state is ProductError) {
-              Modular.get<ISnackBarService>().showError(context, state.message);
+              ModularUtils.showError(state.message);
             }
             return const Center(child: CircularProgressIndicator());
           },

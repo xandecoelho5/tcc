@@ -1,4 +1,3 @@
-import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
 import 'package:e_markety_client/features/company/blocs/company_district/company_district_bloc.dart';
 import 'package:e_markety_client/features/order/address/blocs/default_address/default_address_bloc.dart';
 import 'package:e_markety_client/features/order/address/models/address.dart';
@@ -9,6 +8,7 @@ import 'package:e_markety_client/features/order/checkout/components/delivery_typ
 import 'package:e_markety_client/features/order/checkout/components/notes_container.dart';
 import 'package:e_markety_client/features/order/order/models/delivery_tipe.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
+import 'package:e_markety_client/shared/utils/modular_utils.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,13 +34,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   void _onPlaceOrder() {
     if (_order.deliveryType == DeliveryType.delivery) {
-      final snack = Modular.get<ISnackBarService>();
       if (_order.deliveryAddress == null) {
-        snack.showError(context, 'Selecione um endereço de entrega');
+        ModularUtils.showError('Selecione um endereço de entrega');
         return;
       }
       if (_order.deliveryTime == null) {
-        snack.showError(context, 'Selecione um horário de entrega');
+        ModularUtils.showError('Selecione um endereço de entrega');
         return;
       }
     }
@@ -127,8 +126,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               if (state is OrderSuccess) {
                 Modular.to.navigate('/order/order-result', arguments: true);
               } else if (state is OrderError) {
-                Modular.get<ISnackBarService>()
-                    .showError(context, state.message);
+                ModularUtils.showError(state.message);
                 Modular.to.navigate('/order/order-result', arguments: false);
               }
             },
@@ -139,10 +137,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               if (state is CompanyDistrictSuccessState) {
                 _onDistrictTaxChanged(state.tax);
               }
-
               if (state is CompanyDistrictErrorState) {
-                Modular.get<ISnackBarService>()
-                    .showError(context, state.message);
+                ModularUtils.showError(state.message);
               }
             },
           ),

@@ -1,4 +1,3 @@
-import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
 import 'package:e_markety_client/features/user/components/icon_buttons_list.dart';
 import 'package:e_markety_client/features/user/models/user.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
@@ -23,19 +22,13 @@ class UserProfileScreen extends StatelessWidget {
       bloc: Modular.get<UserBloc>(),
       listener: (context, state) {
         if (state is UserUpdated) {
-          Modular.get<ISnackBarService>().showSuccess(
-            context,
-            'Perfil atualizado com sucesso!',
-          );
+          ModularUtils.showSuccess('Perfil atualizado com sucesso!');
         }
         if (state is UserPasswordUpdated) {
-          Modular.get<ISnackBarService>().showSuccess(
-            context,
-            'Senha atualizada com sucesso!',
-          );
+          ModularUtils.showSuccess('Senha atualizada com sucesso!');
         }
         if (state is UserError) {
-          Modular.get<ISnackBarService>().showError(context, state.message);
+          ModularUtils.showError(state.message);
         }
       },
       child: Scaffold(

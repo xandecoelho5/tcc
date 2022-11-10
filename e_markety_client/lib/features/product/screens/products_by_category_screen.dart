@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../core/services/snack_bar/snackbar_service.dart';
 import '../../../shared/theme/constants.dart';
+import '../../../shared/utils/modular_utils.dart';
 import '../blocs/product_by_category/product_by_category_bloc.dart';
 import '../components/products_list.dart';
 
@@ -102,10 +102,7 @@ class ProductsByCategoryScreen extends StatelessWidget {
                   return ProductsList(products: state.products);
                 }
                 if (state is ProductByCategoryError) {
-                  Modular.get<ISnackBarService>().showError(
-                    context,
-                    state.message,
-                  );
+                  ModularUtils.showError(state.message);
                 }
                 if (state is ProductByCategoryLoading) {
                   return const Center(child: CircularProgressIndicator());

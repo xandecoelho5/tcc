@@ -1,9 +1,9 @@
-import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
 import 'package:e_markety_client/features/admin/settings/components/company_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../../shared/utils/modular_utils.dart';
 import '../../../company/blocs/company/company_bloc.dart';
 
 class CompanySettingsPage extends StatefulWidget {
@@ -21,12 +21,10 @@ class _CompanySettingsPageState extends State<CompanySettingsPage> {
       listener: (context, state) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (state is CompanySuccessState) {
-            Modular.get<ISnackBarService>()
-                .showSuccess(context, 'Dados salvos');
+            ModularUtils.showSuccess('Dados salvos');
           }
           if (state is CompanyErrorState) {
-            Modular.get<ISnackBarService>()
-                .showError(context, 'Erro ao salvar dados: ${state.message}');
+            ModularUtils.showError('Erro ao salvar dados: ${state.message}');
           }
         });
       },

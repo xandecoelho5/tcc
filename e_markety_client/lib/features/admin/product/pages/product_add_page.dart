@@ -1,5 +1,5 @@
-import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
 import 'package:e_markety_client/features/admin/product/components/product_container.dart';
+import 'package:e_markety_client/shared/utils/modular_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -20,12 +20,11 @@ class ProductAddPage extends StatelessWidget {
       bloc: Modular.get<AdminProductBloc>(),
       listener: (context, state) {
         if (state is AdminProductSuccess) {
-          Modular.get<ISnackBarService>().showSuccess(context, 'Produto salvo');
+          ModularUtils.showSuccess('Produto salvo');
           Modular.to.navigate('/admin/product');
         }
         if (state is AdminProductError) {
-          Modular.get<ISnackBarService>()
-              .showError(context, 'Erro ao salvar produto: ${state.message}');
+          ModularUtils.showError('Erro ao salvar produto: ${state.message}');
         }
       },
       child: ProductContainer(

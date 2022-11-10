@@ -1,9 +1,9 @@
+import 'package:e_markety_client/shared/utils/modular_utils.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../core/services/snack_bar/snackbar_service.dart';
 import '../../../../shared/theme/constants.dart';
 import '../../../../shared/widgets/filled_button.dart';
 import '../blocs/address/address_bloc.dart';
@@ -30,16 +30,13 @@ class AddressScreen extends StatelessWidget {
               bloc: bloc,
               listener: (context, state) {
                 if (state is AddressError) {
-                  Modular.get<ISnackBarService>()
-                      .showError(context, state.message);
+                  ModularUtils.showError(state.message);
                 }
                 if (state is AddressAddSuccess) {
-                  Modular.get<ISnackBarService>()
-                      .showSuccess(context, 'Endereço adicionado');
+                  ModularUtils.showSuccess('Endereço adicionado');
                 }
                 if (state is AddressDeletedSuccess) {
-                  Modular.get<ISnackBarService>()
-                      .showSuccess(context, 'Endereço deletado');
+                  ModularUtils.showSuccess('Endereço deletado');
                 }
               },
               child: BlocBuilder<AddressBloc, AddressState>(

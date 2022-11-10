@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
 import 'package:e_markety_client/features/company/blocs/company/company_bloc.dart';
 import 'package:e_markety_client/features/company/models/company.dart';
 import 'package:e_markety_client/features/order/address/models/address.dart';
@@ -11,6 +10,7 @@ import 'package:validatorless/validatorless.dart';
 
 import '../../../../shared/theme/constants.dart';
 import '../../../../shared/utils/assets.dart';
+import '../../../../shared/utils/modular_utils.dart';
 import '../../../../shared/utils/strings.dart';
 import '../../../../shared/widgets/filled_button.dart';
 import '../../../../shared/widgets/table_container.dart';
@@ -75,7 +75,7 @@ class _CompanyContainerState extends State<CompanyContainer> {
       _company.deliveryClosingTime,
     );
     if (message != null) {
-      Modular.get<ISnackBarService>().showError(context, message);
+      ModularUtils.showError(message);
       return false;
     }
     message = _onValidateTime(
@@ -83,7 +83,7 @@ class _CompanyContainerState extends State<CompanyContainer> {
       _company.storeClosingTime,
     );
     if (message != null) {
-      Modular.get<ISnackBarService>().showError(context, message);
+      ModularUtils.showError(message);
       return false;
     }
     return true;

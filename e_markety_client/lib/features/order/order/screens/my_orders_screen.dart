@@ -1,5 +1,5 @@
-import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
 import 'package:e_markety_client/features/order/order/models/order_status.dart';
+import 'package:e_markety_client/shared/utils/modular_utils.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,7 +42,7 @@ class MyOrdersScreen extends StatelessWidget {
 
           if (state is OrderError) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              Modular.get<ISnackBarService>().showError(context, state.message);
+              ModularUtils.showError(state.message);
             });
           }
 

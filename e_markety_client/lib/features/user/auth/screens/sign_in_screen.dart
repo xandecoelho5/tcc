@@ -1,4 +1,3 @@
-import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
 import 'package:e_markety_client/features/company/blocs/company/company_bloc.dart';
 import 'package:e_markety_client/features/user/auth/blocs/auth_bloc.dart';
 import 'package:e_markety_client/shared/environment/platform.dart';
@@ -9,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../shared/theme/constants.dart';
+import '../../../../shared/utils/modular_utils.dart';
 import '../../../../shared/utils/strings.dart';
 import '../../../../shared/widgets/filled_button.dart';
 import '../../../admin/product/components/dropdown_with_label.dart';
@@ -37,7 +37,7 @@ class SignInScreen extends StatelessWidget {
             );
           }
           if (state is AuthError) {
-            Modular.get<ISnackBarService>().showError(context, state.message);
+            ModularUtils.showError(state.message);
           }
         },
         child: Column(
@@ -109,7 +109,7 @@ class _SignInFormState extends State<_SignInForm> {
         }
 
         if (state is CompanyErrorState) {
-          Modular.get<ISnackBarService>().showError(context, state.message);
+          ModularUtils.showError(state.message);
         }
 
         if (state is CompanyLoadingState) {

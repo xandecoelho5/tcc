@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../core/services/snack_bar/snackbar_service.dart';
+import '../../../../shared/utils/modular_utils.dart';
 import '../../../product/models/product.dart';
 import '../blocs/admin_product_bloc.dart';
 import '../components/product_container.dart';
@@ -23,13 +23,11 @@ class ProductEditPage extends StatelessWidget {
       bloc: bloc,
       listener: (context, state) {
         if (state is AdminProductSuccess) {
-          Modular.get<ISnackBarService>()
-              .showSuccess(context, 'Produto editado');
+          ModularUtils.showSuccess('Produto editado');
           Modular.to.navigate('/admin/product/');
         }
         if (state is AdminProductError) {
-          Modular.get<ISnackBarService>()
-              .showError(context, 'Erro: ${state.message}');
+          ModularUtils.showError('Erro: ${state.message}');
         }
       },
       child: BlocBuilder<AdminProductBloc, AdminProductState>(

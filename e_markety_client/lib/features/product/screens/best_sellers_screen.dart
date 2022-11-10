@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../core/services/snack_bar/snackbar_service.dart';
+import '../../../shared/utils/modular_utils.dart';
 import '../../../shared/widgets/custom_app_bar.dart';
 import '../blocs/product/product_bloc.dart';
 import '../components/products_list.dart';
@@ -47,7 +47,7 @@ class _BestSellersScreenState extends State<BestSellersScreen> {
             );
           }
           if (state is ProductError) {
-            Modular.get<ISnackBarService>().showError(context, state.message);
+            ModularUtils.showError(state.message);
           }
           return const Center(child: CircularProgressIndicator());
         },

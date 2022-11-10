@@ -1,5 +1,5 @@
-import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
 import 'package:e_markety_client/features/user/blocs/user_bloc.dart';
+import 'package:e_markety_client/shared/utils/modular_utils.dart';
 import 'package:e_markety_client/shared/utils/strings.dart';
 import 'package:e_markety_client/shared/widgets/filled_button.dart';
 import 'package:e_markety_client/shared/widgets/outlined_button.dart';
@@ -27,15 +27,11 @@ class SignUpScreen extends StatelessWidget {
         bloc: Modular.get<UserBloc>(),
         listener: (context, state) {
           if (state is UserSuccess) {
-            Modular.get<ISnackBarService>().showSuccess(
-              context,
-              'Usuário registrado com sucesso!',
-            );
+            ModularUtils.showSuccess('Usuário registrado com sucesso!');
             Modular.to.pushNamedAndRemoveUntil('/', (_) => false);
           }
-
           if (state is UserError) {
-            Modular.get<ISnackBarService>().showError(context, state.message);
+            ModularUtils.showError(state.message);
           }
         },
         child: Column(

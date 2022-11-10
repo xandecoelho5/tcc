@@ -1,11 +1,11 @@
 import 'package:e_markety_client/features/order/address/blocs/address/address_bloc.dart';
 import 'package:e_markety_client/features/order/address/components/address_container.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
+import 'package:e_markety_client/shared/utils/modular_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../core/services/snack_bar/snackbar_service.dart';
 import '../models/address.dart';
 
 class EditAddressScreen extends StatelessWidget {
@@ -37,13 +37,11 @@ class EditAddressScreen extends StatelessWidget {
         bloc: bloc,
         listener: (context, state) {
           if (state is AddressEditSuccess) {
-            Modular.get<ISnackBarService>()
-                .showSuccess(context, 'Endereço editado');
+            ModularUtils.showSuccess('Endereço editado');
             Navigator.pop(context, state.address);
           }
           if (state is AddressError) {
-            Modular.get<ISnackBarService>()
-                .showError(context, 'Erro: ${state.message}');
+            ModularUtils.showError('Erro: ${state.message}');
           }
         },
         child: BlocBuilder<AddressBloc, AddressState>(

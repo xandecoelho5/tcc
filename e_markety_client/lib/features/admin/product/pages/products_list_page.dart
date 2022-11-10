@@ -1,4 +1,3 @@
-import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
 import 'package:e_markety_client/features/admin/product/blocs/admin_product_bloc.dart';
 import 'package:e_markety_client/features/admin/product/components/notifiers/product_notifier.dart';
 import 'package:e_markety_client/features/admin/product/datasources/product_data_source.dart';
@@ -8,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../shared/utils/data_table_utils.dart';
+import '../../../../shared/utils/modular_utils.dart';
 import '../../../../shared/widgets/custom_data_table/custom_paginated_table.dart';
 import '../../shared/data_responses/product_page_response.dart';
 import '../../shared/widgets/empty_container.dart';
@@ -61,14 +61,10 @@ class _ProductsPageState extends State<ProductsPage> {
       listener: (context, state) {
         if (state is AdminProductDeleteSuccess) {
           _provider.fetchData();
-          Modular.get<ISnackBarService>()
-              .showSuccess(context, 'Produto excluído com sucesso');
+          ModularUtils.showSuccess('Produto excluído com sucesso');
         }
         if (state is AdminProductError) {
-          Modular.get<ISnackBarService>().showError(
-            context,
-            'Erro ao excluir produto: ${state.message}',
-          );
+          ModularUtils.showError('Erro ao excluir produto: ${state.message}');
         }
       },
       child: ValueListenableBuilder<ProviderSettings>(
