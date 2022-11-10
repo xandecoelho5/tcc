@@ -25,7 +25,7 @@ INSERT INTO UNIDADE_MEDIDA(ABREVIATURA, DESCRICAO) VALUES('KG', 'Quilograma');
 INSERT INTO UNIDADE_MEDIDA(ABREVIATURA, DESCRICAO) VALUES('LT', 'Litro');
 
 INSERT INTO USUARIO(NOME, TELEFONE, EMAIL, SENHA, IMAGEM_URL, ADMIN, FAVORITOS_IDS) VALUES('Testezera', '(34)33811-1736', 'a@a.com', '$2a$10$whun6s9AXYDjiWqJVWnjiOa56fP2Suu2VesHBMyPfsF7q56hLo9oG', 'https://avatars.githubusercontent.com/u/45719696', true, ARRAY[1, 2, 3]);
-INSERT INTO USUARIO(NOME, TELEFONE, EMAIL, SENHA, IMAGEM_URL, ADMIN) VALUES('Lucy Martin', '(34)33811-1736', 'lucymartin@gmail.com', '$2a$10$whun6s9AXYDjiWqJVWnjiOa56fP2Suu2VesHBMyPfsF7q56hLo9oG', 'https://avatars.githubusercontent.com/u/45719696', false);
+INSERT INTO USUARIO(NOME, TELEFONE, EMAIL, SENHA, IMAGEM_URL, ADMIN) VALUES('Lucy Martin', '(34)33811-1736', 'b@b.com', '$2a$10$whun6s9AXYDjiWqJVWnjiOa56fP2Suu2VesHBMyPfsF7q56hLo9oG', 'https://avatars.githubusercontent.com/u/45719696', false);
 INSERT INTO USUARIO(NOME, TELEFONE, EMAIL, SENHA, IMAGEM_URL, ADMIN) VALUES('Administro', '(34)33811-1736', 'admin@gmail.com', '$2a$10$whun6s9AXYDjiWqJVWnjiOa56fP2Suu2VesHBMyPfsF7q56hLo9oG', 'https://avatars.githubusercontent.com/u/45719696', true);
 
 INSERT INTO ENDERECO(TAG, NOME, TELEFONE, RUA, REFERENCIA, PADRAO, BAIRRO_ID, USUARIO_ID) VALUES('CASA', 'Lucy Martin', '+91 234 567 8900', 'A/234, Kigs Plaza', 'Near the city', true, 9, 2);

@@ -6,6 +6,7 @@ import br.edu.utfpr.e_markety.exceptions.ExistsLinkedDataException;
 import br.edu.utfpr.e_markety.exceptions.InvalidLoggedUserException;
 import br.edu.utfpr.e_markety.exceptions.NotFoundException;
 import br.edu.utfpr.e_markety.service.GenericService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -105,6 +106,12 @@ public abstract class GenericController<ID, Y> {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(ExistsLinkedDataException.class)
     public String handleValidationExceptions(ExistsLinkedDataException ex) {
+        return CustomValidator.handleCustomRuntimeException(ex);
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public String handleValidationExceptions(DataIntegrityViolationException ex) {
         return CustomValidator.handleCustomRuntimeException(ex);
     }
 }

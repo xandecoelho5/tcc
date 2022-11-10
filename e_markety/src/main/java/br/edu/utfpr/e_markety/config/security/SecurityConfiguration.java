@@ -30,6 +30,38 @@ public class SecurityConfiguration {
     private final EmpresaRepository empresaRepository;
     private final PasswordEncoder passwordEncoder;
 
+    private final String[] POST_URLS = {
+            "/categoria",
+            "/pedido",
+            "/bairro",
+            "/empresa",
+            "/unidade-medida",
+            "/produto",
+    };
+
+    private final String[] PUT_URLS = {
+            "/categoria/**",
+            "/pedido",
+            "/bairro/**",
+            "/empresa/**",
+            "/unidade-medida/**",
+            "/produto/**",
+    };
+
+    private final String[] DELETE_URLS = {
+            "/categoria/**",
+            "/pedido",
+            "/bairro/**",
+            "/empresa/**",
+            "/unidade-medida/**",
+            "/produto/**",
+    };
+
+    private final String[] GET_URLS = {
+            "/pedido/empresa/**",
+            "/usuario",
+    };
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -38,9 +70,13 @@ public class SecurityConfiguration {
                         authorize -> {
                             try {
                                 authorize
-                                        .antMatchers(HttpMethod.POST, "/pedido").denyAll()
-                                        .antMatchers(HttpMethod.POST, "/auth", "/usuario").permitAll()
-                                        .anyRequest().permitAll() // authenticated()
+                                        .antMatchers(HttpMethod.GET, GET_URLS).hasRole("ADMIN")
+                                        .antMatchers(HttpMethod.POST, POST_URLS).hasRole("ADMIN")
+                                        .antMatchers(HttpMethod.PUT, PUT_URLS).hasRole("ADMIN")
+                                        .antMatchers(HttpMethod.DELETE, DELETE_URLS).hasRole("ADMIN")
+                                        .antMatchers(HttpMethod.GET, "/empresa").permitAll()
+                                        .antMatchers(HttpMethod.POST, "/auth/**", "/usuario").permitAll()
+                                        .anyRequest().authenticated()
                                         .and().csrf().disable()
                                         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                                         .and().addFilterBefore(new AuthByTokenFilter(tokenService, usuarioRepository, empresaRepository), UsernamePasswordAuthenticationFilter.class);
