@@ -18,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static br.edu.utfpr.e_markety.config.security.ConfigUtils.*;
+
 @EnableWebSecurity
 @Configuration
 @EnableJpaAuditing
@@ -29,38 +31,6 @@ public class SecurityConfiguration {
     private final TokenService tokenService;
     private final EmpresaRepository empresaRepository;
     private final PasswordEncoder passwordEncoder;
-
-    private final String[] POST_URLS = {
-            "/categoria",
-            "/pedido",
-            "/bairro",
-            "/empresa",
-            "/unidade-medida",
-            "/produto",
-    };
-
-    private final String[] PUT_URLS = {
-            "/categoria/**",
-            "/pedido",
-            "/bairro/**",
-            "/empresa/**",
-            "/unidade-medida/**",
-            "/produto/**",
-    };
-
-    private final String[] DELETE_URLS = {
-            "/categoria/**",
-            "/pedido",
-            "/bairro/**",
-            "/empresa/**",
-            "/unidade-medida/**",
-            "/produto/**",
-    };
-
-    private final String[] GET_URLS = {
-            "/pedido/empresa/**",
-            "/usuario",
-    };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
