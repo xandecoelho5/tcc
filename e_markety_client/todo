@@ -6,12 +6,10 @@ Testar em mais resoluções para ver como vai se comportar.
 
 Tentar padronizar estilização de textos, ou pelo menos reduzir os estilos repetidos.
 
-Adicionar FOCO nos componteis de input quando abrir a tela e quando der submit no input atual;
-
-Quando entrar em alguma rota na Web, verificar se o usuário está logado, se não estiver, redirecionar para a tela de login;
+Adicionar FOCO nos componentes de input quando abrir a tela e quando der submit no input atual;
 
 Quando entrar em alguma rota na Web, atualizar o drawer de acordo com a rota atual;
-
-adicionar Sliver na tela de Produtos por Categoria;
 ----
 tentar ver o que tá acontecendo quando cadastra mais de 3 pedidos;
+
+adicionar login com facebook e google;

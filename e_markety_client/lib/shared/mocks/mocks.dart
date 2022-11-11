@@ -22,33 +22,33 @@ const bannersMock = [
 ];
 
 final categoriesMock = [
-  Category(
+  const Category(
     id: 1,
     name: 'Fruits & Vegetables',
     imageUrl: Assets.hortifrutiImage,
     iconUrl: Assets.hortifrutiIcon,
-    colorString: kGreenColor.toString(),
+    colorString: '0XFF4CA64C',
   ),
   Category(
     id: 2,
     name: 'Dairy & Bakery',
     imageUrl: Assets.hortifrutiImage,
     iconUrl: Assets.hortifrutiIcon,
-    colorString: kLightBrownColor.toString(),
+    colorString: '0xFFD39447',
   ),
   Category(
     id: 3,
     name: 'Staples',
     imageUrl: Assets.hortifrutiImage,
     iconUrl: Assets.hortifrutiIcon,
-    colorString: kMediumBrownColor.toString(),
+    colorString: '0xFF7E724C',
   ),
   Category(
     id: 4,
     name: 'Snacks & Branded Foods',
     imageUrl: Assets.hortifrutiImage,
     iconUrl: Assets.hortifrutiIcon,
-    colorString: kBrownColor.toString(),
+    colorString: '0xFFB34F2D',
   ),
   Category(
     id: 5,

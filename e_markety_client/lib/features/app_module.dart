@@ -12,6 +12,8 @@ import 'package:e_markety_client/features/product/blocs/product_by_category/prod
 import 'package:e_markety_client/features/product/favourite_module.dart';
 import 'package:e_markety_client/features/product/product_module.dart';
 import 'package:e_markety_client/features/product/services/product_service.dart';
+import 'package:e_markety_client/features/route_guards/admin_guard.dart';
+import 'package:e_markety_client/features/route_guards/auth_guard.dart';
 import 'package:e_markety_client/features/user/auth/blocs/auth_bloc.dart';
 import 'package:e_markety_client/features/user/auth/screens/sign_in_screen.dart';
 import 'package:e_markety_client/features/user/auth/screens/welcome_screen.dart';
@@ -86,18 +88,20 @@ class AppModule extends Module {
     ChildRoute('/', child: (context, args) => const WelcomeScreen()),
     ChildRoute('/sign-up', child: (context, args) => const SignUpScreen()),
     ChildRoute('/sign-in', child: (context, args) => const SignInScreen()),
-    ModuleRoute('/home', module: HomeModule()),
-    ModuleRoute('/user', module: UserModule()),
-    ModuleRoute('/favourite', module: FavouriteModule()),
-    ModuleRoute('/category', module: CategoryModule()),
-    ModuleRoute('/product', module: ProductModule()),
-    ModuleRoute('/address', module: AddressModule()),
-    ModuleRoute('/order', module: OrderModule()),
+    ModuleRoute('/home', module: HomeModule(), guards: [AuthGuard()]),
+    ModuleRoute('/user', module: UserModule(), guards: [AuthGuard()]),
+    ModuleRoute('/favourite', module: FavouriteModule(), guards: [AuthGuard()]),
+    ModuleRoute('/category', module: CategoryModule(), guards: [AuthGuard()]),
+    ModuleRoute('/product', module: ProductModule(), guards: [AuthGuard()]),
+    ModuleRoute('/address', module: AddressModule(), guards: [AuthGuard()]),
+    ModuleRoute('/order', module: OrderModule(), guards: [AuthGuard()]),
     ModuleRoute(
       '/admin',
       module: AdminModule(),
       transition: TransitionType.scale,
+      guards: [AuthGuard(), AdminGuard()],
     ),
+    WildcardRoute(child: (context, args) => const NotFoundScreen()),
   ];
 }
 
@@ -114,6 +118,19 @@ class AppWidget extends StatelessWidget {
       routeInformationParser: Modular.routeInformationParser,
       debugShowCheckedModeBanner: false,
       scrollBehavior: CustomScrollBehavior(),
+    );
+  }
+}
+
+class NotFoundScreen extends StatelessWidget {
+  const NotFoundScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Text('Página não encontrada'),
+      ),
     );
   }
 }

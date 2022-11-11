@@ -7,9 +7,9 @@ import 'action_cart.dart';
 class CustomAppBar {
   CustomAppBar._();
 
-  static Container _leadingIcon(context, onLeadingTap) {
+  static Container leadingIcon(BuildContext context, Function()? onLeadingTap) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(16, 16, 8, 8),
+      margin: const EdgeInsets.fromLTRB(16, 8, 8, 16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: kBackgroundColor,
@@ -53,7 +53,7 @@ class CustomAppBar {
       backgroundColor: backgroundColor ?? kScaffoldColor,
       centerTitle: true,
       actions: showAction ? [const ActionCart()] : [],
-      leading: showLeading ? _leadingIcon(context, onLeadingTap) : null,
+      leading: showLeading ? leadingIcon(context, onLeadingTap) : null,
       titleTextStyle: titleStyle ??
           const TextStyle(
             fontSize: 20,

@@ -37,13 +37,6 @@ class AdminSidebar extends StatelessWidget {
       theme: SidebarTheme.build(),
       extendedTheme: SidebarTheme.buildExtended(),
       showToggleButton: false,
-      footerItems: const [
-        CustomSidebarXItem(
-          icon: Icons.logout,
-          label: 'Logout',
-          onTap: ModularUtils.signOut,
-        ),
-      ],
       headerDivider: kDivider,
       headerBuilder: (context, extended) {
         return BlocBuilder<AuthBloc, AuthState>(
@@ -56,6 +49,13 @@ class AdminSidebar extends StatelessWidget {
           },
         );
       },
+      footerItems: const [
+        CustomSidebarXItem(
+          icon: Icons.logout,
+          label: 'Logout',
+          onTap: ModularUtils.signOut,
+        ),
+      ],
       items: [
         CustomSidebarXItem(
           icon: Icons.home_outlined,
