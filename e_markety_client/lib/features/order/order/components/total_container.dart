@@ -51,7 +51,7 @@ class TotalContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _row('Items', '${order.items.length}'),
+        _row('Itens', '${order.items.length}'),
         const SizedBox(height: 8),
         _row('Subtotal', '\$${order.subTotal.toStringAsFixed(2)}'),
         ..._deliveryChargeRow(),

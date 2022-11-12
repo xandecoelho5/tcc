@@ -85,12 +85,18 @@ class CartItemService implements ICartItemService {
 
   @override
   Future<void> quantityIncrement(CartItem cartItem) async {
-    await _updateQuantity(
-      cartItem,
-      () => cartItem.copyWith(
-        quantity: cartItem.quantity + cartItem.product.weightUnit,
-      ),
-    );
+    await _updateQuantity(cartItem, () {
+      CartItem _cartItem;
+      if (cartItem.quantity + cartItem.product.weightUnit >
+          cartItem.product.stock) {
+        _cartItem = cartItem.copyWith(quantity: cartItem.product.stock);
+      } else {
+        _cartItem = cartItem.copyWith(
+          quantity: cartItem.quantity + cartItem.product.weightUnit,
+        );
+      }
+      return _cartItem;
+    });
   }
 
   @override

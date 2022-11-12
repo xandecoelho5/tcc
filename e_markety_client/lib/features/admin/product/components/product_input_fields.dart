@@ -36,7 +36,7 @@ class _ProductInputFieldsState extends State<ProductInputFields> {
     'price': (v) =>
         _product = _product.copyWith(price: double.tryParse(v ?? '0') ?? 0),
     'stock': (v) =>
-        _product = _product.copyWith(stock: int.tryParse(v ?? '0') ?? 0),
+        _product = _product.copyWith(stock: double.tryParse(v ?? '0') ?? 0),
     'weightPrice': (v) => _product =
         _product.copyWith(weightPrice: double.tryParse(v ?? '0') ?? 0),
     'weightUnit': (v) => _product =

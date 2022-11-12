@@ -75,7 +75,7 @@ class ProductDetails extends StatelessWidget {
             ],
           ),
         ),
-        _buildStockFlag(),
+        if (product.stock > 0) _buildStockFlag(),
         _buildFavoriteFlag(),
       ],
     );

@@ -28,19 +28,19 @@ class CartItemQuantity extends StatelessWidget {
               onTap: _onMinusTapped,
             ),
           ),
+          const SizedBox(height: 4),
           Expanded(
-            child: Center(
-              child: FittedBox(
-                child: Text(
-                  item.quantity.toStringAsFixed(item.product.fractionDigits),
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
+            child: FittedBox(
+              child: Text(
+                item.quantity.toStringAsFixed(item.product.fractionDigits),
+                style: const TextStyle(
+                  fontSize: 19,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           ),
+          const SizedBox(height: 4),
           Expanded(
             child: QuantityButton.plus(
               borderRadius: const BorderRadius.only(

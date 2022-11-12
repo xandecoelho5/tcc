@@ -13,8 +13,8 @@ class Product extends Equatable {
   final String description;
   final double price;
   final DateTime? createdAt;
-  final int stock;
-  final int quantitySold;
+  final double stock;
+  final double quantitySold;
   final double weightPrice; // In Kg, L, UN
   final double weightUnit; // Kg, L, UN
 
@@ -147,8 +147,8 @@ class Product extends Equatable {
     String? imageUrl,
     String? description,
     double? price,
-    int? stock,
-    int? quantitySold,
+    double? stock,
+    double? quantitySold,
     double? weightPrice,
     double? weightUnit,
     int? discountPercent,
