@@ -43,6 +43,9 @@ public class EnderecoServiceImpl extends GenericServiceImpl<Endereco, Long, Ende
         if (entity.isPadrao()) {
             repository.updateAllEnderecosToNotDefault(entity.getUsuario().getId());
         }
+        if (!entity.isPadrao() && repository.countAllByUsuarioId(entity.getUsuario().getId()) == 0) {
+            entity.setPadrao(true);
+        }
     }
 
     @Override
