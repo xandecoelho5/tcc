@@ -43,7 +43,7 @@ public class Produto {
     private LocalDate dataAtualizacao;
 
     @Column(nullable = false)
-    private int estoque;
+    private float estoque;
 
     @Column(nullable = false)
     @ColumnDefault("0")
@@ -57,7 +57,7 @@ public class Produto {
     private float pesoUnidade; // peso da unidade, ex: 150g de 1kg
 
     @Column(nullable = false)
-    private int quantidadeVendida;
+    private float quantidadeVendida;
 
     @ManyToOne
     @JoinColumn(name = "unidade_medida_id", referencedColumnName = "id", nullable = false)

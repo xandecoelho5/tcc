@@ -2,11 +2,13 @@ package br.edu.utfpr.e_markety.service.impl;
 
 import br.edu.utfpr.e_markety.dto.PedidoDto;
 import br.edu.utfpr.e_markety.exceptions.AlreadyExistsPendingPedidoException;
+import br.edu.utfpr.e_markety.exceptions.NoneEstoqueForProdutoException;
 import br.edu.utfpr.e_markety.exceptions.NoneOpenPedidoException;
 import br.edu.utfpr.e_markety.model.Pedido;
 import br.edu.utfpr.e_markety.model.enums.StatusPedido;
 import br.edu.utfpr.e_markety.repository.GenericUserRepository;
 import br.edu.utfpr.e_markety.repository.PedidoRepository;
+import br.edu.utfpr.e_markety.repository.ProdutoRepository;
 import br.edu.utfpr.e_markety.service.PedidoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,7 @@ import static br.edu.utfpr.e_markety.utils.PrincipalUtils.getLoggedUsuario;
 public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, PedidoDto> implements PedidoService {
 
     private final PedidoRepository repository;
+    private final ProdutoRepository produtoRepository;
 
     @Override
     protected GenericUserRepository<Pedido, Long> getRepository() {
@@ -60,17 +63,14 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, PedidoDt
 
     @Override
     public Page<PedidoDto> getAll(Pageable pageable) {
-        Page<Pedido> page = repository.findAllByEmpresaIdAndUsuarioId(getLoggedEmpresa().getId(),
-                getLoggedUsuario().getId(), pageable);
+        Page<Pedido> page = repository.findAllByEmpresaIdAndUsuarioId(getLoggedEmpresa().getId(), getLoggedUsuario().getId(), pageable);
         return page.map(this::mapEntityToDto);
     }
 
     @Override
     protected Iterable<Pedido> findAllByUsuario(Pageable pageable) {
         var usuarioId = getLoggedUsuario().getId();
-        return pageable == null ?
-                repository.findAllByUsuarioIdAndStatusIsNot(usuarioId, StatusPedido.PENDENTE) :
-                repository.findAllByUsuarioIdAndStatusIsNot(usuarioId, StatusPedido.PENDENTE, pageable);
+        return pageable == null ? repository.findAllByUsuarioIdAndStatusIsNot(usuarioId, StatusPedido.PENDENTE) : repository.findAllByUsuarioIdAndStatusIsNot(usuarioId, StatusPedido.PENDENTE, pageable);
     }
 
     @Override
@@ -86,7 +86,24 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, PedidoDt
         if (dto.getUsuario() == null) {
             dto.setUsuario(getLoggedUsuario());
             dto.setEmpresa(getLoggedEmpresa());
-            dto.getItems().forEach(item -> item.setPedido(mapDtoToEntity(dto)));
+            for (var item : dto.getItems()) {
+                item.setPedido(mapDtoToEntity(dto));
+                updateEstoqueAndQuantidadeVendidaById(item.getProduto().getId(), item.getQuantidade());
+            }
         }
+    }
+
+    private void updateEstoqueAndQuantidadeVendidaById(Long id, float quantidade) {
+        var produto = produtoRepository.findById(id).get();
+
+        var estoque = produto.getEstoque() - quantidade;
+        if (estoque < 0) {
+            throw new NoneEstoqueForProdutoException(produto.getNome());
+        }
+        var quantidadeVendida = produto.getQuantidadeVendida() + quantidade;
+
+        produto.setEstoque(estoque);
+        produto.setQuantidadeVendida(quantidadeVendida);
+        produtoRepository.save(produto);
     }
 }

@@ -1,7 +1,9 @@
 package br.edu.utfpr.e_markety.service.impl;
 
+import br.edu.utfpr.e_markety.dto.PedidoItemDto;
 import br.edu.utfpr.e_markety.dto.ProdutoDto;
 import br.edu.utfpr.e_markety.exceptions.ExistsLinkedDataException;
+import br.edu.utfpr.e_markety.exceptions.NoneEstoqueForProdutoException;
 import br.edu.utfpr.e_markety.model.Produto;
 import br.edu.utfpr.e_markety.repository.EmpresaRepository;
 import br.edu.utfpr.e_markety.repository.GenericRepository;
@@ -56,6 +58,20 @@ public class ProdutoServiceImpl extends GenericServiceImpl<Produto, Long, Produt
     public List<ProdutoDto> findAllByFilter(String nome, Long categoriaId, BigDecimal precoMin, BigDecimal precoMax, Sort sort) {
         var list = repository.findAllByFilter(getNome(nome), categoriaId, getPrecoMin(precoMin), getPrecoMax(precoMax), PrincipalUtils.getLoggedEmpresa().getId(), sort);
         return mapEntityListToDto(list);
+    }
+
+    @Override
+    public void validateProdutosEstoque(List<PedidoItemDto> dtos) {
+        StringBuilder error = new StringBuilder();
+        for (PedidoItemDto dto : dtos) {
+            var estoque = repository.findEstoqueById(dto.getProdutoId());
+            if (estoque < dto.getQuantidade()) {
+                error.append("Produto ").append(dto.getProdutoNome()).append(" não possui estoque suficiente. Estoque atual: ").append(estoque).append(".");
+            }
+        }
+        if (!error.isEmpty()) {
+            throw new NoneEstoqueForProdutoException(error.toString());
+        }
     }
 
     @Override

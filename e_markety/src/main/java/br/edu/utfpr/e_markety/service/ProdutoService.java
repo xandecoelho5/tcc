@@ -1,5 +1,6 @@
 package br.edu.utfpr.e_markety.service;
 
+import br.edu.utfpr.e_markety.dto.PedidoItemDto;
 import br.edu.utfpr.e_markety.dto.ProdutoDto;
 import org.springframework.data.domain.Sort;
 
@@ -13,4 +14,6 @@ public interface ProdutoService extends GenericService<Long, ProdutoDto> {
     List<ProdutoDto> findAllByIdIn(List<Long> ids);
 
     List<ProdutoDto> findAllByFilter(String nome, Long categoriaId, BigDecimal precoMin, BigDecimal precoMax, Sort sort);
+
+    void validateProdutosEstoque(List<PedidoItemDto> dtos);
 }

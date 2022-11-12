@@ -41,7 +41,7 @@ public class ProdutoDto {
 
     private LocalDate dataAtualizacao;
 
-    private int estoque = 0;
+    private float estoque = 0;
 
     @Min(value = 0, message = "Desconto não pode ser menor que 0%")
     @Max(value = 100, message = "Desconto não pode ser maior que 100%")
@@ -55,7 +55,7 @@ public class ProdutoDto {
     @Max(value = 1, message = "Peso da unidade deve ser menor ou igual a 1")
     private float pesoUnidade;
 
-    private int quantidadeVendida = 0;
+    private float quantidadeVendida = 0;
 
     @NotNull(message = "Campo obrigatório")
     private UnidadeMedida unidadeMedida;

@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.math.BigDecimal;
 import java.util.List;
 
-    public interface ProdutoRepository extends GenericRepository<Produto, Long> {
+public interface ProdutoRepository extends GenericRepository<Produto, Long> {
 
     List<Produto> findAllByCategoriaIdAndEmpresaId(Long id, Long empresaId);
 
@@ -24,4 +24,7 @@ import java.util.List;
     List<Produto> findAllByFilter(String nome, Long categoriaId, BigDecimal precoMin, BigDecimal precoMax, Long empresaId, Sort sort);
 
     Page<Produto> findAllByEmpresaId(Long id, Pageable pageable);
+
+    @Query(value = "SELECT p.estoque FROM Produto p WHERE p.id = :id")
+    float findEstoqueById(Long id);
 }
