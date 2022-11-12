@@ -12,6 +12,7 @@ part 'cart_item_overview_state.dart';
 class CartItemOverviewBloc
     extends Bloc<CartItemOverviewEvent, CartItemOverviewState> {
   final ICartItemService _service;
+  bool _isStreamOpen = false;
 
   CartItemOverviewBloc(this._service) : super(const CartItemOverviewState()) {
     on<CartItemOverviewSubscriptionRequested>(_onSubscriptionRequested);
@@ -22,22 +23,25 @@ class CartItemOverviewBloc
   }
 
   Future<void> _onSubscriptionRequested(event, Emitter emit) async {
-    emit(state.copyWith(status: CartItemOverviewStatus.loading));
-    await _service.init();
+    if (!_isStreamOpen) {
+      emit(state.copyWith(status: CartItemOverviewStatus.loading));
+      await _service.init();
+      _isStreamOpen = true;
 
-    await emit.forEach<List<CartItem>>(
-      _service.getCartItems(),
-      onData: (cartItems) {
-        Modular.get<CurrentOrderBloc>().add(UpdateOrderItems(cartItems));
-        return state.copyWith(
-          status: CartItemOverviewStatus.success,
-          cartItems: cartItems,
-        );
-      },
-      onError: (_, __) => state.copyWith(
-        status: CartItemOverviewStatus.failure,
-      ),
-    );
+      await emit.forEach<List<CartItem>>(
+        _service.getCartItems(),
+        onData: (cartItems) {
+          Modular.get<CurrentOrderBloc>().add(UpdateOrderItems(cartItems));
+          return state.copyWith(
+            status: CartItemOverviewStatus.success,
+            cartItems: cartItems,
+          );
+        },
+        onError: (_, __) => state.copyWith(
+          status: CartItemOverviewStatus.failure,
+        ),
+      );
+    }
   }
 
   void _onCartItemDeleted(CartItemOverviewCartItemDeleted event, emit) {

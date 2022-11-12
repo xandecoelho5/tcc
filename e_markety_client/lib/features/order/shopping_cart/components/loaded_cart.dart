@@ -10,21 +10,10 @@ import '../../order/components/total_container.dart';
 import '../../order/models/order.dart';
 import 'cart_item_list.dart';
 
-class LoadedCart extends StatefulWidget {
+class LoadedCart extends StatelessWidget {
   const LoadedCart({Key? key, required this.cartItems}) : super(key: key);
 
   final List<CartItem> cartItems;
-
-  @override
-  State<LoadedCart> createState() => _LoadedCartState();
-}
-
-class _LoadedCartState extends State<LoadedCart> {
-  @override
-  void initState() {
-    super.initState();
-    Modular.get<CurrentOrderBloc>().add(GetCurrentOrder());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +21,7 @@ class _LoadedCartState extends State<LoadedCart> {
       children: [
         Expanded(
           flex: 5,
-          child: CartItemList(cartItems: widget.cartItems),
+          child: CartItemList(cartItems: cartItems),
         ),
         BlocBuilder<CurrentOrderBloc, CurrentOrderState>(
           bloc: Modular.get<CurrentOrderBloc>(),
