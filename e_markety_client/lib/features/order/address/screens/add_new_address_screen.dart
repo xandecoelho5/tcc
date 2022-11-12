@@ -23,7 +23,7 @@ class AddNewAddressScreen extends StatelessWidget {
         address: const Address.empty(),
         onSubmitAddress: (address) {
           Modular.get<AddressBloc>().add(AddressAddEvent(address));
-          Navigator.of(context).pop();
+          Navigator.of(context).pop(address);
         },
       ),
     );

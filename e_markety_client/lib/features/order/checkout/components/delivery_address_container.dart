@@ -22,15 +22,27 @@ class DeliveryAddressContainer extends StatelessWidget {
       popupMenuButton: PopupMenuButton(
         icon: const Icon(Icons.more_horiz),
         itemBuilder: (context) => [
-          const PopupMenuItem(
-            value: 1,
-            child: Text('Alterar'),
-          ),
+          if (deliveryAddress != null)
+            const PopupMenuItem(
+              value: 1,
+              child: Text('Alterar'),
+            )
+          else
+            const PopupMenuItem(
+              value: 2,
+              child: Text('Adicionar'),
+            ),
         ],
         onSelected: (value) async {
           if (value == 1) {
             final address =
                 await Modular.to.pushNamed('/order/delivery-address');
+            if (address != null) {
+              onAddressSelected(address as Address);
+            }
+          }
+          if (value == 2) {
+            final address = await Modular.to.pushNamed('/address/add');
             if (address != null) {
               onAddressSelected(address as Address);
             }

@@ -18,6 +18,13 @@ class CartItem {
     this.quantity = 1,
   });
 
+  String get quantityText {
+    if (product.measureUnit!.abbreviation == 'UN') {
+      return quantity.toInt().toString();
+    }
+    return quantity.toStringAsFixed(product.fractionDigits);
+  }
+
   factory CartItem.fromMap(dynamic map) {
     return CartItem(
       product: Product.fromMap(map['produto']),

@@ -28,7 +28,7 @@ class _DeliveryAddressScreenState extends State<DeliveryAddressScreen> {
     return Scaffold(
       appBar: CustomAppBar.buildAppBar(context, title: 'Endereço de Entrega'),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Column(
           children: [
             Expanded(

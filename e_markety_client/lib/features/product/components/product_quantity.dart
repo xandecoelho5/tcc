@@ -72,7 +72,7 @@ class _ProductQuantityState extends State<ProductQuantity> {
                   child: Text(
                     _quantity.toStringAsFixed(widget.product.fractionDigits),
                     style: const TextStyle(
-                      fontSize: 24,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,

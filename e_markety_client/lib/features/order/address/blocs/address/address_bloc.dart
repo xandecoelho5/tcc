@@ -50,7 +50,14 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     final response = await _addressService.addAddress(event.address);
     await response.fold(
       (l) => emit(AddressError(l.message)),
-      (r) => emit(AddressAddSuccess()),
+      (r) async {
+        emit(AddressAddSuccess());
+        final response = await _addressService.getAddresses();
+        await response.fold(
+          (l) => emit(AddressError(l.message)),
+          (r) => emit(AddressListLoaded(r)),
+        );
+      },
     );
   }
 

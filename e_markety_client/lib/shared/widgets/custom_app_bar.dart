@@ -32,13 +32,6 @@ class CustomAppBar {
     );
   }
 
-  static Padding _title(title) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 16),
-      child: Text(title),
-    );
-  }
-
   static AppBar buildAppBar(
     BuildContext context, {
     String? title,
@@ -49,7 +42,7 @@ class CustomAppBar {
     bool showLeading = true,
   }) {
     return AppBar(
-      title: title != null ? _title(title) : null,
+      title: title != null ? Text(title) : null,
       backgroundColor: backgroundColor ?? kScaffoldColor,
       centerTitle: true,
       actions: showAction ? [const ActionCart()] : [],

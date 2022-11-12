@@ -33,7 +33,6 @@ class _AddressListState extends State<AddressList> {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       itemCount: widget.addresses.length,
       itemBuilder: (ctx, index) => widget.isShopping
           ? AddressCartItem(

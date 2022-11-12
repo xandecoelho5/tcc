@@ -49,9 +49,17 @@ class AddressScreen extends StatelessWidget {
                 },
                 builder: (context, state) {
                   if (state is AddressListLoaded) {
+                    if (state.addresses.isEmpty) {
+                      return const Center(
+                        child: Text('Nenhum endereço cadastrado'),
+                      );
+                    }
                     return AddressList(addresses: state.addresses);
                   }
-                  return const Center(child: CircularProgressIndicator());
+                  if (state is AddressLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  return const SizedBox.shrink();
                 },
               ),
             ),
@@ -64,10 +72,7 @@ class AddressScreen extends StatelessWidget {
               ),
               child: FilledButton(
                 text: 'Adicionar Endereço',
-                onPressed: () async {
-                  await Modular.to.pushNamed('/address/add');
-                  bloc.add(AddressGetAllEvent());
-                },
+                onPressed: () => Modular.to.pushNamed('/address/add'),
                 color: kSecondaryColor,
               ),
             ),

@@ -85,7 +85,7 @@ class Product extends Equatable {
   }
 
   int get fractionDigits {
-    if (measureUnit?.description == 'UN') {
+    if (measureUnit?.abbreviation == 'UN') {
       return 0;
     }
     return 2;
