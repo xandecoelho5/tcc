@@ -5,7 +5,6 @@ import br.edu.utfpr.e_markety.repository.GenericRepository;
 import br.edu.utfpr.e_markety.repository.GenericUserRepository;
 import br.edu.utfpr.e_markety.service.GenericService;
 import br.edu.utfpr.e_markety.service.MapperService;
-import br.edu.utfpr.e_markety.utils.PrincipalUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+
+import static br.edu.utfpr.e_markety.utils.PrincipalUtils.getLoggedUsuario;
 
 public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID, Y> {
 
@@ -22,7 +23,7 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID,
     private final Class<T> entityClass;
     private final Class<Y> dtoClass;
 
-    protected GenericServiceImpl() { //MapperService mapper
+    protected GenericServiceImpl() {
         this.mapper = new ModelMapperServiceImpl(new ModelMapper());
         this.entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         this.dtoClass = (Class<Y>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[2];
@@ -43,7 +44,7 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID,
     }
 
     protected Iterable<T> findAllByUsuario(Pageable pageable) {
-        var usuarioId = (ID) PrincipalUtils.getLoggedUsuario().getId();
+        var usuarioId = (ID) getLoggedUsuario().getId();
         var repository = (GenericUserRepository<T, ID>) getRepository();
         return pageable == null ? repository.findAllByUsuarioId(usuarioId) : repository.findAllByUsuarioId(usuarioId, pageable);
     }
@@ -115,7 +116,7 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID,
 
     protected T findById(ID id) {
         var byId = getRepository() instanceof GenericUserRepository ?
-                ((GenericUserRepository<T, ID>) getRepository()).findByIdAndUsuarioId(id, (ID) PrincipalUtils.getLoggedUsuario().getId()) :
+                ((GenericUserRepository<T, ID>) getRepository()).findByIdAndUsuarioId(id, (ID) getLoggedUsuario().getId()) :
                 getRepository().findById(id);
         if (byId.isEmpty()) {
             throw new NotFoundException((Long) id);

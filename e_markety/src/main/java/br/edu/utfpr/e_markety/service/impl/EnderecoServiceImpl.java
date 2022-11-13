@@ -9,9 +9,10 @@ import br.edu.utfpr.e_markety.repository.EnderecoRepository;
 import br.edu.utfpr.e_markety.repository.GenericUserRepository;
 import br.edu.utfpr.e_markety.repository.PedidoRepository;
 import br.edu.utfpr.e_markety.service.EnderecoService;
-import br.edu.utfpr.e_markety.utils.PrincipalUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import static br.edu.utfpr.e_markety.utils.PrincipalUtils.getLoggedUsuario;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +39,7 @@ public class EnderecoServiceImpl extends GenericServiceImpl<Endereco, Long, Ende
     @Override
     protected void preSave(Endereco entity, Long id) {
         if (entity.getUsuario() == null) {
-            entity.setUsuario(PrincipalUtils.getLoggedUsuario());
+            entity.setUsuario(getLoggedUsuario());
         }
         if (entity.isPadrao()) {
             repository.updateAllEnderecosToNotDefault(entity.getUsuario().getId());

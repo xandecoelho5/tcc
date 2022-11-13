@@ -4,13 +4,14 @@ import br.edu.utfpr.e_markety.exceptions.NoneDefaultEnderecoFoundException;
 import br.edu.utfpr.e_markety.model.Endereco;
 import br.edu.utfpr.e_markety.service.EnderecoService;
 import br.edu.utfpr.e_markety.service.GenericService;
-import br.edu.utfpr.e_markety.utils.PrincipalUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+
+import static br.edu.utfpr.e_markety.utils.PrincipalUtils.getLoggedUsuario;
 
 @RestController
 @RequestMapping("endereco")
@@ -26,7 +27,7 @@ public class EnderecoController extends GenericController<Long, Endereco> {
     @GetMapping("/padrao")
     public ResponseEntity<?> getDefaultEndereco() {
         try {
-            var usuario = PrincipalUtils.getLoggedUsuario();
+            var usuario = getLoggedUsuario();
             var defaultEndereco = service.getDefaultEndereco(usuario.getId());
             return new ResponseEntity<>(defaultEndereco, HttpStatus.OK);
         } catch (NoneDefaultEnderecoFoundException e) {

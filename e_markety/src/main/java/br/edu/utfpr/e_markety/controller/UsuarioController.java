@@ -10,7 +10,6 @@ import br.edu.utfpr.e_markety.exceptions.InvalidLoggedUserException;
 import br.edu.utfpr.e_markety.exceptions.UserAlreadyRegisteredException;
 import br.edu.utfpr.e_markety.service.MapperService;
 import br.edu.utfpr.e_markety.service.ProdutoService;
-import br.edu.utfpr.e_markety.utils.PrincipalUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
+
+import static br.edu.utfpr.e_markety.utils.PrincipalUtils.getLoggedUsuario;
 
 @RestController
 @RequiredArgsConstructor
@@ -68,20 +69,20 @@ public class UsuarioController {
 
     @GetMapping("/current")
     public ResponseEntity<?> getCurrentUser() {
-        var user = PrincipalUtils.getLoggedUsuario();
+        var user = getLoggedUsuario();
         var userDto = mapper.mapEntityToDto(user, UsuarioDto.class);
         return ResponseEntity.ok(userDto);
     }
 
     @GetMapping("/favoritos")
     public ResponseEntity<?> getUserFavourites() {
-        var user = PrincipalUtils.getLoggedUsuario();
+        var user = getLoggedUsuario();
         return ResponseEntity.ok(produtoService.findAllByIdIn(user.getFavoritosIds()));
     }
 
     @PatchMapping("/favoritos")
     public ResponseEntity<?> addFavouriteToUser(@RequestBody FavoritoDto favoritoDto) {
-        var user = PrincipalUtils.getLoggedUsuario();
+        var user = getLoggedUsuario();
         if (user.getFavoritosIds().contains(favoritoDto.getId())) {
             user.getFavoritosIds().remove(favoritoDto.getId());
         } else {
