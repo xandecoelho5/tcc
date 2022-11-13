@@ -21,7 +21,6 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
 @TypeDef(name = "list-array", typeClass = ListArrayType.class)
 public class Usuario implements UserDetails {
 

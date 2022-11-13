@@ -1,16 +1,20 @@
 package br.edu.utfpr.e_markety.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import com.vladmihalcea.hibernate.type.array.ListArrayType;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
-@AllArgsConstructor
+@TypeDef(name = "list-array", typeClass = ListArrayType.class)
 public class Empresa {
 
     @Id
@@ -44,4 +48,8 @@ public class Empresa {
     @ManyToOne
     @JoinColumn(name = "endereco_id", referencedColumnName = "id", nullable = false)
     private Endereco endereco;
+
+    @Type(type = "list-array")
+    @Column(name = "banners", columnDefinition = "text[]")
+    private List<String> banners;
 }
