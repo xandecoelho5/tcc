@@ -1,5 +1,6 @@
 package br.edu.utfpr.e_markety.repository;
 
+import br.edu.utfpr.e_markety.dto.PrecoDto;
 import br.edu.utfpr.e_markety.model.Produto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,4 +28,7 @@ public interface ProdutoRepository extends GenericRepository<Produto, Long> {
 
     @Query(value = "SELECT p.estoque FROM Produto p WHERE p.id = :id")
     float findEstoqueById(Long id);
+
+    @Query("SELECT new br.edu.utfpr.e_markety.dto.PrecoDto(MIN(p.preco), MAX(p.preco)) FROM Produto p WHERE p.empresa.id = :empresaId")
+    PrecoDto findMinAndMaxPrecoByEmpresaId(Long empresaId);
 }

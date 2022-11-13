@@ -44,4 +44,9 @@ public class ProdutoController extends GenericController<Long, ProdutoDto> {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
+    @GetMapping("/preco")
+    public ResponseEntity<?> findMinAndMaxPreco() {
+        return ResponseEntity.ok(service.findMinAndMaxPreco());
+    }
 }
