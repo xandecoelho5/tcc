@@ -1,6 +1,7 @@
 import 'package:e_markety_client/features/admin/order/models/order_admin.dart';
 import 'package:e_markety_client/features/admin/shared/data_responses/order_page_response.dart';
 import 'package:e_markety_client/features/order/order/models/order_status.dart';
+import 'package:e_markety_client/shared/extensions/double_extension.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:e_markety_client/shared/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class OrderDataSource extends DataTableSource {
         ),
         DataCell(Text(order.user.name)),
         DataCell(Text(order.user.email)),
-        DataCell(Text('\$${order.total.toStringAsFixed(2)}')),
+        DataCell(Text(order.total.toReal)),
         DataCell(_StatusChip(status: order.status)),
         DataCell(Text(DateTimeUtils.getyMd(order.createdAt!))),
         DataCell(

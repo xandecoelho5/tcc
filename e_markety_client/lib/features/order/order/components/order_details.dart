@@ -1,3 +1,4 @@
+import 'package:e_markety_client/shared/extensions/double_extension.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:e_markety_client/shared/utils/assets.dart';
 import 'package:e_markety_client/shared/utils/date_time_utils.dart';
@@ -242,7 +243,7 @@ class _Details extends StatelessWidget {
                 const SizedBox(width: 16),
                 Text('Total:', style: detailStyle),
                 Text(
-                  '\$${order.total.toStringAsFixed(2)}',
+                  order.total.toReal,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],

@@ -1,5 +1,6 @@
 import 'package:e_markety_client/features/admin/product/blocs/admin_product_bloc.dart';
 import 'package:e_markety_client/features/admin/shared/widgets/action_button.dart';
+import 'package:e_markety_client/shared/extensions/double_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -48,7 +49,7 @@ class ProductDataSource extends DataTableSource {
           ),
         ),
         DataCell(Text(product.name)),
-        DataCell(Text('\$${product.price.toStringAsFixed(2)}')),
+        DataCell(Text(product.price.toReal)),
         DataCell(Text(product.formattedDiscount)),
         DataCell(Text(product.quantitySold.toString())),
         DataCell(Text(product.stock.toString())),

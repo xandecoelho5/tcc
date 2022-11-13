@@ -1,4 +1,5 @@
 import 'package:e_markety_client/features/order/order/models/order.dart';
+import 'package:e_markety_client/shared/extensions/double_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../shared/theme/constants.dart';
@@ -80,7 +81,7 @@ class TrackOrderSummary extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '\$${order.total.toStringAsFixed(2)}',
+                        order.total.toReal,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,

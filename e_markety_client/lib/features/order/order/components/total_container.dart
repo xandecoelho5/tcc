@@ -1,3 +1,4 @@
+import 'package:e_markety_client/shared/extensions/double_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../models/delivery_tipe.dart';
@@ -42,7 +43,7 @@ class TotalContainer extends StatelessWidget {
     return showDiscount && order.discount > 0
         ? [
             const SizedBox(height: 8),
-            _row('Discount', '\$${order.discount.toStringAsFixed(2)}'),
+            _row('Discount', order.discount.toReal),
           ]
         : [];
   }
@@ -53,7 +54,7 @@ class TotalContainer extends StatelessWidget {
       children: [
         _row('Itens', '${order.items.length}'),
         const SizedBox(height: 8),
-        _row('Subtotal', '\$${order.subTotal.toStringAsFixed(2)}'),
+        _row('Subtotal', order.subTotal.toReal),
         ..._deliveryChargeRow(),
         ..._discountRow(),
         const Divider(height: 20, thickness: 1),
@@ -66,7 +67,7 @@ class TotalContainer extends StatelessWidget {
             ),
             const Spacer(),
             Text(
-              '\$${order.total.toStringAsFixed(2)}',
+              order.total.toReal,
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ],

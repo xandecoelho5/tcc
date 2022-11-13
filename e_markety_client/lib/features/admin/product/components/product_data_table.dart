@@ -1,4 +1,5 @@
 import 'package:e_markety_client/shared/theme/constants.dart';
+import 'package:e_markety_client/shared/utils/strings.dart';
 import 'package:flutter/material.dart';
 
 import '../../../product/models/product.dart';
@@ -31,7 +32,7 @@ class ProductDataTable extends StatelessWidget {
           ),
         ),
         DataCell(Text(product.name)),
-        DataCell(Text('\$${product.price.toStringAsFixed(2)}')),
+        DataCell(Text(Strings.formatToReal(product.price))),
         DataCell(Text(product.formattedDiscount)),
         DataCell(Text(product.quantitySold.toString())),
         DataCell(Text(product.stock.toString())),

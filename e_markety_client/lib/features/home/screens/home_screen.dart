@@ -1,6 +1,7 @@
 import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
 import 'package:e_markety_client/features/category/blocs/category_bloc.dart';
 import 'package:e_markety_client/features/category/components/category_list.dart';
+import 'package:e_markety_client/features/company/blocs/company/company_bloc.dart';
 import 'package:e_markety_client/features/home/components/banners.dart';
 import 'package:e_markety_client/features/home/components/home_app_bar.dart';
 import 'package:e_markety_client/features/order/address/blocs/default_address/default_address_bloc.dart';
@@ -13,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../shared/mocks/mocks.dart';
 import '../../product/blocs/product/product_bloc.dart';
 import '../../user/auth/components/view_all_row.dart';
 
@@ -32,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      Modular.get<CompanyBloc>().add(CompanyGetCurrentEvent());
       Modular.get<DefaultAddressBloc>().add(DefaultAddressGetEvent());
       productBloc.add(
         ProductGetPageEvent(
@@ -75,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 16),
               const SearchBarWithFilter(),
               const SizedBox(height: 24),
-              const Banners(items: bannersMock),
+              const _Banners(),
               const SizedBox(height: 16),
               const _Categories(),
               const SizedBox(height: 16),
@@ -85,6 +86,26 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _Banners extends StatelessWidget {
+  const _Banners({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<CompanyBloc, CompanyState>(
+      bloc: Modular.get<CompanyBloc>(),
+      builder: (context, state) {
+        if (state is CompanyLoadingState) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (state is CompanyLoadedCurrentState) {
+          return Banners(items: state.company.banners);
+        }
+        return const SizedBox.shrink();
+      },
     );
   }
 }

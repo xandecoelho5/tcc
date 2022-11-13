@@ -10,6 +10,7 @@ Adicionar FOCO nos componentes de input quando abrir a tela e quando der submit 
 
 Quando entrar em alguma rota na Web, atualizar o drawer de acordo com a rota atual;
 ----
-tentar ver o que tá acontecendo quando cadastra mais de 3 pedidos;
-
 adicionar login com facebook e google;
+
+trocar componente de dropdown por um componente de autocomplete; (Bairro)
+

@@ -81,6 +81,7 @@ class ProductsByCategoryScreen extends StatelessWidget {
         slivers: <Widget>[
           _sliverAppBar(context),
           const SliverAppBar(
+            leading: SizedBox(),
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               background: SearchBarWithFilter(),

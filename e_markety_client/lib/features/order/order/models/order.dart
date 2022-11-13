@@ -1,4 +1,5 @@
 import 'package:e_markety_client/features/order/address/models/address.dart';
+import 'package:e_markety_client/shared/extensions/double_extension.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../shopping_cart/models/cart_item.dart';
@@ -44,7 +45,7 @@ class Order {
       );
 
   String get formattedCharge => deliveryCharge != null && deliveryCharge! > 0
-      ? '\$ ${deliveryCharge!.toStringAsFixed(2)}'
+      ? deliveryCharge!.toReal
       : 'Grátis';
 
   double get calculatedTotal => subTotal + (deliveryCharge ?? 0) - discount;

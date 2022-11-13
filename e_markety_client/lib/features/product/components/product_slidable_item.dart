@@ -1,3 +1,4 @@
+import 'package:e_markety_client/shared/extensions/double_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/theme/constants.dart';
@@ -39,7 +40,7 @@ class ProductSlidableItem extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '\$${product.finalPrice.toStringAsFixed(2)}',
+                      product.finalPrice.toReal,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: kSecondaryColor,
@@ -48,7 +49,7 @@ class ProductSlidableItem extends StatelessWidget {
                     const SizedBox(width: 4),
                     if (product.hasPromotion)
                       Text(
-                        '\$${product.price.toStringAsFixed(2)}',
+                        product.price.toReal,
                         style: const TextStyle(
                           color: kDiscountColor,
                           fontWeight: FontWeight.bold,

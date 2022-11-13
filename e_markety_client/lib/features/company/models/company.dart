@@ -11,6 +11,7 @@ class Company {
   final String? storeOpeningTime;
   final String? storeClosingTime;
   final Address address;
+  final List<String> banners;
 
   const Company({
     required this.id,
@@ -23,6 +24,7 @@ class Company {
     this.storeOpeningTime,
     this.storeClosingTime,
     required this.address,
+    this.banners = const [],
   });
 
   Map<String, dynamic> toMap() {
@@ -37,6 +39,7 @@ class Company {
       'lojaAbertura': storeOpeningTime,
       'lojaFechamento': storeClosingTime,
       'endereco': address.toMap(),
+      'banners': banners,
     };
   }
 
@@ -52,6 +55,7 @@ class Company {
       storeOpeningTime: map['lojaAbertura'],
       storeClosingTime: map['lojaFechamento'],
       address: Address.fromMap(map['endereco']),
+      banners: (map['banners'] as List).map((e) => e.toString()).toList(),
     );
   }
 
@@ -68,6 +72,7 @@ class Company {
     String? storeOpeningTime,
     String? storeClosingTime,
     Address? address,
+    List<String>? banners,
   }) {
     return Company(
       id: id,
@@ -80,6 +85,7 @@ class Company {
       storeOpeningTime: storeOpeningTime ?? this.storeOpeningTime,
       storeClosingTime: storeClosingTime ?? this.storeClosingTime,
       address: address ?? this.address,
+      banners: banners ?? this.banners,
     );
   }
 }

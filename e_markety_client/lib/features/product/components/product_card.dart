@@ -3,6 +3,7 @@ import 'package:e_markety_client/features/order/shopping_cart/models/cart_item.d
 import 'package:e_markety_client/features/product/components/category_chip.dart';
 import 'package:e_markety_client/features/product/components/favourite_icon.dart';
 import 'package:e_markety_client/features/product/components/product_flag_widget.dart';
+import 'package:e_markety_client/shared/extensions/double_extension.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -119,7 +120,7 @@ class ProductCard extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(top: 2, left: 12),
             child: Text(
-              '\$${product.finalPrice.toStringAsFixed(2)}',
+              product.finalPrice.toReal,
               style: const TextStyle(
                 color: kSecondaryColor,
                 fontSize: 18,

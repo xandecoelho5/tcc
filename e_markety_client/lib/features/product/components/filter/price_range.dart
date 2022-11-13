@@ -1,4 +1,5 @@
 import 'package:e_markety_client/features/order/checkout/components/information_container.dart';
+import 'package:e_markety_client/shared/extensions/double_extension.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
@@ -39,14 +40,14 @@ class _PriceRangeState extends State<PriceRange> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '\$${min.toStringAsFixed(2)}',
+                  min.toReal,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  '\$${max.toStringAsFixed(2)}',
+                  max.toReal,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -75,7 +76,7 @@ class _PriceRangeState extends State<PriceRange> {
                     values: _values,
                     enableTooltip: true,
                     tooltipTextFormatterCallback: (actualValue, formattedText) {
-                      return '\$${actualValue.toStringAsFixed(2)}';
+                      return (actualValue as double).toReal;
                     },
                     onChanged: (values) {
                       setState(() => _values = values);
