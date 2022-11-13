@@ -3,7 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import '../order/address/blocs/address/address_bloc.dart';
 import '../order/address/blocs/default_address/default_address_bloc.dart';
-import '../order/address/components/notifiers/district_notifier.dart';
+import '../order/address/components/company_district_value_notifier.dart';
 import '../order/address/services/address_service.dart';
 import '../order/address/services/district_service.dart';
 import '../product/blocs/favourite/favourite_bloc.dart';
@@ -20,7 +20,7 @@ class HomeModule extends Module {
         Bind.lazySingleton<IDistrictService>((i) => DistrictService(i())),
         Bind.singleton((i) => AddressBloc(i())),
         Bind.singleton((i) => DefaultAddressBloc(i())),
-        Bind.lazySingleton((i) => DistrictNotifier(i())),
+        Bind.lazySingleton((i) => CompanyDistrictValueNotifier(i())),
       ];
 
   @override

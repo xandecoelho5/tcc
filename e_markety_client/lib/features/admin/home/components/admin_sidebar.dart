@@ -78,6 +78,21 @@ class AdminSidebar extends StatelessWidget {
           ],
         ),
         CustomSidebarXItem(
+          icon: Icons.shopping_cart_outlined,
+          label: 'Bairros',
+          trailing: true,
+          trailingItems: [
+            SidebarSubItem(
+              label: 'Adicionar Bairro',
+              onTap: () => Modular.to.navigate('/admin/company-district/add'),
+            ),
+            SidebarSubItem(
+              label: 'Listar Bairros',
+              onTap: () => Modular.to.navigate('/admin/company-district/'),
+            ),
+          ],
+        ),
+        CustomSidebarXItem(
           icon: Icons.shopping_bag_outlined,
           label: 'Pedidos',
           onTap: () => Modular.to.navigate('/admin/order/'),

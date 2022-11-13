@@ -18,13 +18,6 @@ abstract class IProductService extends IPaginatedService {
     Filter filter,
   );
 
-  // Future<Either<ProductException, ProductPageResponse>> getProductsPaginated({
-  //   required int page,
-  //   required int size,
-  //   String? order,
-  //   bool? asc,
-  // });
-
   Future<Either<ProductException, Product>> getProductById(int id);
 
   Future<Either<ProductException, void>> addProduct(Product product);

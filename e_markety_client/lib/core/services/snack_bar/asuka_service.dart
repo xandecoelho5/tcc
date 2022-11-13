@@ -1,5 +1,6 @@
 import 'package:asuka/asuka.dart';
 import 'package:e_markety_client/core/services/snack_bar/snackbar_service.dart';
+import 'package:e_markety_client/shared/extensions/snack_bar_copy_with.dart';
 
 class AsukaService implements ISnackBarService {
   @override
@@ -9,11 +10,19 @@ class AsukaService implements ISnackBarService {
 
   @override
   void showError(String message) {
-    AsukaSnackbar.alert(message).show();
+    Asuka.showSnackBar(
+      AsukaSnackbar.alert(message).copyWith(
+        duration: const Duration(seconds: 3),
+      ),
+    );
   }
 
   @override
   void showSuccess(String message) {
-    AsukaSnackbar.success(message).show();
+    Asuka.showSnackBar(
+      AsukaSnackbar.success(message).copyWith(
+        duration: const Duration(seconds: 1),
+      ),
+    );
   }
 }

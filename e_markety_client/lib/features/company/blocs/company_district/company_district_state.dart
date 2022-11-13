@@ -4,16 +4,26 @@ abstract class CompanyDistrictState {}
 
 class CompanyDistrictInitial implements CompanyDistrictState {}
 
-class CompanyDistrictLoadingState implements CompanyDistrictState {}
+class CompanyDistrictLoading implements CompanyDistrictState {}
 
-class CompanyDistrictSuccessState implements CompanyDistrictState {
-  final double tax;
+class CompanyDistrictSuccess implements CompanyDistrictState {}
 
-  CompanyDistrictSuccessState(this.tax);
+class CompanyDistrictDeleteSuccess implements CompanyDistrictState {}
+
+class CompanyDistrictLoaded implements CompanyDistrictState {
+  final CompanyDistrict companyDistrict;
+
+  CompanyDistrictLoaded(this.companyDistrict);
 }
 
-class CompanyDistrictErrorState implements CompanyDistrictState {
+class CompanyDistrictTaxSuccess implements CompanyDistrictState {
+  final double tax;
+
+  CompanyDistrictTaxSuccess(this.tax);
+}
+
+class CompanyDistrictError implements CompanyDistrictState {
   final String message;
 
-  CompanyDistrictErrorState(this.message);
+  CompanyDistrictError(this.message);
 }

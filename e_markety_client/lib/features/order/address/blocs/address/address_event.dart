@@ -18,8 +18,9 @@ class AddressEditEvent implements AddressEvent {
 
 class AddressAddEvent implements AddressEvent {
   final Address address;
+  final bool getDefault;
 
-  AddressAddEvent(this.address);
+  AddressAddEvent(this.address, {this.getDefault = false});
 }
 
 class AddressDeleteByIdEvent implements AddressEvent {

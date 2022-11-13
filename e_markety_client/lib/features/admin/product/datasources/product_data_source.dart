@@ -1,4 +1,5 @@
 import 'package:e_markety_client/features/admin/product/blocs/admin_product_bloc.dart';
+import 'package:e_markety_client/features/admin/shared/widgets/action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -54,13 +55,13 @@ class ProductDataSource extends DataTableSource {
         DataCell(
           Row(
             children: [
-              _ActionButton(
+              ActionButton(
                 iconData: Icons.edit,
                 color: kSecondaryColor,
                 onPressed: () =>
                     Modular.to.navigate('/admin/product/edit/${product.id}'),
               ),
-              _ActionButton(
+              ActionButton(
                 iconData: Icons.delete,
                 color: kPrimaryColor,
                 onPressed: () => _onDeleteProduct(product.id!),
@@ -80,30 +81,4 @@ class ProductDataSource extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
-}
-
-class _ActionButton extends StatelessWidget {
-  const _ActionButton({
-    Key? key,
-    required this.iconData,
-    required this.onPressed,
-    required this.color,
-  }) : super(key: key);
-
-  final IconData iconData;
-  final VoidCallback onPressed;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: IconButton(
-        onPressed: onPressed,
-        splashRadius: 20,
-        hoverColor: color.withOpacity(0.35),
-        icon: Icon(iconData, color: color),
-      ),
-    );
-  }
 }

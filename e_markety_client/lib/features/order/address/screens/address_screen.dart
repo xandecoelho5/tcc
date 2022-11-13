@@ -72,7 +72,10 @@ class AddressScreen extends StatelessWidget {
               ),
               child: FilledButton(
                 text: 'Adicionar Endereço',
-                onPressed: () => Modular.to.pushNamed('/address/add'),
+                onPressed: () => Modular.to.pushNamed(
+                  '/address/add',
+                  arguments: true,
+                ),
                 color: kSecondaryColor,
               ),
             ),

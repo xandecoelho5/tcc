@@ -1,4 +1,6 @@
+import 'package:e_markety_client/features/order/address/blocs/default_address/default_address_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../models/address.dart';
 import '../../services/address_service.dart';
@@ -52,6 +54,11 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
       (l) => emit(AddressError(l.message)),
       (r) async {
         emit(AddressAddSuccess());
+
+        if (r) {
+          Modular.get<DefaultAddressBloc>().add(DefaultAddressGetEvent());
+        }
+
         final response = await _addressService.getAddresses();
         await response.fold(
           (l) => emit(AddressError(l.message)),

@@ -1,5 +1,5 @@
-import 'package:e_markety_client/features/company/services/company_district_service.dart';
 import 'package:e_markety_client/features/order/address/models/district.dart';
+import 'package:e_markety_client/features/order/address/services/district_service.dart';
 import 'package:flutter/material.dart';
 
 class DistrictNotifier extends ValueNotifier<List<District>> {
@@ -7,11 +7,11 @@ class DistrictNotifier extends ValueNotifier<List<District>> {
     fetchData();
   }
 
-  final ICompanyDistrictService _service;
+  final IDistrictService _service;
 
   Future<void> fetchData() async {
     try {
-      final response = await _service.getDistricts();
+      final response = await _service.getDistrictsWithoutCurrentCompany();
       response.fold(
         (l) => throw l,
         (r) => value = r,

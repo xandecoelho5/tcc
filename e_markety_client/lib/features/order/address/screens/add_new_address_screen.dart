@@ -7,7 +7,10 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../blocs/address/address_bloc.dart';
 
 class AddNewAddressScreen extends StatelessWidget {
-  const AddNewAddressScreen({Key? key}) : super(key: key);
+  const AddNewAddressScreen({Key? key, required this.getDefault})
+      : super(key: key);
+
+  final bool getDefault;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,9 @@ class AddNewAddressScreen extends StatelessWidget {
         textButton: 'Adicionar',
         address: const Address.empty(),
         onSubmitAddress: (address) {
-          Modular.get<AddressBloc>().add(AddressAddEvent(address));
+          Modular.get<AddressBloc>().add(
+            AddressAddEvent(address, getDefault: getDefault),
+          );
           Navigator.of(context).pop(address);
         },
       ),

@@ -11,7 +11,7 @@ abstract class IAddressService {
 
   Future<Either<AddressException, Address>> getAddressById(int id);
 
-  Future<Either<AddressException, void>> addAddress(Address address);
+  Future<Either<AddressException, bool>> addAddress(Address address);
 
   Future<Either<AddressException, Address>> updateAddress(Address address);
 
@@ -66,11 +66,11 @@ class AddressService implements IAddressService {
   }
 
   @override
-  Future<Either<AddressException, void>> addAddress(Address address) async {
+  Future<Either<AddressException, bool>> addAddress(Address address) async {
     final response = await _httpService.post(_baseUrl, address.toMap());
     return response.fold(
       (l) => Left(AddressException(l.message, l.stackTrace)),
-      (r) => const Right(null),
+      (r) => Right(r['padrao'] as bool),
     );
   }
 

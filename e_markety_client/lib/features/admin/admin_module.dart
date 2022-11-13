@@ -1,3 +1,4 @@
+import 'package:e_markety_client/features/admin/district/admin_company_district_module.dart';
 import 'package:e_markety_client/features/admin/home/pages/dashboard_page.dart';
 import 'package:e_markety_client/features/admin/home/pages/home_page.dart';
 import 'package:e_markety_client/features/admin/order/admin_order_module.dart';
@@ -17,6 +18,10 @@ class AdminModule extends Module {
           children: [
             ChildRoute('/dashboard', child: (_, __) => const DashboardPage()),
             ModuleRoute('/product', module: AdminProductModule()),
+            ModuleRoute(
+              '/company-district',
+              module: AdminCompanyDistrictModule(),
+            ),
             ModuleRoute('/order', module: AdminOrderModule()),
             ModuleRoute('/settings', module: AdminSettingsModule()),
           ],

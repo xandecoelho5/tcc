@@ -42,7 +42,10 @@ class DeliveryAddressContainer extends StatelessWidget {
             }
           }
           if (value == 2) {
-            final address = await Modular.to.pushNamed('/address/add');
+            final address = await Modular.to.pushNamed(
+              '/address/add',
+              arguments: false,
+            );
             if (address != null) {
               onAddressSelected(address as Address);
             }

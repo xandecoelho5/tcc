@@ -5,6 +5,9 @@ import 'package:e_markety_client/features/order/address/models/district.dart';
 
 abstract class IDistrictService {
   Future<Either<DistrictException, List<District>>> getDistricts();
+
+  Future<Either<DistrictException, List<District>>>
+      getDistrictsWithoutCurrentCompany();
 }
 
 class DistrictService implements IDistrictService {
@@ -16,6 +19,16 @@ class DistrictService implements IDistrictService {
   @override
   Future<Either<DistrictException, List<District>>> getDistricts() async {
     final response = await _httpService.getAll('$_baseUrl?size=0');
+    return response.fold(
+      (l) => Left(DistrictException(l.message)),
+      (r) => Right(r.map(District.fromMap).toList()),
+    );
+  }
+
+  @override
+  Future<Either<DistrictException, List<District>>>
+      getDistrictsWithoutCurrentCompany() async {
+    final response = await _httpService.getAll('$_baseUrl/sem-empresa-atual');
     return response.fold(
       (l) => Left(DistrictException(l.message)),
       (r) => Right(r.map(District.fromMap).toList()),

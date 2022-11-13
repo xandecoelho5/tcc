@@ -134,10 +134,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           BlocListener<CompanyDistrictBloc, CompanyDistrictState>(
             bloc: Modular.get<CompanyDistrictBloc>(),
             listener: (context, state) {
-              if (state is CompanyDistrictSuccessState) {
+              if (state is CompanyDistrictTaxSuccess) {
                 _onDistrictTaxChanged(state.tax);
               }
-              if (state is CompanyDistrictErrorState) {
+              if (state is CompanyDistrictError) {
                 ModularUtils.showError(state.message);
               }
             },

@@ -12,6 +12,7 @@ class DropdownWithLabel<T> extends StatelessWidget {
     this.onValidate,
     this.onChanged,
     this.backgroundColor,
+    this.disabled = false,
   }) : super(key: key);
 
   final String label;
@@ -21,6 +22,7 @@ class DropdownWithLabel<T> extends StatelessWidget {
   final String? Function(T?)? onValidate;
   final void Function(T?)? onChanged;
   final Color? backgroundColor;
+  final bool disabled;
 
   List<DropdownMenuItem<T>> _buildItems() {
     return items
@@ -37,7 +39,7 @@ class DropdownWithLabel<T> extends StatelessWidget {
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: backgroundColor,
+            color: disabled ? Colors.grey.shade200 : backgroundColor,
             borderRadius: BorderRadius.circular(15),
           ),
           child: Theme(
@@ -50,7 +52,7 @@ class DropdownWithLabel<T> extends StatelessWidget {
               menuMaxHeight: 350,
               items: _buildItems(),
               value: data,
-              onChanged: onChanged ?? (_) {},
+              onChanged: disabled ? null : onChanged ?? (_) {},
               onSaved: onSaved,
               validator: onValidate,
               dropdownColor: backgroundColor,

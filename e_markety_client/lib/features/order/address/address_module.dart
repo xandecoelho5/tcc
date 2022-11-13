@@ -9,7 +9,7 @@ class AddressModule extends Module {
     ChildRoute('/', child: (context, args) => AddressScreen()),
     ChildRoute(
       '/add',
-      child: (context, args) => const AddNewAddressScreen(),
+      child: (context, args) => AddNewAddressScreen(getDefault: args.data),
     ),
     ChildRoute(
       '/edit/:id',

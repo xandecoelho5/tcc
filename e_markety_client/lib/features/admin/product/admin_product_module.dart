@@ -30,7 +30,7 @@ class AdminProductModule extends Module {
   List<ModularRoute> get routes => [
         ChildRoute(
           '/',
-          child: (context, args) => const ProductsPage(),
+          child: (context, args) => const ProductsListPage(),
         ),
         ChildRoute(
           '/add',

@@ -1,7 +1,6 @@
-import 'package:e_markety_client/features/admin/product/blocs/admin_product_bloc.dart';
-import 'package:e_markety_client/features/admin/product/components/notifiers/product_notifier.dart';
-import 'package:e_markety_client/features/admin/product/datasources/product_data_source.dart';
-import 'package:e_markety_client/features/admin/shared/data_responses/provider_settings.dart';
+import 'package:e_markety_client/features/admin/district/datasources/company_district_datasource.dart';
+import 'package:e_markety_client/features/admin/shared/data_responses/company_district_page_response.dart';
+import 'package:e_markety_client/features/company/blocs/company_district/company_district_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -9,28 +8,22 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../../../../shared/utils/data_table_utils.dart';
 import '../../../../shared/utils/modular_utils.dart';
 import '../../../../shared/widgets/custom_data_table/custom_paginated_table.dart';
-import '../../shared/data_responses/product_page_response.dart';
+import '../../shared/data_responses/provider_settings.dart';
 import '../../shared/widgets/empty_container.dart';
+import '../components/company_district_notifier.dart';
 
-final sortColumns = [
-  'produto',
-  'nome',
-  'preco',
-  'percentualDesconto',
-  'quantidadeVendida',
-  'estoque',
-  'Ações',
-];
+final sortColumns = ['bairro_nome', 'taxaEntrega'];
 
-class ProductsListPage extends StatefulWidget {
-  const ProductsListPage({Key? key}) : super(key: key);
+class CompanyDistrictsListPage extends StatefulWidget {
+  const CompanyDistrictsListPage({Key? key}) : super(key: key);
 
   @override
-  State<ProductsListPage> createState() => _ProductsListPageState();
+  State<CompanyDistrictsListPage> createState() =>
+      _CompanyDistrictsListPageState();
 }
 
-class _ProductsListPageState extends State<ProductsListPage> {
-  final _provider = Modular.get<ProductNotifier>();
+class _CompanyDistrictsListPageState extends State<CompanyDistrictsListPage> {
+  final _provider = Modular.get<CompanyDistrictNotifier>();
 
   @override
   void didChangeDependencies() {
@@ -44,34 +37,35 @@ class _ProductsListPageState extends State<ProductsListPage> {
 
   List<DataColumn> _buildDataColumns() {
     return [
-      const DataColumn(label: Text('Produto')),
       DataColumn(label: const Text('Nome'), onSort: sort),
-      DataColumn(label: const Text('Preço'), numeric: true, onSort: sort),
-      DataColumn(label: const Text('Promoção'), numeric: true, onSort: sort),
-      DataColumn(label: const Text('Vendidos'), numeric: true, onSort: sort),
-      DataColumn(label: const Text('Estoque'), numeric: true, onSort: sort),
+      DataColumn(
+        label: const Text('Taxa de Entrega'),
+        numeric: true,
+        onSort: sort,
+      ),
       const DataColumn(label: Text('Ações')),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AdminProductBloc, AdminProductState>(
-      bloc: Modular.get<AdminProductBloc>(),
+    return BlocListener<CompanyDistrictBloc, CompanyDistrictState>(
+      bloc: Modular.get<CompanyDistrictBloc>(),
       listener: (context, state) {
-        if (state is AdminProductDeleteSuccess) {
+        if (state is CompanyDistrictDeleteSuccess) {
           _provider.fetchData();
-          ModularUtils.showSuccess('Produto excluído com sucesso');
+          ModularUtils.showSuccess('Bairro excluído com sucesso');
         }
-        if (state is AdminProductError) {
-          ModularUtils.showError('Erro ao excluir produto: ${state.message}');
+        if (state is CompanyDistrictError) {
+          ModularUtils.showError('Erro ao excluir bairro: ${state.message}');
         }
       },
       child: ValueListenableBuilder<ProviderSettings>(
         valueListenable: _provider,
         builder: (context, value, child) {
-          final _dataSource =
-              ProductDataSource(value.pageResponse as ProductPageResponse);
+          final _dataSource = CompanyDistrictDataSource(
+            value.pageResponse as CompanyDistrictPageResponse,
+          );
 
           if (value.pageResponse.content.isEmpty) {
             return const EmptyContainer();
@@ -79,7 +73,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
 
           return CustomPaginatedTable(
             dataColumns: _buildDataColumns(),
-            header: const Text('Produtos'),
+            header: const Text('Bairros'),
             onRowChanged: (index) => _provider.rowsPerPage = index!,
             onPageChanged: (index) =>
                 _provider.currentPage = index ~/ _provider.rowsPerPage,
