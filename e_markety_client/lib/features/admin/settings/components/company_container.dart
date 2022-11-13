@@ -52,6 +52,9 @@ class _CompanyContainerState extends State<CompanyContainer> {
         _company = _company.copyWith(storeOpeningTime: v),
     'storeClosingTime': (v) =>
         _company = _company.copyWith(storeClosingTime: v),
+    'banners': (v) => _company = _company.copyWith(
+          banners: v?.split('\n').map((e) => e.trim()).toList(),
+        ),
   };
 
   void _onSaved(String? field, String? value) {
@@ -248,6 +251,15 @@ class _CompanyContainerState extends State<CompanyContainer> {
           _AddressInput(
             address: _company.address,
             onEditAddress: _onEditAddress,
+          ),
+          const SizedBox(height: 24),
+          TextFieldWithLabel(
+            label: 'Banners',
+            maxLines: 5,
+            fieldName: 'banners',
+            data: _company.banners.join('\n'),
+            onCustomSaved: _onSaved,
+            onValidate: Validatorless.required(Strings.obrigatorio),
           ),
           const SizedBox(height: 24),
           FilledButton(

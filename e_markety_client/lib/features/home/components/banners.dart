@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class Banners extends StatefulWidget {
@@ -10,7 +12,30 @@ class Banners extends StatefulWidget {
 }
 
 class _BannersState extends State<Banners> {
+  final _controller = PageController();
   int _current = 0;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+      setState(() {
+        _current = _current == widget.items.length - 1 ? 0 : _current + 1;
+        _controller.animateToPage(
+          _current,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeIn,
+        );
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
   Container _indicator(int index) {
     final isActive = _current == index;
@@ -30,6 +55,7 @@ class _BannersState extends State<Banners> {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.215,
       child: PageView.builder(
+        controller: _controller,
         itemCount: widget.items.length,
         onPageChanged: (int index) => setState(() => _current = index),
         itemBuilder: (context, index) {

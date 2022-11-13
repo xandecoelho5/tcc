@@ -19,6 +19,7 @@ class TextFieldWithLabel extends StatefulWidget {
     this.obscureText = false,
     this.icon,
     this.onTapSuffix,
+    this.maxLines = 1,
   }) : super(key: key);
 
   final String label;
@@ -35,6 +36,7 @@ class TextFieldWithLabel extends StatefulWidget {
   final bool obscureText;
   final Icon? icon;
   final void Function()? onTapSuffix;
+  final int maxLines;
 
   @override
   State<TextFieldWithLabel> createState() => _TextFieldWithLabelState();
@@ -98,6 +100,10 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
                     ),
                   )
                 : null,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: widget.maxLines > 1 ? 20 : 0,
+            ),
           ),
           validator: widget.onValidate,
           onSaved: (value) {
@@ -111,6 +117,7 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
           inputFormatters: widget.inputFormatters,
           readOnly: widget.readOnly,
           onEditingComplete: _focus.unfocus,
+          maxLines: widget.maxLines,
         ),
       ],
     );

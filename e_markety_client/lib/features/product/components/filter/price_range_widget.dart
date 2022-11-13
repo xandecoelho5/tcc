@@ -5,24 +5,25 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
-const min = 0.0;
-const max = 500.0;
-
-class PriceRange extends StatefulWidget {
-  const PriceRange({
+class PriceRangeWidget extends StatefulWidget {
+  const PriceRangeWidget({
     Key? key,
     required this.values,
     required this.onPriceChanged,
+    required this.min,
+    required this.max,
   }) : super(key: key);
 
   final RangeValues values;
   final void Function(SfRangeValues) onPriceChanged;
+  final double min;
+  final double max;
 
   @override
-  State<PriceRange> createState() => _PriceRangeState();
+  State<PriceRangeWidget> createState() => _PriceRangeWidgetState();
 }
 
-class _PriceRangeState extends State<PriceRange> {
+class _PriceRangeWidgetState extends State<PriceRangeWidget> {
   late SfRangeValues _values = SfRangeValues(
     widget.values.start,
     widget.values.end,
@@ -40,14 +41,14 @@ class _PriceRangeState extends State<PriceRange> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  min.toReal,
+                  widget.min.toReal,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  max.toReal,
+                  widget.max.toReal,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -72,7 +73,8 @@ class _PriceRangeState extends State<PriceRange> {
               child: Column(
                 children: [
                   SfRangeSlider(
-                    max: max,
+                    min: widget.min,
+                    max: widget.max,
                     values: _values,
                     enableTooltip: true,
                     tooltipTextFormatterCallback: (actualValue, formattedText) {

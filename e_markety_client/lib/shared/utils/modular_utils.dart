@@ -1,3 +1,4 @@
+import 'package:e_markety_client/shared/utils/global.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../core/services/snack_bar/snackbar_service.dart';
@@ -8,6 +9,7 @@ class ModularUtils {
 
   static Future<void> signOut() async {
     Modular.get<AuthBloc>().add(AuthSignOutEvent());
+    Modular.get<Global>().resetFilter();
     Future.delayed(const Duration(milliseconds: 10), () {
       Modular.to.navigate('/');
     });
