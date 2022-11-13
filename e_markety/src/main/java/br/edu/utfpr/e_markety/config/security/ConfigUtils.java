@@ -11,6 +11,7 @@ public class ConfigUtils {
             "/empresa",
             "/unidade-medida",
             "/produto",
+            "/empresa-bairro",
     };
 
     public static final String[] PUT_URLS = {
@@ -20,6 +21,7 @@ public class ConfigUtils {
             "/empresa/**",
             "/unidade-medida/**",
             "/produto/**",
+            "/empresa-bairro",
     };
 
     public static final String[] DELETE_URLS = {
@@ -29,6 +31,7 @@ public class ConfigUtils {
             "/empresa/**",
             "/unidade-medida/**",
             "/produto/**",
+            "/empresa-bairro",
     };
 
     public static final String[] GET_URLS = {

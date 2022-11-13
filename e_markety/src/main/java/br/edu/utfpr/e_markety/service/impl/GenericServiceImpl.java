@@ -113,7 +113,7 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID,
         return mapper.mapEntityListToDto(entityList, dtoClass);
     }
 
-    private T findById(ID id) {
+    protected T findById(ID id) {
         var byId = getRepository() instanceof GenericUserRepository ?
                 ((GenericUserRepository<T, ID>) getRepository()).findByIdAndUsuarioId(id, (ID) PrincipalUtils.getLoggedUsuario().getId()) :
                 getRepository().findById(id);

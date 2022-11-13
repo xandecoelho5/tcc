@@ -1,5 +1,6 @@
 package br.edu.utfpr.e_markety.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -8,7 +9,6 @@ import java.math.BigDecimal;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 public class EmpresaBairro {
 
@@ -18,6 +18,7 @@ public class EmpresaBairro {
 
     @ManyToOne
     @JoinColumn(name = "empresa_id", referencedColumnName = "id")
+    @JsonIgnore
     private Empresa empresa;
 
     @ManyToOne
