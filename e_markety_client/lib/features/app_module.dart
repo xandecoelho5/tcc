@@ -10,6 +10,7 @@ import 'package:e_markety_client/features/product/blocs/filter/filter_bloc.dart'
 import 'package:e_markety_client/features/product/blocs/product/product_bloc.dart';
 import 'package:e_markety_client/features/product/blocs/product_by_category/product_by_category_bloc.dart';
 import 'package:e_markety_client/features/product/blocs/product_price/product_price_bloc.dart';
+import 'package:e_markety_client/features/product/blocs/stock/stock_bloc.dart';
 import 'package:e_markety_client/features/product/favourite_module.dart';
 import 'package:e_markety_client/features/product/product_module.dart';
 import 'package:e_markety_client/features/product/services/product_service.dart';
@@ -80,6 +81,7 @@ class AppModule extends Module {
     Bind.factory((i) => ProductBloc(i())),
     Bind.singleton((i) => ProductByCategoryBloc(i())),
     Bind.singleton((i) => ProductPriceBloc(i())),
+    Bind.singleton((i) => StockBloc(i())),
     // filter
     Bind.singleton((i) => FilterBloc(i())),
     Bind.singleton((i) => Global()),

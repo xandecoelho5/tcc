@@ -2,10 +2,9 @@ import 'package:e_markety_client/features/product/components/product_details.dar
 import 'package:e_markety_client/features/product/models/product.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../shared/theme/constants.dart';
-import '../../order/shopping_cart/blocs/overview/cart_item_overview_bloc.dart';
+import '../../../shared/utils/modular_utils.dart';
 import '../../order/shopping_cart/models/cart_item.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -27,11 +26,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     _cartItem = _cartItem.copyWith(quantity: quantity);
   }
 
-  void _onAddItemToCart() {
-    Modular.get<CartItemOverviewBloc>()
-        .add(CartItemOverviewCartItemAdd(_cartItem));
-  }
-
   Row _addToCartButton() {
     return Row(
       children: [
@@ -42,7 +36,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               backgroundColor: kSecondaryColor,
               foregroundColor: Colors.white,
             ),
-            onPressed: _onAddItemToCart,
+            onPressed: () => ModularUtils.addToCart(_cartItem),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Row(

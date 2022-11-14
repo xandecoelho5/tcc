@@ -6,6 +6,7 @@ import 'package:e_markety_client/features/home/components/banners.dart';
 import 'package:e_markety_client/features/home/components/home_app_bar.dart';
 import 'package:e_markety_client/features/order/address/blocs/default_address/default_address_bloc.dart';
 import 'package:e_markety_client/features/order/shopping_cart/blocs/overview/cart_item_overview_bloc.dart';
+import 'package:e_markety_client/features/product/blocs/stock/stock_bloc.dart';
 import 'package:e_markety_client/features/product/components/products_list.dart';
 import 'package:e_markety_client/features/product/models/product.dart';
 import 'package:e_markety_client/shared/utils/modular_utils.dart';
@@ -27,6 +28,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final snackBarService = Modular.get<ISnackBarService>();
   final productBloc = Modular.get<ProductBloc>();
+  final cartItemBloc = Modular.get<CartItemOverviewBloc>();
 
   @override
   void initState() {
@@ -43,8 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
       Modular.get<CategoryBloc>().add(CategoryGetAllEvent());
-      Modular.get<CartItemOverviewBloc>()
-          .add(const CartItemOverviewSubscriptionRequested());
+      cartItemBloc.add(const CartItemOverviewSubscriptionRequested());
     });
   }
 
@@ -52,24 +53,39 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeAppBar.build(context),
-      body: BlocListener<CartItemOverviewBloc, CartItemOverviewState>(
-        bloc: Modular.get<CartItemOverviewBloc>(),
-        listenWhen: (previous, current) {
-          if ((previous.status == CartItemOverviewStatus.loading &&
-                  current.status == CartItemOverviewStatus.success) ||
-              (current.cartItems.length <= previous.cartItems.length)) {
-            return false;
-          }
-          return true;
-        },
-        listener: (context, state) {
-          if (state.status == CartItemOverviewStatus.failure) {
-            ModularUtils.showError('Erro ao carregar os itens do carrinho!');
-          }
-          if (state.status == CartItemOverviewStatus.success) {
-            ModularUtils.showSuccess('Produto adicionado ao carrinho');
-          }
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<StockBloc, StockState>(
+            bloc: Modular.get<StockBloc>(),
+            listener: (context, state) {
+              if (state is StockError) {
+                ModularUtils.showError(state.message);
+              }
+              if (state is StockSuccess) {
+                cartItemBloc.add(CartItemOverviewCartItemAdd(state.cartItem));
+              }
+            },
+          ),
+          BlocListener<CartItemOverviewBloc, CartItemOverviewState>(
+            bloc: cartItemBloc,
+            listenWhen: (previous, current) {
+              if ((previous.status == CartItemOverviewStatus.loading &&
+                      current.status == CartItemOverviewStatus.success) ||
+                  (current.cartItems.length <= previous.cartItems.length)) {
+                return false;
+              }
+              return true;
+            },
+            listener: (context, state) {
+              if (state.status == CartItemOverviewStatus.failure) {
+                ModularUtils.showError('Erro com os itens do carrinho!');
+              }
+              if (state.status == CartItemOverviewStatus.success) {
+                ModularUtils.showSuccess('Produto adicionado ao carrinho');
+              }
+            },
+          ),
+        ],
         child: SingleChildScrollView(
           child: Column(
             children: [

@@ -24,7 +24,7 @@ class SearchResultScreen extends StatelessWidget {
         children: [
           const SizedBox(height: 16),
           const SearchBarWithFilter(),
-          const SizedBox(height: 28),
+          const SizedBox(height: 4),
           BlocBuilder<FilterBloc, FilterState>(
             bloc: Modular.get<FilterBloc>(),
             builder: (context, state) {
@@ -34,7 +34,10 @@ class SearchResultScreen extends StatelessWidget {
 
               if (state is FilterLoaded) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 18,
+                    vertical: 8,
+                  ),
                   child: Text(
                     "Resultado da pesquisa ${state.query.isEmpty ? '' : 'para ${state.query}'}",
                     style: const TextStyle(

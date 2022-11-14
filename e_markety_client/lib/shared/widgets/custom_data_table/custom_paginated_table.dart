@@ -19,7 +19,7 @@ class CustomPaginatedTable extends StatelessWidget {
         assert(
           sortColumnIndex == null ||
               (sortColumnIndex >= 0 && sortColumnIndex < dataColumns.length),
-          'Check the sortColumnIndex value',
+          'Cheque o valor do index de ordenação',
         ),
         super(key: key);
 
@@ -64,7 +64,8 @@ class CustomPaginatedTable extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               side: BorderSide(color: Colors.grey.shade50),
             ),
-            elevation: 2,
+            elevation: 3,
+            margin: EdgeInsets.zero,
           ),
         ),
         child: PaginatedDataTable(

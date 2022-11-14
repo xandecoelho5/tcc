@@ -1,4 +1,3 @@
-import 'package:e_markety_client/features/order/shopping_cart/blocs/overview/cart_item_overview_bloc.dart';
 import 'package:e_markety_client/features/order/shopping_cart/models/cart_item.dart';
 import 'package:e_markety_client/features/product/components/category_chip.dart';
 import 'package:e_markety_client/features/product/components/favourite_icon.dart';
@@ -8,6 +7,7 @@ import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../shared/utils/modular_utils.dart';
 import '../models/flag_type.dart';
 import '../models/product.dart';
 
@@ -15,12 +15,6 @@ class ProductCard extends StatelessWidget {
   const ProductCard({Key? key, required this.product}) : super(key: key);
 
   final Product product;
-
-  void _onAddItemToCart() {
-    Modular.get<CartItemOverviewBloc>().add(
-      CartItemOverviewCartItemAdd(CartItem.empty(product: product)),
-    );
-  }
 
   Positioned _buildPromotionOrNewFlag() {
     return Positioned(
@@ -51,7 +45,8 @@ class ProductCard extends StatelessWidget {
         backgroundColor: kPrimaryColor,
         mini: true,
         elevation: 10,
-        onPressed: _onAddItemToCart,
+        onPressed: () =>
+            ModularUtils.addToCart(CartItem.empty(product: product)),
         child: const Icon(
           Icons.add_shopping_cart,
           color: Colors.white,

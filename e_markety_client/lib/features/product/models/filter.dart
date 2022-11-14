@@ -11,7 +11,7 @@ class Filter {
   Filter({
     this.name = '',
     this.values,
-    this.sortType = SortType.popularity,
+    this.sortType = SortType.bestSellers,
     this.category,
   });
 

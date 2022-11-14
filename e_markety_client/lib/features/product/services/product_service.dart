@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_markety_client/core/services/http/http_service.dart';
 import 'package:e_markety_client/features/admin/shared/services/paginated_service.dart';
+import 'package:e_markety_client/features/order/shopping_cart/models/cart_item.dart';
 import 'package:e_markety_client/features/product/models/filter.dart';
 import 'package:e_markety_client/features/product/models/price_range.dart';
 
@@ -28,6 +29,8 @@ abstract class IProductService extends IPaginatedService {
   Future<Either<ProductException, void>> deleteProduct(int id);
 
   Future<Either<ProductException, PriceRange>> getPriceRange();
+
+  Future<Either<ProductException, void>> validateStock(List<CartItem> items);
 }
 
 class ProductService implements IProductService {
@@ -129,6 +132,20 @@ class ProductService implements IProductService {
     return response.fold(
       (l) => Left(ProductException(l.message, l.stackTrace)),
       (r) => Right(PriceRange.fromMap(r)),
+    );
+  }
+
+  @override
+  Future<Either<ProductException, void>> validateStock(
+    List<CartItem> items,
+  ) async {
+    final response = await _httpService.post(
+      '$_baseUrl/estoque',
+      items.map((e) => e.toMapDto()).toList(),
+    );
+    return response.fold(
+      (l) => Left(ProductException(l.message, l.stackTrace)),
+      (r) => const Right(null),
     );
   }
 }

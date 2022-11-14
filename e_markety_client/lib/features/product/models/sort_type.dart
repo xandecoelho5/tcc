@@ -1,5 +1,5 @@
 enum SortType {
-  popularity('Popularidade'),
+  bestSellers('Mais Vendidos'),
   lowestFirst('Mais Barato'),
   highestFirst('Mais Caro'),
   discount('Desconto');
@@ -10,8 +10,8 @@ enum SortType {
 
   String toRemoteName() {
     switch (this) {
-      case SortType.popularity:
-        return 'POPULARIDADE';
+      case SortType.bestSellers:
+        return 'MAIS_VENDIDOS';
       case SortType.lowestFirst:
         return 'MAIS_BARATO';
       case SortType.highestFirst:

@@ -1,3 +1,4 @@
+import 'package:e_markety_client/features/user/models/role.dart';
 import 'package:e_markety_client/shared/utils/assets.dart';
 import 'package:equatable/equatable.dart';
 
@@ -8,7 +9,7 @@ class User extends Equatable {
   final String? phone;
   final String avatarUrl;
   final List<int> favouritesIds;
-  final bool? admin;
+  final Role? role;
 
   const User({
     required this.id,
@@ -17,7 +18,7 @@ class User extends Equatable {
     required this.avatarUrl,
     this.phone,
     this.favouritesIds = const [],
-    this.admin,
+    this.role,
   });
 
   const User.empty({
@@ -27,12 +28,12 @@ class User extends Equatable {
     this.phone = '',
     this.avatarUrl = Assets.avatarPlaceholderUrl,
     this.favouritesIds = const [],
-    this.admin,
+    this.role = Role.user,
   });
 
   bool isFavourite(int id) => favouritesIds.contains(id);
 
-  bool get isAdmin => admin ?? false;
+  bool get isAdmin => role == Role.admin || role == Role.companyAdmin;
 
   User copyWith({
     String? name,
@@ -48,19 +49,8 @@ class User extends Equatable {
       phone: phone ?? this.phone,
       avatarUrl: avatarUrl ?? this.avatarUrl,
       favouritesIds: favouritesIds ?? this.favouritesIds,
-      admin: admin,
+      role: role,
     );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'nome': name,
-      'email': email,
-      'telefone': phone,
-      'imagemUrl': avatarUrl,
-      'favoritosIds': favouritesIds,
-    };
   }
 
   Map<String, dynamic> toUserEditMap() {
@@ -80,13 +70,13 @@ class User extends Equatable {
       phone: map['telefone'],
       avatarUrl: map['imagemUrl'],
       favouritesIds: List<int>.from(map['favoritosIds']),
-      admin: map['admin'],
+      role: Role.fromString(map['cargo']),
     );
   }
 
   @override
   String toString() {
-    return 'User{id: $id, name: $name, email: $email, phone: $phone, avatarUrl: $avatarUrl, favouritesIds: $favouritesIds} admin: $admin';
+    return 'User{id: $id, name: $name, email: $email, phone: $phone, avatarUrl: $avatarUrl, favouritesIds: $favouritesIds} role: $role';
   }
 
   @override

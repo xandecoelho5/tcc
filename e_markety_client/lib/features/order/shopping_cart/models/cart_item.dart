@@ -39,6 +39,14 @@ class CartItem {
     };
   }
 
+  Map<String, dynamic> toMapDto() {
+    return {
+      'produtoId': product.id,
+      'produtoNome': product.name,
+      'quantidade': quantity,
+    };
+  }
+
   CartItem copyWith({
     Product? product,
     double? quantity,
