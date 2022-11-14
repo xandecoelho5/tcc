@@ -1,6 +1,7 @@
 package br.edu.utfpr.e_markety.service.impl;
 
 import br.edu.utfpr.e_markety.dto.PedidoDto;
+import br.edu.utfpr.e_markety.dto.relatorios.ResumoStatus;
 import br.edu.utfpr.e_markety.exceptions.AlreadyExistsPendingPedidoException;
 import br.edu.utfpr.e_markety.exceptions.NoneEstoqueForProdutoException;
 import br.edu.utfpr.e_markety.exceptions.NoneOpenPedidoException;
@@ -14,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import static br.edu.utfpr.e_markety.utils.PrincipalUtils.getLoggedEmpresa;
 import static br.edu.utfpr.e_markety.utils.PrincipalUtils.getLoggedUsuario;
@@ -37,6 +40,14 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, PedidoDt
             throw new AlreadyExistsPendingPedidoException();
         }
         return save(new PedidoDto(usuario, getLoggedEmpresa()));
+    }
+
+    @Override
+    public List<ResumoStatus> relatorioStatusPedido() {
+        var tuples = repository.relatorioStatusPedidoByEmpresaId(getLoggedEmpresa().getId());
+        return tuples.stream()
+                .map(ResumoStatus::fromTuple)
+                .toList();
     }
 
     @Override

@@ -44,6 +44,7 @@ public class SecurityConfiguration {
                                         .antMatchers(HttpMethod.POST, POST_URLS).hasRole("ADMIN")
                                         .antMatchers(HttpMethod.PUT, PUT_URLS).hasRole("ADMIN")
                                         .antMatchers(HttpMethod.DELETE, DELETE_URLS).hasRole("ADMIN")
+                                        .antMatchers(HttpMethod.PATCH, PATCH_URLS).hasRole("ADMIN")
                                         .antMatchers(HttpMethod.GET, "/empresa", "/usuario/current").permitAll()
                                         .antMatchers(HttpMethod.POST, "/auth/**", "/usuario").permitAll()
                                         .anyRequest().authenticated()

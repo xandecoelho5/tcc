@@ -4,7 +4,9 @@ import br.edu.utfpr.e_markety.model.Pedido;
 import br.edu.utfpr.e_markety.model.enums.StatusPedido;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 
+import javax.persistence.Tuple;
 import java.util.List;
 
 public interface PedidoRepository extends GenericUserRepository<Pedido, Long> {
@@ -22,4 +24,11 @@ public interface PedidoRepository extends GenericUserRepository<Pedido, Long> {
     Pedido findByIdAndEmpresaId(Long id, Long empresaId);
 
     boolean existsByEnderecoId(Long id);
+
+    // relatórios
+    @Query(value = "select status, (count(status) * 1.0 / (select count(status) from pedido where empresa_id = :empresaId)) * 100 " +
+            "  from pedido " +
+            " where empresa_id = :empresaId " +
+            " group by status", nativeQuery = true)
+    List<Tuple> relatorioStatusPedidoByEmpresaId(Long empresaId);
 }

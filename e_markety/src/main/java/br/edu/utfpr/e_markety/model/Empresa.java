@@ -8,6 +8,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -44,6 +45,9 @@ public class Empresa {
 
     @Column(length = 20)
     private String lojaFechamento;
+
+    @Column(columnDefinition = "decimal(5,2)", nullable = false)
+    private BigDecimal taxaServico;
 
     @ManyToOne
     @JoinColumn(name = "endereco_id", referencedColumnName = "id", nullable = false)

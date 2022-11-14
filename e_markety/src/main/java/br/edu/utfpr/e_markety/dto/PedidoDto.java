@@ -42,6 +42,8 @@ public class PedidoDto {
 
     private BigDecimal taxaEntrega;
 
+    private BigDecimal taxaServico;
+
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Usuario usuario;
 
@@ -55,6 +57,7 @@ public class PedidoDto {
     public PedidoDto(Usuario usuario, Empresa empresa) {
         this.usuario = usuario;
         this.empresa = empresa;
+        this.taxaServico = empresa.getTaxaServico();
     }
 
     public UsuarioDto getUsuario() {

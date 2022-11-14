@@ -59,6 +59,9 @@ public class Pedido {
     @Column(columnDefinition = "decimal(5,2)")
     private BigDecimal taxaEntrega;
 
+    @Column(columnDefinition = "decimal(5,2) default 0.00")
+    private BigDecimal taxaServico;
+
     @ManyToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false)
     private Usuario usuario;

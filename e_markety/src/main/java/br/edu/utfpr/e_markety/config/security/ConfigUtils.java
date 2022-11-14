@@ -26,7 +26,7 @@ public class ConfigUtils {
 
     public static final String[] DELETE_URLS = {
             "/categoria/**",
-            "/pedido",
+            "/pedido/**",
             "/bairro/**",
             "/empresa/**",
             "/unidade-medida/**",
@@ -37,5 +37,9 @@ public class ConfigUtils {
     public static final String[] GET_URLS = {
             "/pedido/empresa/**",
             "/usuario",
+    };
+
+    public static final String[] PATCH_URLS = {
+            "/pedido/**",
     };
 }
