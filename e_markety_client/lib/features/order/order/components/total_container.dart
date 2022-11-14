@@ -4,28 +4,32 @@ import 'package:flutter/material.dart';
 import '../models/delivery_tipe.dart';
 import '../models/order.dart';
 
+final _style = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.bold,
+  color: Colors.grey.shade600,
+);
+
+const spacer = SizedBox(height: 6);
+
 class TotalContainer extends StatelessWidget {
   const TotalContainer({
     Key? key,
     required this.order,
     this.showDiscount = false,
+    this.showServiceCharge = false,
   }) : super(key: key);
 
   final Order order;
   final bool showDiscount;
+  final bool showServiceCharge;
 
   Row _row(label, value) {
-    final style = TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.bold,
-      color: Colors.grey.shade600,
-    );
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: style),
-        Text(value, style: style),
+        Text(label, style: _style),
+        Text(value, style: _style),
       ],
     );
   }
@@ -33,7 +37,7 @@ class TotalContainer extends StatelessWidget {
   List<Widget> _deliveryChargeRow() {
     return order.deliveryType == DeliveryType.delivery
         ? [
-            const SizedBox(height: 8),
+            spacer,
             _row('Taxa de Entrega', order.formattedCharge),
           ]
         : [];
@@ -42,8 +46,17 @@ class TotalContainer extends StatelessWidget {
   List<Widget> _discountRow() {
     return showDiscount && order.discount > 0
         ? [
-            const SizedBox(height: 8),
-            _row('Discount', order.discount.toReal),
+            spacer,
+            _row('Desconto', order.discount.toReal),
+          ]
+        : [];
+  }
+
+  List<Widget> _serviceChargeRow() {
+    return showServiceCharge
+        ? [
+            spacer,
+            _row('Taxa de Serviço', order.formattedServiceCharge),
           ]
         : [];
   }
@@ -53,10 +66,11 @@ class TotalContainer extends StatelessWidget {
     return Column(
       children: [
         _row('Itens', '${order.items.length}'),
-        const SizedBox(height: 8),
+        spacer,
         _row('Subtotal', order.subTotal.toReal),
         ..._deliveryChargeRow(),
         ..._discountRow(),
+        ..._serviceChargeRow(),
         const Divider(height: 20, thickness: 1),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

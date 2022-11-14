@@ -1,3 +1,5 @@
+import 'package:e_markety_client/features/admin/home/services/status_summary_notifier.dart';
+import 'package:e_markety_client/features/admin/order/components/orders_overview_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -14,7 +16,15 @@ class DashboardPage extends StatelessWidget {
       bloc: Modular.get<AuthBloc>(),
       builder: (context, state) {
         if (state is AuthLogged) {
-          return EmptyContainer(text: 'Bem-vindo ${state.user.name}');
+          return ValueListenableBuilder(
+            valueListenable: Modular.get<StatusSummaryNotifier>(),
+            builder: (context, value, child) {
+              if (value.isEmpty) {
+                return const EmptyContainer();
+              }
+              return OrdersOverviewChart(statusSummary: value);
+            },
+          );
         }
         return const EmptyContainer(text: 'Carregando dados...');
       },

@@ -153,7 +153,7 @@ class _ProductInputFieldsState extends State<ProductInputFields> {
                 fieldName: 'stock',
                 data: _product.stock.toString(),
                 onCustomSaved: _onSaved,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                inputFormatters: [MaskFormatterUtils.decimalNumber],
               ),
             ),
             const SizedBox(width: 16),

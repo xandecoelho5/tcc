@@ -55,6 +55,8 @@ class _CompanyContainerState extends State<CompanyContainer> {
     'banners': (v) => _company = _company.copyWith(
           banners: v?.split('\n').map((e) => e.trim()).toList(),
         ),
+    'serviceCharge': (v) => _company =
+        _company.copyWith(serviceCharge: double.tryParse(v ?? '0') ?? 0),
   };
 
   void _onSaved(String? field, String? value) {
@@ -248,18 +250,28 @@ class _CompanyContainerState extends State<CompanyContainer> {
             ],
           ),
           const SizedBox(height: 24),
-          _AddressInput(
-            address: _company.address,
-            onEditAddress: _onEditAddress,
-          ),
-          const SizedBox(height: 24),
-          TextFieldWithLabel(
-            label: 'Banners',
-            maxLines: 5,
-            fieldName: 'banners',
-            data: _company.banners.join('\n'),
-            onCustomSaved: _onSaved,
-            onValidate: Validatorless.required(Strings.obrigatorio),
+          Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: TextFieldWithLabel(
+                  label: 'Taxa de Serviço',
+                  fieldName: 'serviceCharge',
+                  data: _company.serviceCharge.toString(),
+                  onCustomSaved: _onSaved,
+                  onValidate: Validatorless.required(Strings.obrigatorio),
+                  inputFormatters: [MaskFormatterUtils.decimalNumber],
+                ),
+              ),
+              const SizedBox(width: 20),
+              Expanded(
+                flex: 7,
+                child: _AddressInput(
+                  address: _company.address,
+                  onEditAddress: _onEditAddress,
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 24),
           FilledButton(
@@ -278,12 +290,25 @@ class _CompanyContainerState extends State<CompanyContainer> {
       title: 'Configurações da Empresa',
       child: Form(
         key: _formKey,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(
           children: [
-            _buildLogo(),
-            const SizedBox(width: 20),
-            _buildInputs(),
+            TextFieldWithLabel(
+              label: 'Banners',
+              maxLines: 5,
+              fieldName: 'banners',
+              data: _company.banners.join('\n'),
+              onCustomSaved: _onSaved,
+              onValidate: Validatorless.required(Strings.obrigatorio),
+            ),
+            const SizedBox(height: 24),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildLogo(),
+                const SizedBox(width: 20),
+                _buildInputs(),
+              ],
+            ),
           ],
         ),
       ),

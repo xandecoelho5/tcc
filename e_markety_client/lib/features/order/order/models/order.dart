@@ -6,8 +6,6 @@ import '../../shopping_cart/models/cart_item.dart';
 import 'delivery_tipe.dart';
 import 'order_status.dart';
 
-part 'order.g.dart';
-
 @JsonSerializable(explicitToJson: true)
 class Order {
   final int id;
@@ -19,6 +17,7 @@ class Order {
   final Address? deliveryAddress;
   final DateTime? deliveryTime;
   final double? deliveryCharge;
+  final double serviceCharge;
   final OrderStatus status;
 
   const Order({
@@ -31,6 +30,7 @@ class Order {
     this.deliveryAddress,
     this.deliveryTime,
     this.deliveryCharge,
+    required this.serviceCharge,
     this.status = OrderStatus.placed,
   });
 
@@ -48,7 +48,11 @@ class Order {
       ? deliveryCharge!.toReal
       : 'Grátis';
 
-  double get calculatedTotal => subTotal + (deliveryCharge ?? 0) - discount;
+  String get formattedServiceCharge =>
+      serviceCharge > 0 ? serviceCharge.toReal : 'Grátis';
+
+  double get calculatedTotal =>
+      subTotal + (deliveryCharge ?? 0) + serviceCharge - discount;
 
   Map<String, dynamic> toMap() {
     return {
@@ -61,6 +65,7 @@ class Order {
       'endereco': deliveryAddress?.toMap(),
       'horarioEntrega': deliveryTime?.toIso8601String(),
       'taxaEntrega': deliveryCharge,
+      'taxaServico': serviceCharge,
       'status': status.toRemoteName(),
     };
   }
@@ -79,13 +84,10 @@ class Order {
           ? null
           : DateTime.parse(map['horarioEntrega']),
       deliveryCharge: map['taxaEntrega'],
+      serviceCharge: map['taxaServico'],
       status: OrderStatus.fromString(map['status']),
     );
   }
-
-  factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
-
-  Map<String, dynamic> toJson() => _$OrderToJson(this);
 
   Order copyWith({
     int? id,
@@ -96,6 +98,7 @@ class Order {
     Address? deliveryAddress,
     DateTime? deliveryTime,
     double? deliveryCharge,
+    double? serviceCharge,
     OrderStatus? status,
   }) {
     return Order(
@@ -108,6 +111,7 @@ class Order {
       deliveryAddress: deliveryAddress ?? this.deliveryAddress,
       deliveryTime: deliveryTime ?? this.deliveryTime,
       deliveryCharge: deliveryCharge ?? this.deliveryCharge,
+      serviceCharge: serviceCharge ?? this.serviceCharge,
       status: status ?? this.status,
     );
   }
@@ -117,6 +121,7 @@ class Order {
     return 'Order{id: $id, createdAt: $createdAt, total: $total, '
         'deliveryType: $deliveryType, items: $items, notes: $notes, '
         'deliveryAddress: $deliveryAddress, deliveryTime: $deliveryTime, '
-        'deliveryCharge: $deliveryCharge, status: $status}';
+        'deliveryCharge: $deliveryCharge, serviceCharge: $serviceCharge, '
+        'status: $status}';
   }
 }

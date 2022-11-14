@@ -30,7 +30,8 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  late Order _order = widget.order;
+  late Order _order =
+      widget.order.copyWith(total: widget.order.calculatedTotal);
 
   void _onPlaceOrder() {
     if (_order.deliveryType == DeliveryType.delivery) {
@@ -39,7 +40,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         return;
       }
       if (_order.deliveryTime == null) {
-        ModularUtils.showError('Selecione um endereço de entrega');
+        ModularUtils.showError('Selecione um horário para entrega');
         return;
       }
     }
@@ -55,12 +56,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       if (_order.deliveryType == DeliveryType.pickup) {
         _order = Order(
           id: _order.id,
-          total: _order.subTotal,
+          total: _order.calculatedTotal,
           createdAt: _order.createdAt,
           status: _order.status,
           deliveryType: DeliveryType.pickup,
           notes: _order.notes,
           items: _order.items,
+          serviceCharge: _order.serviceCharge,
         );
       }
 
@@ -209,7 +211,11 @@ class _OrderBill extends StatelessWidget {
   Widget build(BuildContext context) {
     return InformationContainer(
       title: 'Resumo da Conta',
-      child: TotalContainer(order: _order, showDiscount: true),
+      child: TotalContainer(
+        order: _order,
+        showDiscount: true,
+        showServiceCharge: true,
+      ),
     );
   }
 }

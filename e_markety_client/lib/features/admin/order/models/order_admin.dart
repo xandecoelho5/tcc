@@ -16,6 +16,7 @@ class OrderAdmin extends Order {
     super.deliveryAddress,
     super.deliveryTime,
     super.deliveryCharge,
+    required super.serviceCharge,
     super.status = OrderStatus.placed,
     required this.user,
   });
@@ -31,6 +32,7 @@ class OrderAdmin extends Order {
           deliveryAddress: order.deliveryAddress,
           deliveryTime: order.deliveryTime,
           deliveryCharge: order.deliveryCharge,
+          serviceCharge: order.serviceCharge,
           status: order.status,
         );
 
@@ -39,13 +41,5 @@ class OrderAdmin extends Order {
       Order.fromMap(map),
       User.fromMap(map['usuario']),
     );
-  }
-
-  @override
-  String toString() {
-    return 'Order{id: $id, createdAt: $createdAt, total: $total, '
-        'deliveryType: $deliveryType, items: $items, notes: $notes, '
-        'deliveryAddress: $deliveryAddress, deliveryTime: $deliveryTime, '
-        'deliveryCharge: $deliveryCharge, status: $status, user: $user}';
   }
 }
