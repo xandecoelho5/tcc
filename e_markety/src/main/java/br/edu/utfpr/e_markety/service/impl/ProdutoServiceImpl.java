@@ -65,7 +65,7 @@ public class ProdutoServiceImpl extends GenericServiceImpl<Produto, Long, Produt
         for (PedidoItemDto dto : dtos) {
             var estoque = repository.findEstoqueById(dto.getProdutoId());
             if (estoque < dto.getQuantidade()) {
-                error.append("Produto ").append(dto.getProdutoNome()).append(" não possui estoque suficiente. Estoque atual: ").append(estoque).append(".");
+                error.append(dto.getProdutoNome()).append(". Estoque atual: ").append(estoque).append(".");
             }
         }
         if (!error.isEmpty()) {

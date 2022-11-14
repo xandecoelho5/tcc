@@ -1,6 +1,7 @@
 package br.edu.utfpr.e_markety.config.security.dto;
 
 import br.edu.utfpr.e_markety.model.Usuario;
+import br.edu.utfpr.e_markety.model.enums.Cargo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,7 +32,7 @@ public class UsuarioDto {
     private List<Long> favoritosIds;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private boolean admin;
+    private Cargo cargo;
 
     public static UsuarioDto fromUsuario(Usuario usuario) {
         UsuarioDto usuarioDto = new UsuarioDto();
@@ -42,6 +43,7 @@ public class UsuarioDto {
         usuarioDto.setTelefone(usuario.getTelefone());
         usuarioDto.setImagemUrl(usuario.getImagemUrl());
         usuarioDto.setFavoritosIds(usuario.getFavoritosIds());
+        usuarioDto.setCargo(usuario.getCargo());
 
         return usuarioDto;
     }

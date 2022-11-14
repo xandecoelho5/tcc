@@ -1,7 +1,9 @@
 package br.edu.utfpr.e_markety.model;
 
 import br.edu.utfpr.e_markety.config.security.dto.UsuarioEditDto;
+import br.edu.utfpr.e_markety.model.enums.Cargo;
 import com.vladmihalcea.hibernate.type.array.ListArrayType;
+import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Type;
@@ -12,16 +14,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @TypeDef(name = "list-array", typeClass = ListArrayType.class)
+@TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class Usuario implements UserDetails {
 
     @Id
@@ -44,8 +46,10 @@ public class Usuario implements UserDetails {
     @Column(length = 2048, nullable = false)
     private String imagemUrl;
 
-    @Column(columnDefinition = "boolean default false")
-    private boolean admin;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "cargo_enum DEFAULT 'USUARIO'::cargo_enum")
+    @Type(type = "pgsql_enum")
+    private Cargo cargo;
 
     @Type(type = "list-array")
     @Column(name = "favoritos_ids", columnDefinition = "bigint[]")
@@ -54,7 +58,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + (admin ? "ADMIN" : "USER")));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + cargo.name()));
     }
 
     @Override

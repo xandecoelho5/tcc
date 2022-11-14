@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 
 import static br.edu.utfpr.e_markety.utils.PrincipalUtils.getLoggedUsuario;
@@ -59,6 +60,9 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long, Usuari
     @Override
     public UsuarioDto updateUsuario(UsuarioEditDto usuarioDto) {
         var usuario = getLoggedUsuario();
+        if (!Objects.equals(usuario.getEmail(), usuarioDto.getEmail())) {
+            verifyUserExists(usuarioDto.getEmail());
+        }
         usuario.setFromUsuarioEdit(usuarioDto);
         usuario = repository.save(usuario);
         return mapEntityToDto(usuario);
