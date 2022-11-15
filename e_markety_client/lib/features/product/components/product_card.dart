@@ -32,7 +32,7 @@ class ProductCard extends StatelessWidget {
     return Positioned(
       top: 6,
       right: 5,
-      child: FavouriteIcon(product: product),
+      child: FavouriteIcon(product: product, size: 26),
     );
   }
 
@@ -56,59 +56,97 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  Column _productInfo() {
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () =>
+          Modular.to.pushNamed('/product/product-details', arguments: product),
+      borderRadius: BorderRadius.circular(8),
+      child: Container(
+        height: 225,
+        width: MediaQuery.of(context).size.width * 0.44,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Stack(
+          children: [
+            _ProductInfo(product: product),
+            if (product.hasPromotion || product.isNew)
+              _buildPromotionOrNewFlag(),
+            _buildFavoriteFlag(),
+            _buildCartButton(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ProductInfo extends StatelessWidget {
+  const _ProductInfo({Key? key, required this.product}) : super(key: key);
+
+  final Product product;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           flex: 6,
-          child: Container(
-            color: Colors.grey.withOpacity(0.05),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.network(
-                  product.imageUrl,
-                  height: 145,
-                  width: double.infinity,
-                  fit: BoxFit.fill,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.network(
+                product.imageUrl,
+                height: 100,
+                width: double.infinity,
+                fit: BoxFit.contain,
+              ),
+              const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.only(left: 12),
+                child: CategoryChip.small(
+                  label: product.category!.name,
+                  color: product.category!.color,
                 ),
-                const SizedBox(height: 4),
-                Padding(
-                  padding: const EdgeInsets.only(left: 12),
-                  child: CategoryChip.small(
-                    label: product.category!.name,
-                    color: product.category!.color,
+              ),
+              const SizedBox(height: 4),
+              Padding(
+                padding: const EdgeInsets.only(left: 12),
+                child: Text(
+                  product.name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: -0.5,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Padding(
+                padding: const EdgeInsets.only(left: 12),
+                child: Text(
+                  product.formattedWeight,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey.shade700,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: -0.5,
                   ),
                 ),
-                const SizedBox(height: 4),
-                Padding(
-                  padding: const EdgeInsets.only(left: 12),
-                  child: Text(
-                    product.name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: -0.5,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Padding(
-                  padding: const EdgeInsets.only(left: 12),
-                  child: Text(
-                    product.formattedWeight,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey.shade700,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: -0.5,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
         Expanded(
@@ -125,29 +163,6 @@ class ProductCard extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () =>
-          Modular.to.pushNamed('/product/product-details', arguments: product),
-      child: Card(
-        child: SizedBox(
-          height: 265,
-          width: MediaQuery.of(context).size.width * 0.44,
-          child: Stack(
-            children: [
-              _productInfo(),
-              if (product.hasPromotion || product.isNew)
-                _buildPromotionOrNewFlag(),
-              _buildFavoriteFlag(),
-              _buildCartButton(),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

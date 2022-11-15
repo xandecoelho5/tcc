@@ -12,79 +12,76 @@ class HomeAppBar {
   const HomeAppBar._();
 
   static AppBar build(BuildContext context) {
-    Padding _titleRow(User user) {
-      return Padding(
-        padding: const EdgeInsets.only(top: 8),
-        child: Row(
-          children: [
-            Material(
-              elevation: 1,
+    Row _titleRow(User user) {
+      return Row(
+        children: [
+          Material(
+            elevation: 1,
+            borderRadius: BorderRadius.circular(50),
+            child: InkWell(
+              onTap: () => Modular.to.pushNamed('/user/user-profile'),
               borderRadius: BorderRadius.circular(50),
-              child: InkWell(
-                onTap: () => Modular.to.pushNamed('/user/user-profile'),
-                borderRadius: BorderRadius.circular(50),
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                radius: 21,
                 child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 21,
-                  child: CircleAvatar(
-                    radius: 17,
-                    backgroundImage: NetworkImage(user.avatarUrl),
-                  ),
+                  radius: 17,
+                  backgroundImage: NetworkImage(user.avatarUrl),
                 ),
               ),
             ),
-            const SizedBox(width: 8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Olá, ${user.name}',
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: kBasicDarkColor,
-                  ),
+          ),
+          const SizedBox(width: 8),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Olá, ${user.name}',
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: kBasicDarkColor,
                 ),
-                BlocBuilder<DefaultAddressBloc, DefaultAddressState>(
-                  bloc: Modular.get<DefaultAddressBloc>(),
-                  builder: (context, state) {
-                    if (state is DefaultAddressLoaded) {
-                      return Row(
-                        children: [
-                          const Icon(
-                            Icons.location_on,
-                            color: kPrimaryColor,
-                            size: 12,
-                          ),
-                          const SizedBox(width: 2),
-                          Text(
-                            state.address.street,
-                            style: TextStyle(
-                              fontSize: 11,
-                              color: Colors.grey.shade500,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        ],
-                      );
-                    }
-                    if (state is DefaultAddressError) {
-                      return Text(
-                        state.message,
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: Colors.grey.shade500,
-                          fontWeight: FontWeight.bold,
+              ),
+              BlocBuilder<DefaultAddressBloc, DefaultAddressState>(
+                bloc: Modular.get<DefaultAddressBloc>(),
+                builder: (context, state) {
+                  if (state is DefaultAddressLoaded) {
+                    return Row(
+                      children: [
+                        const Icon(
+                          Icons.location_on,
+                          color: kPrimaryColor,
+                          size: 12,
                         ),
-                      );
-                    }
-                    return Container();
-                  },
-                ),
-              ],
-            ),
-          ],
-        ),
+                        const SizedBox(width: 2),
+                        Text(
+                          state.address.street,
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.grey.shade500,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
+                    );
+                  }
+                  if (state is DefaultAddressError) {
+                    return Text(
+                      state.message,
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: Colors.grey.shade500,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  }
+                  return Container();
+                },
+              ),
+            ],
+          ),
+        ],
       );
     }
 

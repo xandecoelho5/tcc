@@ -60,7 +60,7 @@ class _SearchBarWithFilterState extends State<SearchBarWithFilter> {
               padding: const EdgeInsets.only(left: 8, right: 16),
               child: CircleAvatar(
                 radius: 12,
-                backgroundColor: kBasicLightColor,
+                backgroundColor: Colors.grey.shade300,
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(

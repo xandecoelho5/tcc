@@ -36,7 +36,7 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
-    final width = _isBig ? deviceWidth * 0.43 : 120.0;
+    final width = _isBig ? deviceWidth * 0.44 : 120.0;
 
     return GestureDetector(
       onTap: () => Modular.to.pushNamed(
@@ -47,8 +47,9 @@ class CategoryCard extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: kBackgroundColor,
+          color: kScaffoldColor,
           borderRadius: BorderRadius.circular(8),
+          boxShadow: kElevationToShadow[3],
         ),
         child: Stack(
           alignment: Alignment.center,
@@ -71,8 +72,17 @@ class CategoryCard extends StatelessWidget {
               width: width,
               child: Container(
                 height: imageHeight,
-                color: Colors.white,
-                child: Image.asset(category.imageUrl, fit: BoxFit.cover),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(8),
+                    bottomRight: Radius.circular(8),
+                  ),
+                  image: DecorationImage(
+                    image: AssetImage(category.imageUrl),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
             ),
             Positioned(

@@ -28,12 +28,12 @@ class User extends Equatable {
     this.phone = '',
     this.avatarUrl = Assets.avatarPlaceholderUrl,
     this.favouritesIds = const [],
-    this.role = Role.user,
+    this.role = Role.client,
   });
 
   bool isFavourite(int id) => favouritesIds.contains(id);
 
-  bool get isAdmin => role == Role.admin || role == Role.companyAdmin;
+  bool get isAdmin => role == Role.admin || role == Role.employee;
 
   User copyWith({
     String? name,

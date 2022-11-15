@@ -75,6 +75,9 @@ class ProductsByCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Modular.get<ProductByCategoryBloc>()
+        .add(ProductGetAllByCategoryEvent(category.id));
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: CustomScrollView(
@@ -87,7 +90,7 @@ class ProductsByCategoryScreen extends StatelessWidget {
               background: SearchBarWithFilter(),
             ),
           ),
-          _ProductsSliverList(categoryId: category.id),
+          const _ProductsSliverList(),
         ],
       ),
     );
@@ -95,18 +98,12 @@ class ProductsByCategoryScreen extends StatelessWidget {
 }
 
 class _ProductsSliverList extends StatelessWidget {
-  const _ProductsSliverList({
-    Key? key,
-    required this.categoryId,
-  }) : super(key: key);
-
-  final int categoryId;
+  const _ProductsSliverList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductByCategoryBloc, ProductByCategoryState>(
-      bloc: Modular.get<ProductByCategoryBloc>()
-        ..add(ProductGetAllByCategoryEvent(categoryId)),
+      bloc: Modular.get<ProductByCategoryBloc>(),
       builder: (context, state) {
         if (state is ProductByCategoryLoaded) {
           if (state.products.isEmpty) {
@@ -123,17 +120,21 @@ class _ProductsSliverList extends StatelessWidget {
             );
           }
           return SliverGrid(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              mainAxisExtent: MediaQuery.of(context).size.height * 0.45,
+              crossAxisSpacing: 15,
+              mainAxisSpacing: 15,
+              childAspectRatio: 0.77,
             ),
             delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return ProductCard(product: state.products[index]);
-              },
               childCount: state.products.length,
+              (_, i) => Padding(
+                padding: EdgeInsets.only(
+                  left: i.isEven ? 16 : 0,
+                  right: i.isOdd ? 16 : 0,
+                ),
+                child: ProductCard(product: state.products[i]),
+              ),
             ),
           );
         }

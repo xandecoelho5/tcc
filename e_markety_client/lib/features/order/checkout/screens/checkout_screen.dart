@@ -211,11 +211,7 @@ class _OrderBill extends StatelessWidget {
   Widget build(BuildContext context) {
     return InformationContainer(
       title: 'Resumo da Conta',
-      child: TotalContainer(
-        order: _order,
-        showDiscount: true,
-        showServiceCharge: true,
-      ),
+      child: TotalContainer(order: _order, showServiceCharge: true),
     );
   }
 }

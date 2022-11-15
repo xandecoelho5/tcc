@@ -20,7 +20,7 @@ class LoadedCart extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-          flex: 5,
+          flex: 6,
           child: CartItemList(cartItems: cartItems),
         ),
         BlocBuilder<CurrentOrderBloc, CurrentOrderState>(
@@ -49,16 +49,17 @@ class _BottomContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      flex: 3,
+      flex: 4,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
+                boxShadow: kElevationToShadow[2],
               ),
               child: TotalContainer(order: order),
             ),

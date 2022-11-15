@@ -55,38 +55,41 @@ class _ProductQuantityState extends State<ProductQuantity> {
               padding: EdgeInsets.only(left: 16),
               child: Text(
                 'Quantidade',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
-            Row(
-              children: [
-                QuantityButton.minus(
-                  height: double.infinity,
-                  onTap: _onMinusTapped,
-                ),
-                SizedBox(
-                  width: 55,
-                  child: Text(
-                    _quantity.toStringAsFixed(widget.product.fractionDigits),
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: kBasicLightColor),
+              ),
+              child: Row(
+                children: [
+                  QuantityButton.minus(
+                    height: double.infinity,
+                    onTap: _onMinusTapped,
+                  ),
+                  SizedBox(
+                    width: 55,
+                    child: Text(
+                      _quantity.toStringAsFixed(widget.product.fractionDigits),
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
-                ),
-                QuantityButton.plus(
-                  height: double.infinity,
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
+                  QuantityButton.plus(
+                    height: double.infinity,
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    ),
+                    onTap: _onPlusTapped,
                   ),
-                  onTap: _onPlusTapped,
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

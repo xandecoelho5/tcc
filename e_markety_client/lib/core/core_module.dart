@@ -46,6 +46,10 @@ class CoreModule extends Module {
             onError: (error, handler) async {
               print(error);
               if (error.response?.statusCode == 401) {
+                if (error.response?.data == Strings.usuarioInvalido) {
+                  await i.get<ICacheService>().delete(Strings.token);
+                  error.response?.data = 'Sessão expirada';
+                }
                 Modular.to.navigate('/');
               }
               if (error.response?.statusCode == 403) {

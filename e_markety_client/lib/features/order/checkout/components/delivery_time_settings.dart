@@ -1,4 +1,5 @@
 import 'package:e_markety_client/shared/utils/date_time_utils.dart';
+import 'package:e_markety_client/shared/utils/modular_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -27,7 +28,7 @@ class _DeliveryTimeSettingsState extends State<DeliveryTimeSettings> {
 
   void _onDeliveryTimeChanged(DateTime? value) => widget.onTimeChanged(value);
 
-  List<DateTime> _buildItems(DateTime start, DateTime end) {
+  List<DateTime> _buildHourly(DateTime start, DateTime end) {
     var _start = start;
     if (_start.isAfter(end)) {
       return [];
@@ -45,6 +46,20 @@ class _DeliveryTimeSettingsState extends State<DeliveryTimeSettings> {
     return items;
   }
 
+  List<DropdownMenuItem<DateTime>> _buildItems(company) {
+    return _buildHourly(
+      DateTimeUtils.fromHour(company.deliveryOpeningTime ?? '00:00'),
+      DateTimeUtils.fromHour(company.deliveryClosingTime ?? '00:00'),
+    )
+        .map(
+          (e) => DropdownMenuItem(
+            value: e,
+            child: Text('${e.hour}:00 - ${e.hour + 1}:00'),
+          ),
+        )
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return InformationContainer(
@@ -57,14 +72,14 @@ class _DeliveryTimeSettingsState extends State<DeliveryTimeSettings> {
           }
 
           if (state is CompanyErrorState) {
-            return Text(state.message);
+            ModularUtils.showError(state.message);
           }
 
           if (state is CompanyLoadedCurrentState) {
-            final company = state.company;
-
             return DropdownButtonFormField(
               decoration: InputDecoration(
+                contentPadding: const EdgeInsets.fromLTRB(16, 10, 8, 10),
+                isCollapsed: true,
                 filled: true,
                 fillColor: Colors.white,
                 border: OutlineInputBorder(
@@ -72,21 +87,7 @@ class _DeliveryTimeSettingsState extends State<DeliveryTimeSettings> {
                   borderSide: BorderSide(color: Colors.grey.shade300, width: 2),
                 ),
               ),
-              items: _buildItems(
-                DateTimeUtils.fromHourString(
-                  company.deliveryOpeningTime ?? '00:00',
-                ),
-                DateTimeUtils.fromHourString(
-                  company.deliveryClosingTime ?? '00:00',
-                ),
-              )
-                  .map(
-                    (e) => DropdownMenuItem(
-                      value: e,
-                      child: Text('${e.hour}:00 - ${e.hour + 1}:00'),
-                    ),
-                  )
-                  .toList(),
+              items: _buildItems(state.company),
               onChanged: _onDeliveryTimeChanged,
             );
           }

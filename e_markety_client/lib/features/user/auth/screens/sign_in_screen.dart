@@ -30,6 +30,7 @@ class SignInScreen extends StatelessWidget {
           BlocListener<AuthBloc, AuthState>(
             bloc: Modular.get<AuthBloc>(),
             listener: (context, state) {
+              print(state);
               if (state is AuthLogged) {
                 if (state.user.isAdmin) {
                   Modular.to.pushNamedAndRemoveUntil(
@@ -48,14 +49,15 @@ class SignInScreen extends StatelessWidget {
               }
             },
           ),
-          BlocListener<CompanyBloc, CompanyState>(
-            bloc: Modular.get<CompanyBloc>()..add(CompanyGetAllEvent()),
-            listener: (context, state) {
-              if (state is CompanyErrorState) {
-                ModularUtils.showError(state.message);
-              }
-            },
-          ),
+          if (Modular.get<AppPlatform>().isMobile)
+            BlocListener<CompanyBloc, CompanyState>(
+              bloc: Modular.get<CompanyBloc>()..add(CompanyGetAllEvent()),
+              listener: (context, state) {
+                if (state is CompanyErrorState) {
+                  ModularUtils.showError(state.message);
+                }
+              },
+            ),
         ],
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -91,7 +93,7 @@ class _SignInForm extends StatefulWidget {
 class _SignInFormState extends State<_SignInForm> {
   final _loginFormKey = GlobalKey<FormState>();
 
-  LoginModel login = const LoginModel(login: '', password: '', companyId: 0);
+  LoginModel login = const LoginModel(login: '', password: '');
 
   Future<void> _signIn() async {
     if (_loginFormKey.currentState!.validate()) {
@@ -163,7 +165,7 @@ class _SignInFormState extends State<_SignInForm> {
               ),
             ],
           ),
-          _buildDropdown(),
+          if (Modular.get<AppPlatform>().isMobile) _buildDropdown(),
           const SizedBox(height: 20),
           FilledButton(
             text: 'Entrar',

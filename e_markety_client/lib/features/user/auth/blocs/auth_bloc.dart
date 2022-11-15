@@ -17,7 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(this._authService, this._userService) : super(AuthInitial()) {
     on<AuthSignInEvent>(_onAuthSignInEvent);
     on<AuthSignOutEvent>(_onAuthSignOutEvent);
-    on<AuthGetCurrentUserEvent>(_onAuthGetCurrentUserEvent);
+    on<AuthGetCurrentUserEvent>(_onGetCurrentUser);
   }
 
   Future<void> _onAuthSignInEvent(AuthSignInEvent event, emit) async {
@@ -25,7 +25,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final response = await _authService.signIn(event.login);
     await response.fold(
       (l) => emit(AuthError(l.message)),
-      (r) => _onAuthGetCurrentUserEvent(event, emit),
+      (r) => _onGetCurrentUser(event, emit),
     );
   }
 
@@ -34,11 +34,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthSignedOut());
   }
 
-  Future<void> _onAuthGetCurrentUserEvent(event, emit) async {
+  Future<void> _onGetCurrentUser(event, emit) async {
     final user = await _userService.getCurrentUser();
     await user.fold(
       (l) => emit(AuthError(l.message)),
-      (r) => emit(AuthLogged(r)),
+      (r) {
+        emit(AuthLogged(r));
+        event.onSuccessful?.call();
+      },
     );
   }
 }

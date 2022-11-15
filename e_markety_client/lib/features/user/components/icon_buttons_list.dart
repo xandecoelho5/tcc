@@ -25,11 +25,6 @@ final List<IconButtonModel> iconButtons = [
     label: 'Meus Endereços',
     onTap: () => Modular.to.pushNamed('/address/'),
   ),
-  IconButtonModel(
-    icon: Icons.settings_outlined,
-    label: 'Configurações',
-    onTap: () {},
-  ),
 ];
 
 class IconButtonsList extends StatelessWidget {
@@ -45,17 +40,15 @@ class IconButtonsList extends StatelessWidget {
             IconButtonContainer(iconButton: iconButtons[0]),
             const SizedBox(width: 16),
             IconButtonContainer(iconButton: iconButtons[1]),
-            const SizedBox(width: 16),
-            IconButtonContainer(iconButton: iconButtons[2]),
           ],
         ),
         const SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButtonContainer(iconButton: iconButtons[3]),
+            IconButtonContainer(iconButton: iconButtons[2]),
             const SizedBox(width: 16),
-            IconButtonContainer(iconButton: iconButtons[4]),
+            IconButtonContainer(iconButton: iconButtons[3]),
           ],
         ),
       ],

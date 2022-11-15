@@ -10,4 +10,8 @@ class AuthSignInEvent implements AuthEvent {
 
 class AuthSignOutEvent implements AuthEvent {}
 
-class AuthGetCurrentUserEvent implements AuthEvent {}
+class AuthGetCurrentUserEvent implements AuthEvent {
+  final Function()? onSuccessful;
+
+  AuthGetCurrentUserEvent({this.onSuccessful});
+}

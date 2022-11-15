@@ -18,4 +18,5 @@ class Strings {
   // errors
   static const String noneOpenPedido =
       'Não existe um pedido em aberto para este usuário';
+  static const String usuarioInvalido = 'Usuário inválido ou não autorizado';
 }

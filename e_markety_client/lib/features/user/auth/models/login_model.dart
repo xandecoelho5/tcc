@@ -1,12 +1,12 @@
 class LoginModel {
   final String login;
   final String password;
-  final int companyId;
+  final int? companyId;
 
   const LoginModel({
     required this.login,
     required this.password,
-    required this.companyId,
+    this.companyId,
   });
 
   Map<String, dynamic> toMap() {

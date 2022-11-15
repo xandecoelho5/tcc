@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const _Banners(),
               const SizedBox(height: 16),
               const _Categories(),
-              const SizedBox(height: 16),
+              const SizedBox(height: 4),
               _BestSellers(productBloc),
               const SizedBox(height: 16),
             ],
@@ -137,7 +137,6 @@ class _Categories extends StatelessWidget {
           text: 'Categorias',
           onViewAll: () => Modular.to.pushNamed('/category/'),
         ),
-        const SizedBox(height: 4),
         BlocBuilder<CategoryBloc, CategoryState>(
           bloc: Modular.get<CategoryBloc>(),
           builder: (context, state) {

@@ -26,38 +26,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     _cartItem = _cartItem.copyWith(quantity: quantity);
   }
 
-  Row _addToCartButton() {
-    return Row(
-      children: [
-        Expanded(
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              fixedSize: const Size(double.infinity, 100),
-              backgroundColor: kSecondaryColor,
-              foregroundColor: Colors.white,
-            ),
-            onPressed: () => ModularUtils.addToCart(_cartItem),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(''),
-                  Text(
-                    'Adicionar ao Carrinho',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  Icon(Icons.shopping_bag_outlined),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
+  ElevatedButton _addToCartButton() {
+    return ElevatedButton.icon(
+      style: ElevatedButton.styleFrom(
+        fixedSize: const Size(double.infinity, 100),
+        backgroundColor: kSecondaryColor,
+        foregroundColor: Colors.white,
+      ),
+      onPressed: () => ModularUtils.addToCart(_cartItem),
+      icon: const Icon(Icons.add_shopping_cart),
+      label: const Text(
+        'Adicionar ao Carrinho',
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        textAlign: TextAlign.center,
+      ),
     );
   }
 
@@ -70,16 +52,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       ),
       // extendBodyBehindAppBar: true,
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             flex: 9,
             child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-                child: ProductDetails(
-                  product: widget.product,
-                  onQuantityChanged: _onQuantityChanged,
-                ),
+              child: ProductDetails(
+                product: widget.product,
+                onQuantityChanged: _onQuantityChanged,
               ),
             ),
           ),

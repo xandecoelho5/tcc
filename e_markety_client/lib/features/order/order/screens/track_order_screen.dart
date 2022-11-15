@@ -87,6 +87,7 @@ class _TrackOrderView extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
+                boxShadow: kElevationToShadow[1],
               ),
               child: OrderTimeline(
                 process: order.status,

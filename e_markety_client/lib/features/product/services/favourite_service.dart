@@ -64,7 +64,7 @@ class FavouriteService implements IFavouriteService {
 
   Future<void> _updateFavourites(List<Product> favourites, int id) async {
     _streamController.add(favourites);
-    await _httpService.patch(_baseUrl, {'id': id});
+    await _httpService.patch(_baseUrl, id);
     Modular.get<AuthBloc>().add(AuthGetCurrentUserEvent());
   }
 }

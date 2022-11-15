@@ -16,12 +16,10 @@ class TotalContainer extends StatelessWidget {
   const TotalContainer({
     Key? key,
     required this.order,
-    this.showDiscount = false,
     this.showServiceCharge = false,
   }) : super(key: key);
 
   final Order order;
-  final bool showDiscount;
   final bool showServiceCharge;
 
   Row _row(label, value) {
@@ -44,7 +42,7 @@ class TotalContainer extends StatelessWidget {
   }
 
   List<Widget> _discountRow() {
-    return showDiscount && order.discount > 0
+    return order.discount > 0
         ? [
             spacer,
             _row('Desconto', order.discount.toReal),
@@ -71,7 +69,7 @@ class TotalContainer extends StatelessWidget {
         ..._deliveryChargeRow(),
         ..._discountRow(),
         ..._serviceChargeRow(),
-        const Divider(height: 20, thickness: 1),
+        const Divider(height: 16, thickness: 1),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

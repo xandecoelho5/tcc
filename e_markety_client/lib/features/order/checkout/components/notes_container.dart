@@ -29,7 +29,7 @@ class NotesContainer extends StatelessWidget {
           fillColor: Colors.white,
           filled: true,
         ),
-        maxLines: 5,
+        maxLines: 3,
         onChanged: onChange,
       ),
     );

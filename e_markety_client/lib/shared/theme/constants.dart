@@ -4,8 +4,8 @@ const kPrimaryColor = Color(0xFFEB3E4B);
 const kSecondaryColor = Color(0xFF2AC17E);
 const kBasicDarkColor = Color(0xFF322C46);
 const kBasicLightColor = Color(0xFFE9E9E9);
-const kBackgroundColor = Color(0xFFFFFFFF);
-const kScaffoldColor = Color(0xFFF5F5F5);
+const kBackgroundColor = Color(0xFFF5F5F5);
+const kScaffoldColor = Color(0xFFFFFFFF);
 
 const kWeakSecondaryColor = Color(0XFFCEF7E4);
 

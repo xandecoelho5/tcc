@@ -92,6 +92,7 @@ class ProductSlidableItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
+          boxShadow: kElevationToShadow[1],
         ),
         child: Row(
           children: [

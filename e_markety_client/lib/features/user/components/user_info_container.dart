@@ -63,15 +63,9 @@ class _UserInfoContainerState extends State<UserInfoContainer> {
       obscureText: _isObscure && isObscure,
       onFieldSubmitted: widget.onFieldSubmitted,
       decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.grey.shade50,
         labelText: widget.label,
         isDense: true,
-        prefixIcon: CircleAvatar(
-          backgroundColor: Colors.white,
-          radius: 15,
-          child: Icon(widget.icon, color: kPrimaryColor, size: 22),
-        ),
+        prefixIcon: Icon(widget.icon, color: kPrimaryColor, size: 28),
         suffixIcon: isObscure
             ? GestureDetector(
                 onTap: () => setState(() => _isObscure = !_isObscure),
@@ -94,9 +88,10 @@ class _UserInfoContainerState extends State<UserInfoContainer> {
         focusedErrorBorder: border.copyWith(
           borderSide: BorderSide(color: Colors.red.shade700),
         ),
+        labelStyle: TextStyle(color: Colors.grey.shade500),
+        floatingLabelStyle: const TextStyle(color: kPrimaryColor),
       ),
       style: TextStyle(
-        fontSize: 16,
         color: Colors.grey.shade700,
         fontWeight: FontWeight.bold,
       ),

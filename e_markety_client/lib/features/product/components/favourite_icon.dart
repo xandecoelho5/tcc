@@ -17,8 +17,8 @@ class FavouriteIcon extends StatelessWidget {
   final Product product;
   final double? size;
 
-  InkWell _icon(bool isFavorite) {
-    return InkWell(
+  GestureDetector _icon(bool isFavorite) {
+    return GestureDetector(
       onTap: () {
         if (!isFavorite) {
           Modular.get<FavouriteBloc>().add(FavouriteAdd(product));

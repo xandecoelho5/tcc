@@ -52,6 +52,7 @@ class _InformationContainerState extends State<InformationContainer> {
                       topRight: Radius.circular(10),
                     )
                   : BorderRadius.circular(10),
+              boxShadow: kElevationToShadow[1],
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -82,12 +83,13 @@ class _InformationContainerState extends State<InformationContainer> {
             Container(
               width: double.infinity,
               padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: kScaffoldColor,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(10),
                   bottomRight: Radius.circular(10),
                 ),
+                boxShadow: kElevationToShadow[1],
               ),
               child: widget.child,
             ),

@@ -25,8 +25,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Future<void> _tryToLogin() async {
     final token = await Modular.get<ICacheService>().get(Strings.token);
     if (token != null) {
-      Modular.get<AuthBloc>().add(AuthGetCurrentUserEvent());
-      Modular.to.navigate(Modular.get<AppPlatform>().defaultRoute);
+      Modular.get<AuthBloc>().add(
+        AuthGetCurrentUserEvent(
+          onSuccessful: () {
+            Modular.to.navigate(Modular.get<AppPlatform>().defaultRoute);
+          },
+        ),
+      );
     }
   }
 

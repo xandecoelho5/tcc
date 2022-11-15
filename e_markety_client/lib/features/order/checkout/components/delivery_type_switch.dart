@@ -15,14 +15,20 @@ class DeliveryTypeSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SwitchListTile.adaptive(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      tileColor: Colors.white,
-      activeColor: kSecondaryColor,
-      value: deliveryType == DeliveryType.delivery,
-      onChanged: onDeliveryTypeChanged,
-      title: Text(deliveryType.label),
-      subtitle: const Text('Escolha o tipo de entrega'),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: kElevationToShadow[1],
+      ),
+      child: SwitchListTile.adaptive(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        activeColor: kSecondaryColor,
+        value: deliveryType == DeliveryType.delivery,
+        onChanged: onDeliveryTypeChanged,
+        title: Text(deliveryType.label),
+        subtitle: const Text('Escolha o tipo de entrega'),
+      ),
     );
   }
 }
