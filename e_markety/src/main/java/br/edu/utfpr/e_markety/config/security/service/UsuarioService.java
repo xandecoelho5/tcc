@@ -13,4 +13,8 @@ public interface UsuarioService extends GenericService<Long, UsuarioDto>, UserDe
     UsuarioDto updateUsuario(UsuarioEditDto usuarioDto);
 
     void updateSenha(SenhaDto senhaDto);
+
+    UsuarioDto getCurrentUsuario();
+
+    UsuarioDto updateFavoritos(Long id);
 }

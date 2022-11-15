@@ -47,7 +47,7 @@ public class Usuario implements UserDetails {
     private String imagemUrl;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "cargo_enum DEFAULT 'USUARIO'::cargo_enum")
+    @Column(columnDefinition = "cargo_enum DEFAULT 'CLIENTE'::cargo_enum")
     @Type(type = "pgsql_enum")
     private Cargo cargo;
 

@@ -40,11 +40,11 @@ public class SecurityConfiguration {
                         authorize -> {
                             try {
                                 authorize
-                                        .antMatchers(HttpMethod.GET, GET_URLS).hasAnyRole("ADMIN", "ADMIN_EMPRESA")
-                                        .antMatchers(HttpMethod.POST, POST_URLS).hasAnyRole("ADMIN", "ADMIN_EMPRESA")
-                                        .antMatchers(HttpMethod.PUT, PUT_URLS).hasAnyRole("ADMIN", "ADMIN_EMPRESA")
-                                        .antMatchers(HttpMethod.DELETE, DELETE_URLS).hasAnyRole("ADMIN", "ADMIN_EMPRESA")
-                                        .antMatchers(HttpMethod.PATCH, PATCH_URLS).hasAnyRole("ADMIN", "ADMIN_EMPRESA")
+                                        .antMatchers(HttpMethod.GET, GET_URLS).hasAnyRole("ADMIN", "FUNCIONARIO")
+                                        .antMatchers(HttpMethod.POST, POST_URLS).hasAnyRole("ADMIN", "FUNCIONARIO")
+                                        .antMatchers(HttpMethod.PUT, PUT_URLS).hasAnyRole("ADMIN", "FUNCIONARIO")
+                                        .antMatchers(HttpMethod.DELETE, DELETE_URLS).hasAnyRole("ADMIN", "FUNCIONARIO")
+                                        .antMatchers(HttpMethod.PATCH, PATCH_URLS).hasAnyRole("ADMIN", "FUNCIONARIO")
                                         .antMatchers(HttpMethod.GET, "/empresa", "/usuario/current").permitAll()
                                         .antMatchers(HttpMethod.POST, "/auth/**", "/usuario").permitAll()
                                         .anyRequest().authenticated()

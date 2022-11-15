@@ -78,4 +78,21 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long, Usuari
             throw new CurrentPasswordException();
         }
     }
+
+    @Override
+    public UsuarioDto getCurrentUsuario() {
+        return mapEntityToDto(getLoggedUsuario());
+    }
+
+    @Override
+    public UsuarioDto updateFavoritos(Long id) {
+        var usuario = getLoggedUsuario();
+        var favoritos = usuario.getFavoritosIds();
+        if (favoritos.contains(id)) {
+            favoritos.remove(id);
+        } else {
+            favoritos.add(id);
+        }
+        return mapEntityToDto(repository.save(usuario));
+    }
 }

@@ -5,10 +5,8 @@ import br.edu.utfpr.e_markety.config.security.dto.UsuarioDto;
 import br.edu.utfpr.e_markety.config.security.dto.UsuarioEditDto;
 import br.edu.utfpr.e_markety.config.security.service.UsuarioService;
 import br.edu.utfpr.e_markety.config.validator.CustomValidator;
-import br.edu.utfpr.e_markety.dto.FavoritoDto;
 import br.edu.utfpr.e_markety.exceptions.InvalidLoggedUserException;
 import br.edu.utfpr.e_markety.exceptions.UserAlreadyRegisteredException;
-import br.edu.utfpr.e_markety.service.MapperService;
 import br.edu.utfpr.e_markety.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,7 +27,6 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
     private final ProdutoService produtoService;
-    private final MapperService mapper;
 
     @PostMapping
     public ResponseEntity<?> register(@RequestBody @Valid UsuarioDto usuarioDto) {
@@ -45,8 +42,7 @@ public class UsuarioController {
     @PutMapping
     public ResponseEntity<?> update(@RequestBody @Valid UsuarioEditDto dto) {
         try {
-            var usuario = usuarioService.updateUsuario(dto);
-            return ResponseEntity.ok(usuario);
+            return ResponseEntity.ok(usuarioService.updateUsuario(dto));
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -68,27 +64,18 @@ public class UsuarioController {
     }
 
     @GetMapping("/current")
-    public ResponseEntity<?> getCurrentUser() {
-        var user = getLoggedUsuario();
-        var userDto = mapper.mapEntityToDto(user, UsuarioDto.class);
-        return ResponseEntity.ok(userDto);
+    public ResponseEntity<?> getCurrentUsuario() {
+        return ResponseEntity.ok(usuarioService.getCurrentUsuario());
     }
 
     @GetMapping("/favoritos")
-    public ResponseEntity<?> getUserFavourites() {
-        var user = getLoggedUsuario();
-        return ResponseEntity.ok(produtoService.findAllByIdIn(user.getFavoritosIds()));
+    public ResponseEntity<?> getUsuarioFavoritos() {
+        return ResponseEntity.ok(produtoService.findAllByIdIn(getLoggedUsuario().getFavoritosIds()));
     }
 
     @PatchMapping("/favoritos")
-    public ResponseEntity<?> addFavouriteToUser(@RequestBody FavoritoDto favoritoDto) {
-        var user = getLoggedUsuario();
-        if (user.getFavoritosIds().contains(favoritoDto.getId())) {
-            user.getFavoritosIds().remove(favoritoDto.getId());
-        } else {
-            user.getFavoritosIds().add(favoritoDto.getId());
-        }
-        return ResponseEntity.ok(usuarioService.update(user.getId(), mapper.mapEntityToDto(user, UsuarioDto.class)));
+    public ResponseEntity<?> updateFavoritos(@RequestBody Long id) {
+        return ResponseEntity.ok(usuarioService.updateFavoritos(id));
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
