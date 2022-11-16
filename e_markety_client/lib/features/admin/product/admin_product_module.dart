@@ -1,6 +1,3 @@
-import 'package:e_markety_client/features/admin/product/components/notifiers/category_notifier.dart';
-import 'package:e_markety_client/features/admin/product/components/notifiers/measure_unit_notifier.dart';
-import 'package:e_markety_client/features/admin/product/components/notifiers/product_notifier.dart';
 import 'package:e_markety_client/features/admin/product/pages/product_add_page.dart';
 import 'package:e_markety_client/features/admin/product/pages/product_edit_page.dart';
 import 'package:e_markety_client/features/admin/product/pages/products_list_page.dart';
@@ -12,6 +9,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../../product/blocs/product/product_bloc.dart';
 import '../../product/services/product_service.dart';
 import 'blocs/admin_product_bloc.dart';
+import 'notifiers/category_notifier.dart';
+import 'notifiers/measure_unit_notifier.dart';
+import 'notifiers/product_notifier.dart';
 
 class AdminProductModule extends Module {
   @override

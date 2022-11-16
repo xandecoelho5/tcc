@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../shared/utils/assets.dart';
-import '../../../admin/order/components/order_notifier.dart';
+import '../../../admin/order/notifiers/order_notifier.dart';
 
 enum OrderStatus {
   pending('Pedido Pendente', Colors.blueGrey, Assets.placed),

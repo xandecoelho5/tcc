@@ -8,7 +8,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../../company/blocs/company_district/company_district_bloc.dart';
 import '../../company/services/company_district_service.dart';
 import '../shared/widgets/custom_notifier.dart';
-import 'components/district_notifier.dart';
+import 'notifiers/district_notifier.dart';
 
 class AdminCompanyDistrictModule extends Module {
   @override

@@ -1,4 +1,4 @@
-import 'package:e_markety_client/features/admin/order/components/order_notifier.dart';
+import 'package:e_markety_client/features/admin/order/notifiers/order_notifier.dart';
 import 'package:e_markety_client/features/admin/order/pages/orders_page.dart';
 import 'package:e_markety_client/features/order/order/services/order_service.dart';
 import 'package:flutter_modular/flutter_modular.dart';

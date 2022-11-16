@@ -1,7 +1,7 @@
 import 'package:e_markety_client/features/category/models/category.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../../category/services/category_service.dart';
+import '../../../category/services/category_service.dart';
 
 class CategoryNotifier extends ValueNotifier<List<Category>> {
   final ICategoryService _service;

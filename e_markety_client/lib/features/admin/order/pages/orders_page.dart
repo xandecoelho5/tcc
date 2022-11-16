@@ -1,5 +1,5 @@
 import 'package:e_markety_client/features/admin/order/components/order_data_source.dart';
-import 'package:e_markety_client/features/admin/order/components/order_notifier.dart';
+import 'package:e_markety_client/features/admin/order/notifiers/order_notifier.dart';
 import 'package:e_markety_client/features/admin/shared/data_responses/order_page_response.dart';
 import 'package:e_markety_client/shared/utils/data_table_utils.dart';
 import 'package:flutter/material.dart';

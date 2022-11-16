@@ -1,7 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-import '../../home/models/status_summary.dart';
+import '../../../../../shared/theme/constants.dart';
+import '../../models/status_summary.dart';
 
 class OrdersOverviewChart extends StatefulWidget {
   const OrdersOverviewChart({
@@ -56,51 +57,62 @@ class _OrdersOverviewChartState extends State<OrdersOverviewChart> {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1.3,
-      child: Card(
-        color: Colors.white,
-        child: Row(
-          children: <Widget>[
-            const SizedBox(height: 18),
-            Expanded(
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: PieChart(
-                  PieChartData(
-                    pieTouchData: PieTouchData(
-                      touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                        setState(() {
-                          if (!event.isInterestedForInteractions ||
-                              pieTouchResponse == null ||
-                              pieTouchResponse.touchedSection == null) {
-                            touchedIndex = -1;
-                            return;
-                          }
-                          touchedIndex = pieTouchResponse
-                              .touchedSection!.touchedSectionIndex;
-                        });
-                      },
+    return Card(
+      child: Row(
+        children: [
+          const SizedBox(height: 18),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(24, 16, 12, 0),
+                  child: Text(
+                    'Visão geral dos pedidos',
+                    style: TextStyle(
+                      color: kBasicDarkColor,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
-                    borderData: FlBorderData(show: false),
-                    sectionsSpace: 0,
-                    centerSpaceRadius: 40,
-                    sections: _showingSections(),
                   ),
                 ),
-              ),
+                Expanded(
+                  child: PieChart(
+                    PieChartData(
+                      pieTouchData: PieTouchData(
+                        touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                          setState(() {
+                            if (!event.isInterestedForInteractions ||
+                                pieTouchResponse == null ||
+                                pieTouchResponse.touchedSection == null) {
+                              touchedIndex = -1;
+                              return;
+                            }
+                            touchedIndex = pieTouchResponse
+                                .touchedSection!.touchedSectionIndex;
+                          });
+                        },
+                      ),
+                      borderData: FlBorderData(show: false),
+                      sectionsSpace: 0,
+                      centerSpaceRadius: 40,
+                      sections: _showingSections(),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: _buildIndicators(),
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: _buildIndicators(),
             ),
-            const SizedBox(width: 28),
-          ],
-        ),
+          ),
+          const SizedBox(width: 28),
+        ],
       ),
     );
   }

@@ -1,6 +1,4 @@
 import 'package:e_markety_client/features/admin/product/components/dropdown_with_label.dart';
-import 'package:e_markety_client/features/admin/product/components/notifiers/category_notifier.dart';
-import 'package:e_markety_client/features/admin/product/components/notifiers/measure_unit_notifier.dart';
 import 'package:e_markety_client/features/admin/product/components/text_field_with_label.dart';
 import 'package:e_markety_client/features/category/models/category.dart';
 import 'package:e_markety_client/features/product/models/measure_unit.dart';
@@ -12,6 +10,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:validatorless/validatorless.dart';
 
 import '../../../product/models/product.dart';
+import '../notifiers/category_notifier.dart';
+import '../notifiers/measure_unit_notifier.dart';
 
 class ProductInputFields extends StatefulWidget {
   const ProductInputFields({

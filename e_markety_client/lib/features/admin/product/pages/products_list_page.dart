@@ -1,5 +1,4 @@
 import 'package:e_markety_client/features/admin/product/blocs/admin_product_bloc.dart';
-import 'package:e_markety_client/features/admin/product/components/notifiers/product_notifier.dart';
 import 'package:e_markety_client/features/admin/product/datasources/product_data_source.dart';
 import 'package:e_markety_client/features/admin/shared/data_responses/provider_settings.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +10,7 @@ import '../../../../shared/utils/modular_utils.dart';
 import '../../../../shared/widgets/custom_data_table/custom_paginated_table.dart';
 import '../../shared/data_responses/product_page_response.dart';
 import '../../shared/widgets/empty_container.dart';
+import '../notifiers/product_notifier.dart';
 
 final sortColumns = [
   'produto',

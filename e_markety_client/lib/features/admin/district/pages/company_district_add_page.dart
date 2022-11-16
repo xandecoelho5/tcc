@@ -8,7 +8,7 @@ import '../../../../shared/utils/modular_utils.dart';
 import '../../../company/blocs/company_district/company_district_bloc.dart';
 import '../../../order/address/models/district.dart';
 import '../components/company_district_container.dart';
-import '../components/district_notifier.dart';
+import '../notifiers/district_notifier.dart';
 
 class CompanyDistrictAddPage extends StatelessWidget {
   const CompanyDistrictAddPage({Key? key}) : super(key: key);
