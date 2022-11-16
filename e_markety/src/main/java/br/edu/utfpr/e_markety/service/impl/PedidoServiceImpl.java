@@ -1,6 +1,7 @@
 package br.edu.utfpr.e_markety.service.impl;
 
 import br.edu.utfpr.e_markety.dto.PedidoDto;
+import br.edu.utfpr.e_markety.dto.relatorios.PedidosMes;
 import br.edu.utfpr.e_markety.dto.relatorios.ResumoStatus;
 import br.edu.utfpr.e_markety.exceptions.AlreadyExistsPendingPedidoException;
 import br.edu.utfpr.e_markety.exceptions.NoneEstoqueForProdutoException;
@@ -16,6 +17,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 import static br.edu.utfpr.e_markety.utils.PrincipalUtils.getLoggedEmpresa;
@@ -51,8 +55,23 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, PedidoDt
     }
 
     @Override
+    public List<PedidosMes> findPedidosByDataCriacaoBetween() {
+        var pedidos = repository.findPedidosByDataCriacaoBetweenByEmpresaId(getLoggedEmpresa().getId());
+        List<PedidosMes> list = new ArrayList<>();
+        var date = LocalDate.now().minus(11, ChronoUnit.MONTHS);
+        for (int i = 0; i < 12; i++) {
+            LocalDate finalDate = date;
+            var pedidosMes = pedidos.stream()
+                    .filter(p -> p.getDataCriacao().getMonth() == finalDate.getMonth())
+                    .toList();
+            list.add(new PedidosMes(date.getMonth().getValue(), date.getYear(), pedidosMes.size()));
+            date = date.plus(1, ChronoUnit.MONTHS);
+        }
+        return list;
+    }
+
+    @Override
     public PedidoDto findOpenPedidoByUsuario() {
-//        var optionalPedido = repository.findByUsuarioIdAndStatusIs(usuarioId, StatusPedido.PENDENTE);
         var pedidos = repository.findAllByUsuarioIdAndStatusIsNot(getLoggedUsuario().getId(), StatusPedido.ENTREGUE);
         if (pedidos.isEmpty()) {
             throw new NoneOpenPedidoException();

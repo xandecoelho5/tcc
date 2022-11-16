@@ -3,6 +3,7 @@ package br.edu.utfpr.e_markety.service;
 import br.edu.utfpr.e_markety.dto.PedidoItemDto;
 import br.edu.utfpr.e_markety.dto.PrecoDto;
 import br.edu.utfpr.e_markety.dto.ProdutoDto;
+import br.edu.utfpr.e_markety.dto.relatorios.VendaProdutos;
 import org.springframework.data.domain.Sort;
 
 import java.math.BigDecimal;
@@ -19,4 +20,7 @@ public interface ProdutoService extends GenericService<Long, ProdutoDto> {
     void validateProdutosEstoque(List<PedidoItemDto> dtos);
 
     PrecoDto findMinAndMaxPreco();
+
+    // relatórios
+    List<VendaProdutos> relatorioVendaProdutos(String sort);
 }

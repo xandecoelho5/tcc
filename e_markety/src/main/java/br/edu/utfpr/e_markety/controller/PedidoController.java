@@ -74,9 +74,4 @@ public class PedidoController extends GenericController<Long, PedidoDto> {
         var saved = service.save(pedido);
         return ResponseEntity.ok(saved);
     }
-
-    @GetMapping("/relatorio/status")
-    public ResponseEntity<?> relatorioStatusPedido() {
-        return ResponseEntity.ok(service.relatorioStatusPedido());
-    }
 }

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 
+import javax.persistence.Tuple;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -31,4 +32,13 @@ public interface ProdutoRepository extends GenericRepository<Produto, Long> {
 
     @Query("SELECT new br.edu.utfpr.e_markety.dto.PrecoDto(MIN(p.preco), MAX(p.preco)) FROM Produto p WHERE p.empresa.id = :empresaId")
     PrecoDto findMinAndMaxPrecoByEmpresaId(Long empresaId);
+
+    // relatórios
+    @Query(value = "SELECT nome, quantidade_vendida " +
+            " FROM produto " +
+            "WHERE empresa_id = :empresaId " +
+            "ORDER BY CASE WHEN :sort = 'ASC'  THEN quantidade_vendida END ASC, " +
+            "         CASE WHEN :sort = 'DESC' THEN quantidade_vendida END DESC " +
+            "LIMIT 5", nativeQuery = true)
+    List<Tuple> relatorioVendaProdutosByEmpresaId(Long empresaId, String sort);
 }

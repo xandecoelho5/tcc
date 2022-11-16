@@ -31,4 +31,9 @@ public interface PedidoRepository extends GenericUserRepository<Pedido, Long> {
             " where empresa_id = :empresaId " +
             " group by status", nativeQuery = true)
     List<Tuple> relatorioStatusPedidoByEmpresaId(Long empresaId);
+
+    @Query(value = "SELECT * " +
+            "  FROM pedido " +
+            " WHERE empresa_id = :empresaId AND data_criacao between CURRENT_DATE - INTERVAL '1 YEAR' AND  CURRENT_DATE", nativeQuery = true)
+    List<Pedido> findPedidosByDataCriacaoBetweenByEmpresaId(Long empresaId);
 }

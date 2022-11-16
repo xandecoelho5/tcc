@@ -1,6 +1,7 @@
 package br.edu.utfpr.e_markety.service;
 
 import br.edu.utfpr.e_markety.dto.PedidoDto;
+import br.edu.utfpr.e_markety.dto.relatorios.PedidosMes;
 import br.edu.utfpr.e_markety.dto.relatorios.ResumoStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,4 +20,6 @@ public interface PedidoService extends GenericService<Long, PedidoDto> {
 
     // relatórios
     List<ResumoStatus> relatorioStatusPedido();
+
+    List<PedidosMes> findPedidosByDataCriacaoBetween();
 }

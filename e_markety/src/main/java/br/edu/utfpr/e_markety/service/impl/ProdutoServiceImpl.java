@@ -3,6 +3,7 @@ package br.edu.utfpr.e_markety.service.impl;
 import br.edu.utfpr.e_markety.dto.PedidoItemDto;
 import br.edu.utfpr.e_markety.dto.PrecoDto;
 import br.edu.utfpr.e_markety.dto.ProdutoDto;
+import br.edu.utfpr.e_markety.dto.relatorios.VendaProdutos;
 import br.edu.utfpr.e_markety.exceptions.ExistsLinkedDataException;
 import br.edu.utfpr.e_markety.exceptions.NoneEstoqueForProdutoException;
 import br.edu.utfpr.e_markety.model.Produto;
@@ -76,6 +77,14 @@ public class ProdutoServiceImpl extends GenericServiceImpl<Produto, Long, Produt
     @Override
     public PrecoDto findMinAndMaxPreco() {
         return repository.findMinAndMaxPrecoByEmpresaId(getLoggedEmpresa().getId());
+    }
+
+    @Override
+    public List<VendaProdutos> relatorioVendaProdutos(String sort) {
+        var tuples = repository.relatorioVendaProdutosByEmpresaId(getLoggedEmpresa().getId(), sort);
+        return tuples.stream()
+                .map(VendaProdutos::fromTuple)
+                .toList();
     }
 
     @Override
