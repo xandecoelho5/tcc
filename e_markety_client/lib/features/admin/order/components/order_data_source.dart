@@ -5,6 +5,7 @@ import 'package:e_markety_client/shared/extensions/double_extension.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:e_markety_client/shared/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class OrderDataSource extends DataTableSource {
   final OrderPageResponse _pageResponse;
@@ -39,11 +40,7 @@ class OrderDataSource extends DataTableSource {
         DataCell(Text(order.total.toReal)),
         DataCell(_StatusChip(status: order.status)),
         DataCell(Text(DateTimeUtils.getyMd(order.createdAt!))),
-        DataCell(
-          order.status != OrderStatus.delivered
-              ? _ActionButton(id: order.id, status: order.status)
-              : Container(),
-        ),
+        DataCell(_Actions(order: order)),
       ],
     );
   }
@@ -79,6 +76,91 @@ class _StatusChip extends StatelessWidget {
   }
 }
 
+class _Actions extends StatelessWidget {
+  const _Actions({Key? key, required this.order}) : super(key: key);
+
+  final OrderAdmin order;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        _InfoButton(order: order, alone: order.status == OrderStatus.delivered),
+        if (order.status != OrderStatus.delivered)
+          _ActionButton(id: order.id, status: order.status),
+      ],
+    );
+  }
+}
+
+class _InfoButton extends StatefulWidget {
+  const _InfoButton({
+    Key? key,
+    required this.order,
+    required this.alone,
+  }) : super(key: key);
+
+  final OrderAdmin order;
+  final bool alone;
+
+  @override
+  State<_InfoButton> createState() => _InfoButtonState();
+}
+
+class _InfoButtonState extends State<_InfoButton> {
+  bool _isHovering = false;
+
+  void _onHover(bool value) => setState(() => _isHovering = value);
+
+  @override
+  Widget build(BuildContext context) {
+    final borderRadius = widget.alone
+        ? const BorderRadius.all(Radius.circular(20))
+        : const BorderRadius.horizontal(left: Radius.circular(20));
+
+    return SizedBox(
+      height: 30,
+      width: widget.alone ? 85 : 50,
+      child: Material(
+        color: Colors.white,
+        borderRadius: borderRadius,
+        child: InkWell(
+          borderRadius: borderRadius,
+          onTap: () => Modular.to.pushNamed(
+            '/admin/order/details',
+            arguments: widget.order,
+          ),
+          hoverColor: kSecondaryColor,
+          onHover: _onHover,
+          child: Theme(
+            data: ThemeData(
+              hoverColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: _isHovering ? kSecondaryColor : Colors.white,
+                borderRadius: borderRadius,
+                border: Border.all(color: kSecondaryColor),
+              ),
+              child: Center(
+                child: Text(
+                  'Info',
+                  style: TextStyle(
+                    color: _isHovering ? Colors.white : kSecondaryColor,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _ActionButton extends StatefulWidget {
   const _ActionButton({
     Key? key,
@@ -103,11 +185,11 @@ class _ActionButtonState extends State<_ActionButton> {
     final actions = widget.status.popupActions(widget.id);
     final entries = actions.entries.toList();
 
-    const borderRadius = BorderRadius.all(Radius.circular(20));
+    const borderRadius = BorderRadius.horizontal(right: Radius.circular(20));
 
     return Container(
       height: 30,
-      width: 60,
+      width: 35,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: borderRadius,

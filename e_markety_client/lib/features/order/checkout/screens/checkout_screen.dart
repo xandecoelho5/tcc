@@ -115,11 +115,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(
-        context,
-        title: 'Checkout',
-        showAction: false,
-      ),
+      appBar: CustomAppBar.buildAppBar(title: 'Checkout', showAction: false),
       body: MultiBlocListener(
         listeners: [
           BlocListener<OrderBloc, OrderState>(

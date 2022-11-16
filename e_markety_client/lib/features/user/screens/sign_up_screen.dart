@@ -21,7 +21,7 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(context, showAction: false),
+      appBar: CustomAppBar.buildAppBar(showAction: false),
       resizeToAvoidBottomInset: false,
       body: BlocListener<UserBloc, UserState>(
         bloc: Modular.get<UserBloc>(),

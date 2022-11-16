@@ -34,10 +34,7 @@ class _BestSellersScreenState extends State<BestSellersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(
-        context,
-        title: 'Mais Vendidos',
-      ),
+      appBar: CustomAppBar.buildAppBar(title: 'Mais Vendidos'),
       body: BlocBuilder<ProductBloc, ProductState>(
         bloc: productBloc,
         builder: (context, state) {

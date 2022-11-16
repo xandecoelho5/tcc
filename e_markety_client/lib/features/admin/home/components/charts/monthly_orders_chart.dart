@@ -31,7 +31,7 @@ class _MonthlyOrdersChartState extends State<MonthlyOrdersChart> {
         barRods: [
           BarChartRodData(
             toY: e.count.toDouble(),
-            color: kPrimaryColor,
+            color: kSecondaryColor,
             width: 40,
             borderRadius: BorderRadius.zero,
           ),

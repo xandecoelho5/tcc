@@ -1,3 +1,4 @@
+import 'package:e_markety_client/features/order/order/screens/my_order_details_screen.dart';
 import 'package:e_markety_client/features/order/shopping_cart/screens/shopping_cart_screen.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -36,6 +37,10 @@ class OrderModule extends Module {
         ChildRoute(
           '/my-orders',
           child: (context, args) => const MyOrdersScreen(),
+        ),
+        ChildRoute(
+          '/my-orders/details',
+          child: (context, args) => MyOrderDetailsScreen(items: args.data),
         ),
       ];
 }

@@ -45,7 +45,7 @@ class ApplyFiltersScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(context, title: 'Aplicar Filtros'),
+      appBar: CustomAppBar.buildAppBar(title: 'Aplicar Filtros'),
       body: Column(
         children: [
           Expanded(

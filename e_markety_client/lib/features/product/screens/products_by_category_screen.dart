@@ -52,7 +52,7 @@ class ProductsByCategoryScreen extends StatelessWidget {
 
   SliverAppBar _sliverAppBar(context) {
     return SliverAppBar(
-      leading: CustomAppBar.leadingIcon(context, () => Modular.to.pop()),
+      leading: CustomAppBar.leadingIcon(() => Modular.to.pop()),
       pinned: true,
       expandedHeight: 160,
       actions: const [ActionCart()],

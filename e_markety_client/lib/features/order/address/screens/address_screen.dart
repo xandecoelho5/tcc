@@ -18,7 +18,6 @@ class AddressScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar.buildAppBar(
-        context,
         title: 'Meus Endereços',
         showAction: false,
       ),

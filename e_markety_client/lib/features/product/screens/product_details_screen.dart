@@ -46,10 +46,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(
-        context,
-        backgroundColor: Colors.transparent,
-      ),
+      appBar: CustomAppBar.buildAppBar(backgroundColor: Colors.transparent),
       // extendBodyBehindAppBar: true,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

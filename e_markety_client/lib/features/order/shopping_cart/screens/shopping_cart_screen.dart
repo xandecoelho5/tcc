@@ -15,11 +15,7 @@ class ShoppingCartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(
-        context,
-        title: 'Carrinho',
-        showAction: false,
-      ),
+      appBar: CustomAppBar.buildAppBar(title: 'Carrinho', showAction: false),
       body: BlocListener<CurrentOrderBloc, CurrentOrderState>(
         bloc: Modular.get<CurrentOrderBloc>()..add(GetCurrentOrder()),
         listenWhen: (previous, current) => previous != current,

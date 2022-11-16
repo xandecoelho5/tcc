@@ -1,4 +1,5 @@
 import 'package:e_markety_client/features/admin/order/notifiers/order_notifier.dart';
+import 'package:e_markety_client/features/admin/order/pages/order_details_page.dart';
 import 'package:e_markety_client/features/admin/order/pages/orders_page.dart';
 import 'package:e_markety_client/features/order/order/services/order_service.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -15,5 +16,9 @@ class AdminOrderModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/', child: (context, args) => const OrdersPage()),
+        ChildRoute(
+          '/details',
+          child: (context, args) => OrderDetailsPage(order: args.data),
+        ),
       ];
 }

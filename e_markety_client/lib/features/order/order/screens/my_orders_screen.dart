@@ -14,7 +14,7 @@ class MyOrdersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(context, title: 'Meus Pedidos'),
+      appBar: CustomAppBar.buildAppBar(title: 'Meus Pedidos'),
       body: BlocBuilder<OrderBloc, OrderState>(
         bloc: Modular.get<OrderBloc>()..add(OrderGetAllEvent()),
         builder: (context, state) {

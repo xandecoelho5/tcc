@@ -41,7 +41,6 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar.buildAppBar(
-        context,
         title: 'Rastrear pedido',
         showAction: false,
         onLeadingTap: _onTapBack,

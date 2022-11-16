@@ -11,7 +11,7 @@ class FavouriteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(context, title: 'Meus Favoritos'),
+      appBar: CustomAppBar.buildAppBar(title: 'Meus Favoritos'),
       body: BlocBuilder<FavouriteBloc, FavouriteState>(
         bloc: Modular.get<FavouriteBloc>()
           ..add(const FavouriteSubscriptionRequested()),

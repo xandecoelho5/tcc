@@ -23,7 +23,7 @@ class _AboutMeScreenState extends State<AboutMeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(context, title: 'Sobre Mim'),
+      appBar: CustomAppBar.buildAppBar(title: 'Sobre Mim'),
       resizeToAvoidBottomInset: false,
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(

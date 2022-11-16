@@ -77,64 +77,73 @@ class _OrderDetailsState extends State<OrderDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.grey.shade50,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
+    return GestureDetector(
+      onTap: () => Modular.to.pushNamed(
+        '/order/my-orders/details',
+        arguments: widget.order.items,
+      ),
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade50,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+              boxShadow: kElevationToShadow[2],
             ),
-            boxShadow: kElevationToShadow[2],
+            child: Column(
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                  child: Row(
+                    children: [
+                      _OrderIcon(
+                        color: color,
+                        iconUrl: widget.order.status.icon,
+                      ),
+                      const SizedBox(width: 12),
+                      _Details(order: widget.order),
+                      const Spacer(),
+                      _ActionButton(
+                        color: color,
+                        onTap: () => setState(() => _expanded = !_expanded),
+                        icon: _expanded
+                            ? const Icon(Icons.keyboard_arrow_down)
+                            : const Icon(Icons.keyboard_arrow_up),
+                      ),
+                    ],
+                  ),
+                ),
+                AnimatedCrossFade(
+                  firstChild: _firstChild(),
+                  secondChild: _secondChild(),
+                  crossFadeState: _expanded
+                      ? CrossFadeState.showSecond
+                      : CrossFadeState.showFirst,
+                  duration: const Duration(milliseconds: 200),
+                ),
+              ],
+            ),
           ),
-          child: Column(
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                child: Row(
-                  children: [
-                    _OrderIcon(color: color, iconUrl: widget.order.status.icon),
-                    const SizedBox(width: 12),
-                    _Details(order: widget.order),
-                    const Spacer(),
-                    _ActionButton(
-                      color: color,
-                      onTap: () => setState(() => _expanded = !_expanded),
-                      icon: _expanded
-                          ? const Icon(Icons.keyboard_arrow_down)
-                          : const Icon(Icons.keyboard_arrow_up),
-                    ),
-                  ],
+          if (widget.order.status != OrderStatus.delivered)
+            Positioned(
+              top: 0,
+              right: 0,
+              child: _ActionButton(
+                color: color,
+                onTap: () => Modular.to.pushNamed('/order/track-order'),
+                icon: Image.asset(
+                  Assets.track,
+                  color: Colors.black,
+                  width: 22,
                 ),
               ),
-              AnimatedCrossFade(
-                firstChild: _firstChild(),
-                secondChild: _secondChild(),
-                crossFadeState: _expanded
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
-                duration: const Duration(milliseconds: 200),
-              ),
-            ],
-          ),
-        ),
-        if (widget.order.status != OrderStatus.delivered)
-          Positioned(
-            top: 0,
-            right: 0,
-            child: _ActionButton(
-              color: color,
-              onTap: () => Modular.to.pushNamed('/order/track-order'),
-              icon: Image.asset(
-                Assets.track,
-                color: Colors.black,
-                width: 22,
-              ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }

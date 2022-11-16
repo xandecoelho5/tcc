@@ -36,7 +36,7 @@ class Order {
 
   double get subTotal => items.fold(
         0,
-        (total, item) => total + item.product.price * item.quantity,
+        (total, item) => total + item.unitPrice * item.quantity,
       );
 
   double get discount => items.fold(

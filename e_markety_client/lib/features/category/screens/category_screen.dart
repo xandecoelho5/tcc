@@ -18,7 +18,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(context, title: 'Categorias'),
+      appBar: CustomAppBar.buildAppBar(title: 'Categorias'),
       body: BlocBuilder<CategoryBloc, CategoryState>(
         bloc: Modular.get<CategoryBloc>()..add(CategoryGetAllEvent()),
         builder: (context, state) {

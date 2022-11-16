@@ -28,7 +28,6 @@ class OrderView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar.buildAppBar(
-        context,
         title: title,
         showAction: false,
         onLeadingTap: () =>

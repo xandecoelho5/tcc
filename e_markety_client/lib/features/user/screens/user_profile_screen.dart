@@ -32,10 +32,7 @@ class UserProfileScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
-        appBar: CustomAppBar.buildAppBar(
-          context,
-          backgroundColor: Colors.transparent,
-        ),
+        appBar: CustomAppBar.buildAppBar(backgroundColor: Colors.transparent),
         resizeToAvoidBottomInset: false,
         body: Padding(
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),

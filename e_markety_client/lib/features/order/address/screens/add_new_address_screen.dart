@@ -16,7 +16,6 @@ class AddNewAddressScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar.buildAppBar(
-        context,
         title: 'Adicionar Novo Endereço',
         showAction: false,
       ),

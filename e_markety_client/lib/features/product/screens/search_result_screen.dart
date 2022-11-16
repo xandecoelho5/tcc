@@ -15,7 +15,6 @@ class SearchResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar.buildAppBar(
-        context,
         title: 'Resultado da Pesquisa',
         onLeadingTap: () => Modular.to.navigate('/home/'),
       ),

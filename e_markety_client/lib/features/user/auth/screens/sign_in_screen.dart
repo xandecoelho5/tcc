@@ -24,13 +24,12 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar.buildAppBar(context, showAction: false),
+      appBar: CustomAppBar.buildAppBar(showAction: false),
       body: MultiBlocListener(
         listeners: [
           BlocListener<AuthBloc, AuthState>(
             bloc: Modular.get<AuthBloc>(),
             listener: (context, state) {
-              print(state);
               if (state is AuthLogged) {
                 if (state.user.isAdmin) {
                   Modular.to.pushNamedAndRemoveUntil(

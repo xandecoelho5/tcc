@@ -16,6 +16,11 @@ class DateTimeUtils {
     return DateFormat.yMd(_locale).format(date);
   }
 
+  static String getJm(DateTime date) {
+    initializeDateFormatting(_locale);
+    return DateFormat.jm(_locale).format(date);
+  }
+
   static DateTime fromHour(String value) {
     final timeParts = value.split(':');
     final today = DateTime.now();
