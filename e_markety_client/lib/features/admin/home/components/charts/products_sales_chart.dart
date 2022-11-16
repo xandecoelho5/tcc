@@ -109,7 +109,6 @@ class _ProductsSalesChartState extends State<ProductsSalesChart> {
         padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 12, bottom: 16),

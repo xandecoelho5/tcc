@@ -1,5 +1,6 @@
 import 'package:e_markety_client/features/admin/shared/widgets/custom_notifier.dart';
 import 'package:e_markety_client/features/order/order/services/order_service.dart';
+import 'package:e_markety_client/shared/utils/modular_utils.dart';
 
 import '../../shared/data_responses/order_page_response.dart';
 import '../../shared/data_responses/provider_settings.dart';
@@ -22,8 +23,8 @@ class OrderNotifier extends CustomNotifier {
   Future<void> updateOrderStatus(int id) async {
     final response = await _service.updateOrderStatus(id);
     response.fold(
-      (l) => print(l.message),
-      (r) => fetchData(), //value = value.copyWith(pageResponse: r)
+      (l) => ModularUtils.showError(l.message),
+      (r) => fetchData(),
     );
   }
 

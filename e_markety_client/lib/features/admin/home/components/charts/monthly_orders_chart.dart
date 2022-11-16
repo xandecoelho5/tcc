@@ -38,9 +38,7 @@ class _MonthlyOrdersChartState extends State<MonthlyOrdersChart> {
         ],
         showingTooltipIndicators: touchedGroupIndex == index ? [0] : [],
       );
-    })
-        // .where((element) => element.barRods[0].toY > 0)
-        .toList();
+    }).toList();
   }
 
   BarTooltipItem _getTooltipItem(
@@ -111,7 +109,6 @@ class _MonthlyOrdersChartState extends State<MonthlyOrdersChart> {
         padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Padding(
               padding: EdgeInsets.only(top: 12, bottom: 16),

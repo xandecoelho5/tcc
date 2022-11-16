@@ -40,7 +40,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       (l) => emit(AuthError(l.message)),
       (r) {
         emit(AuthLogged(r));
-        event.onSuccessful?.call();
+        if (event is AuthGetCurrentUserEvent) {
+          event.onSuccessful?.call();
+        }
       },
     );
   }
