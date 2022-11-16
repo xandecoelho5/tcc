@@ -47,6 +47,16 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, PedidoDt
     }
 
     @Override
+    public void updatePedidoStatus(Long id) {
+        var pedido = findById(id);
+        var newStatus = pedido.getStatus().getNext(pedido.getTipoEntrega());
+        if (newStatus == StatusPedido.CONFIRMADO) {
+            pedido.getItems().forEach(item -> updateEstoqueAndQuantidadeVendidaById(item.getProduto().getId(), item.getQuantidade()));
+        }
+        repository.updateStatus(id, newStatus);
+    }
+
+    @Override
     public List<ResumoStatus> relatorioStatusPedido() {
         var tuples = repository.relatorioStatusPedidoByEmpresaId(getLoggedEmpresa().getId());
         return tuples.stream()
@@ -58,14 +68,15 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, PedidoDt
     public List<PedidosMes> findPedidosByDataCriacaoBetween() {
         var pedidos = repository.findPedidosByDataCriacaoBetweenByEmpresaId(getLoggedEmpresa().getId());
         List<PedidosMes> list = new ArrayList<>();
-        var date = LocalDate.now().minus(11, ChronoUnit.MONTHS);
+        var start = LocalDate.now().minus(11, ChronoUnit.MONTHS);
         for (int i = 0; i < 12; i++) {
-            LocalDate finalDate = date;
+            LocalDate finalDate = start.plus(i, ChronoUnit.MONTHS);
             var pedidosMes = pedidos.stream()
                     .filter(p -> p.getDataCriacao().getMonth() == finalDate.getMonth())
                     .toList();
-            list.add(new PedidosMes(date.getMonth().getValue(), date.getYear(), pedidosMes.size()));
-            date = date.plus(1, ChronoUnit.MONTHS);
+            if (!pedidosMes.isEmpty()) {
+                list.add(PedidosMes.of(finalDate, pedidosMes.size()));
+            }
         }
         return list;
     }
@@ -86,12 +97,6 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, PedidoDt
     }
 
     @Override
-    public PedidoDto findByIdAndEmpresa(Long id) {
-        var pedido = repository.findByIdAndEmpresaId(id, getLoggedEmpresa().getId());
-        return mapEntityToDto(pedido);
-    }
-
-    @Override
     public Page<PedidoDto> getAll(Pageable pageable) {
         Page<Pedido> page = repository.findAllByEmpresaIdAndUsuarioId(getLoggedEmpresa().getId(), getLoggedUsuario().getId(), pageable);
         return page.map(this::mapEntityToDto);
@@ -100,7 +105,8 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, PedidoDt
     @Override
     protected Iterable<Pedido> findAllByUsuario(Pageable pageable) {
         var usuarioId = getLoggedUsuario().getId();
-        return pageable == null ? repository.findAllByUsuarioIdAndStatusIsNot(usuarioId, StatusPedido.PENDENTE) : repository.findAllByUsuarioIdAndStatusIsNot(usuarioId, StatusPedido.PENDENTE, pageable);
+        return pageable == null ? repository.findAllByUsuarioIdAndStatusIsNot(usuarioId, StatusPedido.PENDENTE) :
+                repository.findAllByUsuarioIdAndStatusIsNot(usuarioId, StatusPedido.PENDENTE, pageable);
     }
 
     @Override
@@ -118,7 +124,6 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, PedidoDt
             dto.setEmpresa(getLoggedEmpresa());
             for (var item : dto.getItems()) {
                 item.setPedido(mapDtoToEntity(dto));
-                updateEstoqueAndQuantidadeVendidaById(item.getProduto().getId(), item.getQuantidade());
             }
         }
     }

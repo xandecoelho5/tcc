@@ -4,6 +4,7 @@ import br.edu.utfpr.e_markety.model.Pedido;
 import br.edu.utfpr.e_markety.model.enums.StatusPedido;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.Tuple;
@@ -21,10 +22,11 @@ public interface PedidoRepository extends GenericUserRepository<Pedido, Long> {
 
     Page<Pedido> findAllByEmpresaIdAndUsuarioId(Long empresaId, Long usuarioId, Pageable pageable);
 
-    Pedido findByIdAndEmpresaId(Long id, Long empresaId);
-
     boolean existsByEnderecoId(Long id);
 
+    @Modifying
+    @Query("UPDATE Pedido p SET p.status = ?2 WHERE p.id = ?1")
+    void updateStatus(Long id, StatusPedido status);
     // relatórios
     @Query(value = "select status, (count(status) * 1.0 / (select count(status) from pedido where empresa_id = :empresaId)) * 100 " +
             "  from pedido " +

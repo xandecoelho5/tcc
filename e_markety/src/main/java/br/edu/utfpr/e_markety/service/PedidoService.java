@@ -14,9 +14,9 @@ public interface PedidoService extends GenericService<Long, PedidoDto> {
 
     Page<PedidoDto> findAllByEmpresa(Pageable pageable);
 
-    PedidoDto findByIdAndEmpresa(Long id);
-
     PedidoDto createPedido();
+
+    void updatePedidoStatus(Long id);
 
     // relatórios
     List<ResumoStatus> relatorioStatusPedido();

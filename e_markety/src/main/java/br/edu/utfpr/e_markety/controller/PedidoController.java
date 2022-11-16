@@ -7,6 +7,7 @@ import br.edu.utfpr.e_markety.service.PedidoService;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -67,11 +68,14 @@ public class PedidoController extends GenericController<Long, PedidoDto> {
         return new ResponseEntity<>(PageResponseDto.of(paginatedData), HttpStatus.OK);
     }
 
-    @PatchMapping("/{id}") //TODO bloquear para somente admin
+    @Transactional
+    @PatchMapping("/{id}")
     public ResponseEntity<?> updatePedidoStatus(@PathVariable @NotNull Long id) {
-        var pedido = service.findByIdAndEmpresa(id);
-        pedido.setStatus(pedido.getStatus().getNext(pedido.getTipoEntrega()));
-        var saved = service.save(pedido);
-        return ResponseEntity.ok(saved);
+        try {
+            service.updatePedidoStatus(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }

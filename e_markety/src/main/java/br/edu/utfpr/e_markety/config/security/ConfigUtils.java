@@ -2,7 +2,8 @@ package br.edu.utfpr.e_markety.config.security;
 
 public class ConfigUtils {
 
-    private ConfigUtils() {}
+    private ConfigUtils() {
+    }
 
     public static final String[] POST_URLS = {
             "/categoria",
@@ -37,6 +38,7 @@ public class ConfigUtils {
     public static final String[] GET_URLS = {
             "/pedido/empresa/**",
             "/usuario",
+            "/relatorio/**",
     };
 
     public static final String[] PATCH_URLS = {
