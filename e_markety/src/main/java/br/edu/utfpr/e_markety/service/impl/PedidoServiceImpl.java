@@ -6,6 +6,7 @@ import br.edu.utfpr.e_markety.dto.relatorios.ResumoStatus;
 import br.edu.utfpr.e_markety.exceptions.AlreadyExistsPendingPedidoException;
 import br.edu.utfpr.e_markety.exceptions.NoneEstoqueForProdutoException;
 import br.edu.utfpr.e_markety.exceptions.NoneOpenPedidoException;
+import br.edu.utfpr.e_markety.exceptions.NotFoundException;
 import br.edu.utfpr.e_markety.model.Pedido;
 import br.edu.utfpr.e_markety.model.enums.StatusPedido;
 import br.edu.utfpr.e_markety.repository.GenericUserRepository;
@@ -48,7 +49,8 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, PedidoDt
 
     @Override
     public void updatePedidoStatus(Long id) {
-        var pedido = findById(id);
+        var pedido = repository.findByIdAndEmpresaId(id, getLoggedEmpresa().getId())
+                .orElseThrow(() -> new NotFoundException(id));
         var newStatus = pedido.getStatus().getNext(pedido.getTipoEntrega());
         if (newStatus == StatusPedido.CONFIRMADO) {
             pedido.getItems().forEach(item -> updateEstoqueAndQuantidadeVendidaById(item.getProduto().getId(), item.getQuantidade()));

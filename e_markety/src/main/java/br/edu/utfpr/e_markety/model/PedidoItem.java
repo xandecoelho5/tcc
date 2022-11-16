@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Getter
@@ -19,6 +20,9 @@ public class PedidoItem {
 
     @Column(nullable = false)
     private float quantidade;
+
+    @Column(nullable = false)
+    private BigDecimal precoUnitario;
 
     @ManyToOne
     @JoinColumn(name = "pedido_id", referencedColumnName = "id")

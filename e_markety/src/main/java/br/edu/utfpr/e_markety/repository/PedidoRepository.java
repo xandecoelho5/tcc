@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.Tuple;
 import java.util.List;
+import java.util.Optional;
 
 public interface PedidoRepository extends GenericUserRepository<Pedido, Long> {
 
@@ -23,6 +24,8 @@ public interface PedidoRepository extends GenericUserRepository<Pedido, Long> {
     Page<Pedido> findAllByEmpresaIdAndUsuarioId(Long empresaId, Long usuarioId, Pageable pageable);
 
     boolean existsByEnderecoId(Long id);
+
+    Optional<Pedido> findByIdAndEmpresaId(Long id, Long empresaId);
 
     @Modifying
     @Query("UPDATE Pedido p SET p.status = ?2 WHERE p.id = ?1")
