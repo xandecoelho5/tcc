@@ -46,10 +46,10 @@ public class Empresa {
     @Column(length = 20)
     private String lojaFechamento;
 
-    @Column(columnDefinition = "decimal(5,2)", nullable = false)
+    @Column(precision = 5, scale = 2, nullable = false)
     private BigDecimal taxaServico;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "endereco_id", referencedColumnName = "id", nullable = false)
     private Endereco endereco;
 

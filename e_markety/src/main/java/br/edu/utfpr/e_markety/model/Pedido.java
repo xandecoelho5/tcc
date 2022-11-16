@@ -37,7 +37,7 @@ public class Pedido {
     @LastModifiedDate
     private LocalDate dataAtualizacao;
 
-    @Column(columnDefinition = "decimal(10,2) default 0.00")
+    @Column(precision = 12, scale = 2)
     private BigDecimal total;
 
     @Enumerated(EnumType.STRING)
@@ -56,10 +56,10 @@ public class Pedido {
     @Column
     private String observacao;
 
-    @Column(columnDefinition = "decimal(5,2)")
+    @Column(precision = 5, scale = 2)
     private BigDecimal taxaEntrega;
 
-    @Column(columnDefinition = "decimal(5,2) default 0.00")
+    @Column(precision = 5, scale = 2)
     private BigDecimal taxaServico;
 
     @ManyToOne
