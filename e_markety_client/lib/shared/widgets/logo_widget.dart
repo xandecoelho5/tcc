@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../theme/constants.dart';
-
 class LogoWidget extends StatelessWidget {
   const LogoWidget({Key? key}) : super(key: key);
 
@@ -10,7 +8,7 @@ class LogoWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Icon(Icons.local_grocery_store, color: kBasicDarkColor, size: 70),
+        // const Icon(Icons.local_grocery_store, color: kBasicDarkColor, size: 70),
         const SizedBox(width: 10),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +35,7 @@ class LogoWidget extends StatelessWidget {
             ),
             const Text(
               'Seu Mercado Online',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
             ),
           ],
         ),

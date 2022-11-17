@@ -33,6 +33,7 @@ class _EmailPasswordComponentState extends State<EmailPasswordComponent> {
           ]),
           onSaved: widget.onEmailSaved,
           fillColor: Colors.white,
+          keyboardType: TextInputType.emailAddress,
         ),
         const SizedBox(height: 8),
         TextFieldWithLabel(

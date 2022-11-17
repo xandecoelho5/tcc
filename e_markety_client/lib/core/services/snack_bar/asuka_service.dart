@@ -10,19 +10,23 @@ class AsukaService implements ISnackBarService {
 
   @override
   void showError(String message) {
-    Asuka.showSnackBar(
-      AsukaSnackbar.alert(message).copyWith(
-        duration: const Duration(seconds: 3),
-      ),
-    );
+    Asuka
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        AsukaSnackbar.alert(message).copyWith(
+          duration: const Duration(seconds: 3),
+        ),
+      );
   }
 
   @override
   void showSuccess(String message) {
-    Asuka.showSnackBar(
-      AsukaSnackbar.success(message).copyWith(
-        duration: const Duration(seconds: 1),
-      ),
-    );
+    Asuka
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        AsukaSnackbar.success(message).copyWith(
+          duration: const Duration(seconds: 1),
+        ),
+      );
   }
 }

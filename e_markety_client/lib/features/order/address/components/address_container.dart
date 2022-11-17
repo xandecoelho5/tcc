@@ -1,3 +1,4 @@
+import 'package:e_markety_client/features/admin/district/notifiers/district_notifier.dart';
 import 'package:e_markety_client/features/admin/product/components/dropdown_with_label.dart';
 import 'package:e_markety_client/features/order/address/models/address.dart';
 import 'package:e_markety_client/features/order/address/models/district.dart';
@@ -11,7 +12,6 @@ import '../../../../shared/utils/strings.dart';
 import '../../../../shared/widgets/filled_button.dart';
 import '../../../admin/product/components/text_field_with_label.dart';
 import '../models/tag.dart';
-import 'company_district_value_notifier.dart';
 
 class AddressContainer extends StatefulWidget {
   const AddressContainer({
@@ -33,6 +33,12 @@ class _AddressContainerState extends State<AddressContainer> {
   late Address _address = widget.address;
   late bool _isDefault = _address.isDefault;
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    Modular.get<DistrictNotifier>().fetchAllData();
+  }
 
   late final _inputSaveMap = <String, void Function(String?)>{
     'name': (v) => _address = _address.copyWith(name: v),
@@ -106,8 +112,7 @@ class _AddressContainerState extends State<AddressContainer> {
                     ),
                     const SizedBox(height: 12),
                     ValueListenableBuilder<List<District>>(
-                      valueListenable:
-                          Modular.get<CompanyDistrictValueNotifier>(),
+                      valueListenable: Modular.get<DistrictNotifier>(),
                       builder: (context, value, child) {
                         if (value.isEmpty) {
                           return const SizedBox.shrink();

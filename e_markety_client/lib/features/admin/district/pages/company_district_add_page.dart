@@ -19,6 +19,7 @@ class CompanyDistrictAddPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Modular.get<DistrictNotifier>().fetchData();
     return BlocListener<CompanyDistrictBloc, CompanyDistrictState>(
       bloc: Modular.get<CompanyDistrictBloc>(),
       listener: (context, state) {

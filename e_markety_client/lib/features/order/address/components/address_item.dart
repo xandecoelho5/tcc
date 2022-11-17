@@ -34,7 +34,7 @@ class AddressItem extends StatelessWidget {
           CircleAvatar(
             radius: 16,
             backgroundColor: Colors.white,
-            child: Icon(icon, color: color, size: 16),
+            child: Icon(icon, color: color, size: 20),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -65,12 +65,13 @@ class AddressItem extends StatelessWidget {
                   horizontal: 12,
                   vertical: 6,
                 ),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(12),
                     topRight: Radius.circular(12),
                   ),
+                  boxShadow: kElevationToShadow[1],
                 ),
                 child: Row(
                   children: [

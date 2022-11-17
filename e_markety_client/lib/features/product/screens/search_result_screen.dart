@@ -32,13 +32,15 @@ class SearchResultScreen extends StatelessWidget {
               }
 
               if (state is FilterLoaded) {
+                final query =
+                    state.query.isEmpty ? '' : 'para "${state.query}"';
                 return Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 18,
                     vertical: 8,
                   ),
                   child: Text(
-                    "Resultado da pesquisa ${state.query.isEmpty ? '' : 'para ${state.query}'}",
+                    'Resultado da pesquisa $query',
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

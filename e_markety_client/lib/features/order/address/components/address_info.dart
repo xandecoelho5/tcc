@@ -16,7 +16,7 @@ class AddressInfo extends StatelessWidget {
           address.tag.label,
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 8),
         Text(
           address.fullAddress,
           style: TextStyle(
@@ -25,7 +25,7 @@ class AddressInfo extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 8),
         Row(
           children: [
             const Text(

@@ -26,6 +26,7 @@ import 'package:e_markety_client/features/user/services/user_service.dart';
 import 'package:e_markety_client/features/user/user_module.dart';
 import 'package:e_markety_client/shared/widgets/custom_scroll_behavior.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../shared/theme/theme.dart';
@@ -114,6 +115,13 @@ class AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+    );
+
     return MaterialApp.router(
       builder: Asuka.builder,
       title: 'EMarkety',

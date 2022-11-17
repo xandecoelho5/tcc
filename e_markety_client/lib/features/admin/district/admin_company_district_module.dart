@@ -14,7 +14,7 @@ class AdminCompanyDistrictModule extends Module {
   @override
   final List<Bind> binds = [
     Bind.lazySingleton<IDistrictService>((i) => DistrictService(i())),
-    Bind.factory((i) => DistrictNotifier(i())),
+    Bind.lazySingleton((i) => DistrictNotifier(i())),
     Bind.lazySingleton<ICompanyDistrictService>(
       (i) => CompanyDistrictService(i()),
     ),

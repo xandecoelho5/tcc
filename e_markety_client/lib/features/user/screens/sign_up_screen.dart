@@ -2,13 +2,11 @@ import 'package:e_markety_client/features/user/blocs/user_bloc.dart';
 import 'package:e_markety_client/shared/utils/modular_utils.dart';
 import 'package:e_markety_client/shared/utils/strings.dart';
 import 'package:e_markety_client/shared/widgets/filled_button.dart';
-import 'package:e_markety_client/shared/widgets/outlined_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:validatorless/validatorless.dart';
 
-import '../../../shared/theme/constants.dart';
 import '../../../shared/widgets/custom_app_bar.dart';
 import '../../admin/product/components/text_field_with_label.dart';
 import '../auth/components/email_password_component.dart';
@@ -122,45 +120,45 @@ class _SignUpFormState extends State<_SignUpForm> {
             onPressed: _register,
             height: 50,
           ),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text(
-                'Ou se registre com',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: -0.5,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: CustomOutlinedButton(
-                  text: 'Google',
-                  color: kGoogleColor,
-                  icon: Icons.sports_golf_outlined,
-                  height: 40,
-                  onPressed: () {},
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: CustomOutlinedButton(
-                  text: 'Facebook',
-                  color: kFacebookColor,
-                  icon: Icons.facebook,
-                  height: 40,
-                  onPressed: () {},
-                ),
-              ),
-            ],
-          ),
+          // const SizedBox(height: 16),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: const [
+          //     Text(
+          //       'Ou se registre com',
+          //       style: TextStyle(
+          //         fontSize: 16,
+          //         fontWeight: FontWeight.bold,
+          //         letterSpacing: -0.5,
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          // const SizedBox(height: 8),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     Expanded(
+          //       child: CustomOutlinedButton(
+          //         text: 'Google',
+          //         color: kGoogleColor,
+          //         icon: Icons.sports_golf_outlined,
+          //         height: 40,
+          //         onPressed: () {},
+          //       ),
+          //     ),
+          //     const SizedBox(width: 16),
+          //     Expanded(
+          //       child: CustomOutlinedButton(
+          //         text: 'Facebook',
+          //         color: kFacebookColor,
+          //         icon: Icons.facebook,
+          //         height: 40,
+          //         onPressed: () {},
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:e_markety_client/features/admin/district/notifiers/district_notifier.dart';
 import 'package:e_markety_client/features/home/screens/home_screen.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -21,6 +22,7 @@ class HomeModule extends Module {
         Bind.singleton((i) => AddressBloc(i())),
         Bind.singleton((i) => DefaultAddressBloc(i())),
         Bind.lazySingleton((i) => CompanyDistrictValueNotifier(i())),
+        Bind.lazySingleton((i) => DistrictNotifier(i())),
       ];
 
   @override

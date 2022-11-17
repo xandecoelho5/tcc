@@ -20,6 +20,7 @@ class TextFieldWithLabel extends StatefulWidget {
     this.icon,
     this.onTapSuffix,
     this.maxLines = 1,
+    this.keyboardType = TextInputType.text,
   }) : super(key: key);
 
   final String label;
@@ -37,6 +38,7 @@ class TextFieldWithLabel extends StatefulWidget {
   final Icon? icon;
   final void Function()? onTapSuffix;
   final int maxLines;
+  final TextInputType keyboardType;
 
   @override
   State<TextFieldWithLabel> createState() => _TextFieldWithLabelState();

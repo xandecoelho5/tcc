@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../shared/theme/constants.dart';
 import '../../../../shared/utils/modular_utils.dart';
 import '../../../../shared/utils/strings.dart';
 import '../../../../shared/widgets/filled_button.dart';
@@ -117,7 +116,7 @@ class _SignInFormState extends State<_SignInForm> {
       builder: (context, state) {
         if (state is CompanyLoadedListState) {
           return DropdownWithLabel(
-            label: 'Escolha o mercado',
+            label: 'Escolha um mercado para acessar',
             items: state.companies,
             data: state.companies.first,
             onSaved: _onCompanySaved,
@@ -148,22 +147,23 @@ class _SignInFormState extends State<_SignInForm> {
             onEmailSaved: _onEmailSaved,
             onPasswordSaved: _onSenhaSaved,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'Esqueci minha senha',
-                  style: TextStyle(
-                    color: kBasicDarkColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.end,
+          //   children: [
+          //     TextButton(
+          //       onPressed: () {},
+          //       child: const Text(
+          //         'Esqueci minha senha',
+          //         style: TextStyle(
+          //           color: kBasicDarkColor,
+          //           fontSize: 18,
+          //           fontWeight: FontWeight.w500,
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          const SizedBox(height: 12),
           if (Modular.get<AppPlatform>().isMobile) _buildDropdown(),
           const SizedBox(height: 20),
           FilledButton(

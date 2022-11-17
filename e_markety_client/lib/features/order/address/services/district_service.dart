@@ -18,7 +18,7 @@ class DistrictService implements IDistrictService {
 
   @override
   Future<Either<DistrictException, List<District>>> getDistricts() async {
-    final response = await _httpService.getAll('$_baseUrl?size=0');
+    final response = await _httpService.getAll('$_baseUrl?size=50');
     return response.fold(
       (l) => Left(DistrictException(l.message)),
       (r) => Right(r.map(District.fromMap).toList()),

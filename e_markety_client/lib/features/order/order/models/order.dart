@@ -44,9 +44,11 @@ class Order {
         (total, item) => total + item.product.discount * item.quantity,
       );
 
-  String get formattedCharge => deliveryCharge != null && deliveryCharge! > 0
-      ? deliveryCharge!.toReal
-      : 'Grátis';
+  String get formattedCharge => deliveryCharge == null
+      ? '???'
+      : deliveryCharge! > 0
+          ? deliveryCharge!.toReal
+          : 'Grátis';
 
   String get formattedServiceCharge =>
       serviceCharge > 0 ? serviceCharge.toReal : 'Grátis';
