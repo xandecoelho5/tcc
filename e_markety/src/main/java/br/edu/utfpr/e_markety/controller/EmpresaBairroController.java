@@ -1,15 +1,15 @@
 package br.edu.utfpr.e_markety.controller;
 
+import br.edu.utfpr.e_markety.config.validator.CustomValidator;
 import br.edu.utfpr.e_markety.dto.EmpresaBairroDto;
+import br.edu.utfpr.e_markety.exceptions.BairroEmpresaAlreadyRegisteredException;
+import br.edu.utfpr.e_markety.exceptions.BairroNotFoundForEmpresaException;
 import br.edu.utfpr.e_markety.service.EmpresaBairroService;
 import br.edu.utfpr.e_markety.service.GenericService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 
@@ -32,5 +32,17 @@ public class EmpresaBairroController extends GenericController<Long, EmpresaBair
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(BairroEmpresaAlreadyRegisteredException.class)
+    public String handleValidationExceptions(BairroEmpresaAlreadyRegisteredException ex) {
+        return CustomValidator.handleCustomRuntimeException(ex);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(BairroNotFoundForEmpresaException.class)
+    public String handleValidationExceptions(BairroNotFoundForEmpresaException ex) {
+        return CustomValidator.handleCustomRuntimeException(ex);
     }
 }

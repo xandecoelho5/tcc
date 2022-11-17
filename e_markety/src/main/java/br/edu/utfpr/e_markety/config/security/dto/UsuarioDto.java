@@ -32,7 +32,7 @@ public class UsuarioDto {
     private List<Long> favoritosIds;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Cargo cargo;
+    private Cargo cargo = Cargo.CLIENTE;
 
     public static UsuarioDto fromUsuario(Usuario usuario) {
         UsuarioDto usuarioDto = new UsuarioDto();

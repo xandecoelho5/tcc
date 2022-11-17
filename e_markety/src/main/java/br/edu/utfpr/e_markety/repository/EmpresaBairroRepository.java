@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface EmpresaBairroRepository extends GenericRepository<EmpresaBairro, Long> {
 
-    EmpresaBairro findByEmpresaIdAndBairroId(Long empresaId, Long bairroId);
+    Optional<EmpresaBairro> findByEmpresaIdAndBairroId(Long empresaId, Long bairroId);
 
     Optional<EmpresaBairro> findByIdAndEmpresaId(Long id, Long empresaId);
 

@@ -118,9 +118,6 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID,
         var byId = getRepository() instanceof GenericUserRepository ?
                 ((GenericUserRepository<T, ID>) getRepository()).findByIdAndUsuarioId(id, (ID) getLoggedUsuario().getId()) :
                 getRepository().findById(id);
-        if (byId.isEmpty()) {
-            throw new NotFoundException((Long) id);
-        }
-        return byId.get();
+        return byId.orElseThrow(() -> new NotFoundException((Long) id));
     }
 }

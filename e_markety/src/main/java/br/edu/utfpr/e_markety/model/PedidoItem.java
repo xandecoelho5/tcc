@@ -25,12 +25,12 @@ public class PedidoItem {
     private BigDecimal precoUnitario;
 
     @ManyToOne
-    @JoinColumn(name = "pedido_id", referencedColumnName = "id")
+    @JoinColumn(name = "pedido_id")
     @JsonIgnore
     @ToString.Exclude
     private Pedido pedido;
 
     @ManyToOne
-    @JoinColumn(name = "produto_id", referencedColumnName = "id")
+    @JoinColumn(name = "produto_id")
     private Produto produto;
 }

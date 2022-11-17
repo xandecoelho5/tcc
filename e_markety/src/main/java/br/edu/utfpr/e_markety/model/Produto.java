@@ -60,15 +60,15 @@ public class Produto {
     private float quantidadeVendida;
 
     @ManyToOne
-    @JoinColumn(name = "unidade_medida_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "unidade_medida_id", nullable = false)
     private UnidadeMedida unidadeMedida;
 
     @ManyToOne
-    @JoinColumn(name = "categoria_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
 
     @ManyToOne
-    @JoinColumn(name = "empresa_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "empresa_id", nullable = false)
     @JsonIgnore
     private Empresa empresa;
 }

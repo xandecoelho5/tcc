@@ -24,10 +24,11 @@ import java.util.Optional;
 public abstract class GenericController<ID, Y> {
 
     protected Sort sort = Sort.by("id");
+
     protected abstract GenericService<ID, Y> getService();
 
     @GetMapping
-    public ResponseEntity<List<Y>> getAll(@RequestParam("size") Optional<Integer> size) {
+    public ResponseEntity<List<Y>> getAll(@RequestParam Optional<Integer> size) {
         if (size.isPresent() && size.get() == 0) {
             return ResponseEntity.ok(getService().getAll());
         }

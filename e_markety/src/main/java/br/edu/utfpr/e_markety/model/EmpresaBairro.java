@@ -17,12 +17,12 @@ public class EmpresaBairro {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "empresa_id", referencedColumnName = "id")
+    @JoinColumn(name = "empresa_id")
     @JsonIgnore
     private Empresa empresa;
 
     @ManyToOne
-    @JoinColumn(name = "bairro_id", referencedColumnName = "id")
+    @JoinColumn(name = "bairro_id")
     private Bairro bairro;
 
     @Column(precision = 5, scale = 2)

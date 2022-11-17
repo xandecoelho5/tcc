@@ -50,7 +50,7 @@ public class Empresa {
     private BigDecimal taxaServico;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "endereco_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "endereco_id", nullable = false)
     private Endereco endereco;
 
     @Type(type = "list-array")

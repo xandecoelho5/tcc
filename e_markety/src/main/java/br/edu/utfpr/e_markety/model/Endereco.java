@@ -43,11 +43,11 @@ public class Endereco {
     private boolean padrao;
 
     @ManyToOne
-    @JoinColumn(name = "bairro_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "bairro_id", nullable = false)
     private Bairro bairro;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "usuario_id", nullable = false)
     @JsonIgnore
     private Usuario usuario;
 }

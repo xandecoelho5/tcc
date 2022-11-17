@@ -1,6 +1,7 @@
 package br.edu.utfpr.e_markety.service.impl;
 
 import br.edu.utfpr.e_markety.dto.EmpresaBairroDto;
+import br.edu.utfpr.e_markety.exceptions.BairroEmpresaAlreadyRegisteredException;
 import br.edu.utfpr.e_markety.exceptions.BairroNotFoundForEmpresaException;
 import br.edu.utfpr.e_markety.exceptions.NotFoundException;
 import br.edu.utfpr.e_markety.model.EmpresaBairro;
@@ -42,27 +43,31 @@ public class EmpresaBairroServiceImpl extends GenericServiceImpl<EmpresaBairro, 
 
     @Override
     public BigDecimal findTaxaEntregaByBairroId(Long bairroId) {
-        var empresaBairro = repository.findByEmpresaIdAndBairroId(getLoggedEmpresa().getId(), bairroId);
-        if (empresaBairro == null) {
-            throw new BairroNotFoundForEmpresaException();
-        }
-        return empresaBairro.getTaxaEntrega();
+        return findEmpresaBairroByBairroId(bairroId).getTaxaEntrega();
+    }
+
+    @Override
+    public EmpresaBairro findEmpresaBairroByBairroId(Long bairroId) {
+        var optionalEmpresaBairro = repository.findByEmpresaIdAndBairroId(getLoggedEmpresa().getId(), bairroId);
+        return optionalEmpresaBairro.orElseThrow(BairroNotFoundForEmpresaException::new);
     }
 
     @Override
     protected void preSave(EmpresaBairro entity, Long id) {
         if (entity.getEmpresa() == null) {
-            entity.setEmpresa(getLoggedEmpresa());
+            var empresa = getLoggedEmpresa();
+            var empresaBairro = repository.findByEmpresaIdAndBairroId(empresa.getId(), entity.getBairro().getId());
+            if (empresaBairro.isPresent()) {
+                throw new BairroEmpresaAlreadyRegisteredException();
+            }
+            entity.setEmpresa(empresa);
         }
     }
 
     @Override
     protected EmpresaBairro findById(Long id) {
         var byId = repository.findByIdAndEmpresaId(id, getLoggedEmpresa().getId());
-        if (byId.isEmpty()) {
-            throw new NotFoundException(id);
-        }
-        return byId.get();
+        return byId.orElseThrow(() -> new NotFoundException(id));
     }
 
     @Override

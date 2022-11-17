@@ -3,7 +3,9 @@ package br.edu.utfpr.e_markety.model;
 import br.edu.utfpr.e_markety.model.enums.StatusPedido;
 import br.edu.utfpr.e_markety.model.enums.TipoEntrega;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.springframework.data.annotation.CreatedDate;
@@ -63,15 +65,15 @@ public class Pedido {
     private BigDecimal taxaServico;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "endereco_id", referencedColumnName = "id")
+    @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
     @ManyToOne
-    @JoinColumn(name = "empresa_id", referencedColumnName = "id")
+    @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -3,15 +3,14 @@ package br.edu.utfpr.e_markety.service.impl;
 import br.edu.utfpr.e_markety.dto.PedidoDto;
 import br.edu.utfpr.e_markety.dto.relatorios.PedidosMes;
 import br.edu.utfpr.e_markety.dto.relatorios.ResumoStatus;
-import br.edu.utfpr.e_markety.exceptions.AlreadyExistsPendingPedidoException;
-import br.edu.utfpr.e_markety.exceptions.NoneEstoqueForProdutoException;
-import br.edu.utfpr.e_markety.exceptions.NoneOpenPedidoException;
-import br.edu.utfpr.e_markety.exceptions.NotFoundException;
+import br.edu.utfpr.e_markety.exceptions.*;
 import br.edu.utfpr.e_markety.model.Pedido;
 import br.edu.utfpr.e_markety.model.enums.StatusPedido;
+import br.edu.utfpr.e_markety.model.enums.TipoEntrega;
 import br.edu.utfpr.e_markety.repository.GenericUserRepository;
 import br.edu.utfpr.e_markety.repository.PedidoRepository;
 import br.edu.utfpr.e_markety.repository.ProdutoRepository;
+import br.edu.utfpr.e_markety.service.EmpresaBairroService;
 import br.edu.utfpr.e_markety.service.PedidoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -32,6 +31,7 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, PedidoDt
 
     private final PedidoRepository repository;
     private final ProdutoRepository produtoRepository;
+    private final EmpresaBairroService empresaBairroService;
 
     @Override
     protected GenericUserRepository<Pedido, Long> getRepository() {
@@ -115,6 +115,7 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, PedidoDt
     protected void preSave(Pedido entity, Long id) {
         super.preSave(entity, id);
         if (id != null && StatusPedido.PENDENTE == entity.getStatus()) {
+            validateEndereco(entity);
             entity.setStatus(StatusPedido.REALIZADO);
         }
     }
@@ -128,6 +129,14 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido, Long, PedidoDt
                 item.setPedido(mapDtoToEntity(dto));
             }
         }
+    }
+
+    private void validateEndereco(Pedido pedido) {
+        if (pedido.getTipoEntrega() == TipoEntrega.RETIRADA) return;
+
+        if (pedido.getEndereco() == null) throw new EnderecoUninformedException();
+
+        empresaBairroService.findEmpresaBairroByBairroId(pedido.getEndereco().getBairro().getId());
     }
 
     private void updateEstoqueAndQuantidadeVendidaById(Long id, float quantidade) {
