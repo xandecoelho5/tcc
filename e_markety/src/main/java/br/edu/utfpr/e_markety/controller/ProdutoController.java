@@ -31,8 +31,7 @@ public class ProdutoController extends GenericController<Long, ProdutoDto> {
 
     @PostMapping("/filtro")
     public List<ProdutoDto> findAllByFilter(@RequestBody FiltroDto filtro) {
-        return service.findAllByFilter(filtro.getNome(), filtro.getCategoriaId(), filtro.getPrecoMin(),
-                filtro.getPrecoMax(), filtro.getTipoOrdenacao().getSort());
+        return service.findAllByFilter(filtro);
     }
 
     @PostMapping("/estoque")

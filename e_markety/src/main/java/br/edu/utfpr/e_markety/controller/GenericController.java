@@ -33,9 +33,7 @@ public abstract class GenericController<ID, Y> {
             return ResponseEntity.ok(getService().getAll());
         }
 
-        int pageSize = size.orElse(10);
-
-        var result = getService().getAll(PageRequest.of(0, pageSize, sort));
+        var result = getService().getAll(PageRequest.of(0, size.orElse(10), sort));
         return new ResponseEntity<>(result.toList(), HttpStatus.OK);
     }
 
@@ -60,21 +58,18 @@ public abstract class GenericController<ID, Y> {
 
     @GetMapping("/{id}")
     public ResponseEntity<Y> getById(@PathVariable @NotNull ID id) {
-        var entity = getService().getById(id);
-        return new ResponseEntity<>(entity, HttpStatus.OK);
+        return new ResponseEntity<>(getService().getById(id), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Y> save(@RequestBody @Valid Y dto) {
-        Y registered = getService().save(dto);
-        return new ResponseEntity<>(registered, HttpStatus.CREATED);
+        return new ResponseEntity<>(getService().save(dto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable ID id, @RequestBody @Valid Y dto) {
         try {
-            var updated = getService().update(id, dto);
-            return new ResponseEntity<>(updated, HttpStatus.OK);
+            return new ResponseEntity<>(getService().update(id, dto), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

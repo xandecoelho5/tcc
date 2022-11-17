@@ -1,5 +1,6 @@
 package br.edu.utfpr.e_markety.service.impl;
 
+import br.edu.utfpr.e_markety.dto.FiltroDto;
 import br.edu.utfpr.e_markety.dto.PedidoItemDto;
 import br.edu.utfpr.e_markety.dto.PrecoDto;
 import br.edu.utfpr.e_markety.dto.ProdutoDto;
@@ -14,7 +15,6 @@ import br.edu.utfpr.e_markety.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -43,7 +43,7 @@ public class ProdutoServiceImpl extends GenericServiceImpl<Produto, Long, Produt
     }
 
     @Override
-    public List<ProdutoDto> findAllByCategoriaId(Long id) {
+        public List<ProdutoDto> findAllByCategoriaId(Long id) {
         var list = repository.findAllByCategoriaIdAndEmpresaId(id, getLoggedEmpresa().getId());
         return mapEntityListToDto(list);
     }
@@ -55,8 +55,10 @@ public class ProdutoServiceImpl extends GenericServiceImpl<Produto, Long, Produt
     }
 
     @Override
-    public List<ProdutoDto> findAllByFilter(String nome, Long categoriaId, BigDecimal precoMin, BigDecimal precoMax, Sort sort) {
-        var list = repository.findAllByFilter(getNome(nome), categoriaId, getPrecoMin(precoMin), getPrecoMax(precoMax), getLoggedEmpresa().getId(), sort);
+    public List<ProdutoDto> findAllByFilter(FiltroDto filtro) {
+        var list = repository.findAllByFilter(getNome(filtro.getNome()), filtro.getCategoriaId(),
+                getPrecoMin(filtro.getPrecoMin()), getPrecoMax(filtro.getPrecoMax()),
+                getLoggedEmpresa().getId(), filtro.getTipoOrdenacao().getSort());
         return mapEntityListToDto(list);
     }
 
