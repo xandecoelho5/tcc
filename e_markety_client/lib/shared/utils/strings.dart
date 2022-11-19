@@ -19,4 +19,6 @@ class Strings {
   static const String noneOpenPedido =
       'Não existe um pedido em aberto para este usuário';
   static const String usuarioInvalido = 'Usuário inválido ou não autorizado';
+  static const String naoPossivelAdicionarItem =
+      'Não é possível adicionar ao carrinho enquanto houver algum pedido em andamento';
 }

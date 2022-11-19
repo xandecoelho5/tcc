@@ -5,7 +5,9 @@ import 'package:e_markety_client/features/company/blocs/company/company_bloc.dar
 import 'package:e_markety_client/features/home/components/banners.dart';
 import 'package:e_markety_client/features/home/components/home_app_bar.dart';
 import 'package:e_markety_client/features/order/address/blocs/default_address/default_address_bloc.dart';
+import 'package:e_markety_client/features/order/order/models/order_status.dart';
 import 'package:e_markety_client/features/order/shopping_cart/blocs/overview/cart_item_overview_bloc.dart';
+import 'package:e_markety_client/features/product/blocs/favourite/favourite_bloc.dart';
 import 'package:e_markety_client/features/product/blocs/stock/stock_bloc.dart';
 import 'package:e_markety_client/features/product/components/products_list.dart';
 import 'package:e_markety_client/features/product/models/product.dart';
@@ -15,6 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../shared/utils/strings.dart';
+import '../../order/order/blocs/current_order/current_order_bloc.dart';
 import '../../product/blocs/product/product_bloc.dart';
 import '../../user/auth/components/view_all_row.dart';
 
@@ -29,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final snackBarService = Modular.get<ISnackBarService>();
   final productBloc = Modular.get<ProductBloc>();
   final cartItemBloc = Modular.get<CartItemOverviewBloc>();
+  final favouriteBloc = Modular.get<FavouriteBloc>();
 
   @override
   void initState() {
@@ -46,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
       );
       Modular.get<CategoryBloc>().add(CategoryGetAllEvent());
       cartItemBloc.add(const CartItemOverviewSubscriptionRequested());
+      favouriteBloc.add(const FavouriteSubscriptionRequested());
     });
   }
 
@@ -62,7 +68,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 ModularUtils.showError(state.message);
               }
               if (state is StockSuccess) {
-                cartItemBloc.add(CartItemOverviewCartItemAdd(state.cartItem));
+                final orderState = Modular.get<CurrentOrderBloc>().state;
+                if (orderState is! CurrentOrderLoaded ||
+                    orderState.order.status == OrderStatus.pending) {
+                  cartItemBloc.add(CartItemOverviewCartItemAdd(state.cartItem));
+                } else {
+                  ModularUtils.showError(Strings.naoPossivelAdicionarItem);
+                }
               }
             },
           ),
@@ -82,6 +94,25 @@ class _HomeScreenState extends State<HomeScreen> {
               }
               if (state.status == CartItemOverviewStatus.success) {
                 ModularUtils.showSuccess('Produto adicionado ao carrinho');
+              }
+            },
+          ),
+          BlocListener<FavouriteBloc, FavouriteState>(
+            bloc: favouriteBloc,
+            listenWhen: (previous, current) {
+              if ((previous.status == FavouriteStatus.loading &&
+                      current.status == FavouriteStatus.success) ||
+                  (current.products.length <= previous.products.length)) {
+                return false;
+              }
+              return true;
+            },
+            listener: (context, state) {
+              if (state.status == FavouriteStatus.failure) {
+                ModularUtils.showError('Erro com os favoritos!');
+              }
+              if (state.status == FavouriteStatus.success) {
+                ModularUtils.showSuccess('Favorito adicionado');
               }
             },
           ),
