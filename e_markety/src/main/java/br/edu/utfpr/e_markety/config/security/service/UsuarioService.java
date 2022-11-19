@@ -8,13 +8,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UsuarioService extends GenericService<Long, UsuarioDto>, UserDetailsService {
 
-    void verifyUserExists(String email);
+    UsuarioDto register(UsuarioDto usuarioDto);
 
-    UsuarioDto updateUsuario(UsuarioEditDto usuarioDto);
+    UsuarioDto update(UsuarioEditDto usuarioDto);
 
     void updateSenha(SenhaDto senhaDto);
 
-    UsuarioDto getCurrentUsuario();
+    UsuarioDto getCurrent();
 
     UsuarioDto updateFavoritos(Long id);
 }

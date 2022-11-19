@@ -25,7 +25,6 @@ public class EmpresaController extends GenericController<Long, Empresa> {
 
     @GetMapping("current")
     public ResponseEntity<Empresa> getCurrentEmpresa() {
-        var empresa = getLoggedEmpresa();
-        return new ResponseEntity<>(empresa, HttpStatus.OK);
+        return new ResponseEntity<>(getLoggedEmpresa(), HttpStatus.OK);
     }
 }

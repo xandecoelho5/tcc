@@ -31,9 +31,7 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<?> register(@RequestBody @Valid UsuarioDto usuarioDto) {
         try {
-            usuarioService.verifyUserExists(usuarioDto.getEmail());
-            usuarioDto.setImagemUrl("http://unicietec.unievangelica.edu.br/wp-content/uploads/2017/04/avatar-placeholder-300x250.png");
-            return ResponseEntity.ok(usuarioService.save(usuarioDto));
+            return ResponseEntity.ok(usuarioService.register(usuarioDto));
         } catch (UserAlreadyRegisteredException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -42,14 +40,14 @@ public class UsuarioController {
     @PutMapping
     public ResponseEntity<?> update(@RequestBody @Valid UsuarioEditDto dto) {
         try {
-            return ResponseEntity.ok(usuarioService.updateUsuario(dto));
+            return ResponseEntity.ok(usuarioService.update(dto));
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("/senha")
-    public ResponseEntity<?> update(@RequestBody @Valid SenhaDto senhaDto) {
+    public ResponseEntity<?> updateSenha(@RequestBody @Valid SenhaDto senhaDto) {
         try {
             usuarioService.updateSenha(senhaDto);
             return ResponseEntity.ok().build();
@@ -65,7 +63,7 @@ public class UsuarioController {
 
     @GetMapping("/current")
     public ResponseEntity<?> getCurrentUsuario() {
-        return ResponseEntity.ok(usuarioService.getCurrentUsuario());
+        return ResponseEntity.ok(usuarioService.getCurrent());
     }
 
     @GetMapping("/favoritos")

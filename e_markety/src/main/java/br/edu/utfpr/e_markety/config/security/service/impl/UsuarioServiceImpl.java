@@ -50,18 +50,17 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long, Usuari
     }
 
     @Override
-    public void verifyUserExists(String email) {
-        var optionalUser = repository.findByEmail(email);
-        if (optionalUser.isPresent()) {
-            throw new UserAlreadyRegisteredException();
-        }
+    public UsuarioDto register(UsuarioDto usuarioDto) {
+        verifyUsuarioExists(usuarioDto.getEmail());
+        usuarioDto.setImagemUrl("http://unicietec.unievangelica.edu.br/wp-content/uploads/2017/04/avatar-placeholder-300x250.png");
+        return save(usuarioDto);
     }
 
     @Override
-    public UsuarioDto updateUsuario(UsuarioEditDto usuarioDto) {
+    public UsuarioDto update(UsuarioEditDto usuarioDto) {
         var usuario = getLoggedUsuario();
         if (!Objects.equals(usuario.getEmail(), usuarioDto.getEmail())) {
-            verifyUserExists(usuarioDto.getEmail());
+            verifyUsuarioExists(usuarioDto.getEmail());
         }
         usuario.setFromUsuarioEdit(usuarioDto);
         usuario = repository.save(usuario);
@@ -80,7 +79,7 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long, Usuari
     }
 
     @Override
-    public UsuarioDto getCurrentUsuario() {
+    public UsuarioDto getCurrent() {
         return mapEntityToDto(getLoggedUsuario());
     }
 
@@ -94,5 +93,11 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long, Usuari
             favoritos.add(id);
         }
         return mapEntityToDto(repository.save(usuario));
+    }
+
+    private void verifyUsuarioExists(String email) {
+        if (repository.findByEmail(email).isPresent()) {
+            throw new UserAlreadyRegisteredException();
+        }
     }
 }

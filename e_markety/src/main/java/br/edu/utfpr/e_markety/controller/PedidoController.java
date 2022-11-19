@@ -32,8 +32,7 @@ public class PedidoController extends GenericController<Long, PedidoDto> {
     @PostMapping("/novo")
     public ResponseEntity<?> createPedido() {
         try {
-            var pedido = service.createPedido();
-            return new ResponseEntity<>(pedido, HttpStatus.CREATED);
+            return new ResponseEntity<>(service.createPedido(), HttpStatus.CREATED);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
@@ -42,8 +41,7 @@ public class PedidoController extends GenericController<Long, PedidoDto> {
     @GetMapping("/aberto")
     public ResponseEntity<?> getOpenPedido() {
         try {
-            var pedido = service.findOpenPedidoByUsuario();
-            return new ResponseEntity<>(pedido, HttpStatus.OK);
+            return new ResponseEntity<>(service.findOpenPedidoByUsuario(), HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
@@ -52,8 +50,7 @@ public class PedidoController extends GenericController<Long, PedidoDto> {
     @PutMapping("/realizar")
     public ResponseEntity<?> placePedido(@RequestBody @Valid PedidoDto pedidoDto) {
         try {
-            var pedido = service.update(pedidoDto.getId(), pedidoDto);
-            return new ResponseEntity<>(pedido, HttpStatus.OK);
+            return new ResponseEntity<>(service.update(pedidoDto.getId(), pedidoDto), HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

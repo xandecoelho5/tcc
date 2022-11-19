@@ -27,9 +27,7 @@ public class EnderecoController extends GenericController<Long, Endereco> {
     @GetMapping("/padrao")
     public ResponseEntity<?> getDefaultEndereco() {
         try {
-            var usuario = getLoggedUsuario();
-            var defaultEndereco = service.getDefaultEndereco(usuario.getId());
-            return new ResponseEntity<>(defaultEndereco, HttpStatus.OK);
+            return new ResponseEntity<>(service.getDefaultEndereco(getLoggedUsuario().getId()), HttpStatus.OK);
         } catch (NoneDefaultEnderecoFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }

@@ -85,18 +85,11 @@ public abstract class GenericServiceImpl<T, ID, Y> implements GenericService<ID,
         getRepository().deleteById(id);
     }
 
-    protected void changeEntityId(ID id, T entity) {
-
-    }
-
     protected void preUpdate(Y dto) {
 
     }
 
     protected void preSave(T entity, ID id) {
-        if (id != null) {
-            changeEntityId(id, entity);
-        }
     }
 
     protected void preDelete(ID id) {
