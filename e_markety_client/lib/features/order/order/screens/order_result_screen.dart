@@ -22,7 +22,7 @@ Você receberá uma resposta em alguns minutos...
         buttonText: 'Rastrear pedido',
         backgroundColor: kSecondaryColor,
         buttonColor: kBasicDarkColor,
-        onButtonPressed: () => Modular.to.navigate('/order/track-order'),
+        onButtonPressed: () => Modular.to.pushNamed('/order/track-order'),
       );
     }
 

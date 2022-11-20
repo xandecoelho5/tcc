@@ -6,14 +6,8 @@ import 'package:e_markety_client/features/company/services/company_service.dart'
 import 'package:e_markety_client/features/home/home_module.dart';
 import 'package:e_markety_client/features/order/address/address_module.dart';
 import 'package:e_markety_client/features/order/order_module.dart';
-import 'package:e_markety_client/features/product/blocs/filter/filter_bloc.dart';
-import 'package:e_markety_client/features/product/blocs/product/product_bloc.dart';
-import 'package:e_markety_client/features/product/blocs/product_by_category/product_by_category_bloc.dart';
-import 'package:e_markety_client/features/product/blocs/product_price/product_price_bloc.dart';
-import 'package:e_markety_client/features/product/blocs/stock/stock_bloc.dart';
 import 'package:e_markety_client/features/product/favourite_module.dart';
 import 'package:e_markety_client/features/product/product_module.dart';
-import 'package:e_markety_client/features/product/services/product_service.dart';
 import 'package:e_markety_client/features/route_guards/admin_guard.dart';
 import 'package:e_markety_client/features/route_guards/auth_guard.dart';
 import 'package:e_markety_client/features/user/auth/blocs/auth_bloc.dart';
@@ -30,18 +24,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../shared/theme/theme.dart';
-import '../shared/utils/global.dart';
-import 'category/blocs/category_bloc.dart';
-import 'category/services/category_service.dart';
 import 'company/blocs/company/company_bloc.dart';
 import 'company/blocs/company_district/company_district_bloc.dart';
 import 'company/services/company_district_service.dart';
-import 'order/order/blocs/current_order/current_order_bloc.dart';
-import 'order/order/blocs/order/order_bloc.dart';
-import 'order/order/services/current_order_service.dart';
-import 'order/order/services/order_service.dart';
-import 'order/shopping_cart/blocs/overview/cart_item_overview_bloc.dart';
-import 'order/shopping_cart/services/cart_item_service.dart';
 
 class AppModule extends Module {
   @override
@@ -64,28 +49,6 @@ class AppModule extends Module {
       (i) => CompanyDistrictService(i()),
     ),
     Bind.singleton((i) => CompanyDistrictBloc(i())),
-    // cart item
-    Bind.singleton<ICartItemService>((i) => CartItemService(i(), i(), i())),
-    Bind.singleton((i) => CartItemOverviewBloc(i())),
-    // order
-    Bind.singleton<IOrderService>((i) => OrderService(i())),
-    Bind.singleton<ICurrentOrderService>(
-      (i) => CurrentOrderService(i(), i()),
-    ),
-    Bind.singleton((i) => OrderBloc(i(), i())),
-    Bind.singleton((i) => CurrentOrderBloc(i())),
-    // category
-    Bind.singleton<ICategoryService>((i) => CategoryService(i())),
-    Bind.singleton((i) => CategoryBloc(i())),
-    // product
-    Bind.singleton<IProductService>((i) => ProductService(i())),
-    Bind.factory((i) => ProductBloc(i())),
-    Bind.singleton((i) => ProductByCategoryBloc(i())),
-    Bind.singleton((i) => ProductPriceBloc(i())),
-    Bind.singleton((i) => StockBloc(i())),
-    // filter
-    Bind.singleton((i) => FilterBloc(i())),
-    Bind.singleton((i) => Global()),
   ];
 
   @override
@@ -140,9 +103,7 @@ class NotFoundScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(
-        child: Text('Página não encontrada'),
-      ),
+      body: Center(child: Text('Página não encontrada')),
     );
   }
 }

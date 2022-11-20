@@ -23,8 +23,7 @@ class ShoppingCartScreen extends StatelessWidget {
           if (state is CurrentOrderLoaded &&
               Modular.to.path == '/order/shopping-cart') {
             if (state.order.status != OrderStatus.pending) {
-              Modular.to
-                  .pushNamedAndRemoveUntil('/order/track-order', (_) => false);
+              Modular.to.pushNamed('/order/track-order');
             }
           }
         },

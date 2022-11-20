@@ -122,10 +122,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             bloc: Modular.get<OrderBloc>(),
             listener: (context, state) {
               if (state is OrderSuccess) {
-                Modular.to.navigate('/order/order-result', arguments: true);
+                Modular.to.pushNamed('/order/order-result', arguments: true);
               } else if (state is OrderError) {
                 ModularUtils.showError(state.message);
-                Modular.to.navigate('/order/order-result', arguments: false);
+                Modular.to.pushNamed('/order/order-result', arguments: false);
               }
             },
           ),

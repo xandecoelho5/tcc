@@ -31,7 +31,7 @@ class OrderView extends StatelessWidget {
         title: title,
         showAction: false,
         onLeadingTap: () =>
-            Modular.to.pushNamedAndRemoveUntil('/', (_) => false),
+            Modular.to.pushNamedAndRemoveUntil('/home/', (_) => false),
       ),
       body: Container(
         margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
