@@ -40,9 +40,7 @@ class OrderSimplerTimeline extends StatelessWidget {
             padding: const EdgeInsets.only(left: 12, right: 24),
             child: Text(
               processes[index].label,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+              style: kTitleMedium.copyWith(
                 color: notProcessed
                     ? kDarkGreyColor
                     : delivered

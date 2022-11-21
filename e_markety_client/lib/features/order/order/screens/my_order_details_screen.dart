@@ -63,27 +63,20 @@ class _OrderItem extends StatelessWidget {
                     children: [
                       Text(
                         '${item.unitPrice.toReal} x ${item.quantityText}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: kSecondaryColor,
-                        ),
+                        style: kLabelLarge.copyWith(color: kSecondaryColor),
                       ),
                     ],
                   ),
                   Text(
                     item.product.name,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: kTitleMedium,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     item.product.formattedWeight,
-                    style: TextStyle(
+                    style: kLabelLarge.copyWith(
                       color: Colors.grey.shade700,
-                      fontWeight: FontWeight.w600,
                       letterSpacing: -0.5,
                     ),
                   ),

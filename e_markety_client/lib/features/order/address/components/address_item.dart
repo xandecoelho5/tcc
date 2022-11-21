@@ -40,11 +40,7 @@ class AddressItem extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey.shade700,
-                fontWeight: FontWeight.bold,
-              ),
+              style: kTitleMedium.copyWith(color: Colors.grey.shade700),
               maxLines: 2,
             ),
           ),
@@ -77,13 +73,7 @@ class AddressItem extends StatelessWidget {
                   children: [
                     Icon(address.tag.icon, color: color, size: 50),
                     const SizedBox(width: 12),
-                    Text(
-                      address.tag.label,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
+                    Text(address.tag.label, style: kHeadline6),
                     const Spacer(),
                     PopupMenuButton(
                       icon: const Icon(Icons.more_horiz),

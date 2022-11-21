@@ -38,11 +38,7 @@ class _DeliveryAddressScreenState extends State<DeliveryAddressScreen> {
                 children: [
                   Text(
                     'Enviando para',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey.shade600,
-                    ),
+                    style: kTitleLarge.copyWith(color: Colors.grey.shade600),
                   ),
                   const SizedBox(height: 20),
                   Expanded(

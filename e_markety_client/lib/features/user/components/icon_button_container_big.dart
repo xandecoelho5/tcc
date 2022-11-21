@@ -1,3 +1,4 @@
+import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'icon_button_model.dart';
@@ -48,12 +49,7 @@ class IconButtonContainerBig extends StatelessWidget {
           FittedBox(
             child: Text(
               iconButton.label,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                letterSpacing: -0.5,
-              ),
+              style: kHeadline6Light.copyWith(letterSpacing: -0.5),
             ),
           ),
         ],

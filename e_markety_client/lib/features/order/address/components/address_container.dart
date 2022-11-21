@@ -148,10 +148,8 @@ class _AddressContainerState extends State<AddressContainer> {
                           onChanged: _onDefaultChanged,
                         ),
                         Text(
-                          'Endereço padrão de entrega',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                          'Endereço padrão para entregas',
+                          style: kTitleMedium.copyWith(
                             color: Colors.grey.shade700,
                           ),
                         ),

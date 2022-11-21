@@ -1,6 +1,8 @@
 import 'package:e_markety_client/features/order/address/models/address.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../shared/theme/constants.dart';
+
 class AddressInfo extends StatelessWidget {
   const AddressInfo({Key? key, required this.address}) : super(key: key);
 
@@ -12,33 +14,19 @@ class AddressInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          address.tag.label,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
+        Text(address.tag.label, style: kHeadline6),
         const SizedBox(height: 8),
         Text(
           address.fullAddress,
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.grey.shade700,
-            fontWeight: FontWeight.bold,
-          ),
+          style: kTitleMedium.copyWith(color: Colors.grey.shade700),
         ),
         const SizedBox(height: 8),
         Row(
           children: [
-            const Text(
-              'Telefone: ',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
+            const Text('Telefone: ', style: kTitleMedium),
             Text(
               address.phone,
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey.shade700,
-                fontWeight: FontWeight.bold,
-              ),
+              style: kTitleMedium.copyWith(color: Colors.grey.shade700),
             ),
           ],
         ),

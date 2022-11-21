@@ -41,18 +41,14 @@ class ProductSlidableItem extends StatelessWidget {
                   children: [
                     Text(
                       product.finalPrice.toReal,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: kSecondaryColor,
-                      ),
+                      style: kLabelLarge.copyWith(color: kSecondaryColor),
                     ),
                     const SizedBox(width: 4),
                     if (product.hasPromotion)
                       Text(
                         product.price.toReal,
-                        style: const TextStyle(
+                        style: kLabelLarge.copyWith(
                           color: kDiscountColor,
-                          fontWeight: FontWeight.bold,
                           decoration: TextDecoration.lineThrough,
                         ),
                       ),
@@ -60,18 +56,14 @@ class ProductSlidableItem extends StatelessWidget {
                 ),
                 Text(
                   product.name,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: kTitleMedium,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   product.formattedWeight,
-                  style: TextStyle(
+                  style: kLabelLarge.copyWith(
                     color: Colors.grey.shade700,
-                    fontWeight: FontWeight.w600,
                     letterSpacing: -0.5,
                   ),
                 ),

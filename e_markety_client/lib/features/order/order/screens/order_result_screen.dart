@@ -1,5 +1,6 @@
 import 'package:e_markety_client/features/order/order/components/order_view.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
+import 'package:e_markety_client/shared/utils/modular_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -26,7 +27,7 @@ Você receberá uma resposta em alguns minutos...
       );
     }
 
-    return OrderView(
+    return const OrderView(
       title: 'Pedido recusado',
       mainMessage: 'Seu pedido foi recusado',
       subMessage: '''
@@ -36,8 +37,7 @@ Por favor, tente novamente mais tarde.'
       buttonText: 'Tentar novamente',
       backgroundColor: kBasicDarkColor,
       buttonColor: kPrimaryColor,
-      onButtonPressed: () =>
-          Modular.to.pushNamedAndRemoveUntil('/home/', (_) => false),
+      onButtonPressed: ModularUtils.goToHome,
     );
   }
 }

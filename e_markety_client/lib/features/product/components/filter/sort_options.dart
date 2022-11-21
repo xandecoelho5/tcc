@@ -38,9 +38,7 @@ class _SortOptionsState extends State<SortOptions> {
                     children: [
                       Text(
                         type.label,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                        style: kTitleLarge.copyWith(
                           color: Colors.grey.shade800,
                         ),
                       ),

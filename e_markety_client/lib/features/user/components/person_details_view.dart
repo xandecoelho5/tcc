@@ -52,10 +52,7 @@ class _PersonDetailsFormViewState extends State<PersonDetailsFormView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Detalhes Pessoais',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
+            const Text('Detalhes Pessoais', style: kHeadline6),
             const SizedBox(height: 12),
             UserInfoContainer(
               text: _user.name,

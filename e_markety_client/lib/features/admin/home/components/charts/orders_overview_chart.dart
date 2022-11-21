@@ -46,11 +46,7 @@ class _OrdersOverviewChartState extends State<OrdersOverviewChart> {
         value: s.percentage,
         title: '${s.percentage.toStringAsFixed(2)}%',
         radius: radius,
-        titleStyle: TextStyle(
-          fontSize: fontSize,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
+        titleStyle: kLabelLargeLight.copyWith(fontSize: fontSize),
       );
     }).toList();
   }
@@ -65,15 +61,11 @@ class _OrdersOverviewChartState extends State<OrdersOverviewChart> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(24, 16, 12, 0),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 16, 12, 0),
                   child: Text(
                     'Visão geral dos pedidos',
-                    style: TextStyle(
-                      color: kBasicDarkColor,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: kTitleLargeDark,
                   ),
                 ),
                 Expanded(
@@ -147,14 +139,7 @@ class Indicator extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 4),
-        Text(
-          text,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: textColor,
-          ),
-        )
+        Text(text, style: kTitleMedium.copyWith(color: textColor)),
       ],
     );
   }

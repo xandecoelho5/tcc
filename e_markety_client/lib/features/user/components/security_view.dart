@@ -46,10 +46,7 @@ class _SecurityFormViewState extends State<SecurityFormView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Segurança',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
+            const Text('Segurança', style: kHeadline6),
             const SizedBox(height: 12),
             UserInfoContainer(
               icon: Icons.lock,

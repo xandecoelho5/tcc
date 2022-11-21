@@ -18,23 +18,14 @@ class Accordion extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: ExpansionTile(
-        title: Text(
-          title,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: titleColor ?? kBasicDarkColor,
-          ),
-        ),
+        title: Text(title, style: kTitleLargeDark.copyWith(color: titleColor)),
         trailing: const Icon(
           Icons.keyboard_arrow_down,
           color: kBasicDarkColor,
           size: 28,
         ),
         childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 28),
-        children: [
-          content,
-        ],
+        children: [content],
       ),
     );
   }

@@ -50,9 +50,7 @@ class IconButtonContainer extends StatelessWidget {
             FittedBox(
               child: Text(
                 iconButton.label,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
+                style: kLabelLarge.copyWith(
                   color: Colors.grey.shade600,
                   letterSpacing: -0.5,
                 ),

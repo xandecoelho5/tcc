@@ -19,24 +19,11 @@ class TextButtonAuth extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          textLabel,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            letterSpacing: -0.5,
-          ),
-        ),
+        Text(textLabel, style: kTitleLarge.copyWith(letterSpacing: -0.5)),
         TextButton(
           style: TextButton.styleFrom(foregroundColor: kBasicDarkColor),
           onPressed: onPressed,
-          child: Text(
-            textButtonLabel,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
+          child: Text(textButtonLabel, style: kTitleLarge),
         ),
       ],
     );

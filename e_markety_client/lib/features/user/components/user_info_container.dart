@@ -91,10 +91,7 @@ class _UserInfoContainerState extends State<UserInfoContainer> {
         labelStyle: TextStyle(color: Colors.grey.shade500),
         floatingLabelStyle: const TextStyle(color: kPrimaryColor),
       ),
-      style: TextStyle(
-        color: Colors.grey.shade700,
-        fontWeight: FontWeight.bold,
-      ),
+      style: kLabelLarge.copyWith(color: Colors.grey.shade700),
     );
   }
 }

@@ -53,10 +53,7 @@ class _ProductQuantityState extends State<ProductQuantity> {
           children: [
             const Padding(
               padding: EdgeInsets.only(left: 16),
-              child: Text(
-                'Quantidade',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
+              child: Text('Quantidade', style: kTitleLarge),
             ),
             Container(
               decoration: BoxDecoration(

@@ -19,10 +19,7 @@ class OrderDetailsPage extends StatelessWidget {
     return FittedBox(
       child: Row(
         children: [
-          Text(
-            '$key: ',
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
+          Text('$key: ', style: kLabelLarge),
           Text('$value'),
         ],
       ),

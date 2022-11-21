@@ -35,7 +35,10 @@ class DropdownWithLabel<T> extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label.toUpperCase(), style: kLabelStyle),
+        Text(
+          label.toUpperCase(),
+          style: kLabelLarge.copyWith(color: kLabelColor),
+        ),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(

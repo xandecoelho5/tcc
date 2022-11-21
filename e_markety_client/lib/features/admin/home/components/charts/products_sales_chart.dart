@@ -50,10 +50,8 @@ class _ProductsSalesChartState extends State<ProductsSalesChart> {
   ) {
     return BarTooltipItem(
       rod.toY.toString(),
-      TextStyle(
-        fontWeight: FontWeight.bold,
+      kTitleLarge.copyWith(
         color: rod.color,
-        fontSize: 18,
         shadows: const [Shadow(color: Colors.black26, blurRadius: 12)],
       ),
     );
@@ -71,10 +69,7 @@ class _ProductsSalesChartState extends State<ProductsSalesChart> {
               width: 100,
               child: Text(
                 widget.productsSales[value.toInt()].name,
-                style: const TextStyle(
-                  color: kBasicDarkColor,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: kLabelLargeDark,
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -112,14 +107,7 @@ class _ProductsSalesChartState extends State<ProductsSalesChart> {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 12, bottom: 16),
-              child: Text(
-                widget.title,
-                style: const TextStyle(
-                  color: kBasicDarkColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: Text(widget.title, style: kTitleLargeDark),
             ),
             Expanded(
               child: BarChart(

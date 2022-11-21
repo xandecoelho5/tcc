@@ -2,6 +2,7 @@ import 'package:e_markety_client/features/product/components/product_basic_info.
 import 'package:e_markety_client/features/product/components/product_flag_widget.dart';
 import 'package:e_markety_client/features/product/components/product_quantity.dart';
 import 'package:e_markety_client/features/product/models/product.dart';
+import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:e_markety_client/shared/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
@@ -63,10 +64,8 @@ class ProductDetails extends StatelessWidget {
               title: 'Descrição',
               content: CustomText(
                 text: product.description,
-                style: TextStyle(
-                  fontSize: 16,
+                style: kTitleRegular.copyWith(
                   color: Colors.grey.shade700,
-                  fontWeight: FontWeight.w500,
                   letterSpacing: -0.5,
                 ),
               ),

@@ -1,14 +1,9 @@
 import 'package:e_markety_client/shared/extensions/double_extension.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../shared/theme/constants.dart';
 import '../models/delivery_tipe.dart';
 import '../models/order.dart';
-
-final _style = TextStyle(
-  fontSize: 16,
-  fontWeight: FontWeight.bold,
-  color: Colors.grey.shade600,
-);
 
 const spacer = SizedBox(height: 6);
 
@@ -26,8 +21,8 @@ class TotalContainer extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: _style),
-        Text(value, style: _style),
+        Text(label, style: kTitleMedium.copyWith(color: Colors.grey.shade600)),
+        Text(value, style: kTitleMedium.copyWith(color: Colors.grey.shade600)),
       ],
     );
   }
@@ -73,15 +68,9 @@ class TotalContainer extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              'Total',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
+            const Text('Total', style: kHeadline6),
             const Spacer(),
-            Text(
-              order.total.toReal,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
+            Text(order.total.toReal, style: kHeadline6),
           ],
         ),
       ],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../theme/constants.dart';
+
 class TableContainer extends StatelessWidget {
   const TableContainer({
     Key? key,
@@ -25,13 +27,7 @@ class TableContainer extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
-              child: Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: Text(title, style: kHeadline6),
             ),
             const Divider(),
             Padding(

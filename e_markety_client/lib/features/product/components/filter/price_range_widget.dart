@@ -40,20 +40,8 @@ class _PriceRangeWidgetState extends State<PriceRangeWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  widget.min.toReal,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  widget.max.toReal,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                Text(widget.min.toReal, style: kTitleLarge),
+                Text(widget.max.toReal, style: kTitleLarge),
               ],
             ),
             const SizedBox(height: 10),

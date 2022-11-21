@@ -53,9 +53,7 @@ class OrderTimeline extends StatelessWidget {
             padding: const EdgeInsets.only(left: 16),
             child: Text(
               processes[index].label,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+              style: kHeadline6.copyWith(
                 color: notProcessed ? kDarkGreyColor : kSecondaryColor,
                 letterSpacing: -0.3,
               ),

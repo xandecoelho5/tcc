@@ -36,58 +36,20 @@ class TrackOrderSummary extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Código: #OD${order.id}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  Text('Código: #OD${order.id}', style: kTitleLargeLight),
                   const SizedBox(height: 4),
                   Text(
                     'Data: ${DateTimeUtils.getAbbrMonth(order.createdAt ?? DateTime.now())}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: kLabelLargeLight,
                   ),
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      const Text(
-                        'Items: ',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Text(
-                        '${order.items.length}',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      const Text('Items: ', style: kTitleRegular),
+                      Text('${order.items.length}', style: kTitleLargeLight),
                       const SizedBox(width: 10),
-                      const Text(
-                        'Total: ',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Text(
-                        order.total.toReal,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      const Text('Total: ', style: kTitleRegular),
+                      Text(order.total.toReal, style: kTitleLargeLight),
                     ],
                   ),
                 ],

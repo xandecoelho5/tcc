@@ -7,9 +7,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
-@AllArgsConstructor
 public class Categoria {
 
     @Id
@@ -27,5 +25,4 @@ public class Categoria {
 
     @Column(length = 20, nullable = false)
     private String cor;
-
 }

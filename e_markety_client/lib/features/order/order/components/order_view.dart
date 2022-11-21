@@ -1,6 +1,7 @@
+import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../../shared/utils/modular_utils.dart';
 import '../../../../shared/widgets/custom_app_bar.dart';
 import '../../../../shared/widgets/filled_button.dart';
 
@@ -30,8 +31,7 @@ class OrderView extends StatelessWidget {
       appBar: CustomAppBar.buildAppBar(
         title: title,
         showAction: false,
-        onLeadingTap: () =>
-            Modular.to.pushNamedAndRemoveUntil('/home/', (_) => false),
+        onLeadingTap: ModularUtils.goToHome,
       ),
       body: Container(
         margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
@@ -67,12 +67,7 @@ class OrderView extends StatelessWidget {
                     const Spacer(),
                     Text(
                       subMessage,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        height: 1.5,
-                      ),
+                      style: kTitleMediumLight.copyWith(height: 1.5),
                       textAlign: TextAlign.center,
                     ),
                   ],

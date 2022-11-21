@@ -44,20 +44,12 @@ class _OrderDetailsState extends State<OrderDetails> {
           const SizedBox(width: 15),
           Text(
             widget.order.status.label,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: kDarkGreyColor,
-              letterSpacing: -0.5,
-            ),
+            style: kLabelLargeDark.copyWith(letterSpacing: -0.5),
           ),
           const Spacer(),
           Text(
             DateTimeUtils.getAbbrMonth(widget.order.createdAt!),
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: kDarkGreyColor,
-              letterSpacing: -0.5,
-            ),
+            style: kLabelLargeDark.copyWith(letterSpacing: -0.5),
           ),
         ],
       ),
@@ -220,11 +212,7 @@ class _Details extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final detailStyle = TextStyle(
-      color: Colors.grey.shade600,
-      fontWeight: FontWeight.bold,
-      fontSize: 13,
-    );
+    final detailStyle = kLabelLarge.copyWith(color: Colors.grey.shade600);
 
     return Expanded(
       flex: 4,
@@ -232,10 +220,7 @@ class _Details extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Código: #OD${order.id}',
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
+            Text('Código: #OD${order.id}', style: kLabelLarge),
             const SizedBox(height: 4),
             Text(
               'Data: ${DateTimeUtils.getAbbrMonth(order.createdAt!)}',
@@ -245,16 +230,10 @@ class _Details extends StatelessWidget {
             Row(
               children: [
                 Text('Items:', style: detailStyle),
-                Text(
-                  order.items.length.toString(),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
+                Text(order.items.length.toString(), style: kLabelLarge),
                 const SizedBox(width: 16),
                 Text('Total:', style: detailStyle),
-                Text(
-                  order.total.toReal,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
+                Text(order.total.toReal, style: kLabelLarge),
               ],
             ),
           ],

@@ -20,11 +20,7 @@ class ActionCart extends StatelessWidget {
       child: Center(
         child: Text(
           '$quantity',
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 10,
-            fontWeight: FontWeight.bold,
-          ),
+          style: kHomeAddressStyle.copyWith(color: Colors.white),
         ),
       ),
     );

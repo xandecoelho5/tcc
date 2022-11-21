@@ -32,4 +32,8 @@ class ModularUtils {
   static void addToCart(CartItem cartItem) {
     Modular.get<StockBloc>().add(VerifyStock(cartItem));
   }
+
+  static void goToHome() {
+    Modular.to.pushNamedAndRemoveUntil('/home/', (_) => false);
+  }
 }

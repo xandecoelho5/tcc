@@ -123,14 +123,10 @@ class _SignUpFormState extends State<_SignUpForm> {
           // const SizedBox(height: 16),
           // Row(
           //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: const [
+          //   children: [
           //     Text(
           //       'Ou se registre com',
-          //       style: TextStyle(
-          //         fontSize: 16,
-          //         fontWeight: FontWeight.bold,
-          //         letterSpacing: -0.5,
-          //       ),
+          //       style: kTitleMedium.copyWith(letterSpacing: -0.5),
           //     ),
           //   ],
           // ),

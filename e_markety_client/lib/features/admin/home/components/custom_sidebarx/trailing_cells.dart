@@ -1,3 +1,4 @@
+import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'custom_sidebarx_item.dart';
@@ -42,15 +43,8 @@ class _TrailingCell extends StatelessWidget {
   final VoidCallback onTap;
 
   TextStyle get textStyle => selected
-      ? const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-          letterSpacing: 0.3,
-        )
-      : const TextStyle(
-          color: Colors.white,
-        );
+      ? kTitleMediumLight.copyWith(letterSpacing: 0.3)
+      : const TextStyle(color: Colors.white);
 
   @override
   Widget build(BuildContext context) {

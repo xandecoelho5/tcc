@@ -166,6 +166,7 @@ class _Categories extends StatelessWidget {
       children: [
         ViewAllRow(
           text: 'Categorias',
+          buttonText: 'Ver todas',
           onViewAll: () => Modular.to.pushNamed('/category/'),
         ),
         BlocBuilder<CategoryBloc, CategoryState>(

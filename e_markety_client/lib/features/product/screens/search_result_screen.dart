@@ -1,11 +1,12 @@
 import 'package:e_markety_client/features/product/blocs/filter/filter_bloc.dart';
+import 'package:e_markety_client/shared/theme/constants.dart';
+import 'package:e_markety_client/shared/utils/modular_utils.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:e_markety_client/shared/widgets/search_bar_with_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../shared/theme/constants.dart';
 import '../components/products_list.dart';
 
 class SearchResultScreen extends StatelessWidget {
@@ -16,7 +17,7 @@ class SearchResultScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar.buildAppBar(
         title: 'Resultado da Pesquisa',
-        onLeadingTap: () => Modular.to.navigate('/home/'),
+        onLeadingTap: ModularUtils.goToHome,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,11 +42,7 @@ class SearchResultScreen extends StatelessWidget {
                   ),
                   child: Text(
                     'Resultado da pesquisa $query',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: kBasicDarkColor,
-                    ),
+                    style: kHeadline6Dark,
                   ),
                 );
               }

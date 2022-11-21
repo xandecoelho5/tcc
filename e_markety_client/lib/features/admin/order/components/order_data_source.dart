@@ -29,12 +29,7 @@ class OrderDataSource extends DataTableSource {
       index: index,
       color: MaterialStateProperty.all(Colors.white),
       cells: [
-        DataCell(
-          Text(
-            '${order.id}',
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-        ),
+        DataCell(Text('${order.id}', style: kTitleMedium)),
         DataCell(Text(order.user.name)),
         DataCell(Text(order.user.email)),
         DataCell(Text(order.total.toReal)),

@@ -59,11 +59,7 @@ class _InformationContainerState extends State<InformationContainer> {
               children: [
                 Text(
                   widget.title,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: widget.titleColor ?? kBasicDarkColor,
-                  ),
+                  style: kTitleLargeDark.copyWith(color: widget.titleColor),
                 ),
                 if (widget.popupMenuButton != null) widget.popupMenuButton!,
                 if (widget.icon != null)

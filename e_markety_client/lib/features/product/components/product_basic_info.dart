@@ -32,10 +32,8 @@ class ProductBasicInfo extends StatelessWidget {
           ),
           Text(
             product.formattedWeight,
-            style: TextStyle(
+            style: kHeadline6.copyWith(
               color: Colors.grey.shade700,
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
               letterSpacing: -0.5,
             ),
           ),
@@ -54,9 +52,8 @@ class ProductBasicInfo extends StatelessWidget {
               if (product.hasPromotion)
                 Text(
                   product.price.toReal,
-                  style: const TextStyle(
+                  style: kHeadline6.copyWith(
                     color: kDiscountColor,
-                    fontSize: 20,
                     fontWeight: FontWeight.w500,
                     decoration: TextDecoration.lineThrough,
                   ),

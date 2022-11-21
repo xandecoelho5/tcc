@@ -1,5 +1,6 @@
 import 'package:e_markety_client/features/order/shopping_cart/blocs/overview/cart_item_overview_bloc.dart';
 import 'package:e_markety_client/features/order/shopping_cart/models/cart_item.dart';
+import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -33,10 +34,7 @@ class CartItemQuantity extends StatelessWidget {
             child: FittedBox(
               child: Text(
                 item.quantity.toStringAsFixed(item.product.fractionDigits),
-                style: const TextStyle(
-                  fontSize: 19,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: kTitleLarge,
               ),
             ),
           ),

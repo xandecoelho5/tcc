@@ -36,10 +36,7 @@ class SignInScreen extends StatelessWidget {
                     (route) => false,
                   );
                 } else {
-                  Modular.to.pushNamedAndRemoveUntil(
-                    '/home/',
-                    (route) => false,
-                  );
+                  ModularUtils.goToHome();
                 }
               }
               if (state is AuthError) {
@@ -152,14 +149,7 @@ class _SignInFormState extends State<_SignInForm> {
           //   children: [
           //     TextButton(
           //       onPressed: () {},
-          //       child: const Text(
-          //         'Esqueci minha senha',
-          //         style: TextStyle(
-          //           color: kBasicDarkColor,
-          //           fontSize: 18,
-          //           fontWeight: FontWeight.w500,
-          //         ),
-          //       ),
+          //       child: Text('Esqueci minha senha', style: kTitleMediumDark),
           //     ),
           //   ],
           // ),

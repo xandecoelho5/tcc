@@ -1,6 +1,7 @@
 import 'package:e_markety_client/features/order/order/blocs/current_order/current_order_bloc.dart';
 import 'package:e_markety_client/features/order/order/components/track_order_summary.dart';
 import 'package:e_markety_client/features/order/order/models/order_status.dart';
+import 'package:e_markety_client/shared/utils/modular_utils.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,7 +36,7 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
     final history = Modular.to.navigateHistory;
     history[history.length - 2].name == '/order/my-orders'
         ? Modular.to.pop()
-        : Modular.to.pushNamedAndRemoveUntil('/home/', (_) => false);
+        : ModularUtils.goToHome();
   }
 
   @override

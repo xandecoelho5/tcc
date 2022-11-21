@@ -1,3 +1,4 @@
+import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'information_container.dart';
@@ -19,10 +20,7 @@ class NotesContainer extends StatelessWidget {
       child: TextField(
         decoration: InputDecoration(
           hintText: 'Escreva alguma coisa aqui caso precisar...',
-          hintStyle: TextStyle(
-            color: Colors.grey.shade500,
-            fontWeight: FontWeight.bold,
-          ),
+          hintStyle: kLabelLarge.copyWith(color: Colors.grey.shade500),
           border: border,
           enabledBorder: border,
           focusedBorder: border,

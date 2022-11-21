@@ -3,12 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../shared/theme/constants.dart';
 
-const style = TextStyle(
-  fontSize: 18,
-  color: Colors.white,
-  fontWeight: FontWeight.bold,
-);
-
 class CheckoutHeader extends StatelessWidget {
   const CheckoutHeader({Key? key, required this.order}) : super(key: key);
 
@@ -25,8 +19,8 @@ class CheckoutHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text('Código do Pedido', style: style),
-          Text('#OD${order.id}', style: style),
+          Text('Código do Pedido', style: kTitleLargeLight),
+          Text('#OD${order.id}', style: kTitleLargeLight),
         ],
       ),
     );

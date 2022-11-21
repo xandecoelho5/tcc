@@ -100,14 +100,7 @@ class _HeaderState extends State<_Header> {
                   color: Colors.white,
                 ),
               ),
-              Text(
-                _user.email,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              Text(_user.email, style: kTitleMediumLight),
             ],
           ),
         );

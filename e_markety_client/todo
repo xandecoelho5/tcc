@@ -14,3 +14,6 @@ adicionar login com facebook e google;
 
 trocar componente de dropdown por um componente de autocomplete; (Bairro)
 
+
+criar uma aba para controle dos usuários que podem acessar a aplicação com funcionários
+ - pode acontecer de um funcionário sair da empresa e não ter como remover o acesso dele;

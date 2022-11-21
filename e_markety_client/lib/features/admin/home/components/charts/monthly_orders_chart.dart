@@ -49,10 +49,8 @@ class _MonthlyOrdersChartState extends State<MonthlyOrdersChart> {
   ) {
     return BarTooltipItem(
       rod.toY.toString(),
-      TextStyle(
-        fontWeight: FontWeight.bold,
+      kTitleLarge.copyWith(
         color: rod.color,
-        fontSize: 18,
         shadows: const [Shadow(color: Colors.black26, blurRadius: 12)],
       ),
     );
@@ -71,10 +69,7 @@ class _MonthlyOrdersChartState extends State<MonthlyOrdersChart> {
               width: 100,
               child: Text(
                 '${order.month}/${order.year}',
-                style: const TextStyle(
-                  color: kBasicDarkColor,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: kLabelLargeDark,
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -110,16 +105,9 @@ class _MonthlyOrdersChartState extends State<MonthlyOrdersChart> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 12, bottom: 16),
-              child: Text(
-                'Pedidos por mês',
-                style: TextStyle(
-                  color: kBasicDarkColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+            Padding(
+              padding: const EdgeInsets.only(top: 12, bottom: 16),
+              child: Text('Pedidos por mês', style: kTitleLargeDark),
             ),
             Expanded(
               child: BarChart(

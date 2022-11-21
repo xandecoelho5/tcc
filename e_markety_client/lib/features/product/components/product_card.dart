@@ -125,10 +125,7 @@ class _ProductInfo extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 12),
                 child: Text(
                   product.name,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: -0.5,
-                  ),
+                  style: kLabelLarge.copyWith(letterSpacing: -0.5),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -154,11 +151,7 @@ class _ProductInfo extends StatelessWidget {
             padding: const EdgeInsets.only(top: 2, left: 12),
             child: Text(
               product.finalPrice.toReal,
-              style: const TextStyle(
-                color: kSecondaryColor,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: kTitleLarge.copyWith(color: kSecondaryColor),
             ),
           ),
         ),

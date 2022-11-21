@@ -46,12 +46,7 @@ class CustomAppBar {
       centerTitle: true,
       actions: showAction ? [const ActionCart()] : [],
       leading: showLeading ? leadingIcon(onLeadingTap) : null,
-      titleTextStyle: titleStyle ??
-          const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: kBasicDarkColor,
-          ),
+      titleTextStyle: titleStyle ?? kHeadline6Dark,
     );
   }
 }

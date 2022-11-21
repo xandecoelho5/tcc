@@ -1,3 +1,4 @@
+import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
 
 class FilledButton extends StatelessWidget {
@@ -23,15 +24,7 @@ class FilledButton extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
       onPressed: onPressed,
-      child: Text(
-        text,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          letterSpacing: -0.5,
-        ),
-      ),
+      child: Text(text, style: kHeadline6Light.copyWith(letterSpacing: -0.5)),
     );
   }
 }

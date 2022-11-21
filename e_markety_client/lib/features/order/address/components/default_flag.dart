@@ -9,14 +9,10 @@ class DefaultFlag extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: kWeakSecondaryColor,
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      child: const Text(
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+      child: Text(
         'Padrão',
-        style: TextStyle(
-          fontSize: 13,
-          color: kSecondaryColor,
-          fontWeight: FontWeight.bold,
-        ),
+        style: kLabelLarge.copyWith(color: kSecondaryColor),
       ),
     );
   }

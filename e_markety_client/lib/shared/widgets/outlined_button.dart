@@ -1,3 +1,4 @@
+import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomOutlinedButton extends StatelessWidget {
@@ -27,14 +28,7 @@ class CustomOutlinedButton extends StatelessWidget {
       ),
       onPressed: onPressed,
       icon: Icon(icon, color: color),
-      label: Text(
-        text,
-        style: TextStyle(
-          color: color,
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+      label: Text(text, style: kTitleMedium.copyWith(color: color)),
     );
   }
 }

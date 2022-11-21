@@ -1,3 +1,4 @@
+import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:flutter/material.dart';
 
 class EmptyContainer extends StatelessWidget {
@@ -13,7 +14,7 @@ class EmptyContainer extends StatelessWidget {
     return Container(
       color: Colors.white,
       alignment: Alignment.center,
-      child: Text(text, style: const TextStyle(fontSize: 18)),
+      child: Text(text, style: kTitleLarge),
     );
   }
 }

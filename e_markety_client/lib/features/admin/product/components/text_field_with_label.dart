@@ -83,7 +83,10 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(widget.label.toUpperCase(), style: kLabelStyle),
+        Text(
+          widget.label.toUpperCase(),
+          style: kLabelLarge.copyWith(color: kLabelColor),
+        ),
         const SizedBox(height: 8),
         TextFormField(
           obscureText: widget.obscureText,

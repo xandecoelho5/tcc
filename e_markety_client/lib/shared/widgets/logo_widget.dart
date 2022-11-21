@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../theme/constants.dart';
+
 class LogoWidget extends StatelessWidget {
   const LogoWidget({Key? key}) : super(key: key);
 
@@ -33,10 +35,7 @@ class LogoWidget extends StatelessWidget {
                 ),
               ],
             ),
-            const Text(
-              'Seu Mercado Online',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-            ),
+            const Text('Seu Mercado Online', style: kHeadline6),
           ],
         ),
       ],

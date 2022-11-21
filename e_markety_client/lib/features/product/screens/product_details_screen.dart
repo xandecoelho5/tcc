@@ -37,7 +37,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       icon: const Icon(Icons.add_shopping_cart),
       label: const Text(
         'Adicionar ao Carrinho',
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        style: kHeadline6,
         textAlign: TextAlign.center,
       ),
     );

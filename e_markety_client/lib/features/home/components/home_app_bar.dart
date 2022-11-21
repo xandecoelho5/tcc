@@ -35,14 +35,7 @@ class HomeAppBar {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Olá, ${user.name}',
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: kBasicDarkColor,
-                ),
-              ),
+              Text('Olá, ${user.name}', style: kTitleMediumDark),
               BlocBuilder<DefaultAddressBloc, DefaultAddressState>(
                 bloc: Modular.get<DefaultAddressBloc>(),
                 builder: (context, state) {
@@ -55,26 +48,12 @@ class HomeAppBar {
                           size: 12,
                         ),
                         const SizedBox(width: 2),
-                        Text(
-                          state.address.street,
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Colors.grey.shade500,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
+                        Text(state.address.street, style: kHomeAddressStyle),
                       ],
                     );
                   }
                   if (state is DefaultAddressError) {
-                    return Text(
-                      state.message,
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: Colors.grey.shade500,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    );
+                    return Text(state.message, style: kHomeAddressStyle);
                   }
                   return Container();
                 },

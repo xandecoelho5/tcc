@@ -62,8 +62,7 @@ class _SortCategoryState extends State<SortCategory> {
                         ),
                         child: Text(
                           category.name,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                          style: kLabelLarge.copyWith(
                             color: selected ? Colors.white : Colors.grey[700],
                           ),
                         ),

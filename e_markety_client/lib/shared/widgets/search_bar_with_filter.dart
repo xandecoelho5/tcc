@@ -34,7 +34,7 @@ class _SearchBarWithFilterState extends State<SearchBarWithFilter> {
   void _onApply() {
     Modular.get<FilterBloc>().add(FilterApplyEvent(_filter));
     Modular.get<Global>().filter = _filter;
-    Modular.to.navigate('/product/search-result');
+    Modular.to.pushNamed('/product/search-result');
   }
 
   Filter get _filter => Modular.get<Global>().filter.copyWith(
@@ -81,11 +81,7 @@ class _SearchBarWithFilterState extends State<SearchBarWithFilter> {
             ),
             hintStyle: const TextStyle(color: Colors.grey),
           ),
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-            letterSpacing: -0.5,
-          ),
+          style: kLabelLarge.copyWith(letterSpacing: -0.5),
           onSubmitted: (value) => _onApply(),
         ),
       ),
