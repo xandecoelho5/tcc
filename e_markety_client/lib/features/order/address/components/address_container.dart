@@ -101,6 +101,7 @@ class _AddressContainerState extends State<AddressContainer> {
                       onCustomSaved: _onSaved,
                       onValidate: Validatorless.required(Strings.obrigatorio),
                       inputFormatters: [MaskFormatterUtils.cellPhone],
+                      keyboardType: TextInputType.phone,
                     ),
                     const SizedBox(height: 12),
                     TextFieldWithLabel(

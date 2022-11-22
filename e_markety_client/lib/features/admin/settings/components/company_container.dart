@@ -63,7 +63,9 @@ class _CompanyContainerState extends State<CompanyContainer> {
     _inputSaveMap[field]?.call(value);
   }
 
-  void _onEditAddress(Address? v) => _company = _company.copyWith(address: v);
+  void _onEditAddress(Address? v) => setState(() {
+        _company = _company.copyWith(address: v);
+      });
 
   Future<void> _onFocusLost(String url) async {
     try {
@@ -147,11 +149,7 @@ class _CompanyContainerState extends State<CompanyContainer> {
             height: 400,
             width: double.infinity,
             padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.all(Radius.circular(15)),
-              border: Border.all(color: const Color(0XFFEEEEEE)),
-            ),
+            decoration: kAdminContainerDecoration,
             child: buildImage(),
           ),
         ],
@@ -338,10 +336,8 @@ class _AddressInputState extends State<_AddressInput> {
       '/admin/settings/address/edit/${widget.address.id}',
     );
     if (address != null) {
-      setState(() {
-        _address = address as Address;
-        widget.onEditAddress(_address);
-      });
+      _address = address as Address;
+      widget.onEditAddress(_address);
     }
   }
 

@@ -49,9 +49,12 @@ class DropdownWithLabel<T> extends StatelessWidget {
             data: Theme.of(context).copyWith(
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
+              hoverColor: Colors.white,
+              focusColor: kSecondaryColor.withOpacity(0.75),
             ),
             child: DropdownButtonFormField<T>(
               decoration: kTextInputDecoration,
+              focusColor: Colors.transparent,
               menuMaxHeight: 350,
               items: _buildItems(),
               value: data,

@@ -21,7 +21,7 @@ final kThemeData = ThemeData(
     elevation: 0,
     toolbarHeight: 56,
   ),
-  inputDecorationTheme: const InputDecorationTheme(
+  inputDecorationTheme: InputDecorationTheme(
     border: kOutlineInputBorder,
     focusedBorder: kOutlineInputBorder,
     enabledBorder: kOutlineInputBorder,

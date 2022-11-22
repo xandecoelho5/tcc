@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 const kPrimaryColor = Color(0xFFEB3E4B);
 const kSecondaryColor = Color(0xFF2AC17E);
 const kBasicDarkColor = Color(0xFF322C46);
-// const kBasicDarkColor = Colors.purpleAccent;
 const kBasicLightColor = Color(0xFFE9E9E9);
 const kBackgroundColor = Color(0xFFF5F5F5);
 const kScaffoldColor = Colors.white;
@@ -25,45 +24,53 @@ const kFacebookColor = Color(0XFF3B5998);
 final kDarkGreyColor = Colors.grey.shade600;
 const kDiscountColor = Color(0XFFCEB35C);
 const kLabelColor = Color(0XFF8a909d);
+const kBorderColor = Color(0XFFEEEEEE);
+const kChartBorderColor = Color(0xFFECECEC);
 
-const kBorderRadius = BorderRadius.all(Radius.circular(8));
+final kErrorColor = Colors.red.shade700;
+
+final kDivider = Divider(color: Colors.grey.withOpacity(0.3), height: 1);
+
+const _kBorderRadius = BorderRadius.all(Radius.circular(8));
 
 const kOutlineInputBorder = OutlineInputBorder(
-  borderRadius: kBorderRadius,
+  borderRadius: _kBorderRadius,
   borderSide: BorderSide(color: kBackgroundColor),
 );
 
-const kErrorOutlineInputBorder = OutlineInputBorder(
-  borderRadius: kBorderRadius,
-  borderSide: BorderSide(color: Colors.red),
-);
-
-const kBottomRadiusCircularBorder = BorderRadius.only(
-  bottomLeft: Radius.circular(10),
-  bottomRight: Radius.circular(10),
+final kErrorOutlineInputBorder = OutlineInputBorder(
+  borderRadius: _kBorderRadius,
+  borderSide: BorderSide(color: kErrorColor),
 );
 
 const kDecorationBottomRadiusCircularBorder = BoxDecoration(
   color: Colors.white,
-  borderRadius: kBottomRadiusCircularBorder,
+  borderRadius: BorderRadius.only(
+    bottomLeft: Radius.circular(10),
+    bottomRight: Radius.circular(10),
+  ),
 );
 
-final kDivider = Divider(color: Colors.grey.withOpacity(0.3), height: 1);
+final kAdminContainerDecoration = BoxDecoration(
+  color: Colors.white,
+  borderRadius: const BorderRadius.all(Radius.circular(15)),
+  border: Border.all(color: kBorderColor),
+);
 
 final kTextInputBorder = OutlineInputBorder(
   borderRadius: BorderRadius.circular(15),
-  borderSide: const BorderSide(color: Color(0XFFEEEEEE)),
+  borderSide: const BorderSide(color: kBorderColor),
 );
 
 final kTextInputDecoration = InputDecoration(
+  contentPadding: const EdgeInsets.symmetric(horizontal: 15),
   enabledBorder: kTextInputBorder,
   focusedBorder: kTextInputBorder,
-  contentPadding: const EdgeInsets.symmetric(horizontal: 15),
   errorBorder: kTextInputBorder.copyWith(
-    borderSide: BorderSide(color: Colors.red.shade700),
+    borderSide: BorderSide(color: kErrorColor),
   ),
   focusedErrorBorder: kTextInputBorder.copyWith(
-    borderSide: BorderSide(color: Colors.red.shade700),
+    borderSide: BorderSide(color: kErrorColor),
   ),
 );
 

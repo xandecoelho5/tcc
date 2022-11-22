@@ -13,15 +13,9 @@ class SidebarTheme {
       selectedTextStyle: const TextStyle(color: selectedTextColor),
       itemTextPadding: const EdgeInsets.only(left: 10),
       selectedItemTextPadding: const EdgeInsets.only(left: 10),
-      itemDecoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
-        // border: Border.all(color: canvasColor),
-      ),
+      itemDecoration: BoxDecoration(borderRadius: BorderRadius.circular(4)),
       selectedItemDecoration: BoxDecoration(
-        // borderRadius: BorderRadius.circular(4),
-        // border: Border.all(color: actionColor.withOpacity(0.37)),
         gradient: const LinearGradient(
-          // colors: [accentCanvasColor, canvasColor],
           colors: [accentCanvasColor, accentCanvasColor],
         ),
         boxShadow: [
@@ -56,17 +50,8 @@ class SidebarTheme {
   }
 }
 
-// const primaryColor = Color(0xFF685BFF);
-// const canvasColor = Color(0xFF2E2E48);
-// const scaffoldBackgroundColor = Color(0xFF464667);
-// const accentCanvasColor = Color(0xFF3E3E61);
-// const white = Colors.white;
-// final actionColor = const Color(0xFF5F5FA7).withOpacity(0.6);
-
-// const primaryColor = Color(0xFF685BFF);
 final textColor = Colors.blueGrey.withOpacity(0.9);
 const selectedTextColor = Colors.white;
 const canvasColor = Colors.white;
 const scaffoldBackgroundColor = Colors.white;
 const accentCanvasColor = kPrimaryColor;
-final actionColor = const Color(0xFF5F5FA7).withOpacity(0.6);

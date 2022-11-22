@@ -115,7 +115,7 @@ class _MonthlyOrdersChartState extends State<MonthlyOrdersChart> {
                   alignment: BarChartAlignment.spaceAround,
                   borderData: FlBorderData(
                     border: const Border.symmetric(
-                      horizontal: BorderSide(color: Color(0xFFececec)),
+                      horizontal: BorderSide(color: kChartBorderColor),
                     ),
                   ),
                   titlesData: FlTitlesData(
@@ -128,7 +128,7 @@ class _MonthlyOrdersChartState extends State<MonthlyOrdersChart> {
                     show: true,
                     drawVerticalLine: false,
                     getDrawingHorizontalLine: (value) => FlLine(
-                      color: const Color(0xFFececec),
+                      color: kChartBorderColor,
                       strokeWidth: 1,
                     ),
                   ),

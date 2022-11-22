@@ -70,6 +70,16 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
   }
 
   @override
+  void didUpdateWidget(covariant TextFieldWithLabel oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.data != widget.data) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        _controller.text = widget.data ?? '';
+      });
+    }
+  }
+
+  @override
   void dispose() {
     _focus.dispose();
     super.dispose();
@@ -89,6 +99,7 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
         ),
         const SizedBox(height: 8),
         TextFormField(
+          keyboardType: widget.keyboardType,
           obscureText: widget.obscureText,
           obscuringCharacter: '*',
           controller: _controller,

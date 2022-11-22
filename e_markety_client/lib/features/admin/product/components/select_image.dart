@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:validatorless/validatorless.dart';
 
+import '../../../../shared/theme/constants.dart';
 import '../../../../shared/utils/strings.dart';
 
 class SelectImage extends StatefulWidget {
@@ -47,7 +48,6 @@ class _SelectImageState extends State<SelectImage> {
     return Image.network(_product.imageUrl, fit: BoxFit.contain);
   }
 
-  // https://i.pinimg.com/236x/7d/0e/68/7d0e68d3982cf67cfe6504e165029bd1--wattpad-book.jpg
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -64,11 +64,7 @@ class _SelectImageState extends State<SelectImage> {
           height: 400,
           width: double.infinity,
           padding: const EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: const BorderRadius.all(Radius.circular(15)),
-            border: Border.all(color: const Color(0XFFEEEEEE)),
-          ),
+          decoration: kAdminContainerDecoration,
           child: _buildImage(),
         ),
       ],

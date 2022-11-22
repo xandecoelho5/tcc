@@ -132,7 +132,6 @@ class _AvatarSelectorState extends State<_AvatarSelector> {
     widget.onUrlChanged(_url);
   }
 
-  // https://i.pinimg.com/236x/7d/0e/68/7d0e68d3982cf67cfe6504e165029bd1--wattpad-book.jpg
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -147,11 +146,7 @@ class _AvatarSelectorState extends State<_AvatarSelector> {
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.all(Radius.circular(15)),
-              border: Border.all(color: const Color(0XFFEEEEEE)),
-            ),
+            decoration: kAdminContainerDecoration,
             child: _buildImage(),
           ),
         ),
