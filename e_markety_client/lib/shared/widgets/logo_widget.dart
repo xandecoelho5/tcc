@@ -10,8 +10,6 @@ class LogoWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // const Icon(Icons.local_grocery_store, color: kBasicDarkColor, size: 70),
-        const SizedBox(width: 10),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

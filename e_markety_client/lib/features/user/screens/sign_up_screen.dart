@@ -1,6 +1,7 @@
 import 'package:e_markety_client/features/user/blocs/user_bloc.dart';
 import 'package:e_markety_client/shared/utils/modular_utils.dart';
 import 'package:e_markety_client/shared/utils/strings.dart';
+import 'package:e_markety_client/shared/widgets/adaptive_widget.dart';
 import 'package:e_markety_client/shared/widgets/filled_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,29 +33,32 @@ class SignUpScreen extends StatelessWidget {
             ModularUtils.showError(state.message);
           }
         },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Expanded(
-              flex: 10,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
-                  child: _SignUpForm(),
+        child: AdaptiveWidget(
+          height: 500,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              const Flexible(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
+                    child: _SignUpForm(),
+                  ),
                 ),
               ),
-            ),
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 4,
+                ),
                 child: TextButtonAuth(
                   textLabel: 'Já possui uma conta?',
                   textButtonLabel: 'Entrar',
                   onPressed: () => Modular.to.pushNamed('/sign-in'),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

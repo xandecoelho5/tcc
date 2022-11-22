@@ -1,4 +1,5 @@
 import 'package:e_markety_client/shared/utils/strings.dart';
+import 'package:e_markety_client/shared/widgets/adaptive_widget.dart';
 import 'package:e_markety_client/shared/widgets/filled_button.dart';
 import 'package:e_markety_client/shared/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
@@ -39,12 +40,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SafeArea(
+      body: AdaptiveWidget(
         child: Padding(
-          padding: const EdgeInsets.all(18),
+          padding: const EdgeInsets.all(16),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.18),
               const LogoWidget(),
               const SizedBox(height: 80),
               FilledButton(
@@ -52,7 +53,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 color: Theme.of(context).colorScheme.primary,
                 onPressed: () => Modular.to.pushNamed('/sign-in'),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
               FilledButton(
                 text: 'Criar uma conta',
                 color: Theme.of(context).colorScheme.secondary,

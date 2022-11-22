@@ -1,6 +1,7 @@
 import 'package:e_markety_client/features/company/blocs/company/company_bloc.dart';
 import 'package:e_markety_client/features/user/auth/blocs/auth_bloc.dart';
 import 'package:e_markety_client/shared/environment/platform.dart';
+import 'package:e_markety_client/shared/widgets/adaptive_widget.dart';
 import 'package:e_markety_client/shared/widgets/custom_app_bar.dart';
 import 'package:e_markety_client/shared/widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
@@ -54,24 +55,26 @@ class SignInScreen extends StatelessWidget {
               },
             ),
         ],
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
-                child: _SignInForm(),
+        child: AdaptiveWidget(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              const SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
+                  child: _SignInForm(),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-              child: TextButtonAuth(
-                textLabel: 'Não tem uma conta?',
-                textButtonLabel: 'Cadastre-se',
-                onPressed: () => Modular.to.navigate('/sign-up'),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                child: TextButtonAuth(
+                  textLabel: 'Não tem uma conta?',
+                  textButtonLabel: 'Cadastre-se',
+                  onPressed: () => Modular.to.pushNamed('/sign-up'),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -153,7 +156,7 @@ class _SignInFormState extends State<_SignInForm> {
           //     ),
           //   ],
           // ),
-          const SizedBox(height: 12),
+          if (Modular.get<AppPlatform>().isMobile) const SizedBox(height: 12),
           if (Modular.get<AppPlatform>().isMobile) _buildDropdown(),
           const SizedBox(height: 20),
           FilledButton(
