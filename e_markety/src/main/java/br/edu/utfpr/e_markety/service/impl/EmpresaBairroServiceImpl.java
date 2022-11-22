@@ -56,9 +56,11 @@ public class EmpresaBairroServiceImpl extends GenericServiceImpl<EmpresaBairro, 
     protected void preSave(EmpresaBairro entity, Long id) {
         if (entity.getEmpresa() == null) {
             var empresa = getLoggedEmpresa();
-            var empresaBairro = repository.findByEmpresaIdAndBairroId(empresa.getId(), entity.getBairro().getId());
-            if (empresaBairro.isPresent()) {
-                throw new BairroEmpresaAlreadyRegisteredException();
+            if (id == null) {
+                var empresaBairro = repository.findByEmpresaIdAndBairroId(empresa.getId(), entity.getBairro().getId());
+                if (empresaBairro.isPresent()) {
+                    throw new BairroEmpresaAlreadyRegisteredException();
+                }
             }
             entity.setEmpresa(empresa);
         }
