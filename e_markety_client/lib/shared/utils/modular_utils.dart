@@ -1,4 +1,5 @@
 import 'package:e_markety_client/features/product/blocs/stock/stock_bloc.dart';
+import 'package:e_markety_client/shared/environment/platform.dart';
 import 'package:e_markety_client/shared/utils/global.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -11,7 +12,9 @@ class ModularUtils {
 
   static Future<void> signOut() async {
     Modular.get<AuthBloc>().add(AuthSignOutEvent());
-    Modular.get<Global>().resetFilter();
+    if (Modular.get<AppPlatform>().isMobile) {
+      Modular.get<Global>().resetFilter();
+    }
     Future.delayed(const Duration(milliseconds: 10), () {
       Modular.to.navigate('/');
     });
