@@ -74,13 +74,13 @@ class _AddressContainerState extends State<AddressContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          Expanded(
-            flex: 9,
-            child: SingleChildScrollView(
+    return Column(
+      children: [
+        Expanded(
+          flex: 9,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -140,6 +140,7 @@ class _AddressContainerState extends State<AddressContainer> {
                       items: Tag.values,
                       onSaved: _onTagSaved,
                     ),
+                    const SizedBox(height: 4),
                     Row(
                       children: [
                         Checkbox(
@@ -160,15 +161,17 @@ class _AddressContainerState extends State<AddressContainer> {
               ),
             ),
           ),
-          Expanded(
-            child: FilledButton(
-              text: widget.textButton,
-              color: kSecondaryColor,
-              onPressed: _onSubmit,
-            ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          child: FilledButton(
+            height: MediaQuery.of(context).size.height * 0.075,
+            text: widget.textButton,
+            color: kSecondaryColor,
+            onPressed: _onSubmit,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -21,7 +21,7 @@ class ProductAddPage extends StatelessWidget {
       listener: (context, state) {
         if (state is AdminProductSuccess) {
           ModularUtils.showSuccess('Produto salvo');
-          Modular.to.navigate('/admin/product');
+          Modular.to.navigate('/admin/product/');
         }
         if (state is AdminProductError) {
           ModularUtils.showError('Erro ao salvar produto: ${state.message}');

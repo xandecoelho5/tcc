@@ -164,6 +164,14 @@ class _ProductInputFieldsState extends State<ProductInputFields> {
                 data: _product.discountPercent.toString(),
                 onCustomSaved: _onSaved,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                onValidate: Validatorless.multiple([
+                  Validatorless.required(Strings.obrigatorio),
+                  Validatorless.numbersBetweenInterval(
+                    0,
+                    100,
+                    Strings.valorEntrePercentual,
+                  ),
+                ]),
               ),
             ),
           ],

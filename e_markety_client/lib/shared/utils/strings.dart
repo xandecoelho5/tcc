@@ -6,6 +6,7 @@ class Strings {
   static const String valorMinimo = 'Este valor deve ser maior que 0';
   static const String valorEntre =
       'Este valor deve ser maior ou igual a 0 e menor ou igual a 999';
+  static const String valorEntrePercentual = 'Valor deve ser entre 0 e 100';
   static const String senhaMinimo = 'Deve ter pelo menos 6 caracteres';
   static const String senhaDiferente = 'As senhas não são iguais';
   static const String token = 'authToken';

@@ -64,7 +64,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
           ModularUtils.showSuccess('Produto excluído com sucesso');
         }
         if (state is AdminProductError) {
-          ModularUtils.showError('Erro ao excluir produto: ${state.message}');
+          ModularUtils.showError(state.message);
         }
       },
       child: ValueListenableBuilder<ProviderSettings>(
