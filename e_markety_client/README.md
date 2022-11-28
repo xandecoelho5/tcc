@@ -1,16 +1,18 @@
-# e_markety_client
-
-Mobile version fo EMarkety project
+# EMarkety client
 
 ## Getting Started
+- Before trying to run the application, you must run the following commands on terminal:
+```
+flutter pub get
+```
 
-This project is a starting point for a Flutter application.
+## Links used for reference
+- [E-commerce Deshboard](https://dribbble.com/shots/19190972-E-commerce-Deshboard)
+- [Ekka-Admin](https://loopinfosol.in/themeforest/ekka-html-v32/ekka-admin/index.html)
+- [nfresh](https://themeforest.net/item/nfresh-food-grocery-app-ui-kit-for-sketch/31621728)
+- [FOGROR](https://themeforest.net/item/fogro-food-grocery-app-ui-kit-for-adobe-xd/31303286)
+- [Patão-delivery](https://delivery.patao.com.br)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Some packages used
+- [flutter_modular](https://modular.flutterando.com.br/docs/flutter_modular/start)
+- [flutter_bloc](https://bloclibrary.dev/#/gettingstarted)
