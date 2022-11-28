@@ -6,6 +6,12 @@
 flutter pub get
 ```
 
+## Observations
+- If a model is not being generated or was changed, you must run the following command on terminal:
+```
+flutter pub run build_runner build --delete-conflicting-outputs
+```
+
 ## Links used for reference
 - [E-commerce Deshboard](https://dribbble.com/shots/19190972-E-commerce-Deshboard)
 - [Ekka-Admin](https://loopinfosol.in/themeforest/ekka-html-v32/ekka-admin/index.html)
