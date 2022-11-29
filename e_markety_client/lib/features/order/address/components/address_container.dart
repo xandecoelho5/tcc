@@ -2,6 +2,7 @@ import 'package:e_markety_client/features/admin/district/notifiers/district_noti
 import 'package:e_markety_client/features/admin/product/components/dropdown_with_label.dart';
 import 'package:e_markety_client/features/order/address/models/address.dart';
 import 'package:e_markety_client/features/order/address/models/district.dart';
+import 'package:e_markety_client/shared/environment/platform.dart';
 import 'package:e_markety_client/shared/utils/mask_formatter_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -101,7 +102,10 @@ class _AddressContainerState extends State<AddressContainer> {
                       onCustomSaved: _onSaved,
                       onValidate: Validatorless.multiple([
                         Validatorless.required(Strings.obrigatorio),
-                        Validatorless.min(15, Strings.telefoneInvalido),
+                        Validatorless.min(
+                          Modular.get<AppPlatform>().isMobile ? 15 : 14,
+                          Strings.telefoneInvalido,
+                        ),
                       ]),
                       inputFormatters: [MaskFormatterUtils.cellPhone],
                       keyboardType: TextInputType.phone,

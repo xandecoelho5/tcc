@@ -91,7 +91,15 @@ class _ChartsState extends State<_Charts> {
                 valueListenable: Modular.get<MonthlyOrdersNotifier>(),
                 builder: (context, value, child) {
                   if (value.isEmpty) {
-                    return const EmptyContainer();
+                    return const Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 32),
+                        child: EmptyContainer(
+                          text:
+                              'Ainda não existem pedidos para o cálculo de pedidos por mês',
+                        ),
+                      ),
+                    );
                   }
                   return Expanded(
                     child: MonthlyOrdersChart(monthlyOrders: value),
@@ -102,7 +110,15 @@ class _ChartsState extends State<_Charts> {
                 valueListenable: Modular.get<StatusSummaryNotifier>(),
                 builder: (context, value, child) {
                   if (value.isEmpty) {
-                    return const EmptyContainer();
+                    return const Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 32),
+                        child: EmptyContainer(
+                          text:
+                              'Ainda não existem pedidos para o cálculo de resumo de status de pedidos',
+                        ),
+                      ),
+                    );
                   }
                   return Expanded(
                     child: OrdersOverviewChart(statusSummary: value),

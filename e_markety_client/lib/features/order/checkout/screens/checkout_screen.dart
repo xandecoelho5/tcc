@@ -70,10 +70,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
       if (_order.deliveryType == DeliveryType.delivery &&
           _order.deliveryAddress == null) {
-        final state = Modular.get<DefaultAddressBloc>().state;
-        if (state is DefaultAddressLoaded) {
-          _onAddressSelected(state.address);
-        }
+        Modular.get<DefaultAddressBloc>().add(
+          DefaultAddressGetEvent(onCompleted: _onAddressSelected),
+        );
       }
     });
   }

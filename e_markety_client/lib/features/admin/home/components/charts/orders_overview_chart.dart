@@ -54,6 +54,7 @@ class _OrdersOverviewChartState extends State<OrdersOverviewChart> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 4,
       child: Row(
         children: [
           const SizedBox(height: 18),

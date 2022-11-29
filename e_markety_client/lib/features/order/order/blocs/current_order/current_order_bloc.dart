@@ -22,6 +22,7 @@ class CurrentOrderBloc extends Bloc<CurrentOrderEvent, CurrentOrderState> {
     try {
       final order = await _service.getCurrentOrder();
       emit(CurrentOrderLoaded(order));
+      event.onCompleted?.call();
     } catch (e) {
       emit(CurrentOrderError(e.toString()));
     }

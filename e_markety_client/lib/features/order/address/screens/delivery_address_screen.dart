@@ -54,7 +54,11 @@ class _DeliveryAddressScreenState extends State<DeliveryAddressScreen> {
 
                         if (state is AddressListLoaded) {
                           _address ??=
-                              state.addresses.where((e) => e.isDefault).first;
+                              state.addresses.firstWhere((e) => e.isDefault);
+                          if (_address != null) {
+                            _address = state.addresses
+                                .firstWhere((e) => e.id == _address!.id);
+                          }
                           return AddressList(
                             addresses: state.addresses,
                             isShopping: true,

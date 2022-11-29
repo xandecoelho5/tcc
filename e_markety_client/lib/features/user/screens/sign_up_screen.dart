@@ -21,7 +21,7 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar.buildAppBar(showAction: false),
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       body: BlocListener<UserBloc, UserState>(
         bloc: Modular.get<UserBloc>(),
         listener: (context, state) {
@@ -36,7 +36,7 @@ class SignUpScreen extends StatelessWidget {
         child: AdaptiveWidget(
           height: 500,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Flexible(
                 child: SingleChildScrollView(

@@ -4,6 +4,7 @@ import 'package:e_markety_client/shared/utils/global.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../core/services/snack_bar/snackbar_service.dart';
+import '../../features/order/order/blocs/current_order/current_order_bloc.dart';
 import '../../features/order/shopping_cart/models/cart_item.dart';
 import '../../features/user/auth/blocs/auth_bloc.dart';
 
@@ -33,7 +34,11 @@ class ModularUtils {
   }
 
   static void addToCart(CartItem cartItem) {
-    Modular.get<StockBloc>().add(VerifyStock(cartItem));
+    Modular.get<CurrentOrderBloc>().add(
+      GetCurrentOrder(
+        onCompleted: () => Modular.get<StockBloc>().add(VerifyStock(cartItem)),
+      ),
+    );
   }
 
   static void goToHome() {
