@@ -195,7 +195,7 @@ class _CompanyContainerState extends State<CompanyContainer> {
                   data: _company.cellPhone,
                   onCustomSaved: _onSaved,
                   onValidate: (value) {
-                    if (value.isNotBlank) {
+                    if (value.isBlank) {
                       return null;
                     }
                     return Validatorless.min(15, Strings.celularInvalido)(

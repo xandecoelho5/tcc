@@ -1,4 +1,5 @@
 import 'package:e_markety_client/features/user/components/user_info_container.dart';
+import 'package:e_markety_client/shared/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:validatorless/validatorless.dart';
@@ -78,6 +79,12 @@ class _PersonDetailsFormViewState extends State<PersonDetailsFormView> {
               icon: Icons.phone,
               label: 'Telefone',
               onSaved: _onPhoneSaved,
+              onValidate: (value) {
+                if (value.isBlank) {
+                  return null;
+                }
+                return Validatorless.min(15, Strings.telefoneInvalido)(value);
+              },
               onFieldSubmitted: (_) => _onSubmit(),
               inputFormatters: [MaskFormatterUtils.cellPhone],
             ),
