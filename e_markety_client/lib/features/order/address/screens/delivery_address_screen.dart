@@ -26,7 +26,10 @@ class _DeliveryAddressScreenState extends State<DeliveryAddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.buildAppBar(title: 'Endereço de Entrega'),
+      appBar: CustomAppBar.buildAppBar(
+        title: 'Endereço de Entrega',
+        showAction: false,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Column(
