@@ -31,14 +31,14 @@ public interface PedidoRepository extends GenericUserRepository<Pedido, Long> {
     @Query("UPDATE Pedido p SET p.status = ?2 WHERE p.id = ?1")
     void updateStatus(Long id, StatusPedido status);
     // relatórios
-    @Query(value = "select status, (count(status) * 1.0 / (select count(status) from pedido where empresa_id = :empresaId)) * 100 " +
+    @Query(value = "select status, (count(status) * 1.0 / (select count(status) from pedido where empresa_id = :empresaId and status != 'PENDENTE')) * 100 " +
             "  from pedido " +
-            " where empresa_id = :empresaId " +
+            " where empresa_id = :empresaId and status != 'PENDENTE' " +
             " group by status", nativeQuery = true)
     List<Tuple> relatorioStatusPedidoByEmpresaId(Long empresaId);
 
     @Query(value = "SELECT * " +
             "  FROM pedido " +
-            " WHERE empresa_id = :empresaId AND data_criacao between CURRENT_DATE - INTERVAL '1 YEAR' AND  CURRENT_DATE", nativeQuery = true)
+            " WHERE empresa_id = :empresaId AND data_criacao between CURRENT_DATE - INTERVAL '1 YEAR' AND  CURRENT_DATE AND status != 'PENDENTE'", nativeQuery = true)
     List<Pedido> findPedidosByDataCriacaoBetweenByEmpresaId(Long empresaId);
 }
