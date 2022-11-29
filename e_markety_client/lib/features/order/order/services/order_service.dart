@@ -16,11 +16,16 @@ abstract class IOrderService extends IPaginatedService {
   Future<Either<OrderException, Order>> placeOrder(Order order);
 
   Future<Either<OrderException, void>> updateOrderStatus(int id);
+
+  Stream<Either<OrderException, List<Order>>> streamOrders();
+
+  void closeStream();
 }
 
 class OrderService implements IOrderService {
   final IHttpService _httpService;
   final String _baseUrl = '/pedido';
+  bool _isStreamOpen = false;
 
   OrderService(this._httpService);
 
@@ -86,4 +91,25 @@ class OrderService implements IOrderService {
       (r) => const Right(null),
     );
   }
+
+  @override
+  Stream<Either<OrderException, List<Order>>> streamOrders() async* {
+    Stream<Either<OrderException, List<Order>>> _emit() async* {
+      final response = await _httpService.getAll(_baseUrl);
+      yield response.fold(
+        (l) => Left(OrderException(l.message, l.stackTrace)),
+        (r) => Right(r.map(Order.fromMap).toList()),
+      );
+    }
+
+    yield* _emit();
+    _isStreamOpen = true;
+    while (_isStreamOpen) {
+      await Future.delayed(const Duration(seconds: 5));
+      if (_isStreamOpen) yield* _emit();
+    }
+  }
+
+  @override
+  void closeStream() => _isStreamOpen = false;
 }

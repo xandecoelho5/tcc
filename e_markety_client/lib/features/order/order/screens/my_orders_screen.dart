@@ -8,15 +8,34 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../blocs/order/order_bloc.dart';
 import '../components/order_details.dart';
 
-class MyOrdersScreen extends StatelessWidget {
+class MyOrdersScreen extends StatefulWidget {
   const MyOrdersScreen({Key? key}) : super(key: key);
+
+  @override
+  State<MyOrdersScreen> createState() => _MyOrdersScreenState();
+}
+
+class _MyOrdersScreenState extends State<MyOrdersScreen> {
+  final bloc = Modular.get<OrderBloc>();
+
+  @override
+  void initState() {
+    super.initState();
+    bloc.add(OrderStreamEvent());
+  }
+
+  @override
+  void dispose() {
+    bloc.add(OrderCloseStreamEvent());
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar.buildAppBar(title: 'Meus Pedidos'),
       body: BlocBuilder<OrderBloc, OrderState>(
-        bloc: Modular.get<OrderBloc>()..add(OrderGetAllEvent()),
+        bloc: bloc,
         builder: (context, state) {
           if (state is OrderLoading) {
             return const Center(child: CircularProgressIndicator());
@@ -34,7 +53,10 @@ class MyOrdersScreen extends StatelessWidget {
 
             return ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              itemBuilder: (ctx, i) => OrderDetails(order: _orders[i]),
+              itemBuilder: (ctx, i) => OrderDetails(
+                order: _orders[i],
+                orderBloc: bloc,
+              ),
               separatorBuilder: (ctx, i) => const SizedBox(height: 20),
               itemCount: _orders.length,
             );

@@ -36,7 +36,7 @@ class HomeModule extends Module {
         Bind.singleton<ICurrentOrderService>(
           (i) => CurrentOrderService(i(), i()),
         ),
-        Bind.singleton((i) => OrderBloc(i(), i())),
+        Bind.factory((i) => OrderBloc(i(), i())),
         Bind.singleton((i) => CurrentOrderBloc(i())),
         // category
         Bind.singleton<ICategoryService>((i) => CategoryService(i())),

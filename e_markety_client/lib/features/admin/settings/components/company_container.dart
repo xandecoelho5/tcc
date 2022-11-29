@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:e_markety_client/features/company/blocs/company/company_bloc.dart';
 import 'package:e_markety_client/features/company/models/company.dart';
 import 'package:e_markety_client/features/order/address/models/address.dart';
+import 'package:e_markety_client/shared/extensions/string_extension.dart';
 import 'package:e_markety_client/shared/utils/date_time_utils.dart';
 import 'package:e_markety_client/shared/utils/mask_formatter_utils.dart';
 import 'package:flutter/material.dart';
@@ -179,7 +180,10 @@ class _CompanyContainerState extends State<CompanyContainer> {
                   fieldName: 'phone',
                   data: _company.phone,
                   onCustomSaved: _onSaved,
-                  onValidate: Validatorless.required(Strings.obrigatorio),
+                  onValidate: Validatorless.multiple([
+                    Validatorless.required(Strings.obrigatorio),
+                    Validatorless.min(14, Strings.telefoneInvalido),
+                  ]),
                   inputFormatters: [MaskFormatterUtils.phone],
                 ),
               ),
@@ -190,6 +194,14 @@ class _CompanyContainerState extends State<CompanyContainer> {
                   fieldName: 'cellPhone',
                   data: _company.cellPhone,
                   onCustomSaved: _onSaved,
+                  onValidate: (value) {
+                    if (value.isNotBlank) {
+                      return null;
+                    }
+                    return Validatorless.min(15, Strings.celularInvalido)(
+                      value,
+                    );
+                  },
                   inputFormatters: [MaskFormatterUtils.cellPhone],
                 ),
               ),

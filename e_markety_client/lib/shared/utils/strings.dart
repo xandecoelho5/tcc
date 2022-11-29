@@ -15,6 +15,8 @@ class Strings {
   static const String horarioAberturaMaiorQueFechamento =
       'Horário de abertura deve ser menor que horário de fechamento';
   static const String horarioInvalido = 'Horário inválido';
+  static const String telefoneInvalido = 'Telefone inválido';
+  static const String celularInvalido = 'Celular inválido';
 
   // errors
   static const String noneOpenPedido =

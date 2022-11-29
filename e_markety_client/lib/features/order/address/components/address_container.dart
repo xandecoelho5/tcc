@@ -99,7 +99,10 @@ class _AddressContainerState extends State<AddressContainer> {
                       fieldName: 'phone',
                       data: _address.phone,
                       onCustomSaved: _onSaved,
-                      onValidate: Validatorless.required(Strings.obrigatorio),
+                      onValidate: Validatorless.multiple([
+                        Validatorless.required(Strings.obrigatorio),
+                        Validatorless.min(15, Strings.telefoneInvalido),
+                      ]),
                       inputFormatters: [MaskFormatterUtils.cellPhone],
                       keyboardType: TextInputType.phone,
                     ),

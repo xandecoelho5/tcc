@@ -32,7 +32,7 @@ class OrderModule extends Module {
         ),
         ChildRoute(
           '/track-order',
-          child: (context, args) => const TrackOrderScreen(),
+          child: (context, args) => TrackOrderScreen(orderBloc: args.data),
         ),
         ChildRoute(
           '/my-orders',

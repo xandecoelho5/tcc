@@ -83,7 +83,7 @@ class CurrentOrderService implements ICurrentOrderService {
     _isStreamOpen = true;
     while (_isStreamOpen) {
       await Future.delayed(const Duration(seconds: 5));
-      yield* _emit();
+      if (_isStreamOpen) yield* _emit();
     }
   }
 

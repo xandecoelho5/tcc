@@ -30,8 +30,10 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  late Order _order =
-      widget.order.copyWith(total: widget.order.calculatedTotal);
+  final orderBloc = Modular.get<OrderBloc>();
+  late Order _order = widget.order.copyWith(
+    total: widget.order.calculatedTotal,
+  );
 
   void _onPlaceOrder() {
     if (_order.deliveryType == DeliveryType.delivery) {
@@ -44,7 +46,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         return;
       }
     }
-    Modular.get<OrderBloc>().add(OrderPlaceEvent(_order));
+    orderBloc.add(OrderPlaceEvent(_order));
   }
 
   void _onDeliveryTypeChanged(bool value) {
@@ -119,7 +121,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       body: MultiBlocListener(
         listeners: [
           BlocListener<OrderBloc, OrderState>(
-            bloc: Modular.get<OrderBloc>(),
+            bloc: orderBloc,
             listener: (context, state) {
               if (state is OrderSuccess) {
                 Modular.to.pushNamed('/order/order-result', arguments: true);
@@ -177,7 +179,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   vertical: 8,
                 ),
                 child: BlocBuilder<OrderBloc, OrderState>(
-                  bloc: Modular.get<OrderBloc>(),
+                  bloc: orderBloc,
                   builder: (context, state) {
                     if (state is OrderLoading) {
                       return const Center(child: CircularProgressIndicator());

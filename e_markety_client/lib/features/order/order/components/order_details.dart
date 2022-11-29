@@ -1,3 +1,4 @@
+import 'package:e_markety_client/features/order/order/blocs/order/order_bloc.dart';
 import 'package:e_markety_client/shared/extensions/double_extension.dart';
 import 'package:e_markety_client/shared/theme/constants.dart';
 import 'package:e_markety_client/shared/utils/assets.dart';
@@ -11,20 +12,22 @@ import '../models/order_status.dart';
 import 'order_simpler_timeline.dart';
 
 class OrderDetails extends StatefulWidget {
-  const OrderDetails({Key? key, required this.order}) : super(key: key);
+  const OrderDetails({
+    Key? key,
+    required this.order,
+    required this.orderBloc,
+  }) : super(key: key);
 
   final Order order;
+  final OrderBloc orderBloc;
 
   @override
   State<OrderDetails> createState() => _OrderDetailsState();
 }
 
 class _OrderDetailsState extends State<OrderDetails> {
+  late Color color;
   late bool _expanded = widget.order.status != OrderStatus.delivered;
-  late Color color = widget.order.status == OrderStatus.delivered
-      ? kSecondaryColor
-      : kPrimaryColor;
-
   late final processes = widget.order.deliveryType == DeliveryType.delivery
       ? OrderStatus.caseDelivery()
       : OrderStatus.casePickup();
@@ -69,6 +72,10 @@ class _OrderDetailsState extends State<OrderDetails> {
 
   @override
   Widget build(BuildContext context) {
+    color = widget.order.status == OrderStatus.delivered
+        ? kSecondaryColor
+        : kPrimaryColor;
+
     return GestureDetector(
       onTap: () => Modular.to.pushNamed(
         '/order/my-orders/details',
@@ -79,17 +86,16 @@ class _OrderDetailsState extends State<OrderDetails> {
           Container(
             decoration: BoxDecoration(
               color: Colors.grey.shade50,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-              ),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
               boxShadow: kElevationToShadow[2],
             ),
             child: Column(
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 12,
+                  ),
                   child: Row(
                     children: [
                       _OrderIcon(
@@ -126,7 +132,10 @@ class _OrderDetailsState extends State<OrderDetails> {
               right: 0,
               child: _ActionButton(
                 color: color,
-                onTap: () => Modular.to.pushNamed('/order/track-order'),
+                onTap: () => Modular.to.pushNamed(
+                  '/order/track-order',
+                  arguments: widget.orderBloc,
+                ),
                 icon: Image.asset(
                   Assets.track,
                   color: Colors.black,
