@@ -113,7 +113,7 @@ class _ProductsSliverList extends StatelessWidget {
                 child: Center(
                   child: Text(
                     'Nenhum produto encontrado para esta categoria',
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
               ),

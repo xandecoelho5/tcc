@@ -80,7 +80,7 @@ class DioService implements IHttpService {
       return response.data;
     } on DioError catch (e) {
       print(e);
-      return Stream.empty();
+      return const Stream.empty();
     }
   }
 

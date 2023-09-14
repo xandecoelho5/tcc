@@ -29,21 +29,21 @@ final categoriesMock = [
     iconUrl: Assets.hortifrutiIcon,
     colorString: '0XFF4CA64C',
   ),
-  Category(
+  const Category(
     id: 2,
     name: 'Dairy & Bakery',
     imageUrl: Assets.hortifrutiImage,
     iconUrl: Assets.hortifrutiIcon,
     colorString: '0xFFD39447',
   ),
-  Category(
+  const Category(
     id: 3,
     name: 'Staples',
     imageUrl: Assets.hortifrutiImage,
     iconUrl: Assets.hortifrutiIcon,
     colorString: '0xFF7E724C',
   ),
-  Category(
+  const Category(
     id: 4,
     name: 'Snacks & Branded Foods',
     imageUrl: Assets.hortifrutiImage,
@@ -267,7 +267,7 @@ final ordersMock = [
     deliveryTime: DateTime.now().add(const Duration(hours: 2)),
     status: OrderStatus.delivered,
     total: 87,
-  )
+  ),
 ];
 
 const userMock = User(

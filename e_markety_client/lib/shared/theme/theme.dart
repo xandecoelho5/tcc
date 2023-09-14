@@ -9,8 +9,8 @@ final kThemeData = ThemeData(
     secondary: kSecondaryColor,
   ),
   textTheme: const TextTheme(
-    bodyText1: TextStyle(),
-    bodyText2: TextStyle(),
+    bodyLarge: TextStyle(),
+    bodyMedium: TextStyle(),
   ).apply(
     bodyColor: kBasicDarkColor,
     displayColor: kBasicDarkColor,

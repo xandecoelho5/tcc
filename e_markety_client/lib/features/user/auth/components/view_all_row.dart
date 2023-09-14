@@ -37,7 +37,7 @@ class ViewAllRow extends StatelessWidget {
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

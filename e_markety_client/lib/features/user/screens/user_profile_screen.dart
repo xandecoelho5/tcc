@@ -34,12 +34,12 @@ class UserProfileScreen extends StatelessWidget {
       child: Scaffold(
         appBar: CustomAppBar.buildAppBar(),
         resizeToAvoidBottomInset: false,
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        body: const Padding(
+          padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: const [
+            children: [
               IntrinsicHeight(
                 child: _Header(),
               ),

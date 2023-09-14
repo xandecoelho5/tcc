@@ -81,7 +81,7 @@ enum OrderStatus {
     final cancelar = {
       'Cancelar': () {
         print('Cancelar');
-      }
+      },
     };
 
     Future<void> updateAction() =>

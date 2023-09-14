@@ -22,7 +22,7 @@ class SidebarTheme {
           BoxShadow(
             color: accentCanvasColor.withOpacity(0.28),
             blurRadius: 15,
-          )
+          ),
         ],
       ),
       iconTheme: IconThemeData(

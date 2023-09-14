@@ -64,7 +64,7 @@ class DropdownWithLabel<T> extends StatelessWidget {
               dropdownColor: backgroundColor,
             ),
           ),
-        )
+        ),
       ],
     );
   }
